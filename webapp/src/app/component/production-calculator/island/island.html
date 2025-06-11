@@ -1,0 +1,27 @@
+<table>
+  <thead>
+    <tr>
+      <th>Building</th>
+      <th>Count</th>
+      <th>Good</th>
+      <th>D</th>
+      <th>/</th>
+      <th>N</th>
+      <th>Boost</th>
+      <th>Trade Union?</th>
+      <th>Trade Union Bonus (%)</th>
+      <th>Efficiency</th>
+      <th>Building Process Time (s)</th>
+      <th>Good Process Time (s)</th>
+      <th>Production (Goods per m)</th>
+      <th>Remove</th>
+    </tr>
+  </thead>
+  <tbody>
+    <ng-container *ngFor="let productionLine of productionLines; index as i">
+      <tr production-line [controller]="productionLine" (remove)="removeProductionLineAt(i)">
+      </tr>
+    </ng-container>
+  </tbody>
+</table>
+<button matButton (click)="addProductionLine()">+</button>

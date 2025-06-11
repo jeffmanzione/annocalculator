@@ -1,0 +1,26 @@
+:host ::ng-deep th {
+  width: 0;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+thead {
+  tr {
+    border-bottom: 1px solid gray;
+
+    th {
+      font-weight: 500;
+
+      strong {
+        font-weight: 700;
+        font-size: 13px;
+      }
+    }
+  }
+}
+
+tr:not(:last-child) {
+  border-bottom: 1px solid gray;
+}

@@ -1,0 +1,11 @@
+<mat-toolbar color="primary" class="toolbar">
+  <div class="toolbar-items">
+    <button mat-button class="toolbar-title toolbar-text-shadow"
+      (click)="router.navigateByUrl('/')">AnnoCalculator.com</button>
+    <div *ngFor="let app of apps" class="toolbar-item toolbar-text-shadow"
+      [ngClass]="app.path == router.url ? 'toolbar-item-selected': ''">
+      <button mat-button [disabled]="app.path == router.url" (click)="router.navigateByUrl(app.path)">{{ app.displayText
+        }}</button>
+    </div>
+  </div>
+</mat-toolbar>
