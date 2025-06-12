@@ -2,7 +2,11 @@ import { IslandView } from "./views";
 
 export enum ProductionBuilding {
   Unknown = 'Unknown',
+  AdvancedCoffeeRoaster = 'Advanced Coffee Roaster',
+  AdvancedCottonMill = 'Advanced Cotton Mill',
+  AdvancedRumDistillery = 'Advanced Rum Distillery',
   AlpacaFarm = 'Alpaca Farm',
+  Apiary = 'Apiary',
   ArcticGasMine = 'Arctic Gas Mine',
   AssemblyLineBiscuits = 'Assembly Line: Biscuits',
   AssemblyLineElevators = 'Assembly Line: Elevators',
@@ -13,6 +17,7 @@ export enum ProductionBuilding {
   BombinWeaver = 'Bombin Weaver',
   BrassSmeltery = 'Brass Smetlery',
   Brewery = 'Brewery',
+  BrickDryHouse = 'Brick Dry-House',
   BrickFactory = 'Brick Factory',
   CabAssemblyLine = 'Cab Assembly Line',
   Cannery = 'Cannery',
@@ -36,29 +41,43 @@ export enum ProductionBuilding {
   ConcreteFactory = 'Concrete Factory',
   CopperMine = 'Copper Mine',
   CornFarm = 'Corn Farm',
+  CottonMill = 'Cotton Mill',
   CottonPlantation = 'Cotton Plantation',
+  DynamiteFactory = 'Dynamite Factory',
+  Fishery = 'Fishery',
+  FlourMill = 'Flour Mill',
   FrameworkKnitters = 'Framework Knitters',
   FriedPlantainKitchen = 'Fried Plantain Kitchen',
   FurDealer = 'Fur Dealer',
   Furnace = 'Furnace',
+  Glassmakers = 'Glassmakers',
+  GoatFarm = 'Goat Farm',
   GoldOreMine = 'Gold Ore Mine',
   GooseFarm = 'Goose Farm',
   GrainFarm = 'Grain Farm',
   GramophoneFactory = 'Gramophone Factory',
   HeavyWeaponsFactory = 'Heavy Weapons Factory',
+  HibiscusFarm = 'Hibiscus Farm',
   HopFarm = 'Hop Farm',
   HuntingCabin = 'Hunting Cabin',
   HuskyFarm = 'Husky Farm',
   HuskySledFactory = 'Husky Sled Factory',
+  IndigoFarm = 'Indigo Farm',
   IronMine = 'Iron Mine',
   Jewellers = 'Jewellers',
   LightBulbFactory = 'Light Bulb Factory',
   LimestoneQuarry = 'Limestone Mine',
+  LinenMill = 'Linen Mill',
+  LinseedFarm = 'Linseed Farm',
+  LobsterFishery = 'Lobster Fishery',
   LumberjacksHut = 'Lumberjack\'s Hut',
+  MarquetryWorkshop = 'Marquetry Workshop',
   MotorAssemblyLine = 'Motor Assembly Line',
   OilLampFactory = 'Oil Lamp Factory',
   OilRefinery = 'Oil Refinery',
+  PaperMill = 'Paper Mill',
   ParkaFactory = 'Parka Factory',
+  PearlFarm = 'Pearl Farm',
   PemmicanCookhouse = 'Pemmican Cookhouse',
   PigFarm = 'Pig Farm',
   PlantainPlantation = 'Plantain Plantation',
@@ -69,6 +88,7 @@ export enum ProductionBuilding {
   RumDistillery = 'Rum Distillery',
   Sailmakers = 'Sailmakers',
   SaltpeterWorks = 'Saltpeter Works',
+  SaltWorks = 'SaltWorks',
   SandMine = 'Sand Mine',
   Sawmill = 'Sawmill',
   SchnappsDistillery = 'Schnapps Distillery',
@@ -79,13 +99,19 @@ export enum ProductionBuilding {
   SleepingBagFactory = 'Sleeping Bag Factory',
   SoapFactory = 'Soap Factory',
   SpectacleFactory = 'Spectacle Factory',
+  SpiceFarm = 'Spice Farm',
   Steelworks = 'Steelworks',
   SugarCanePlantation = 'Sugar Cane Plantation',
+  TailorsShop = 'Tailor\'s Shop',
+  TapestryLooms = 'Tapestry Looms',
+  TeaSpicer = 'Tea Spicer',
+  TelephoneManufacturer = 'Telephone Manufacturer',
   TobaccoPlantation = 'Tobacco Plantation',
   TortillaMaker = 'Tortilla Maker',
   Vineyard = 'Vineyard',
   WeaponFactory = 'Weapon Factory',
-  WindowFactory = 'Window Factory',
+  WhalingStation = 'Whaling Station',
+  WindowMakers = 'Window Makers',
   ZincMine = 'Zinc Mine',
 };
 
@@ -96,6 +122,7 @@ export enum ProductionType {
   AnimalFarm = 'Animal Farm',
   HuntingCabin = 'Hunting Cabin',
   Orchard = 'Orchard',
+  Oil = 'Oil',
 };
 
 export enum Good {
@@ -117,7 +144,7 @@ export enum Good {
   Bricks = 'Bricks',
   CannedFood = 'Canned Food',
   Caoutchouc = 'Caoutchouc',
-  Caribou = 'Caribou',
+  CaribouMeat = 'Caribou Meat',
   Cement = 'Cement',
   Champagne = 'Champagne',
   Chocolate = 'Chocolate',
@@ -135,9 +162,11 @@ export enum Good {
   Corn = 'Corn',
   Cotton = 'Cotton',
   CottonFabric = 'Cotton Fabric',
+  Dynamite = 'Dynamite',
   Elevators = 'Elevators',
   Fish = 'Fish',
   Flour = 'Flour',
+  FriedPlantains = 'Fried Plantains',
   FurCoats = 'Fur Coats',
   Furs = 'Furs',
   Glass = 'Glass',
@@ -150,6 +179,8 @@ export enum Good {
   Gramophones = 'Gramophones',
   Helium = 'Helium',
   Herbs = 'Herbs',
+  HibiscusPetals = 'Hibiscus Petals',
+  HibiscusTea = 'Hibiscus Tea',
   Hops = 'Hops',
   Huskies = 'Huskies',
   HuskySleds = 'Husky Sleds',
@@ -162,22 +193,27 @@ export enum Good {
   Leather = 'Leather',
   Lemonade = 'Lemonade',
   LightBulbs = 'Light Bulbs',
-  Linens = 'Linens',
+  Linen = 'Linen',
   Linseed = 'Linseed',
+  Lobster = 'Lobster',
   Milk = 'Milk',
   Minerals = 'Minerals',
   MudBricks = 'Mud Bricks',
   NanduFeathers = 'Nandu Feathers',
   NanduLeather = 'Nandu Leather',
   Oil = 'Oil',
+  OilLamps = 'Oil Lamps',
   Pamphlets = 'Pamphlets',
   Paper = 'Paper',
+  Parkas = 'Parkas',
   Pearls = 'Pearls',
+  Pemmican = 'Pemmican',
   PennyFarthings = 'Penny Farthings',
   Perfumes = 'Perfumes',
   Pigs = 'Pigs',
   Plantains = 'Plantains',
   PocketWatches = 'Pocket Watches',
+  Ponchos = 'Ponchos',
   Potatoes = 'Potatoes',
   QuartzSand = 'Quartz Sand',
   RedPeppers = 'Red Peppers',
@@ -189,11 +225,10 @@ export enum Good {
   Saltpetre = 'Saltpetre',
   Sausages = 'Sausages',
   Schnapps = 'Schnapps',
-  Seals = 'Seals',
   SealSkin = 'Seal Skin',
-  SeaMines = 'Sea Mines',
   SewingMachines = 'Sewing Machines',
   Shampoo = 'Shampoo',
+  SleepingBags = 'Sleeping Bags',
   Soap = 'Soap',
   Souvenirs = 'Souvenirs',
   Spices = 'Spices',
@@ -204,13 +239,15 @@ export enum Good {
   SugarCane = 'Sugar Cane',
   TailoredSuits = 'Tailored Suits',
   Tapestries = 'Tapestries',
-  Tea = 'Tea',
   Telephones = 'Telephones',
+  Timber = 'Timber',
   Tobacco = 'Tobacco',
+  Tortillas = 'Tortillas',
   Toys = 'Toys',
   Typewriter = 'Typewriter',
   Violins = 'Violins',
   WaterDrop = 'Water Drop',
+  Weapons = 'Weapons',
   WhaleOil = 'Whale Oil',
   Windows = 'Windows',
   Wood = 'Wood',
@@ -223,10 +260,10 @@ export enum Good {
 export enum BoostType {
   None = 'None',
   Electricity = 'Electricity',
-  Tracktors = 'Tracktors',
+  TracktorBarn = 'Tracktor Barn',
   Fertilizer = 'Fertilizer',
   TractorsAndFertilizer = 'Tractors & Fertilizer',
-  AnimalFeed = 'Animal Feed',
+  Silo = 'Silo',
 };
 
 export enum IslandPolicy {
@@ -303,6 +340,7 @@ export interface ProductionInfo {
   processingTimeSeconds: number;
   productionType: ProductionType;
   good: Good;
+  requiresElectricity?: boolean;
 };
 
 export const improvedByLandReformAct = new Set<ProductionBuilding>([
@@ -350,10 +388,37 @@ export function getExtraGoodsModifier(productionBuilding: ProductionBuilding, go
 
 export const buildingInfo: ProductionInfo[] = [
   {
+    building: ProductionBuilding.AdvancedCoffeeRoaster,
+    processingTimeSeconds: 60,
+    productionType: ProductionType.Factory,
+    good: Good.Coffee,
+    requiresElectricity: true,
+  },
+  {
+    building: ProductionBuilding.AdvancedCottonMill,
+    processingTimeSeconds: 60,
+    productionType: ProductionType.Factory,
+    good: Good.CottonFabric,
+    requiresElectricity: true,
+  },
+  {
+    building: ProductionBuilding.AdvancedRumDistillery,
+    processingTimeSeconds: 60,
+    productionType: ProductionType.Factory,
+    good: Good.Rum,
+    requiresElectricity: true,
+  },
+  {
     building: ProductionBuilding.AlpacaFarm,
     processingTimeSeconds: 30,
     productionType: ProductionType.AnimalFarm,
     good: Good.AlpacaWool,
+  },
+  {
+    building: ProductionBuilding.Apiary,
+    processingTimeSeconds: 30,
+    productionType: ProductionType.AnimalFarm,
+    good: Good.Beeswax,
   },
   {
     building: ProductionBuilding.ArcticGasMine,
@@ -389,13 +454,14 @@ export const buildingInfo: ProductionInfo[] = [
     building: ProductionBuilding.BearHuntingCabin,
     processingTimeSeconds: 90,
     productionType: ProductionType.HuntingCabin,
-    good: Good.Bread,
+    good: Good.BearFur,
   },
   {
     building: ProductionBuilding.BicycleFactory,
-    processingTimeSeconds: 15,
+    processingTimeSeconds: 30,
     productionType: ProductionType.Factory,
     good: Good.PennyFarthings,
+    requiresElectricity: true,
   },
   {
     building: ProductionBuilding.BombinWeaver,
@@ -416,6 +482,12 @@ export const buildingInfo: ProductionInfo[] = [
     good: Good.Beer,
   },
   {
+    building: ProductionBuilding.BrickDryHouse,
+    processingTimeSeconds: 60,
+    productionType: ProductionType.Factory,
+    good: Good.MudBricks,
+  },
+  {
     building: ProductionBuilding.BrickFactory,
     processingTimeSeconds: 60,
     productionType: ProductionType.Factory,
@@ -423,9 +495,10 @@ export const buildingInfo: ProductionInfo[] = [
   },
   {
     building: ProductionBuilding.CabAssemblyLine,
-    processingTimeSeconds: 30,
+    processingTimeSeconds: 60,
     productionType: ProductionType.Factory,
     good: Good.SteamCarriages,
+    requiresElectricity: true,
   },
   {
     building: ProductionBuilding.Cannery,
@@ -438,6 +511,12 @@ export const buildingInfo: ProductionInfo[] = [
     processingTimeSeconds: 60,
     productionType: ProductionType.PlantFarm,
     good: Good.Caoutchouc,
+  },
+  {
+    building: ProductionBuilding.CaribouHuntingCabin,
+    processingTimeSeconds: 60,
+    productionType: ProductionType.HuntingCabin,
+    good: Good.CaribouMeat,
   },
   {
     building: ProductionBuilding.CattleFarm,
@@ -548,10 +627,34 @@ export const buildingInfo: ProductionInfo[] = [
     good: Good.Corn,
   },
   {
+    building: ProductionBuilding.CottonMill,
+    processingTimeSeconds: 30,
+    productionType: ProductionType.PlantFarm,
+    good: Good.CottonFabric,
+  },
+  {
     building: ProductionBuilding.CottonPlantation,
     processingTimeSeconds: 60,
     productionType: ProductionType.PlantFarm,
     good: Good.Cotton,
+  },
+  {
+    building: ProductionBuilding.DynamiteFactory,
+    processingTimeSeconds: 60,
+    productionType: ProductionType.Factory,
+    good: Good.Dynamite,
+  },
+  {
+    building: ProductionBuilding.Fishery,
+    processingTimeSeconds: 30,
+    productionType: ProductionType.Factory,
+    good: Good.Fish,
+  },
+  {
+    building: ProductionBuilding.FlourMill,
+    processingTimeSeconds: 30,
+    productionType: ProductionType.Factory,
+    good: Good.Flour,
   },
   {
     building: ProductionBuilding.FrameworkKnitters,
@@ -563,7 +666,7 @@ export const buildingInfo: ProductionInfo[] = [
     building: ProductionBuilding.FriedPlantainKitchen,
     processingTimeSeconds: 30,
     productionType: ProductionType.Factory,
-    good: Good.Plantains,
+    good: Good.FriedPlantains,
   },
   {
     building: ProductionBuilding.FurDealer,
@@ -576,6 +679,18 @@ export const buildingInfo: ProductionInfo[] = [
     processingTimeSeconds: 30,
     productionType: ProductionType.Factory,
     good: Good.Steel,
+  },
+  {
+    building: ProductionBuilding.Glassmakers,
+    processingTimeSeconds: 30,
+    productionType: ProductionType.Factory,
+    good: Good.Glass,
+  },
+  {
+    building: ProductionBuilding.GoatFarm,
+    processingTimeSeconds: 60,
+    productionType: ProductionType.AnimalFarm,
+    good: Good.GoatMilk,
   },
   {
     building: ProductionBuilding.GoldOreMine,
@@ -597,15 +712,23 @@ export const buildingInfo: ProductionInfo[] = [
   },
   {
     building: ProductionBuilding.GramophoneFactory,
-    processingTimeSeconds: 60,
+    processingTimeSeconds: 120,
     productionType: ProductionType.Factory,
     good: Good.Gramophones,
+    requiresElectricity: true,
   },
   {
     building: ProductionBuilding.HeavyWeaponsFactory,
-    processingTimeSeconds: 60,
+    processingTimeSeconds: 120,
     productionType: ProductionType.Factory,
     good: Good.AdvancedWeapons,
+    requiresElectricity: true,
+  },
+  {
+    building: ProductionBuilding.HibiscusFarm,
+    processingTimeSeconds: 60,
+    productionType: ProductionType.PlantFarm,
+    good: Good.HibiscusPetals,
   },
   {
     building: ProductionBuilding.HopFarm,
@@ -632,6 +755,12 @@ export const buildingInfo: ProductionInfo[] = [
     good: Good.HuskySleds,
   },
   {
+    building: ProductionBuilding.IndigoFarm,
+    processingTimeSeconds: 60,
+    productionType: ProductionType.PlantFarm,
+    good: Good.IndigoDye,
+  },
+  {
     building: ProductionBuilding.IronMine,
     processingTimeSeconds: 15,
     productionType: ProductionType.Mine,
@@ -655,62 +784,78 @@ export const buildingInfo: ProductionInfo[] = [
     productionType: ProductionType.Mine,
     good: Good.Cement,
   },
-  // LumberjacksHut = 'Lumberjack\'s Hut',
-  // MotorAssemblyLine = 'Motor Assembly Line',
-  // OilLampFactory = 'Oil Lamp Factory',
-  // OilRefinery = 'Oil Refinery',
-  // ParkaFactory = 'Parka Factory',
-  // PemmicanCookhouse = 'Pemmican Cookhouse',
-  // PigFarm = 'Pig Farm',
-  // PlantainPlantation = 'Plantain Plantation',
-  // PonchoDarner = 'Poncho Darner',
-  // PotatoFarm = 'Potato Farm',
-  // PrimeHuntingCabin = 'Prime Hunting Cabin',
-  // RedPepperFarm = 'Red Pepper Farm',
-  // RumDistillery = 'Rum Distillery',
-  // Sailmakers = 'Sailmakers',
-  // SaltpeterWorks = 'Saltpeter Works',
-  // SandMine = 'Sand Mine',
-  // Sawmill = 'Sawmill',
-  // SchnappsDistillery = 'Schnapps Distillery',
-  // SewingMachineFactory = 'Sewing Machine Factory',
-  // SheepFarm = 'Sheep Farm',
-  // Slaughterhouse = 'Slaughterhouse',
-  // SleepingBagFactory = 'Sleeping Bag Factory',
-  // SoapFactory = 'Soap Factory',
-  // SpectacleFactory = 'Spectacle Factory',
-  // Steelworks = 'Steelworks',
-  // SugarCanePlantation = 'Sugar Cane Plantation',
-  // TobaccoPlantation = 'Tobacco Plantation',
-  // TortillaMaker = 'Tortilla Maker',
-  // Vineyard = 'Vineyard',
-  // WeaponFactory = 'Weapon Factory',
-  // WindowFactory = 'Window Factory',
-  // ZincMine = 'Zinc Mine',
-
   {
-    building: ProductionBuilding.PotatoFarm,
+    building: ProductionBuilding.LinenMill,
     processingTimeSeconds: 30,
-    productionType: ProductionType.PlantFarm,
-    good: Good.Potatoes,
+    productionType: ProductionType.Factory,
+    good: Good.Linen,
   },
   {
-    building: ProductionBuilding.RedPepperFarm,
-    processingTimeSeconds: 120,
+    building: ProductionBuilding.LinseedFarm,
+    processingTimeSeconds: 60,
     productionType: ProductionType.PlantFarm,
-    good: Good.RedPeppers,
+    good: Good.Linseed,
   },
   {
-    building: ProductionBuilding.Vineyard,
-    processingTimeSeconds: 120,
-    productionType: ProductionType.PlantFarm,
-    good: Good.Grapes,
+    building: ProductionBuilding.LobsterFishery,
+    processingTimeSeconds: 60,
+    productionType: ProductionType.Factory,
+    good: Good.Lobster,
   },
   {
-    building: ProductionBuilding.SheepFarm,
-    processingTimeSeconds: 30,
-    productionType: ProductionType.AnimalFarm,
-    good: Good.Wool,
+    building: ProductionBuilding.LumberjacksHut,
+    processingTimeSeconds: 15,
+    productionType: ProductionType.Orchard,
+    good: Good.Wood,
+  },
+  {
+    building: ProductionBuilding.MarquetryWorkshop,
+    processingTimeSeconds: 60,
+    productionType: ProductionType.Factory,
+    good: Good.WoodVeneers,
+  },
+  {
+    building: ProductionBuilding.MotorAssemblyLine,
+    processingTimeSeconds: 90,
+    productionType: ProductionType.Factory,
+    good: Good.SteamMotors,
+    requiresElectricity: true,
+  },
+  {
+    building: ProductionBuilding.OilLampFactory,
+    processingTimeSeconds: 60,
+    productionType: ProductionType.Factory,
+    good: Good.OilLamps,
+  },
+  {
+    building: ProductionBuilding.OilRefinery,
+    processingTimeSeconds: 15,
+    productionType: ProductionType.Oil,
+    good: Good.Oil,
+  },
+  {
+    building: ProductionBuilding.PaperMill,
+    processingTimeSeconds: 15,
+    productionType: ProductionType.Factory,
+    good: Good.Paper,
+  },
+  {
+    building: ProductionBuilding.ParkaFactory,
+    processingTimeSeconds: 90,
+    productionType: ProductionType.Factory,
+    good: Good.Parkas,
+  },
+  {
+    building: ProductionBuilding.PearlFarm,
+    processingTimeSeconds: 90,
+    productionType: ProductionType.Factory,
+    good: Good.Pearls,
+  },
+  {
+    building: ProductionBuilding.PemmicanCookhouse,
+    processingTimeSeconds: 60,
+    productionType: ProductionType.Factory,
+    good: Good.Pemmican,
   },
   {
     building: ProductionBuilding.PigFarm,
@@ -719,10 +864,203 @@ export const buildingInfo: ProductionInfo[] = [
     good: Good.Pigs,
   },
   {
+    building: ProductionBuilding.PlantainPlantation,
+    processingTimeSeconds: 30,
+    productionType: ProductionType.PlantFarm,
+    good: Good.Plantains,
+  },
+  {
+    building: ProductionBuilding.PonchoDarner,
+    processingTimeSeconds: 30,
+    productionType: ProductionType.Factory,
+    good: Good.Ponchos,
+  },
+  {
+    building: ProductionBuilding.PotatoFarm,
+    processingTimeSeconds: 30,
+    productionType: ProductionType.PlantFarm,
+    good: Good.Potatoes,
+  },
+  {
+    building: ProductionBuilding.PrimeHuntingCabin,
+    processingTimeSeconds: 15,
+    productionType: ProductionType.HuntingCabin,
+    good: Good.Furs,
+  },
+  {
+    building: ProductionBuilding.RedPepperFarm,
+    processingTimeSeconds: 120,
+    productionType: ProductionType.PlantFarm,
+    good: Good.RedPeppers,
+  },
+  {
+    building: ProductionBuilding.RumDistillery,
+    processingTimeSeconds: 60,
+    productionType: ProductionType.Factory,
+    good: Good.Rum,
+  },
+  {
+    building: ProductionBuilding.Sailmakers,
+    processingTimeSeconds: 30,
+    productionType: ProductionType.Factory,
+    good: Good.Sails,
+  },
+  {
+    building: ProductionBuilding.SaltWorks,
+    processingTimeSeconds: 90,
+    productionType: ProductionType.Mine,
+    good: Good.Salt,
+  },
+  {
+    building: ProductionBuilding.SaltpeterWorks,
+    processingTimeSeconds: 120,
+    productionType: ProductionType.Mine,
+    good: Good.Saltpetre,
+  },
+  {
+    building: ProductionBuilding.SandMine,
+    processingTimeSeconds: 30,
+    productionType: ProductionType.Mine,
+    good: Good.QuartzSand,
+  },
+  {
+    building: ProductionBuilding.Sawmill,
+    processingTimeSeconds: 15,
+    productionType: ProductionType.Factory,
+    good: Good.Timber,
+  },
+  {
+    building: ProductionBuilding.SealHuntingDocks,
+    processingTimeSeconds: 30,
+    productionType: ProductionType.Factory,
+    good: Good.SealSkin,
+  },
+  {
+    building: ProductionBuilding.SchnappsDistillery,
+    processingTimeSeconds: 30,
+    productionType: ProductionType.Factory,
+    good: Good.Schnapps,
+  },
+  {
+    building: ProductionBuilding.SewingMachineFactory,
+    processingTimeSeconds: 30,
+    productionType: ProductionType.Factory,
+    good: Good.SewingMachines,
+  },
+  {
+    building: ProductionBuilding.SheepFarm,
+    processingTimeSeconds: 30,
+    productionType: ProductionType.AnimalFarm,
+    good: Good.Wool,
+  },
+  {
+    building: ProductionBuilding.Slaughterhouse,
+    processingTimeSeconds: 60,
+    productionType: ProductionType.Factory,
+    good: Good.Sausages,
+  },
+  {
+    building: ProductionBuilding.SleepingBagFactory,
+    processingTimeSeconds: 60,
+    productionType: ProductionType.Factory,
+    good: Good.SleepingBags,
+  },
+  {
+    building: ProductionBuilding.SoapFactory,
+    processingTimeSeconds: 30,
+    productionType: ProductionType.Factory,
+    good: Good.Soap,
+  },
+  {
+    building: ProductionBuilding.SpectacleFactory,
+    processingTimeSeconds: 90,
+    productionType: ProductionType.Factory,
+    good: Good.Glasses,
+  },
+  {
+    building: ProductionBuilding.SpiceFarm,
+    processingTimeSeconds: 60,
+    productionType: ProductionType.PlantFarm,
+    good: Good.Spices,
+  },
+  {
     building: ProductionBuilding.Steelworks,
     processingTimeSeconds: 45,
     productionType: ProductionType.Factory,
     good: Good.SteelBeams,
+  },
+  {
+    building: ProductionBuilding.SugarCanePlantation,
+    processingTimeSeconds: 30,
+    productionType: ProductionType.PlantFarm,
+    good: Good.SugarCane,
+  },
+  {
+    building: ProductionBuilding.TapestryLooms,
+    processingTimeSeconds: 30,
+    productionType: ProductionType.Factory,
+    good: Good.Tapestries,
+  },
+  {
+    building: ProductionBuilding.TailorsShop,
+    processingTimeSeconds: 60,
+    productionType: ProductionType.Factory,
+    good: Good.TailoredSuits,
+  },
+  {
+    building: ProductionBuilding.TeaSpicer,
+    processingTimeSeconds: 90,
+    productionType: ProductionType.PlantFarm,
+    good: Good.HibiscusTea,
+  },
+  {
+    building: ProductionBuilding.TelephoneManufacturer,
+    processingTimeSeconds: 90,
+    productionType: ProductionType.Factory,
+    good: Good.Telephones,
+    requiresElectricity: true,
+  },
+  {
+    building: ProductionBuilding.TobaccoPlantation,
+    processingTimeSeconds: 120,
+    productionType: ProductionType.PlantFarm,
+    good: Good.Tobacco,
+  },
+  {
+    building: ProductionBuilding.TortillaMaker,
+    processingTimeSeconds: 30,
+    productionType: ProductionType.Factory,
+    good: Good.Tortillas,
+  },
+  {
+    building: ProductionBuilding.Vineyard,
+    processingTimeSeconds: 120,
+    productionType: ProductionType.PlantFarm,
+    good: Good.Grapes,
+  },
+  {
+    building: ProductionBuilding.WeaponFactory,
+    processingTimeSeconds: 90,
+    productionType: ProductionType.Factory,
+    good: Good.Weapons,
+  },
+  {
+    building: ProductionBuilding.WhalingStation,
+    processingTimeSeconds: 60,
+    productionType: ProductionType.Factory,
+    good: Good.WhaleOil,
+  },
+  {
+    building: ProductionBuilding.WindowMakers,
+    processingTimeSeconds: 60,
+    productionType: ProductionType.Factory,
+    good: Good.Windows,
+  },
+  {
+    building: ProductionBuilding.ZincMine,
+    processingTimeSeconds: 30,
+    productionType: ProductionType.Mine,
+    good: Good.Zinc,
   },
 ];
 
@@ -731,3 +1069,37 @@ const builingsToInfo = new Map<ProductionBuilding, ProductionInfo>(buildingInfo.
 export function lookupProductionInfo(building: ProductionBuilding): ProductionInfo {
   return builingsToInfo.get(building)!;
 };
+
+export function requiresElectricity(building: ProductionBuilding): boolean {
+  return builingsToInfo.get(building)?.requiresElectricity ?? false;
+}
+
+export function allowedBoosts(building: ProductionBuilding): BoostType[] {
+  const info = lookupProductionInfo(building);
+  if (!info) {
+    return [BoostType.None];
+  }
+  if (info.productionType == ProductionType.AnimalFarm) {
+    return [BoostType.None, BoostType.Silo];
+  } else if (info.productionType == ProductionType.Factory) {
+    return [BoostType.None, BoostType.Electricity];
+  } else if (info.productionType == ProductionType.Mine) {
+    return [BoostType.None, BoostType.Electricity];
+  } else if (info.productionType == ProductionType.PlantFarm) {
+    return [BoostType.None, BoostType.TracktorBarn, BoostType.Fertilizer, BoostType.TractorsAndFertilizer];
+  }
+  return [BoostType.None];
+}
+
+// for (const building of Object.values(ProductionBuilding)) {
+//   if (!builingsToInfo.has(building)) {
+//     console.log(building);
+//   }
+// }
+
+// const usedGoods = new Set<Good>(buildingInfo.map(info => info.good));
+// for (const good of Object.values(Good)) {
+//   if (!usedGoods.has(good)) {
+//     console.log(good);
+//   }
+// }

@@ -35,8 +35,9 @@
   </td>
   <td>
     <mat-form-field class="boost-field">
-      <mat-select formControlName="boostType">
-        <mat-option *ngFor="let boost of boosts" [value]="boost">
+      <input *ngIf="!allowBoostSelect" matInput formControlName="boostType" [readonly]="true">
+      <mat-select *ngIf="allowBoostSelect" formControlName="boostType">
+        <mat-option *ngFor="let boost of allowedBoosts" [value]="boost">
           {{ boost }}
         </mat-option>
       </mat-select>

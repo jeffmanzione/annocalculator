@@ -73,7 +73,7 @@ export class ProductionLineView extends View<ProductionLineModel> {
           efficiency += 0.5;
         }
         break;
-      case BoostType.Tracktors:
+      case BoostType.TracktorBarn:
         efficiency += 2.0;
         break;
       case BoostType.Fertilizer:
@@ -82,7 +82,7 @@ export class ProductionLineView extends View<ProductionLineModel> {
       case BoostType.TractorsAndFertilizer:
         efficiency += 3.0;
         break;
-      case BoostType.AnimalFeed:
+      case BoostType.Silo:
         efficiency += 1.0;
         break;
     }
@@ -96,7 +96,7 @@ export class ProductionLineView extends View<ProductionLineModel> {
   }
 
   get buildingProcessTimeSeconds(): number {
-    return lookupProductionInfo(this.building)?.processingTimeSeconds ?? 0 / this.efficiency;
+    return (lookupProductionInfo(this.building)?.processingTimeSeconds ?? 0) / this.efficiency;
   }
 
   get goodProcessTimeSeconds(): number {

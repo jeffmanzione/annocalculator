@@ -4,7 +4,7 @@ import { MAT_FORM_FIELD_DEFAULT_OPTIONS, MatFormFieldModule } from '@angular/mat
 import { MatSelectModule } from '@angular/material/select';
 import { ProductionLineController } from '../../../mvc/controllers';
 import { MatInputModule } from '@angular/material/input';
-import { BoostType, ProductionBuilding, Good } from '../../../mvc/models';
+import { BoostType, ProductionBuilding, Good, requiresElectricity, allowedBoosts } from '../../../mvc/models';
 import { CommonModule, formatNumber, formatPercent } from '@angular/common';
 import { AbstractControl, FormControl, FormGroup, FormsModule, NG_VALIDATORS, ReactiveFormsModule, ValidationErrors, Validator, ValidatorFn, Validators } from '@angular/forms';
 
@@ -51,33 +51,25 @@ export class ProductionLine implements OnInit {
   readonly goods = Object.values(Good).filter(pb => pb != Good.Unknown);
   readonly boosts = Object.values(BoostType);
 
+  allowedBoosts: Set<BoostType> = new Set();
+
   constructor(@Inject(LOCALE_ID) private readonly locale: string) { }
 
   @Input()
   controller?: ProductionLineController;
 
+  @Input()
+  formGroup?: FormGroup;
+
   @Output()
   remove = new EventEmitter<void>();
 
-  formGroup?: FormGroup;
+  efficiency: string = '-';
+  buildingProcessTimeSeconds: string = '-';
+  goodProcessTimeSeconds: string = '-';
+  goodsProducedPerMinute: string = '-';
 
-  private _efficiency?: number;
-  private _buildingProcessTimeSeconds?: number;
-  private _goodProcessTimeSeconds?: number;
-  private _goodsProducedPerMinute?: number;
-
-  get efficiency() {
-    return this.formatPercent(this._efficiency!);
-  }
-  get buildingProcessTimeSeconds() {
-    return this.formatNumber(this._buildingProcessTimeSeconds!);
-  }
-  get goodProcessTimeSeconds() {
-    return this.formatNumber(this._goodProcessTimeSeconds!);
-  }
-  get goodsProducedPerMinute() {
-    return this.formatNumber(this._goodsProducedPerMinute!);
-  }
+  allowBoostSelect: boolean = true;
 
   private formatPercent(value: number): string {
     return formatPercent(value, this.locale, '1.0-0');
@@ -88,7 +80,7 @@ export class ProductionLine implements OnInit {
   }
 
   ngOnInit(): void {
-    this.formGroup = new FormGroup({
+    const controls: Record<string, FormControl> = {
       building: new FormControl(this.controller!.building),
       resource: new FormControl(this.controller!.good),
       numBuildings: new FormControl(this.controller!.numBuildings),
@@ -101,13 +93,28 @@ export class ProductionLine implements OnInit {
       buildingProcessTime: new FormControl(0.0),
       goodProcessTime: new FormControl(0.0),
       productionPerMinute: new FormControl(0.0),
-    });
+    };
+    Object.keys(controls).forEach(name => this.formGroup!.addControl(name, controls[name]));
+
     this.update();
-    this.formGroup.valueChanges.subscribe(() => this.update());
+    this.formGroup!.valueChanges.subscribe(() => this.update());
+
   }
 
   private update(): void {
     this.controller!.building = this.formGroup!.value.building;
+
+    if (requiresElectricity(this.controller!.building)) {
+      this.formGroup!.controls['boostType'].setValue(BoostType.Electricity, { emitEvent: false });
+      this.allowBoostSelect = false;
+    } else {
+      this.allowedBoosts = new Set(allowedBoosts(this.controller!.building));
+      if (!this.allowedBoosts.has(this.formGroup!.value.boostType)) {
+        this.formGroup!.controls['boostType'].setValue(BoostType.None, { emitEvent: false });
+      }
+      this.allowBoostSelect = true;
+    }
+
     this.controller!.good = this.formGroup!.value.resource;
     this.controller!.numBuildings = this.formGroup!.value.numBuildings;
     this.controller!.goodsRateNumerator = this.formGroup!.value.goodsRateNumerator;
@@ -123,12 +130,10 @@ export class ProductionLine implements OnInit {
       this.formGroup!.controls['tradeUnionItemsBonusPercent'].disable({ emitEvent: false });
     }
 
-    this._efficiency = this.controller!.efficiency;
-    this._buildingProcessTimeSeconds = this.controller!.buildingProcessTimeSeconds;
-    this._goodProcessTimeSeconds = this.controller!.goodProcessTimeSeconds;
-    this._goodsProducedPerMinute = this.controller!.goodsProducedPerMinute;
-
-    console.log(this.controller!.toJsonString());
+    this.efficiency = this.formatPercent(this.controller!.efficiency);
+    this.buildingProcessTimeSeconds = this.formatNumber(this.controller!.buildingProcessTimeSeconds);
+    this.goodProcessTimeSeconds = this.formatNumber(this.controller!.goodProcessTimeSeconds);
+    this.goodsProducedPerMinute = this.formatNumber(this.controller!.goodsProducedPerMinute);
   }
 
   submitForm(): void {
