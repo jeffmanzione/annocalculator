@@ -1,34 +1,51 @@
-<div *ngIf="controller" [formGroup]="formGroup!">
-  <mat-form-field>
-    <mat-label>Island Name</mat-label>
-    <input matInput type="text" formControlName="name">
-  </mat-form-field>
-  <table>
-    <thead>
-      <tr>
-        <th>Building</th>
-        <th>Count</th>
-        <th>Good</th>
-        <th>D</th>
-        <th>/</th>
-        <th>N</th>
-        <th>Boost</th>
-        <th>Trade Union?</th>
-        <th>Trade Union Bonus (%)</th>
-        <th>Efficiency</th>
-        <th>Building Process Time (s)</th>
-        <th>Good Process Time (s)</th>
-        <th>Production (Goods per m)</th>
-        <th>Remove</th>
-      </tr>
-    </thead>
-    <tbody>
-      <ng-container *ngFor="let productionLine of productionLines; index as i">
-        <tr production-line [controller]="productionLine" [formGroup]="productionLineArray.controls[i]"
-          (remove)="removeProductionLineAt(i)">
+<ng-container *ngIf="controller" [formGroup]="formGroup!">
+  <section>
+    <mat-form-field>
+      <mat-label>Island Name</mat-label>
+      <input matInput type="text" formControlName="name">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Department of Labor Policy</mat-label>
+      <mat-select formControlName="dolPolicy">
+        <mat-option *ngFor="let policy of dolPolicies" [value]="policy">
+          {{ policy }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </section>
+  <section>
+    <table>
+      <thead>
+        <tr>
+          <th>Building</th>
+          <th>Count</th>
+          <th>Good</th>
+          <th>D</th>
+          <th>/</th>
+          <th>N</th>
+          <th>Boost</th>
+          <th>Trade Union?</th>
+          <th>Trade Union Bonus (%)</th>
+          <th>In Range of Local Department</th>
+          <th>Efficiency</th>
+          <th>Building Process Time (s)</th>
+          <th>Good Process Time (s)</th>
+          <th>Production (Goods per m)</th>
+          <th>Remove</th>
         </tr>
-      </ng-container>
-    </tbody>
-  </table>
-  <button matButton (click)="addProductionLine()">+</button>
-</div>
+      </thead>
+      <tbody>
+        <ng-container *ngFor="let productionLine of productionLines; index as i">
+          <tr production-line [controller]="productionLine" (change)="onChange()" (remove)="removeProductionLineAt(i)">
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+  </section>
+  <section>
+    <button matButton="filled" color="primary" (click)="addProductionLine()">
+      <mat-icon>add</mat-icon>
+      Add Production Line
+    </button>
+  </section>
+</ng-container>

@@ -266,12 +266,13 @@ export enum BoostType {
   Silo = 'Silo',
 };
 
-export enum IslandPolicy {
+export enum DepartmentOfLaborPolicy {
   None = 'None',
   LandReformAct = 'Land Reform Act',
   SkilledLaborAct = 'Skilled Labor Act',
-  UnionSubsidiesAct = 'Union Subsidies Act',
   GalvanicGrantsAct = 'Galvanic Grants Act',
+  FactoryInspectionsAct = 'Factory Inspections Act',
+  UnionSubsidiesAct = 'Union Subsidies Act',
 };
 
 export interface Model { };
@@ -285,12 +286,13 @@ export interface ProductionLineModel extends Model {
   boostType?: BoostType;
   hasTradeUnion?: boolean;
   tradeUnionItemsBonus?: number;
+  inRangeOfLocalDepartment?: boolean;
 };
 
 export interface IslandModel extends Model {
   name: string;
-  islandPolicy?: IslandPolicy;
   productionLines: ProductionLineModel[];
+  dolPolicy?: DepartmentOfLaborPolicy;
 };
 
 export interface WorldModel extends Model {
@@ -313,17 +315,18 @@ export const DEFAULT_PRODUCTION_LINE_MODEL: ProductionLineModel = {
   boostType: BoostType.None,
   hasTradeUnion: false,
   tradeUnionItemsBonus: 0.0,
+  inRangeOfLocalDepartment: false,
 };
 
 export const BASE_ISLAND_MODEL: IslandModel = {
-  name: "",
+  name: 'UNNAMED_ISLAND',
   productionLines: [],
 };
 
 export const DEFAULT_ISLAND_MODEL: IslandModel = {
-  name: 'Unknown',
-  islandPolicy: IslandPolicy.None,
+  name: '',
   productionLines: [],
+  dolPolicy: DepartmentOfLaborPolicy.None,
 };
 
 export const BASE_WORLD_MODEL: WorldModel = {
@@ -377,9 +380,9 @@ export function getExtraGoodsModifier(productionBuilding: ProductionBuilding, go
   const productionInfo = lookupProductionInfo(productionBuilding);
   if (productionInfo == null || good != productionInfo.good) {
     return 1.0;
-  } else if (improvedByLandReformAct.has(productionBuilding) && island.policy == IslandPolicy.LandReformAct) {
+  } else if (improvedByLandReformAct.has(productionBuilding) && island.dolPolicy == DepartmentOfLaborPolicy.LandReformAct) {
     return 1.5;
-  } else if (improvedBySkilledLaborAct.has(productionBuilding) && island.policy == IslandPolicy.SkilledLaborAct) {
+  } else if (improvedBySkilledLaborAct.has(productionBuilding) && island.dolPolicy == DepartmentOfLaborPolicy.SkilledLaborAct) {
     return 1. + 1. / 3.;
   } else {
     return 1.0;

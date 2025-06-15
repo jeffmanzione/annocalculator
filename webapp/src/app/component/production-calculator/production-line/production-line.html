@@ -9,13 +9,13 @@
     </mat-form-field>
   </td>
   <td>
-    <mat-form-field class="input-field">
+    <mat-form-field class="building-count">
       <input matInput type="text" inputmode="numeric" min="0" formControlName="numBuildings" [intMin]="0">
     </mat-form-field>
   </td>
   <td>
     <mat-form-field class="good-field">
-      <mat-select formControlName="resource">
+      <mat-select formControlName="good">
         <mat-option *ngFor="let good of goods" [value]="good">
           {{ good }}
         </mat-option>
@@ -23,13 +23,13 @@
     </mat-form-field>
   </td>
   <td>
-    <mat-form-field class="input-field">
+    <mat-form-field class="extra-goods-field">
       <input matInput type="text" inputmode="numeric" min="1" formControlName="goodsRateNumerator" [intMin]="1">
     </mat-form-field>
   </td>
   <td>/</td>
   <td>
-    <mat-form-field class="input-field">
+    <mat-form-field class="extra-goods-field">
       <input matInput type="text" inputmode="numeric" min="1" formControlName="goodsRateDenominator" [intMin]="1">
     </mat-form-field>
   </td>
@@ -52,6 +52,9 @@
     </mat-form-field>
   </td>
   <td>
+    <mat-checkbox formControlName="inRangeOfLocalDepartment"></mat-checkbox>
+  </td>
+  <td>
     <div class="keep-top">{{ efficiency }}</div>
   </td>
   <td>
@@ -64,6 +67,8 @@
     <div class="keep-top">{{ goodsProducedPerMinute }}</div>
   </td>
   <td>
-    <button matButton (click)="remove.emit()">-</button>
+    <button matIconButton (click)="remove.emit()">
+      <mat-icon>delete</mat-icon>
+    </button>
   </td>
 </ng-container>

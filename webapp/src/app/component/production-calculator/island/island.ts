@@ -1,13 +1,17 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { IslandController, ProductionLineController } from '../../../mvc/controllers';
 import { ProductionLine } from "../production-line/production-line";
 import { MatTableModule } from '@angular/material/table';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
-import { FormArray, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
+import { MatSelectModule } from '@angular/material/select';
+import { DepartmentOfLaborPolicy } from '../../../mvc/models';
+import { ControllerComponent } from '../base/controller';
 
 @Component({
   selector: 'island',
@@ -17,7 +21,9 @@ import { MatInputModule } from '@angular/material/input';
     MatButtonModule,
     MatDividerModule,
     MatFormFieldModule,
+    MatIconModule,
     MatInputModule,
+    MatSelectModule,
     MatTableModule,
     ProductionLine,
     ReactiveFormsModule,
@@ -26,43 +32,50 @@ import { MatInputModule } from '@angular/material/input';
   templateUrl: './island.html',
   styleUrl: './island.scss'
 })
-export class Island implements OnInit {
+export class Island extends ControllerComponent<IslandController> implements OnInit {
+  readonly dolPolicies = Object.values(DepartmentOfLaborPolicy);
 
   formGroup?: FormGroup;
 
-  @Input()
-  controller?: IslandController;
+  @ViewChildren(ProductionLine)
+  productionLineComponents!: QueryList<ProductionLine>;
 
-  productionLines: ProductionLineController[] = [];
-
-  productionLineArray = new FormArray<FormGroup>([]);
-
-  ngOnInit(): void {
-
-    this.formGroup = new FormGroup({
-      name: new FormControl(this.controller!.name),
-      productionLines: this.productionLineArray,
-    });
-    this.controller!.productionLines.forEach(_ => this.productionLineArray.push(new FormGroup({}), { emitEvent: false }));
-    this.formGroup.valueChanges.subscribe(() => this.update());
-    this.update();
+  get productionLines(): ProductionLineController[] {
+    // So that islands cannot be without production lines.
+    if (this.controller.productionLines.length == 0) {
+      this.addProductionLine();
+    }
+    return this.controller.productionLines;
   }
 
-  private update(): void {
-    this.controller!.name = this.formGroup!.value.name;
-    // this.productionLines = this.controller!.productionLines;
-    console.log(this.controller!.toJsonString());
+  ngOnInit(): void {
+    this.formGroup = new FormGroup({
+      name: new FormControl(this.controller.name),
+      dolPolicy: new FormControl(this.controller.dolPolicy),
+    });
+    this.formGroup.valueChanges.subscribe(_ => this.change.emit());
+  }
+
+  update(): void {
+    this.controller.name = this.formGroup!.value.name;
+    this.controller.dolPolicy = this.formGroup!.value.dolPolicy;
+
+    if (this.productionLineComponents) {
+      for (const pl of this.productionLineComponents) {
+        pl.update();
+      }
+    }
   }
 
   addProductionLine(): void {
-    this.productionLineArray.push(new FormGroup({}), { emitEvent: false });
-    this.controller!.addProductionLine();
-    this.update();
+    this.controller.addProductionLine();
   }
 
   removeProductionLineAt(index: number): void {
-    this.productionLineArray.removeAt(index, { emitEvent: false });
-    this.controller!.removeProductionLineAt(index);
-    this.update();
+    this.controller.removeProductionLineAt(index);
+  }
+
+  onChange(): void {
+    this.change.emit()
   }
 }

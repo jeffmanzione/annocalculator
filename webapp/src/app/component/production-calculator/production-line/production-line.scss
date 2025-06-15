@@ -1,33 +1,28 @@
-:host ::ng-deep {
-  div .mat-mdc-form-field-infix {
-    display: grid;
-  }
-}
-
-td {
-  padding: 2px;
-
-  &:first-child {
-    padding-left: 0;
-  }
-
-  &:last-child {
-    padding-right: 0;
-  }
-}
-
 .building-field {
   width: 160px;
 }
 
-.input-field {
+.building-count {
+  width: 50px;
+}
+
+.good-field {
+  width: 160px;
+}
+
+.extra-goods-field {
   width: 40px;
 }
 
 .boost-field {
-  width: 120px;
+  width: 150px;
 }
 
 .trade-bonus-field {
   width: 70px;
+}
+
+mat-checkbox {
+  display: table;
+  margin: auto;
 }

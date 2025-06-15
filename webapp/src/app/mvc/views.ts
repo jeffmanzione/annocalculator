@@ -1,4 +1,4 @@
-import { BASE_ISLAND_MODEL, BASE_PRODUCTION_LINE_MODEL, BASE_WORLD_MODEL, BoostType, DEFAULT_ISLAND_MODEL, DEFAULT_PRODUCTION_LINE_MODEL, DEFAULT_WORLD_MODEL, getExtraGoodsModifier as computeExtraGoodsModifier, improvedByLandReformAct, improvedBySkilledLaborAct, IslandModel, IslandPolicy, lookupProductionInfo, Model, ProductionBuilding, ProductionLineModel, Good, WorldModel } from "./models";
+import { BASE_ISLAND_MODEL, BASE_PRODUCTION_LINE_MODEL, BASE_WORLD_MODEL, BoostType, DEFAULT_ISLAND_MODEL, DEFAULT_PRODUCTION_LINE_MODEL, DEFAULT_WORLD_MODEL, getExtraGoodsModifier as computeExtraGoodsModifier, improvedByLandReformAct, improvedBySkilledLaborAct, IslandModel, DepartmentOfLaborPolicy, lookupProductionInfo, Model, ProductionBuilding, ProductionLineModel, Good, WorldModel } from "./models";
 
 export interface ViewContext {
   world?: WorldView;
@@ -37,7 +37,7 @@ export class ProductionLineView extends View<ProductionLineModel> {
   }
 
   get numBuildings(): number {
-    return this.model.numBuildings;
+    return this.model.numBuildings ?? DEFAULT_PRODUCTION_LINE_MODEL.numBuildings;
   }
 
   get goodsRateNumerator(): number {
@@ -64,12 +64,16 @@ export class ProductionLineView extends View<ProductionLineModel> {
     return this.model.tradeUnionItemsBonus ?? DEFAULT_PRODUCTION_LINE_MODEL.tradeUnionItemsBonus!;
   }
 
+  get inRangeOfLocalDepartment(): boolean {
+    return this.model.inRangeOfLocalDepartment ?? DEFAULT_PRODUCTION_LINE_MODEL.inRangeOfLocalDepartment!;
+  }
+
   get efficiency(): number {
     let efficiency = 1.0;
     switch (this.boostType) {
       case BoostType.Electricity:
         efficiency += 1.0;
-        if (this.context.island!.policy == IslandPolicy.GalvanicGrantsAct) {
+        if (this.inRangeOfLocalDepartment && this.context.island!.dolPolicy == DepartmentOfLaborPolicy.GalvanicGrantsAct) {
           efficiency += 0.5;
         }
         break;
@@ -87,9 +91,9 @@ export class ProductionLineView extends View<ProductionLineModel> {
         break;
     }
     if (this.hasTradeUnion) {
-      // if (this.context.island!.policy == IslandPolicy.UnionSubsidiesAct) {
-      efficiency += this.context.world!.tradeUnionBonus;
-      // }
+      if (this.inRangeOfLocalDepartment && this.context.island!.dolPolicy != DepartmentOfLaborPolicy.None) {
+        efficiency += this.context.world!.tradeUnionBonus;
+      }
       efficiency += this.tradeUnionItemsBonus;
     }
     return efficiency;
@@ -102,11 +106,17 @@ export class ProductionLineView extends View<ProductionLineModel> {
   get goodProcessTimeSeconds(): number {
     return this.buildingProcessTimeSeconds
       / this.goodsRate
-      / computeExtraGoodsModifier(this.building, this.good, this.context.island!);
+      / ((this.hasTradeUnion && this.inRangeOfLocalDepartment)
+        ? computeExtraGoodsModifier(this.building, this.good, this.context.island!)
+        : 1);
   }
 
   get goodsProducedPerMinute(): number {
     return this.numBuildings * 60 / this.goodProcessTimeSeconds;
+  }
+
+  get islandHasDepartmentOfLabor(): boolean {
+    return this.context.island?.dolPolicy != DepartmentOfLaborPolicy.None;
   }
 };
 
@@ -123,12 +133,12 @@ export class IslandView extends View<IslandModel> {
     return this.model.name;
   }
 
-  get policy(): IslandPolicy {
-    return this.model.islandPolicy ?? DEFAULT_ISLAND_MODEL.islandPolicy!;
-  }
-
   get productionLines(): ProductionLineView[] {
     return this.model.productionLines.map(pl => ProductionLineView.wrap(pl, { ...this.context, island: this }));
+  }
+
+  get dolPolicy(): DepartmentOfLaborPolicy {
+    return this.model.dolPolicy ?? DEFAULT_ISLAND_MODEL.dolPolicy!;
   }
 };
 

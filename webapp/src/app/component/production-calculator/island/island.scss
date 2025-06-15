@@ -1,26 +1,53 @@
-:host ::ng-deep th {
-  width: 0;
+@use '../../../../theme-colors';
+
+:host ::ng-deep {
+  th {
+    width: 0;
+  }
+
+  td,
+  th {
+    box-sizing: border-box;
+    border: 1px solid lightgray;
+    padding: 4px;
+    text-align: center;
+  }
+
+  div .mat-mdc-form-field-infix {
+    display: grid;
+  }
+}
+
+section {
+  margin-bottom: 8px;
+
+  &:last-child {
+    margin-bottom: 0px;
+  }
+}
+
+mat-form-field {
+  padding: 4px;
+
+  &:first-child {
+    padding-left: 0;
+  }
+
+  &:last-child {
+    padding-right: 0;
+  }
 }
 
 table {
   border-collapse: collapse;
+  max-width: 1170px;
+  min-width: 1170px;
 }
 
 thead {
   tr {
-    border-bottom: 1px solid gray;
-
     th {
       font-weight: 500;
-
-      strong {
-        font-weight: 700;
-        font-size: 13px;
-      }
     }
   }
-}
-
-tr:not(:last-child) {
-  border-bottom: 1px solid gray;
 }

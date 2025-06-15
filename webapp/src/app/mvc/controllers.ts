@@ -1,6 +1,5 @@
-import { BASE_ISLAND_MODEL, BASE_PRODUCTION_LINE_MODEL, BoostType, DEFAULT_ISLAND_MODEL, DEFAULT_PRODUCTION_LINE_MODEL, DEFAULT_WORLD_MODEL, IslandModel, IslandPolicy, Model, ProductionBuilding, ProductionLineModel, Good, WorldModel } from "./models";
+import { BASE_ISLAND_MODEL, BASE_PRODUCTION_LINE_MODEL, BoostType, DEFAULT_ISLAND_MODEL, DEFAULT_PRODUCTION_LINE_MODEL, DEFAULT_WORLD_MODEL, IslandModel, DepartmentOfLaborPolicy, Model, ProductionBuilding, ProductionLineModel, Good, WorldModel } from "./models";
 import { IslandView, ProductionLineView, ViewContext, WorldView } from "./views";
-
 
 export class ProductionLineController extends ProductionLineView {
   static override wrap(model: ProductionLineModel, context: ViewContext): ProductionLineController {
@@ -38,7 +37,7 @@ export class ProductionLineController extends ProductionLineView {
   }
 
   override set goodsRateNumerator(value: number) {
-    if (value == DEFAULT_PRODUCTION_LINE_MODEL.goodsRateNumerator) {
+    if (value == null || value == DEFAULT_PRODUCTION_LINE_MODEL.goodsRateNumerator) {
       delete this.model.goodsRateNumerator;
       return;
     }
@@ -49,7 +48,7 @@ export class ProductionLineController extends ProductionLineView {
   }
 
   override set goodsRateDenominator(value: number) {
-    if (value == DEFAULT_PRODUCTION_LINE_MODEL.goodsRateDenominator) {
+    if (value == null || value == DEFAULT_PRODUCTION_LINE_MODEL.goodsRateDenominator) {
       delete this.model.goodsRateDenominator;
       return;
     }
@@ -60,7 +59,7 @@ export class ProductionLineController extends ProductionLineView {
   }
 
   override set boostType(value: BoostType) {
-    if (value == DEFAULT_PRODUCTION_LINE_MODEL.boostType) {
+    if (value == null || value == DEFAULT_PRODUCTION_LINE_MODEL.boostType) {
       delete this.model.boostType;
       return;
     }
@@ -71,7 +70,7 @@ export class ProductionLineController extends ProductionLineView {
   }
 
   override set hasTradeUnion(value: boolean) {
-    if (value == DEFAULT_PRODUCTION_LINE_MODEL.hasTradeUnion) {
+    if (value == null || value == DEFAULT_PRODUCTION_LINE_MODEL.hasTradeUnion) {
       delete this.model.hasTradeUnion;
       delete this.model.tradeUnionItemsBonus;
       return;
@@ -83,7 +82,7 @@ export class ProductionLineController extends ProductionLineView {
   }
 
   override set tradeUnionItemsBonus(value: number) {
-    if (value == DEFAULT_PRODUCTION_LINE_MODEL.tradeUnionItemsBonus) {
+    if (value == null || value == DEFAULT_PRODUCTION_LINE_MODEL.tradeUnionItemsBonus) {
       delete this.model.tradeUnionItemsBonus;
       return;
     }
@@ -91,6 +90,17 @@ export class ProductionLineController extends ProductionLineView {
   }
   override get tradeUnionItemsBonus(): number {
     return super.tradeUnionItemsBonus;
+  }
+
+  override set inRangeOfLocalDepartment(value: boolean) {
+    if (value == null || value == DEFAULT_PRODUCTION_LINE_MODEL.inRangeOfLocalDepartment) {
+      delete this.model.inRangeOfLocalDepartment;
+      return;
+    }
+    this.model.inRangeOfLocalDepartment = value;
+  }
+  override get inRangeOfLocalDepartment(): boolean {
+    return super.inRangeOfLocalDepartment;
   }
 };
 
@@ -108,23 +118,35 @@ export class IslandController extends IslandView {
   override set name(value: string) {
     this.model.name = value;
   }
-
-  override set policy(value: IslandPolicy) {
-    if (value == DEFAULT_ISLAND_MODEL.islandPolicy) {
-      delete this.model.islandPolicy;
-      return;
-    }
-    this.model.islandPolicy = value;
+  override get name(): string {
+    return super.name;
   }
 
+  override set dolPolicy(value: DepartmentOfLaborPolicy) {
+    if (value == null || value == DEFAULT_ISLAND_MODEL.dolPolicy) {
+      delete this.model.dolPolicy;
+      return;
+    }
+    this.model.dolPolicy = value;
+  }
+  override get dolPolicy(): DepartmentOfLaborPolicy {
+    return super.dolPolicy;
+  }
+
+  private _productionLines?: ProductionLineController[];
+
   override get productionLines(): ProductionLineController[] {
-    return this.model.productionLines.map(pl => ProductionLineController.wrap(pl, { ...this.context, island: this }));
+    this._productionLines ??= this.model.productionLines.map(pl => ProductionLineController.wrap(pl, { ...this.context, island: this }));
+    return this._productionLines;
   }
 
   addProductionLine(): ProductionLineController {
-    const productionLine = { ...BASE_PRODUCTION_LINE_MODEL };
+    const productionLine = structuredClone(BASE_PRODUCTION_LINE_MODEL);
     this.model.productionLines.push(productionLine);
-    return ProductionLineController.wrap(productionLine, { ...this.context, island: this });
+    this._productionLines ??= [];
+    const controller = ProductionLineController.wrap(productionLine, { ...this.context, island: this });
+    this._productionLines.push(controller);
+    return controller;
   }
 
   removeProductionLineAt(index: number): void {
@@ -134,7 +156,8 @@ export class IslandController extends IslandView {
         `Was ${index} and length is ${this.model.productionLines.length}`);
       return;
     }
-    this.model.productionLines.splice(index, index + 1);
+    this.model.productionLines.splice(index, 1);
+    this._productionLines!.splice(index, 1);
   }
 };
 
@@ -153,22 +176,26 @@ export class WorldController extends WorldView {
     return super.tradeUnionBonus;
   }
   override set tradeUnionBonus(value: number) {
-    if (value == DEFAULT_WORLD_MODEL.tradeUnionBonus) {
+    if (value == null || value == DEFAULT_WORLD_MODEL.tradeUnionBonus) {
       delete this.model.tradeUnionBonus;
       return;
     }
     this.model.tradeUnionBonus = value;
   }
 
+  private _islands?: IslandController[];
 
   override get islands(): IslandController[] {
-    return this.model.islands.map(i => IslandController.wrap(i, { world: this }));
+    this._islands ??= this.model.islands.map(i => IslandController.wrap(i, { world: this }));
+    return this._islands;
   }
 
   addIsland(): IslandController {
-    const island = { ...BASE_ISLAND_MODEL };
+    const island = structuredClone(BASE_ISLAND_MODEL);
     this.model.islands.push(island);
-    return IslandController.wrap(island, this.context);
+    const controller = IslandController.wrap(island, { ...this.context, world: this });
+    this._islands?.push(controller);
+    return controller;
   }
 
   removeIslandAt(index: number): void {
@@ -178,7 +205,8 @@ export class WorldController extends WorldView {
         `Was ${index} and length is ${this.model.islands.length}`);
       return;
     }
-    this.model.islands.splice(index, index);
+    this.model.islands.splice(index, 1);
+    this._islands?.splice(index, 1);
   }
 };
 
