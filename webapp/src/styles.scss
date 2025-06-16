@@ -29,7 +29,59 @@ $web-theme: mat.m2-define-light-theme((color: (primary: $web-primary,
 @include mat.all-component-themes($web-theme);
 @include mat.all-component-typographies($web-fonts);
 
+
+::-webkit-scrollbar {
+  width: theme-colors.$scrollbar-width;
+}
+
+::-webkit-scrollbar-track {
+  background: theme-colors.$scrollbar-background-color;
+  border-radius: theme-colors.$scrollbar-border-radius;
+}
+
+::-webkit-scrollbar-thumb {
+  background: theme-colors.$scrollbar-thumb-color;
+  border-radius: theme-colors.$scrollbar-border-radius;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: theme-colors.$scrollbar-thumb-hover-color;
+}
+
+div .mat-mdc-form-field-infix {
+  display: grid;
+}
+
+.mat-table {
+  border-radius: 16px;
+  overflow: hidden !important;
+}
+
+html {
+  height: 100%;
+}
+
 body {
   margin: 0;
   background-color: theme-colors.$bg-color;
+  height: 100%;
+
+  @include mat.table-overrides((background-color: theme-colors.$table-bg-color,
+    ));
+
+  table {
+    background-color: theme-colors.$table-bg-color;
+
+    tr {
+      box-sizing: border-box;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+    }
+
+    td,
+    th {
+      border-collapse: separate;
+      padding: 4px;
+      text-align: center;
+    }
+  }
 }

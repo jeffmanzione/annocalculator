@@ -1,0 +1,25 @@
+mat-card {
+  height: 100%;
+
+  .underlay {
+    z-index: 0;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: url(/anno_1800_logo.png);
+    background-size: 300px;
+    background-repeat: space;
+    opacity: 5%;
+  }
+
+  mat-card-header {
+    z-index: 1;
+  }
+
+  mat-card-content {
+    z-index: 1;
+    padding-top: 16px;
+    display: flex;
+    flex-direction: row;
+  }
+}

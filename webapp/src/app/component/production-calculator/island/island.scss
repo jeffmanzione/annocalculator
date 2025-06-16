@@ -1,28 +1,74 @@
 @use '../../../../theme-colors';
 
 :host ::ng-deep {
-  th {
-    width: 0;
+  .building-field {
+    width: 160px;
   }
 
-  td,
-  th {
-    box-sizing: border-box;
-    border: 1px solid lightgray;
-    padding: 4px;
-    text-align: center;
+  .building-count {
+    width: 50px;
   }
 
-  div .mat-mdc-form-field-infix {
-    display: grid;
+  .good-field {
+    width: 160px;
+  }
+
+  .extra-goods-field {
+    width: 40px;
+  }
+
+  .boost-field {
+    width: 150px;
+  }
+
+  .trade-bonus-field {
+    width: 70px;
+  }
+
+
+  .table-container {
+    table {
+      display: flex;
+      flex-flow: column;
+      border-collapse: collapse;
+      width: 100%;
+      height: 100%;
+
+      thead {
+        flex: 0 0 auto;
+        display: table;
+        table-layout: fixed;
+        width: calc(100% - 0.9em);
+
+        tr {
+          th {
+            font-weight: 500;
+          }
+        }
+      }
+
+      tbody {
+        flex: 1 1 auto;
+        display: block;
+        max-height: 266px;
+        overflow-y: scroll;
+
+        tr {
+          // width: 100%;
+          // display: table;
+          table-layout: fixed;
+
+        }
+      }
+    }
   }
 }
 
 section {
-  margin-bottom: 8px;
+  margin: 10px 0 0 0;
 
-  &:last-child {
-    margin-bottom: 0px;
+  &:first-child {
+    margin-top: 0;
   }
 }
 
@@ -35,19 +81,5 @@ mat-form-field {
 
   &:last-child {
     padding-right: 0;
-  }
-}
-
-table {
-  border-collapse: collapse;
-  max-width: 1170px;
-  min-width: 1170px;
-}
-
-thead {
-  tr {
-    th {
-      font-weight: 500;
-    }
   }
 }

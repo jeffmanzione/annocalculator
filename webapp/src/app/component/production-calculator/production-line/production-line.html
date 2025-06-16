@@ -55,16 +55,24 @@
     <mat-checkbox formControlName="inRangeOfLocalDepartment"></mat-checkbox>
   </td>
   <td>
-    <div class="keep-top">{{ efficiency }}</div>
+    <div class="keep-top">
+      <formatted-number [value]="efficiency" [isPercent]="true"></formatted-number>
+    </div>
   </td>
   <td>
-    <div class="keep-top">{{ buildingProcessTimeSeconds }}</div>
+    <div class="keep-top">
+      <formatted-number [value]="buildingProcessTimeSeconds" suffix="/s"></formatted-number>
+    </div>
   </td>
   <td>
-    <div class="keep-top">{{ goodProcessTimeSeconds }}</div>
+    <div class="keep-top">
+      <formatted-number [value]="goodProcessTimeSeconds" suffix="/s"></formatted-number>
+    </div>
   </td>
   <td>
-    <div class="keep-top">{{ goodsProducedPerMinute }}</div>
+    <div class="keep-top">
+      <formatted-number [value]="goodsProducedPerMinute" suffix="/m"></formatted-number>
+    </div>
   </td>
   <td>
     <button matIconButton (click)="remove.emit()">

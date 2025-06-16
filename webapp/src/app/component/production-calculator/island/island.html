@@ -14,23 +14,29 @@
     </mat-form-field>
   </section>
   <section>
+    <button matButton="filled" color="primary" (click)="addProductionLine()">
+      <mat-icon>add</mat-icon>
+      Add Production Line
+    </button>
+  </section>
+  <section class="table-container">
     <table>
       <thead>
         <tr>
-          <th>Building</th>
-          <th>Count</th>
-          <th>Good</th>
-          <th>D</th>
+          <th class="building-field">Building</th>
+          <th class="building-count">Count</th>
+          <th class="good-field">Good</th>
+          <th class="extra-goods-field">D</th>
           <th>/</th>
-          <th>N</th>
-          <th>Boost</th>
+          <th class="extra-goods-field">N</th>
+          <th class="boost-field">Boost</th>
           <th>Trade Union?</th>
-          <th>Trade Union Bonus (%)</th>
+          <th class="trade-bonus-field">Trade Union Bonus (%)</th>
           <th>In Range of Local Department</th>
           <th>Efficiency</th>
-          <th>Building Process Time (s)</th>
-          <th>Good Process Time (s)</th>
-          <th>Production (Goods per m)</th>
+          <th>Building Process Time</th>
+          <th>Good Process Time</th>
+          <th>Production</th>
           <th>Remove</th>
         </tr>
       </thead>
@@ -41,11 +47,5 @@
         </ng-container>
       </tbody>
     </table>
-  </section>
-  <section>
-    <button matButton="filled" color="primary" (click)="addProductionLine()">
-      <mat-icon>add</mat-icon>
-      Add Production Line
-    </button>
   </section>
 </ng-container>
