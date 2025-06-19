@@ -1,6 +1,6 @@
-import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { Component, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { WorldController } from '../../mvc/controllers';
-import { ProductionBuilding, Good, WorldModel, BoostType, DepartmentOfLaborPolicy } from '../../mvc/models';
+import { ProductionBuilding, Good, WorldModel, BoostType, DepartmentOfLaborPolicy, Region } from '../../mvc/models';
 import { Island } from "./island/island";
 import { MatExpansionModule } from '@angular/material/expansion';
 import { CommonModule } from '@angular/common';
@@ -38,25 +38,34 @@ export class ProductionCalculatorPage implements OnInit {
     islands: [
       {
         name: 'Crown Falls',
+        region: Region.CapeTrelawney,
         dolPolicy: DepartmentOfLaborPolicy.SkilledLaborAct,
         productionLines: [
           {
             building: ProductionBuilding.FlourMill,
             good: Good.Flour,
             numBuildings: 5,
-            boostType: BoostType.Electricity,
+            boosts: [BoostType.Electricity],
             hasTradeUnion: true,
             tradeUnionItemsBonus: 0.15,
             inRangeOfLocalDepartment: true,
+            extraGoods: [],
           },
           {
             building: ProductionBuilding.Bakery,
             good: Good.Bread,
             numBuildings: 10,
-            boostType: BoostType.Electricity,
+            boosts: [BoostType.Electricity],
             hasTradeUnion: true,
             tradeUnionItemsBonus: 0.15,
             inRangeOfLocalDepartment: true,
+            extraGoods: [
+              {
+                good: Good.Chocolate,
+                rateNumerator: 1,
+                rateDenominator: 3,
+              }
+            ],
           }
         ]
       },
@@ -68,9 +77,10 @@ export class ProductionCalculatorPage implements OnInit {
             building: ProductionBuilding.GrainFarm,
             good: Good.Grain,
             numBuildings: 5,
-            boostType: BoostType.TracktorBarn,
+            boosts: [BoostType.TracktorBarn],
             hasTradeUnion: true,
             inRangeOfLocalDepartment: true,
+            extraGoods: [],
           }
         ]
       }
@@ -82,6 +92,9 @@ export class ProductionCalculatorPage implements OnInit {
 
   @ViewChildren(Island)
   islandComponents!: QueryList<Island>;
+
+  @ViewChild(SummaryPanel)
+  summaryPanel!: SummaryPanel;
 
   ngOnInit(): void {
     this.formGroup = new FormGroup({
@@ -98,6 +111,7 @@ export class ProductionCalculatorPage implements OnInit {
         i.update();
       }
     }
+    this.summaryPanel?.update();
     console.log(this.world.toJsonString());
   }
 

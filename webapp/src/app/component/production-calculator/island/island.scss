@@ -1,67 +1,107 @@
+@use 'sass:color';
+@use '@angular/material' as mat;
 @use '../../../../theme-colors';
 
-:host ::ng-deep {
-  .building-field {
-    width: 160px;
+.building-field {
+  width: 160px;
+}
+
+.building-count {
+  width: 50px;
+}
+
+.good-field {
+  width: 160px;
+}
+
+.extra-goods-field {
+  width: 40px;
+}
+
+.boost-field {
+  width: 150px;
+}
+
+.trade-bonus-field {
+  width: 70px;
+}
+
+.process-time {
+  width: 72px;
+}
+
+.extra-goods-right-padding {
+  padding-right: 436px !important;
+}
+
+.production-field {
+  width: 78px;
+}
+
+.remove-button {
+  width: 60px;
+}
+
+.production-line-row {
+  border-bottom: none;
+}
+
+:host {
+  @include mat.table-overrides((header-container-height: 30px,
+      header-headline-line-height: 1,
+      header-headline-weight: 500,
+    ));
+}
+
+.extra-goods-row {
+  padding: 0 !important;
+}
+
+.extra-goods-outer-container {
+  overflow: hidden;
+  display: flex;
+  box-sizing: border-box;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+.extra-goods-inner-container {
+  padding-left: 270px;
+}
+
+.table-scroll {
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+table.production-lines-table {
+  display: block;
+  max-height: 273px;
+  empty-cells: show;
+
+  table.extra-goods-table {
+    display: flow;
   }
 
-  .building-count {
-    width: 50px;
+  th {
+    text-align: center;
+    padding: 4px;
+    background-color: color.scale(theme-colors.$table-bg-color, $lightness: -6%);
   }
 
-  .good-field {
-    width: 160px;
+  td {
+    text-align: center;
+    padding: 0 4px;
+    background-color: color.scale(theme-colors.$table-bg-color, $lightness: -3%);
   }
+}
 
-  .extra-goods-field {
-    width: 40px;
-  }
+.extra-good-table-row {
+  height: 0;
+}
 
-  .boost-field {
-    width: 150px;
-  }
-
-  .trade-bonus-field {
-    width: 70px;
-  }
-
-
-  .table-container {
-    table {
-      display: flex;
-      flex-flow: column;
-      border-collapse: collapse;
-      width: 100%;
-      height: 100%;
-
-      thead {
-        flex: 0 0 auto;
-        display: table;
-        table-layout: fixed;
-        width: calc(100% - 0.9em);
-
-        tr {
-          th {
-            font-weight: 500;
-          }
-        }
-      }
-
-      tbody {
-        flex: 1 1 auto;
-        display: block;
-        max-height: 266px;
-        overflow-y: scroll;
-
-        tr {
-          // width: 100%;
-          // display: table;
-          table-layout: fixed;
-
-        }
-      }
-    }
-  }
+.add-extra-good-button {
+  display: flex;
+  margin: 4px;
 }
 
 section {
@@ -70,6 +110,11 @@ section {
   &:first-child {
     margin-top: 0;
   }
+}
+
+mat-checkbox {
+  display: table;
+  margin: auto;
 }
 
 mat-form-field {
@@ -82,4 +127,30 @@ mat-form-field {
   &:last-child {
     padding-right: 0;
   }
+}
+
+.select-row {
+  display: flex;
+}
+
+.island-select {
+  padding: 4px;
+}
+
+:host ::ng-deep {
+  .mat-mdc-select-disabled {
+    color: unset;
+  }
+
+  .mdc-text-field--disabled {
+    color: unset;
+    border: 1px solid rgba(1, 1, 1, 0.15);
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+
+  .mdc-text-field--outlined.mdc-text-field--disabled .mdc-text-field__input {
+    color: rgba(0, 0, 0, 0.87)
+  }
+
 }

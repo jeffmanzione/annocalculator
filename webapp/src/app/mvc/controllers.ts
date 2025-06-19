@@ -1,5 +1,38 @@
-import { BASE_ISLAND_MODEL, BASE_PRODUCTION_LINE_MODEL, BoostType, DEFAULT_ISLAND_MODEL, DEFAULT_PRODUCTION_LINE_MODEL, DEFAULT_WORLD_MODEL, IslandModel, DepartmentOfLaborPolicy, Model, ProductionBuilding, ProductionLineModel, Good, WorldModel } from "./models";
-import { IslandView, ProductionLineView, ViewContext, WorldView } from "./views";
+import { BASE_ISLAND_MODEL, BASE_PRODUCTION_LINE_MODEL, BoostType, DEFAULT_ISLAND_MODEL, DEFAULT_PRODUCTION_LINE_MODEL, DEFAULT_WORLD_MODEL, IslandModel, DepartmentOfLaborPolicy, ProductionBuilding, ProductionLineModel, Good, WorldModel, Region, ExtraGoodModel, BASE_EXTRA_GOOD_MODEL } from "./models";
+import { ExtraGoodView, IslandView, ProductionLineView, ViewContext, WorldView } from "./views";
+
+export class ExtraGoodController extends ExtraGoodView {
+  static override wrap(model: ExtraGoodModel, context: ViewContext): ExtraGoodController {
+    const controller = new ExtraGoodController(context);
+    controller.wrap(model);
+    return controller;
+  }
+
+  asView(): ExtraGoodView {
+    return this;
+  }
+
+  override set good(value: Good) {
+    this.model.good = value;
+  }
+  override get good(): Good {
+    return super.good;
+  }
+
+  override set rateNumerator(value: number) {
+    this.model.rateNumerator = value;
+  }
+  override get rateNumerator(): number {
+    return super.rateNumerator;
+  }
+
+  override set rateDenominator(value: number) {
+    this.model.rateDenominator = value;
+  }
+  override get rateDenominator(): number {
+    return super.rateDenominator;
+  }
+};
 
 export class ProductionLineController extends ProductionLineView {
   static override wrap(model: ProductionLineModel, context: ViewContext): ProductionLineController {
@@ -36,37 +69,15 @@ export class ProductionLineController extends ProductionLineView {
     return super.numBuildings;
   }
 
-  override set goodsRateNumerator(value: number) {
-    if (value == null || value == DEFAULT_PRODUCTION_LINE_MODEL.goodsRateNumerator) {
-      delete this.model.goodsRateNumerator;
+  override set boosts(value: BoostType[]) {
+    if (value == null || value == DEFAULT_PRODUCTION_LINE_MODEL.boosts) {
+      delete this.model.boosts;
       return;
     }
-    this.model.goodsRateNumerator = value;
+    this.model.boosts = value;
   }
-  override get goodsRateNumerator(): number {
-    return super.goodsRateNumerator;
-  }
-
-  override set goodsRateDenominator(value: number) {
-    if (value == null || value == DEFAULT_PRODUCTION_LINE_MODEL.goodsRateDenominator) {
-      delete this.model.goodsRateDenominator;
-      return;
-    }
-    this.model.goodsRateDenominator = value;
-  }
-  override get goodsRateDenominator(): number {
-    return super.goodsRateDenominator;
-  }
-
-  override set boostType(value: BoostType) {
-    if (value == null || value == DEFAULT_PRODUCTION_LINE_MODEL.boostType) {
-      delete this.model.boostType;
-      return;
-    }
-    this.model.boostType = value;
-  }
-  override get boostType(): BoostType {
-    return super.boostType;
+  override get boosts(): BoostType[] {
+    return super.boosts;
   }
 
   override set hasTradeUnion(value: boolean) {
@@ -102,6 +113,33 @@ export class ProductionLineController extends ProductionLineView {
   override get inRangeOfLocalDepartment(): boolean {
     return super.inRangeOfLocalDepartment;
   }
+
+  private _extraGoods?: ExtraGoodController[];
+
+  override get extraGoods(): ExtraGoodController[] {
+    this._extraGoods ??= this.model.extraGoods.map(eg => ExtraGoodController.wrap(eg, { ...this.context, productionLine: this }));
+    return this._extraGoods;
+  }
+
+  addExtraGood(): ExtraGoodController {
+    this._extraGoods ??= this.model.extraGoods.map(eg => ExtraGoodController.wrap(eg, { ...this.context, productionLine: this }));
+    const extraGood = structuredClone(BASE_EXTRA_GOOD_MODEL);
+    this.model.extraGoods.push(extraGood);
+    const controller = ExtraGoodController.wrap(extraGood, { ...this.context, productionLine: this });
+    this._extraGoods.push(controller);
+    return controller;
+  }
+
+  removeExtraGoodAt(index: number): void {
+    if (!Number.isInteger(index) || index < 0
+      || index >= this.model.extraGoods.length) {
+      console.warn('Invalid productionLine index. ' +
+        `Was ${index} and length is ${this.model.extraGoods.length}`);
+      return;
+    }
+    this.model.extraGoods.splice(index, 1);
+    this._extraGoods!.splice(index, 1);
+  }
 };
 
 export class IslandController extends IslandView {
@@ -120,6 +158,13 @@ export class IslandController extends IslandView {
   }
   override get name(): string {
     return super.name;
+  }
+
+  override set region(value: Region) {
+    this.model.region = value;
+  }
+  override get region(): Region {
+    return super.region;
   }
 
   override set dolPolicy(value: DepartmentOfLaborPolicy) {

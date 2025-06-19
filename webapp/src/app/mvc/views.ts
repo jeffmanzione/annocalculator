@@ -1,8 +1,9 @@
-import { BASE_ISLAND_MODEL, BASE_PRODUCTION_LINE_MODEL, BASE_WORLD_MODEL, BoostType, DEFAULT_ISLAND_MODEL, DEFAULT_PRODUCTION_LINE_MODEL, DEFAULT_WORLD_MODEL, getExtraGoodsModifier as computeExtraGoodsModifier, improvedByLandReformAct, improvedBySkilledLaborAct, IslandModel, DepartmentOfLaborPolicy, lookupProductionInfo, Model, ProductionBuilding, ProductionLineModel, Good, WorldModel } from "./models";
+import { BASE_ISLAND_MODEL, BASE_PRODUCTION_LINE_MODEL, BASE_WORLD_MODEL, BoostType, DEFAULT_ISLAND_MODEL, DEFAULT_PRODUCTION_LINE_MODEL, DEFAULT_WORLD_MODEL, getExtraGoodsModifier as computeExtraGoodsModifier, IslandModel, DepartmentOfLaborPolicy, lookupProductionInfo, Model, ProductionBuilding, ProductionLineModel, Good, WorldModel, Region, ExtraGoodModel, BASE_EXTRA_GOOD_MODEL, DEFAULT_EXTRA_GOOD_MODEL } from "./models";
 
 export interface ViewContext {
   world?: WorldView;
   island?: IslandView;
+  productionLine?: ProductionLineView;
 };
 
 export abstract class View<M extends Model> {
@@ -18,6 +19,40 @@ export abstract class View<M extends Model> {
     return JSON.stringify(this.model);
   }
 }
+
+export class ExtraGoodView extends View<ExtraGoodModel> {
+  override model = BASE_EXTRA_GOOD_MODEL;
+
+  static wrap(model: ExtraGoodModel, context: ViewContext): ExtraGoodView {
+    const view = new ExtraGoodView(context);
+    view.wrap(model);
+    return view;
+  }
+
+  get good(): Good {
+    return this.model.good;
+  }
+
+  get rateNumerator(): number {
+    return this.model.rateNumerator ?? DEFAULT_EXTRA_GOOD_MODEL.rateNumerator!;
+  }
+
+  get rateDenominator(): number {
+    return this.model.rateDenominator ?? DEFAULT_EXTRA_GOOD_MODEL.rateDenominator!;
+  }
+
+  get rate(): number {
+    return this.rateNumerator / this.rateDenominator;
+  }
+
+  get processTimeSeconds(): number {
+    return this.context.productionLine!.buildingProcessTimeSeconds / this.rate;
+  }
+
+  get producedPerMinute(): number {
+    return this.context.productionLine!.numBuildings * 60 / this.processTimeSeconds;
+  }
+};
 
 export class ProductionLineView extends View<ProductionLineModel> {
   override model = BASE_PRODUCTION_LINE_MODEL;
@@ -40,20 +75,8 @@ export class ProductionLineView extends View<ProductionLineModel> {
     return this.model.numBuildings ?? DEFAULT_PRODUCTION_LINE_MODEL.numBuildings;
   }
 
-  get goodsRateNumerator(): number {
-    return this.model.goodsRateNumerator ?? DEFAULT_PRODUCTION_LINE_MODEL.goodsRateNumerator!;
-  }
-
-  get goodsRateDenominator(): number {
-    return this.model.goodsRateDenominator ?? DEFAULT_PRODUCTION_LINE_MODEL.goodsRateDenominator!;
-  }
-
-  get goodsRate(): number {
-    return this.goodsRateNumerator / this.goodsRateDenominator;
-  }
-
-  get boostType(): BoostType {
-    return this.model.boostType ?? DEFAULT_PRODUCTION_LINE_MODEL.boostType!;
+  get boosts(): BoostType[] {
+    return this.model.boosts ?? DEFAULT_PRODUCTION_LINE_MODEL.boosts!;
   }
 
   get hasTradeUnion(): boolean {
@@ -64,31 +87,34 @@ export class ProductionLineView extends View<ProductionLineModel> {
     return this.model.tradeUnionItemsBonus ?? DEFAULT_PRODUCTION_LINE_MODEL.tradeUnionItemsBonus!;
   }
 
+  get extraGoods(): ExtraGoodView[] {
+    return this.model.extraGoods.map(eg => ExtraGoodView.wrap(eg, { ...this.context, productionLine: this }));
+  }
+
   get inRangeOfLocalDepartment(): boolean {
     return this.model.inRangeOfLocalDepartment ?? DEFAULT_PRODUCTION_LINE_MODEL.inRangeOfLocalDepartment!;
   }
 
   get efficiency(): number {
     let efficiency = 1.0;
-    switch (this.boostType) {
-      case BoostType.Electricity:
-        efficiency += 1.0;
-        if (this.inRangeOfLocalDepartment && this.context.island!.dolPolicy == DepartmentOfLaborPolicy.GalvanicGrantsAct) {
-          efficiency += 0.5;
-        }
-        break;
-      case BoostType.TracktorBarn:
-        efficiency += 2.0;
-        break;
-      case BoostType.Fertilizer:
-        efficiency += 1.0;
-        break;
-      case BoostType.TractorsAndFertilizer:
-        efficiency += 3.0;
-        break;
-      case BoostType.Silo:
-        efficiency += 1.0;
-        break;
+    for (const boost of this.boosts) {
+      switch (boost) {
+        case BoostType.Electricity:
+          efficiency += 1.0;
+          if (this.inRangeOfLocalDepartment && this.context.island!.dolPolicy == DepartmentOfLaborPolicy.GalvanicGrantsAct) {
+            efficiency += 0.5;
+          }
+          break;
+        case BoostType.TracktorBarn:
+          efficiency += 2.0;
+          break;
+        case BoostType.Fertilizer:
+          efficiency += 1.0;
+          break;
+        case BoostType.Silo:
+          efficiency += 1.0;
+          break;
+      }
     }
     if (this.hasTradeUnion) {
       if (this.inRangeOfLocalDepartment && this.context.island!.dolPolicy != DepartmentOfLaborPolicy.None) {
@@ -105,7 +131,6 @@ export class ProductionLineView extends View<ProductionLineModel> {
 
   get goodProcessTimeSeconds(): number {
     return this.buildingProcessTimeSeconds
-      / this.goodsRate
       / ((this.hasTradeUnion && this.inRangeOfLocalDepartment)
         ? computeExtraGoodsModifier(this.building, this.good, this.context.island!)
         : 1);
@@ -131,6 +156,10 @@ export class IslandView extends View<IslandModel> {
 
   get name(): string {
     return this.model.name;
+  }
+
+  get region(): Region {
+    return this.model.region ?? DEFAULT_ISLAND_MODEL.region!;
   }
 
   get productionLines(): ProductionLineView[] {

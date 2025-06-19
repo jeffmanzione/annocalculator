@@ -40,6 +40,8 @@ mat-accordion {
     div.underlay {
       z-index: 0;
       position: absolute;
+      top: 0;
+      left: 0;
       width: 100%;
       height: 100%;
       background-image: url(/anno_1800_logo.png);
@@ -47,13 +49,18 @@ mat-accordion {
       background-repeat: space;
       opacity: 5%;
     }
-
-    mat-panel-title,
-    mat-panel-description {
-      z-index: 1;
-    }
   }
 }
+
+
+mat-panel-title,
+mat-panel-description,
+island {
+  position: relative;
+  z-index: 1;
+}
+
+
 
 summary-panel {
   flex-grow: 1;

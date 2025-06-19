@@ -1,6 +1,6 @@
 <div class="top-panel" [formGroup]="formGroup!">
   <card>
-    <card-title>World Inputs</card-title>
+    <card-title>Global Parameters</card-title>
     <card-content>
       <mat-form-field>
         <mat-label>Palace Trade Union Bonus (%)</mat-label>
@@ -14,8 +14,8 @@
     <section class="island-list">
       <mat-accordion multi>
         <mat-expansion-panel *ngFor="let island of world.islands; index as i" [expanded]="true">
+          <div class="underlay"></div>
           <mat-expansion-panel-header>
-            <div class="underlay"></div>
             <mat-panel-title><mat-icon>flag</mat-icon>{{ island.name }}</mat-panel-title>
             <mat-panel-description>
               <button mat-icon-button class="delete-island-button" (click)="removeIslandAt(i)">
@@ -34,5 +34,5 @@
       </button>
     </section>
   </div>
-  <summary-panel></summary-panel>
+  <summary-panel [world]="world"></summary-panel>
 </div>

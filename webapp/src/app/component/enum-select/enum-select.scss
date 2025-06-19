@@ -1,0 +1,36 @@
+:host {
+  display: block;
+}
+
+.field {
+  width: 160px;
+}
+
+.option {
+  display: flex;
+}
+
+.icon {
+  width: 24px;
+}
+
+.icon-right-padding {
+  padding-right: 8px;
+}
+
+.option-text {
+  padding-left: 8px;
+  margin: auto 0;
+}
+
+.placeholder {
+  margin: auto 0;
+}
+
+mat-select {
+  height: 24px;
+}
+
+mat-select-trigger {
+  display: flex;
+}

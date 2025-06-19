@@ -1,3 +1,4 @@
+@use 'sass:color';
 @use '@angular/material' as mat;
 @use 'theme-colors';
 
@@ -57,8 +58,32 @@ div .mat-mdc-form-field-infix {
   overflow: hidden !important;
 }
 
+div .mat-expansion-panel-body {
+  padding: 0 16px 16px;
+}
+
+.mat-mdc-text-field-wrapper {
+  background-color: white;
+}
+
 html {
   height: 100%;
+}
+
+
+
+table {
+  background-color: theme-colors.$table-bg-color;
+
+  tr {
+    box-sizing: border-box;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+  }
+
+  td,
+  th {
+    padding: 4px;
+  }
 }
 
 body {
@@ -68,20 +93,4 @@ body {
 
   @include mat.table-overrides((background-color: theme-colors.$table-bg-color,
     ));
-
-  table {
-    background-color: theme-colors.$table-bg-color;
-
-    tr {
-      box-sizing: border-box;
-      border-bottom: 1px solid rgba(0, 0, 0, 0.12);
-    }
-
-    td,
-    th {
-      border-collapse: separate;
-      padding: 4px;
-      text-align: center;
-    }
-  }
 }

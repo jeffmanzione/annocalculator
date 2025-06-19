@@ -1,15 +1,15 @@
-import { Component } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { CardModule } from '../../card/card';
-import { MatTableModule } from '@angular/material/table';
-import { Good } from '../../../mvc/models';
+import { MatTable, MatTableModule } from '@angular/material/table';
+import { BoostType, DepartmentOfLaborPolicy, Good, ProductionBuilding, Region, WorldModel } from '../../../mvc/models';
 import { FormattedNumberModule, GREEN_RED_FONT_SPEC } from "../../formatted-number/formatted-number";
+import { WorldView } from '../../../mvc/views';
 
 interface GoodSummaryRow {
   good: Good,
   totalProductionPerMin: number,
   netProductionPerMin: number,
 };
-
 
 @Component({
   selector: 'summary-panel',
@@ -21,9 +21,7 @@ interface GoodSummaryRow {
   templateUrl: './summary-panel.html',
   styleUrl: './summary-panel.scss'
 })
-export class SummaryPanel {
-
-
+export class SummaryPanel implements OnInit {
   colorSpec = GREEN_RED_FONT_SPEC;
 
   displayColumns = [
@@ -31,21 +29,52 @@ export class SummaryPanel {
     'total-production-per-min',
     'net-production-per-min',
   ];
-  computedData: GoodSummaryRow[] = [
-    {
-      good: Good.Grain,
-      totalProductionPerMin: 24.7,
-      netProductionPerMin: 0.2,
-    },
-    {
-      good: Good.Flour,
-      totalProductionPerMin: 24.5,
-      netProductionPerMin: 0.0,
-    },
-    {
-      good: Good.Bread,
-      totalProductionPerMin: 24.5,
-      netProductionPerMin: -0.3,
-    },
-  ];
+
+  computedData!: GoodSummaryRow[];
+
+  @Input()
+  world!: WorldView;
+
+  @ViewChild(MatTable<GoodSummaryRow>)
+  table!: MatTable<GoodSummaryRow>;
+
+  ngOnInit(): void {
+    this.update();
+  }
+
+  getOrDefault<K, V>(map: Map<K, V>, key: K, defaultValue: V): V {
+    if (map.has(key)) {
+      return map.get(key)!;
+    }
+    const val = defaultValue;
+    map.set(key, val);
+    return val;
+  }
+
+  update(): void {
+    if (!this.world) {
+      return;
+    }
+    let rows = new Map<Good, GoodSummaryRow>();
+    for (const island of this.world.islands) {
+      for (const pl of island.productionLines) {
+        const row = this.getOrDefault(rows, pl.good, { good: pl.good, totalProductionPerMin: 0, netProductionPerMin: 0 });
+        row.totalProductionPerMin += pl.goodsProducedPerMinute;
+        for (const eg of pl.extraGoods) {
+          const row = this.getOrDefault(rows, eg.good, { good: eg.good, totalProductionPerMin: 0, netProductionPerMin: 0 });
+          row.totalProductionPerMin += eg.producedPerMinute;
+        }
+      }
+    }
+    this.computedData = Array.from(rows.values()).sort((r1, r2) => r1.good.localeCompare(r2.good));
+    this.table?.renderRows();
+  }
+
+  // addValues(values: Iterable<number>): number {
+  //   let total = 0;
+  //   for (const value of values) {
+  //     total += value;
+  //   }
+  //   return total;
+  // }
 }
