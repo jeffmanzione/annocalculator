@@ -1,4 +1,6 @@
-import { BASE_ISLAND_MODEL, BASE_PRODUCTION_LINE_MODEL, BASE_WORLD_MODEL, BoostType, DEFAULT_ISLAND_MODEL, DEFAULT_PRODUCTION_LINE_MODEL, DEFAULT_WORLD_MODEL, getExtraGoodsModifier as computeExtraGoodsModifier, IslandModel, DepartmentOfLaborPolicy, lookupProductionInfo, Model, ProductionBuilding, ProductionLineModel, Good, WorldModel, Region, ExtraGoodModel, BASE_EXTRA_GOOD_MODEL, DEFAULT_EXTRA_GOOD_MODEL } from "./models";
+import { Boost, Good, ProductionBuilding, DepartmentOfLaborPolicy, Region } from "../game/enums";
+import { computeExtraGoodsModifier, lookupProductionInfo } from "../game/facts";
+import { BASE_ISLAND_MODEL, BASE_PRODUCTION_LINE_MODEL, BASE_WORLD_MODEL, DEFAULT_ISLAND_MODEL, DEFAULT_PRODUCTION_LINE_MODEL, DEFAULT_WORLD_MODEL, IslandModel, Model, ProductionLineModel, WorldModel, ExtraGoodModel, BASE_EXTRA_GOOD_MODEL, DEFAULT_EXTRA_GOOD_MODEL } from "./models";
 
 export interface ViewContext {
   world?: WorldView;
@@ -67,6 +69,10 @@ export class ProductionLineView extends View<ProductionLineModel> {
     return this.model.building;
   }
 
+  get inputGoods(): Good[] {
+    return this.model.inputGoods ?? DEFAULT_PRODUCTION_LINE_MODEL.inputGoods!;
+  }
+
   get good(): Good {
     return this.model.good;
   }
@@ -75,7 +81,7 @@ export class ProductionLineView extends View<ProductionLineModel> {
     return this.model.numBuildings ?? DEFAULT_PRODUCTION_LINE_MODEL.numBuildings;
   }
 
-  get boosts(): BoostType[] {
+  get boosts(): Boost[] {
     return this.model.boosts ?? DEFAULT_PRODUCTION_LINE_MODEL.boosts!;
   }
 
@@ -99,19 +105,19 @@ export class ProductionLineView extends View<ProductionLineModel> {
     let efficiency = 1.0;
     for (const boost of this.boosts) {
       switch (boost) {
-        case BoostType.Electricity:
+        case Boost.Electricity:
           efficiency += 1.0;
           if (this.inRangeOfLocalDepartment && this.context.island!.dolPolicy == DepartmentOfLaborPolicy.GalvanicGrantsAct) {
             efficiency += 0.5;
           }
           break;
-        case BoostType.TracktorBarn:
+        case Boost.TracktorBarn:
           efficiency += 2.0;
           break;
-        case BoostType.Fertilizer:
+        case Boost.Fertilizer:
           efficiency += 1.0;
           break;
-        case BoostType.Silo:
+        case Boost.Silo:
           efficiency += 1.0;
           break;
       }

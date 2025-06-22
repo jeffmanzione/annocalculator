@@ -7,7 +7,7 @@
 }
 
 .building-count {
-  width: 50px;
+  width: 45px;
 }
 
 .good-field {
@@ -18,8 +18,13 @@
   width: 40px;
 }
 
-.boost-field {
-  width: 150px;
+:host {
+  .boost-field {
+    ::ng-deep mat-form-field {
+      width: 140px;
+    }
+  }
+
 }
 
 .trade-bonus-field {
@@ -31,7 +36,7 @@
 }
 
 .extra-goods-right-padding {
-  padding-right: 436px !important;
+  padding-right: 308px !important;
 }
 
 .production-field {
@@ -65,7 +70,7 @@
 }
 
 .extra-goods-inner-container {
-  padding-left: 270px;
+  padding-left: 425px;
 }
 
 .table-scroll {
@@ -144,7 +149,7 @@ mat-form-field {
 
   .mdc-text-field--disabled {
     color: unset;
-    border: 1px solid rgba(1, 1, 1, 0.15);
+    border: -1px solid rgba(1, 1, 1, 0.15);
     border-radius: 4px;
     box-sizing: border-box;
   }

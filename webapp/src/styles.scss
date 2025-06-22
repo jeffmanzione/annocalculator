@@ -62,8 +62,14 @@ div .mat-expansion-panel-body {
   padding: 0 16px 16px;
 }
 
-.mat-mdc-text-field-wrapper {
+div .mat-mdc-text-field-wrapper {
   background-color: white;
+  padding: 0 12px;
+  letter-spacing: -0.25px;
+}
+
+mat-pseudo-checkbox {
+  margin-right: 6px !important;
 }
 
 html {
@@ -92,5 +98,6 @@ body {
   height: 100%;
 
   @include mat.table-overrides((background-color: theme-colors.$table-bg-color,
+      header-headline-size: 12px,
     ));
 }

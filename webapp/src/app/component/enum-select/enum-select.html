@@ -1,11 +1,12 @@
 <mat-form-field *ngIf="wrapInMatFormField" class="field">
+  <mat-label *ngIf="label != null">{{ label }}</mat-label>
   <mat-select [(value)]="value" [disabled]="isDisabled" (valueChange)="onChange(value)" (closed)="onTouched()"
     [multiple]="multiple" placeholder="None" [class.placeholder]="valueAsArray.length == 0">
     <mat-select-trigger>
-      <div *ngFor="let value of valueAsArray" class="option">
+      <div *ngFor="let value of valueAsArray" class="selected-option">
         <img *ngIf="iconUrlLookupFn(value)" [src]="iconUrlLookupFn(value)" [alt]="value" class="icon"
           [class.icon-right-padding]="valueAsArray.length > 1">
-        <div *ngIf="valueAsArray.length == 1" class="option-text">{{ value }}</div>
+        <div *ngIf="valueAsArray.length == 1" class="selected-text">{{ value }}</div>
       </div>
     </mat-select-trigger>
     <mat-option *ngFor="let option of options" [value]="option">
@@ -20,9 +21,9 @@
   <mat-select [(value)]="value" [disabled]="isDisabled" (valueChange)="onChange(value)" (closed)="onTouched()"
     [multiple]="multiple" placeholder="None">
     <mat-select-trigger>
-      <div *ngFor="let value of valueAsArray" class="option">
+      <div *ngFor="let value of valueAsArray" class="selected-option">
         <img *ngIf="iconUrlLookupFn(value)" [src]="iconUrlLookupFn(value)" [alt]="value" class="icon">
-        <div class="option-text">{{ value }}</div>
+        <div class="selected-text">{{ value }}</div>
       </div>
     </mat-select-trigger>
     <mat-option *ngFor="let option of options" [value]="option">

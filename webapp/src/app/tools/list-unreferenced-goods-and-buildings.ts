@@ -1,4 +1,5 @@
-import { buildingInfo, Good, lookupProductionInfo, ProductionBuilding } from "../mvc/models";
+import { ProductionBuilding, Good } from "../game/enums";
+import { lookupProductionInfo, buildingInfo } from "../game/facts";
 
 console.log('All buildings without a production chain:');
 for (const building of Object.values(ProductionBuilding)) {

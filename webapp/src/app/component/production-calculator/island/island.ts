@@ -8,12 +8,14 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
-import { BoostType, DepartmentOfLaborPolicy, Good, lookupGoodIconUrl, lookupBoostIconUrl, ProductionBuilding, Region, lookupProductionInfo, lookupBuildingIconUrl, lookupRegionIconUrl, lookupPolicyIconUrl } from '../../../mvc/models';
 import { ControllerComponent } from '../base/controller';
 import { ExtraGoodControl, ProductionLineControl } from '../production-line';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { FormattedNumberModule } from '../../formatted-number/formatted-number';
 import { EnumSelect } from '../../enum-select/enum-select';
+import { Boost, Region, DepartmentOfLaborPolicy, Good, ProductionBuilding } from '../../../game/enums';
+import { lookupProductionInfo } from '../../../game/facts';
+import { lookupBuildingIconUrl, lookupGoodIconUrl, lookupBoostIconUrl, lookupRegionIconUrl, lookupPolicyIconUrl } from '../../../game/icons';
 
 @Component({
   selector: 'island',
@@ -46,6 +48,7 @@ export class Island extends ControllerComponent<IslandController> implements OnI
     'building',
     'numBuildings',
     'expandExtraGoods',
+    'inputGoods',
     'good',
     'boosts',
     'hasTradeUnion',
@@ -110,7 +113,6 @@ export class Island extends ControllerComponent<IslandController> implements OnI
       this.updateRegionSpecificSelectOptions();
     }
     this.controller.region = this.formGroup.value.region;
-    console.log(this.formGroup.value.dolPolicy);
     this.controller.dolPolicy = this.formGroup.value.dolPolicy;
 
     if (this.productionLineControls) {
@@ -177,8 +179,8 @@ export class Island extends ControllerComponent<IslandController> implements OnI
     return lookupGoodIconUrl(good ?? Good.Unknown);
   }
 
-  lookupBoostIconUrl(boost: BoostType | null): string {
-    return lookupBoostIconUrl(boost ?? BoostType.None);
+  lookupBoostIconUrl(boost: Boost | null): string {
+    return lookupBoostIconUrl(boost ?? Boost.None);
   }
 
   lookupRegionIconUrl(region: Region | null): string {

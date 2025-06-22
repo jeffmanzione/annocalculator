@@ -1,4 +1,4 @@
-import { Component, forwardRef, Input, OnInit } from '@angular/core';
+import { Component, forwardRef, Input } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { CommonModule } from '@angular/common';
@@ -22,6 +22,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
   ]
 })
 export class EnumSelect<T> implements ControlValueAccessor {
+  @Input()
+  label?: string;
+
   @Input()
   options!: T[];
 

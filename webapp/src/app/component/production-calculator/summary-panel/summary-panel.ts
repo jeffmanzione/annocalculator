@@ -1,9 +1,9 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { CardModule } from '../../card/card';
 import { MatTable, MatTableModule } from '@angular/material/table';
-import { BoostType, DepartmentOfLaborPolicy, Good, ProductionBuilding, Region, WorldModel } from '../../../mvc/models';
 import { FormattedNumberModule, GREEN_RED_FONT_SPEC } from "../../formatted-number/formatted-number";
 import { WorldView } from '../../../mvc/views';
+import { Good } from '../../../game/enums';
 
 interface GoodSummaryRow {
   good: Good,

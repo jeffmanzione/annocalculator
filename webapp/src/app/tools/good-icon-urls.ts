@@ -1,5 +1,5 @@
 
-import { Good } from "../mvc/models";
+import { Good } from "../game/enums";
 
 const alternativeIconNames = new Map<Good, string>([
   [Good.AluminiumProfiles, 'Aluminium_Profiles'],

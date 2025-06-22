@@ -1,6 +1,5 @@
 import { Component, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { WorldController } from '../../mvc/controllers';
-import { ProductionBuilding, Good, WorldModel, BoostType, DepartmentOfLaborPolicy, Region } from '../../mvc/models';
 import { Island } from "./island/island";
 import { MatExpansionModule } from '@angular/material/expansion';
 import { CommonModule } from '@angular/common';
@@ -11,6 +10,8 @@ import { MAT_FORM_FIELD_DEFAULT_OPTIONS, MatFormFieldModule } from '@angular/mat
 import { MatInputModule } from '@angular/material/input';
 import { SummaryPanel } from "./summary-panel/summary-panel";
 import { CardModule } from '../card/card';
+import { Region, DepartmentOfLaborPolicy, ProductionBuilding, Good, Boost } from '../../game/enums';
+import { WorldModel } from '../../mvc/models';
 
 @Component({
   selector: 'production-calculator-page',
@@ -43,9 +44,10 @@ export class ProductionCalculatorPage implements OnInit {
         productionLines: [
           {
             building: ProductionBuilding.FlourMill,
+            inputGoods: [Good.Grain],
             good: Good.Flour,
             numBuildings: 5,
-            boosts: [BoostType.Electricity],
+            boosts: [Boost.Electricity],
             hasTradeUnion: true,
             tradeUnionItemsBonus: 0.15,
             inRangeOfLocalDepartment: true,
@@ -53,9 +55,10 @@ export class ProductionCalculatorPage implements OnInit {
           },
           {
             building: ProductionBuilding.Bakery,
+            inputGoods: [Good.Flour],
             good: Good.Bread,
             numBuildings: 10,
-            boosts: [BoostType.Electricity],
+            boosts: [Boost.Electricity],
             hasTradeUnion: true,
             tradeUnionItemsBonus: 0.15,
             inRangeOfLocalDepartment: true,
@@ -77,7 +80,7 @@ export class ProductionCalculatorPage implements OnInit {
             building: ProductionBuilding.GrainFarm,
             good: Good.Grain,
             numBuildings: 5,
-            boosts: [BoostType.TracktorBarn],
+            boosts: [Boost.TracktorBarn],
             hasTradeUnion: true,
             inRangeOfLocalDepartment: true,
             extraGoods: [],

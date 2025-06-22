@@ -1,4 +1,5 @@
-import { BASE_ISLAND_MODEL, BASE_PRODUCTION_LINE_MODEL, BoostType, DEFAULT_ISLAND_MODEL, DEFAULT_PRODUCTION_LINE_MODEL, DEFAULT_WORLD_MODEL, IslandModel, DepartmentOfLaborPolicy, ProductionBuilding, ProductionLineModel, Good, WorldModel, Region, ExtraGoodModel, BASE_EXTRA_GOOD_MODEL } from "./models";
+import { Boost, Good, ProductionBuilding, Region, DepartmentOfLaborPolicy } from "../game/enums";
+import { BASE_ISLAND_MODEL, BASE_PRODUCTION_LINE_MODEL, DEFAULT_ISLAND_MODEL, DEFAULT_PRODUCTION_LINE_MODEL, DEFAULT_WORLD_MODEL, IslandModel, ProductionLineModel, WorldModel, ExtraGoodModel, BASE_EXTRA_GOOD_MODEL } from "./models";
 import { ExtraGoodView, IslandView, ProductionLineView, ViewContext, WorldView } from "./views";
 
 export class ExtraGoodController extends ExtraGoodView {
@@ -52,6 +53,18 @@ export class ProductionLineController extends ProductionLineView {
     return super.building;
   }
 
+  override set inputGoods(value: Good[]) {
+    if (value == null || value == DEFAULT_PRODUCTION_LINE_MODEL.inputGoods) {
+      delete this.model.inputGoods;
+      return;
+    }
+    this.model.inputGoods = value;
+  }
+  override get inputGoods(): Good[] {
+    return super.inputGoods;
+  }
+
+
   override set good(value: Good) {
     this.model.good = value;
   }
@@ -69,14 +82,14 @@ export class ProductionLineController extends ProductionLineView {
     return super.numBuildings;
   }
 
-  override set boosts(value: BoostType[]) {
+  override set boosts(value: Boost[]) {
     if (value == null || value == DEFAULT_PRODUCTION_LINE_MODEL.boosts) {
       delete this.model.boosts;
       return;
     }
     this.model.boosts = value;
   }
-  override get boosts(): BoostType[] {
+  override get boosts(): Boost[] {
     return super.boosts;
   }
 

@@ -1,9 +1,19 @@
 :host {
   display: block;
+
+  ::ng-deep {
+    div.mat-mdc-select-value {
+      display: grid;
+    }
+  }
 }
 
 .field {
   width: 160px;
+}
+
+.selected-option {
+  display: contents;
 }
 
 .option {
@@ -18,9 +28,23 @@
   padding-right: 8px;
 }
 
-.option-text {
-  padding-left: 8px;
+.selected-text {
+  padding-left: 6px;
   margin: auto 0;
+  min-width: 0;
+  letter-spacing: -0.25px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.option-text {
+  padding-left: 6px;
+  margin: auto 0;
+  min-width: 0;
+  letter-spacing: -0.25px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .placeholder {

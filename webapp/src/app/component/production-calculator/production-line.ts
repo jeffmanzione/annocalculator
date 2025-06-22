@@ -1,9 +1,10 @@
 import { FormControl, FormGroup } from "@angular/forms";
 import { ExtraGoodController, ProductionLineController } from "../../mvc/controllers";
 import { ProductionLineView } from "../../mvc/views";
-import { BoostType, lookupAllowedBoosts, lookupProductionInfo, ProductionBuilding, requiresElectricity } from "../../mvc/models";
 import { EventEmitter } from "@angular/core";
 import { MatTableDataSource } from "@angular/material/table";
+import { Boost, ProductionBuilding } from "../../game/enums";
+import { lookupProductionInfo, requiresElectricity, lookupAllowedBoosts } from "../../game/facts";
 
 
 export class ProductionLineControl {
@@ -24,7 +25,7 @@ export class ProductionLineControl {
   }
 
   allowBoostSelect: boolean = true;
-  allowedBoosts: Set<BoostType> = new Set();
+  allowedBoosts: Set<Boost> = new Set();
 
   efficiency: number = 0;
   buildingProcessTimeSeconds: number = 0;
@@ -35,6 +36,7 @@ export class ProductionLineControl {
     this.formGroup = new FormGroup({
       building: new FormControl(this.controller.building),
       numBuildings: new FormControl(this.controller.numBuildings),
+      inputGoods: new FormControl(this.controller.inputGoods),
       good: new FormControl(this.controller.good),
       boosts: new FormControl(this.controller.boosts),
       hasTradeUnion: new FormControl(this.controller.hasTradeUnion),
@@ -65,17 +67,21 @@ export class ProductionLineControl {
     if (this.controller.building != building) {
       const productionInfo = lookupProductionInfo(building);
       this.formGroup.controls['good'].setValue(productionInfo!.good, { emitEvent: false });
+      this.formGroup.controls['inputGoods'].setValue(productionInfo!.inputGoods ?? [], { emitEvent: false });
     }
-
     this.updateBoostOptions();
     // Some buildings require electricity, and if so, we automatically select it, otherwise, we
     // narrow the field down to possinble options.
     if (requiresElectricity(building)) {
-      this.formGroup.controls['boosts'].setValue([BoostType.Electricity], { emitEvent: false });
-      this.formGroup.controls['boosts'].disable({ emitEvent: false });
+      this.clearAndDisableControl('boosts', [Boost.Electricity]);
     } else {
-      this.formGroup.controls['boosts'].enable({ emitEvent: false });
-      this.allowBoostSelect = true;
+      if (this.allowedBoosts.size == 0) {
+        this.clearAndDisableControl('boosts', []);
+        this.allowBoostSelect = false;
+      } else {
+        this.enableControl('boosts');
+        this.allowBoostSelect = true;
+      }
     }
     // Local department effects have no effect without a DoL on the island and a Trade Union in
     // range.
@@ -93,15 +99,13 @@ export class ProductionLineControl {
   }
 
   private updateBoostOptions(): void {
-    console.log(this.formGroup.value.building);
     this.allowedBoosts = new Set(lookupAllowedBoosts(this.formGroup.value.building));
     if (!this.allowedBoosts.has(this.formGroup.value.boosts)) {
       this.formGroup.controls['boosts'].setValue(
-        ((this.formGroup.value.boosts ?? []) as BoostType[])
+        ((this.formGroup.value.boosts ?? []) as Boost[])
           .filter(b => this.allowedBoosts.has(b)),
         { emitEvent: false });
     }
-    console.log(this.allowedBoosts);
   }
 
   private enableControl(controlName: string): void {
@@ -116,6 +120,7 @@ export class ProductionLineControl {
   // Updates the model based on the states of the form.
   private updateModel(): void {
     this.controller.building = this.formGroup.value.building;
+    this.controller.inputGoods = this.formGroup.value.inputGoods;
     this.controller.good = this.formGroup.value.good;
     this.controller.numBuildings = Number.parseInt(this.formGroup.value.numBuildings);
     this.controller.boosts = this.formGroup.value.boosts;
