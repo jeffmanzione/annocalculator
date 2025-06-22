@@ -1,34 +1,34 @@
 :host {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   width: 100%;
   height: 100%;
 }
 
-.top-panel {
+.column {
+  padding-right: 16px;
+
+  &:last-child {
+    padding-right: 0;
+  }
+}
+
+
+
+.left-column {
+  flex: 4;
+  display: flex;
+  flex-direction: column;
+}
+
+.global-parameters-section {
   padding-bottom: 16px;
 }
 
-.bottom-panel {
-  display: flex;
-  flex-direction: row;
+.island-list-section {
   flex: 1;
-  width: 100%;
-}
-
-.data-entry-panel {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  padding-right: 8px;
-}
-
-.island-list {
-  flex: 1;
-  overflow-y: scroll;
   overflow-x: hidden;
   height: 100%;
-  width: 1230px;
   position: relative;
 }
 
@@ -60,11 +60,8 @@ island {
   z-index: 1;
 }
 
-
-
-summary-panel {
+.right-column {
   flex-grow: 1;
-  margin-bottom: 16px;
 }
 
 .delete-island-button {
@@ -75,5 +72,4 @@ summary-panel {
 .add-island-button-section {
   border-top: 2px solid #ddd;
   padding-top: 16px;
-  margin: 0 0 16px 0;
 }

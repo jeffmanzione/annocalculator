@@ -166,7 +166,6 @@ export class Island extends ControllerComponent<IslandController> implements OnI
 
   removeExtraGoodAt(productionLine: ProductionLineControl, extraGood: ExtraGoodControl): void {
     const index = productionLine.extraGoods?.data.indexOf(extraGood)!;
-    productionLine.extraGoods?.data.splice(index, 1);
     productionLine.removeExtraGoodAt(index);
     this.change.emit();
   }

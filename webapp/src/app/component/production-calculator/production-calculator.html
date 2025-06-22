@@ -1,38 +1,38 @@
-<div class="top-panel" [formGroup]="formGroup!">
-  <card>
-    <card-title>Global Parameters</card-title>
-    <card-content>
-      <mat-form-field>
-        <mat-label>Palace Trade Union Bonus (%)</mat-label>
-        <input matInput type="number" formControlName="tradeUnionBonusPercent">
-      </mat-form-field>
-    </card-content>
-  </card>
+<div class="column left-column">
+  <section class="global-parameters-section" [formGroup]="formGroup!">
+    <card>
+      <card-title>Global Parameters</card-title>
+      <card-content>
+        <mat-form-field>
+          <mat-label>Palace Trade Union Bonus (%)</mat-label>
+          <input matInput type="number" formControlName="tradeUnionBonusPercent">
+        </mat-form-field>
+      </card-content>
+    </card>
+  </section>
+  <section class="island-list-section">
+    <mat-accordion multi>
+      <mat-expansion-panel *ngFor="let island of world.islands; index as i" [expanded]="true">
+        <div class="underlay"></div>
+        <mat-expansion-panel-header>
+          <mat-panel-title><mat-icon>flag</mat-icon>{{ island.name }}</mat-panel-title>
+          <mat-panel-description>
+            <button mat-icon-button class="delete-island-button" (click)="removeIslandAt(i)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <island [controller]="island" (change)="update()"></island>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </section>
+  <section class="add-island-button-section">
+    <button mat-raised-button color="primary" (click)="addIsland()">
+      <mat-icon>add</mat-icon>
+      Add Island
+    </button>
+  </section>
 </div>
-<div class="bottom-panel">
-  <div class="data-entry-panel">
-    <section class="island-list">
-      <mat-accordion multi>
-        <mat-expansion-panel *ngFor="let island of world.islands; index as i" [expanded]="true">
-          <div class="underlay"></div>
-          <mat-expansion-panel-header>
-            <mat-panel-title><mat-icon>flag</mat-icon>{{ island.name }}</mat-panel-title>
-            <mat-panel-description>
-              <button mat-icon-button class="delete-island-button" (click)="removeIslandAt(i)">
-                <mat-icon>delete</mat-icon>
-              </button>
-            </mat-panel-description>
-          </mat-expansion-panel-header>
-          <island [controller]="island" (change)="update()"></island>
-        </mat-expansion-panel>
-      </mat-accordion>
-    </section>
-    <section class="add-island-button-section">
-      <button mat-raised-button color="primary" (click)="addIsland()">
-        <mat-icon>add</mat-icon>
-        Add Island
-      </button>
-    </section>
-  </div>
+<div class="column right-column">
   <summary-panel [world]="world"></summary-panel>
 </div>

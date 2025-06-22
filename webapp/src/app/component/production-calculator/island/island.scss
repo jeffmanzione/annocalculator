@@ -143,10 +143,6 @@ mat-form-field {
 }
 
 :host ::ng-deep {
-  .mat-mdc-select-disabled {
-    color: unset;
-  }
-
   .mdc-text-field--disabled {
     color: unset;
     border: -1px solid rgba(1, 1, 1, 0.15);
@@ -157,5 +153,4 @@ mat-form-field {
   .mdc-text-field--outlined.mdc-text-field--disabled .mdc-text-field__input {
     color: rgba(0, 0, 0, 0.87)
   }
-
 }

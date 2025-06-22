@@ -24,7 +24,6 @@ export class ProductionLineControl {
     return 'arrow_drop_down';
   }
 
-  allowBoostSelect: boolean = true;
   allowedBoosts: Set<Boost> = new Set();
 
   efficiency: number = 0;
@@ -74,15 +73,12 @@ export class ProductionLineControl {
     // narrow the field down to possinble options.
     if (requiresElectricity(building)) {
       this.clearAndDisableControl('boosts', [Boost.Electricity]);
+    } else if (this.allowedBoosts.size == 0) {
+      this.clearAndDisableControl('boosts', []);
     } else {
-      if (this.allowedBoosts.size == 0) {
-        this.clearAndDisableControl('boosts', []);
-        this.allowBoostSelect = false;
-      } else {
-        this.enableControl('boosts');
-        this.allowBoostSelect = true;
-      }
+      this.enableControl('boosts');
     }
+
     // Local department effects have no effect without a DoL on the island and a Trade Union in
     // range.
     if (!this.controller.islandHasDepartmentOfLabor || !this.formGroup.value.hasTradeUnion) {
@@ -100,11 +96,13 @@ export class ProductionLineControl {
 
   private updateBoostOptions(): void {
     this.allowedBoosts = new Set(lookupAllowedBoosts(this.formGroup.value.building));
-    if (!this.allowedBoosts.has(this.formGroup.value.boosts)) {
+    const selectedBoosts = (this.formGroup.value.boosts ?? []) as Boost[];
+
+    if (!selectedBoosts.every(b => !this.allowedBoosts.has(b))) {
       this.formGroup.controls['boosts'].setValue(
-        ((this.formGroup.value.boosts ?? []) as Boost[])
-          .filter(b => this.allowedBoosts.has(b)),
-        { emitEvent: false });
+        selectedBoosts.filter(b => this.allowedBoosts.has(b)),
+        { emitEvent: false }
+      );
     }
   }
 
@@ -113,8 +111,8 @@ export class ProductionLineControl {
   }
 
   private clearAndDisableControl(controlName: string, clearedValue: any = 0): void {
-    this.formGroup.controls[controlName].setValue(clearedValue, { emitEvent: false });
-    this.formGroup.controls[controlName].disable({ emitEvent: false });
+    this.formGroup.controls[controlName].disable({ onlySelf: true, emitEvent: false });
+    this.formGroup.controls[controlName].setValue(clearedValue, { onlySelf: true, emitEvent: false });
   }
 
   // Updates the model based on the states of the form.
@@ -123,7 +121,8 @@ export class ProductionLineControl {
     this.controller.inputGoods = this.formGroup.value.inputGoods;
     this.controller.good = this.formGroup.value.good;
     this.controller.numBuildings = Number.parseInt(this.formGroup.value.numBuildings);
-    this.controller.boosts = this.formGroup.value.boosts;
+    // Must use getRawValue() as .disable() clears value.boosts
+    this.controller.boosts = this.formGroup.controls['boosts'].getRawValue();
     this.controller.tradeUnionItemsBonus = (this.formGroup.value.tradeUnionItemsBonusPercent ?? 0) / 100;
     this.controller.inRangeOfLocalDepartment = this.formGroup.value.inRangeOfLocalDepartment;
     this.controller.hasTradeUnion = this.formGroup.value.hasTradeUnion;
@@ -160,6 +159,7 @@ export class ProductionLineControl {
   }
 
   removeExtraGoodAt(index: number): void {
+    this.controller.removeExtraGoodAt(index);
     this.extraGoods?.data.splice(index, 1);
     if (this.extraGoods?.data.length == 0) {
       this.showExtraGoods = false;

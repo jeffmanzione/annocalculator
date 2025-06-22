@@ -30,11 +30,14 @@ import { WorldModel } from '../../mvc/models';
   templateUrl: './production-calculator.html',
   styleUrl: './production-calculator.scss',
   providers: [
-    { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'outline', subscriptSizing: 'dynamic' } }
+    {
+      provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
+      useValue: { appearance: 'outline', subscriptSizing: 'dynamic' }
+    }
   ],
 })
 export class ProductionCalculatorPage implements OnInit {
-  worldModel: WorldModel = {
+  private readonly worldModel: WorldModel = {
     tradeUnionBonus: 0.3,
     islands: [
       {
@@ -120,9 +123,11 @@ export class ProductionCalculatorPage implements OnInit {
 
   addIsland(): void {
     this.world.addIsland();
+    this.update();
   }
 
   removeIslandAt(index: number): void {
     this.world.removeIslandAt(index);
+    this.update();
   }
 }
