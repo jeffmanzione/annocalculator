@@ -13,8 +13,6 @@
   }
 }
 
-
-
 .left-column {
   flex: 4;
   display: flex;
@@ -61,7 +59,8 @@ island {
 }
 
 .right-column {
-  flex-grow: 1;
+  // flex-grow: 1;
+  width: 600px;
 }
 
 .delete-island-button {

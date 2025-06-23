@@ -12,6 +12,7 @@ export class Card { }
 @Component({
   selector: 'card-title',
   template: '<ng-content/>',
+  styles: ':host { width: 100%; }',
   standalone: false,
 })
 export class CardTitle { }
@@ -19,6 +20,7 @@ export class CardTitle { }
 @Component({
   selector: 'card-content',
   template: '<ng-content/>',
+  styles: ':host { width: 100%; }',
   standalone: false,
 })
 export class CardContent { }

@@ -16,6 +16,7 @@ import { EnumSelect } from '../../enum-select/enum-select';
 import { Boost, Region, DepartmentOfLaborPolicy, Good, ProductionBuilding } from '../../../game/enums';
 import { lookupProductionInfo } from '../../../game/facts';
 import { lookupBuildingIconUrl, lookupGoodIconUrl, lookupBoostIconUrl, lookupRegionIconUrl, lookupPolicyIconUrl } from '../../../game/icons';
+import { TextFieldModule } from '@angular/cdk/text-field';
 
 @Component({
   selector: 'island',
@@ -32,6 +33,7 @@ import { lookupBuildingIconUrl, lookupGoodIconUrl, lookupBoostIconUrl, lookupReg
     MatSelectModule,
     MatTableModule,
     ReactiveFormsModule,
+    TextFieldModule,
   ],
   templateUrl: './island.html',
   styleUrl: './island.scss'

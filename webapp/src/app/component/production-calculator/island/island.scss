@@ -2,49 +2,12 @@
 @use '@angular/material' as mat;
 @use '../../../../theme-colors';
 
-.building-field {
-  width: 160px;
-}
-
 .building-count {
   width: 45px;
 }
 
-.good-field {
-  width: 160px;
-}
-
-.extra-goods-field {
-  width: 40px;
-}
-
-:host {
-  .boost-field {
-    ::ng-deep mat-form-field {
-      width: 140px;
-    }
-  }
-
-}
-
 .trade-bonus-field {
   width: 70px;
-}
-
-.process-time {
-  width: 72px;
-}
-
-.extra-goods-right-padding {
-  padding-right: 308px !important;
-}
-
-.production-field {
-  width: 78px;
-}
-
-.remove-button {
-  width: 60px;
 }
 
 .production-line-row {
@@ -58,19 +21,14 @@
     ));
 }
 
-.extra-goods-row {
-  padding: 0 !important;
-}
-
 .extra-goods-outer-container {
-  overflow: hidden;
   display: flex;
-  box-sizing: border-box;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+  justify-content: space-evenly;
+  margin: 8px;
 }
 
-.extra-goods-inner-container {
-  padding-left: 425px;
+.extra-goods-field {
+  width: 35px;
 }
 
 .table-scroll {
@@ -79,23 +37,38 @@
 }
 
 table.production-lines-table {
-  display: block;
-  max-height: 273px;
-  empty-cells: show;
+  display: inline-table;
+  max-height: 400px;
 
   table.extra-goods-table {
-    display: flow;
+
+    th {
+      // No idea where the th z-index is overridden directly to 100. It's not in the code.
+      z-index: 99 !important;
+    }
+  }
+
+  thead {
+    display: table-header-group;
+  }
+
+  th,
+  td {
+    padding: 4px;
+    flex-grow: 1;
+    text-align: center;
+  }
+
+  td.extra-goods-row {
+    padding: 0;
   }
 
   th {
-    text-align: center;
-    padding: 4px;
     background-color: color.scale(theme-colors.$table-bg-color, $lightness: -6%);
   }
 
   td {
-    text-align: center;
-    padding: 0 4px;
+    padding: 4px;
     background-color: color.scale(theme-colors.$table-bg-color, $lightness: -3%);
   }
 }
@@ -106,7 +79,7 @@ table.production-lines-table {
 
 .add-extra-good-button {
   display: flex;
-  margin: 4px;
+  margin-bottom: 8px;
 }
 
 section {
@@ -122,16 +95,8 @@ mat-checkbox {
   margin: auto;
 }
 
-mat-form-field {
-  padding: 4px;
-
-  &:first-child {
-    padding-left: 0;
-  }
-
-  &:last-child {
-    padding-right: 0;
-  }
+.island-name-field {
+  padding: 4px 4px 4px 0;
 }
 
 .select-row {
