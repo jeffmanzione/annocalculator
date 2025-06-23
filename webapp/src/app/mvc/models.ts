@@ -18,11 +18,20 @@ export interface ProductionLineModel extends Model {
   boosts?: Boost[];
   hasTradeUnion?: boolean;
   tradeUnionItemsBonus?: number;
-  extraGoods: ExtraGoodModel[];
+  extraGoods?: ExtraGoodModel[];
   inRangeOfLocalDepartment?: boolean;
 };
 
+export type IslandId = number;
+
+export interface TradeRouteModel extends Model {
+  fromIsland: IslandId;
+  toIsland: IslandId;
+  good: Good;
+};
+
 export interface IslandModel extends Model {
+  id?: IslandId;
   name: string;
   region?: Region;
   productionLines: ProductionLineModel[];
@@ -32,6 +41,7 @@ export interface IslandModel extends Model {
 export interface WorldModel extends Model {
   tradeUnionBonus?: number;
   islands: IslandModel[];
+  tradeRoutes: TradeRouteModel[];
 };
 
 export const BASE_EXTRA_GOOD_MODEL: ExtraGoodModel = {
@@ -50,7 +60,6 @@ export const BASE_PRODUCTION_LINE_MODEL: ProductionLineModel = {
   building: ProductionBuilding.Unknown,
   good: Good.Unknown,
   numBuildings: 1,
-  extraGoods: [],
 };
 
 export const DEFAULT_PRODUCTION_LINE_MODEL: ProductionLineModel = {
@@ -63,6 +72,18 @@ export const DEFAULT_PRODUCTION_LINE_MODEL: ProductionLineModel = {
   tradeUnionItemsBonus: 0.0,
   extraGoods: [],
   inRangeOfLocalDepartment: false,
+};
+
+export const BASE_TRADE_ROUTE_MODEL: TradeRouteModel = {
+  fromIsland: -1,
+  toIsland: -1,
+  good: Good.Unknown,
+};
+
+export const DEFAULT_TRADE_ROUTE_MODEL: TradeRouteModel = {
+  fromIsland: -1,
+  toIsland: -1,
+  good: Good.Unknown,
 };
 
 export const BASE_ISLAND_MODEL: IslandModel = {
@@ -78,11 +99,13 @@ export const DEFAULT_ISLAND_MODEL: IslandModel = {
 };
 
 export const BASE_WORLD_MODEL: WorldModel = {
-  islands: []
+  islands: [],
+  tradeRoutes: [],
 };
 
 export const DEFAULT_WORLD_MODEL: WorldModel = {
   tradeUnionBonus: 0.0,
   islands: [],
+  tradeRoutes: [],
 };
 

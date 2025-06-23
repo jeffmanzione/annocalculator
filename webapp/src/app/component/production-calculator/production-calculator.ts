@@ -54,7 +54,6 @@ export class ProductionCalculatorPage implements OnInit {
             hasTradeUnion: true,
             tradeUnionItemsBonus: 0.15,
             inRangeOfLocalDepartment: true,
-            extraGoods: [],
           },
           {
             building: ProductionBuilding.Bakery,
@@ -86,11 +85,11 @@ export class ProductionCalculatorPage implements OnInit {
             boosts: [Boost.TracktorBarn],
             hasTradeUnion: true,
             inRangeOfLocalDepartment: true,
-            extraGoods: [],
           }
         ]
       }
-    ]
+    ],
+    tradeRoutes: [],
   };
   world: WorldController = WorldController.wrap(this.worldModel);
 

@@ -1,6 +1,6 @@
 import { Boost, Good, ProductionBuilding, DepartmentOfLaborPolicy, Region } from "../game/enums";
 import { computeExtraGoodsModifier, lookupProductionInfo } from "../game/facts";
-import { BASE_ISLAND_MODEL, BASE_PRODUCTION_LINE_MODEL, BASE_WORLD_MODEL, DEFAULT_ISLAND_MODEL, DEFAULT_PRODUCTION_LINE_MODEL, DEFAULT_WORLD_MODEL, IslandModel, Model, ProductionLineModel, WorldModel, ExtraGoodModel, BASE_EXTRA_GOOD_MODEL, DEFAULT_EXTRA_GOOD_MODEL } from "./models";
+import { BASE_ISLAND_MODEL, BASE_PRODUCTION_LINE_MODEL, BASE_WORLD_MODEL, DEFAULT_ISLAND_MODEL, DEFAULT_PRODUCTION_LINE_MODEL, DEFAULT_WORLD_MODEL, IslandModel, Model, ProductionLineModel, WorldModel, ExtraGoodModel, BASE_EXTRA_GOOD_MODEL, DEFAULT_EXTRA_GOOD_MODEL, TradeRouteModel, BASE_TRADE_ROUTE_MODEL, IslandId } from "./models";
 
 export interface ViewContext {
   world?: WorldView;
@@ -23,7 +23,7 @@ export abstract class View<M extends Model> {
 }
 
 export class ExtraGoodView extends View<ExtraGoodModel> {
-  override model = BASE_EXTRA_GOOD_MODEL;
+  protected override model = BASE_EXTRA_GOOD_MODEL;
 
   static wrap(model: ExtraGoodModel, context: ViewContext): ExtraGoodView {
     const view = new ExtraGoodView(context);
@@ -57,7 +57,7 @@ export class ExtraGoodView extends View<ExtraGoodModel> {
 };
 
 export class ProductionLineView extends View<ProductionLineModel> {
-  override model = BASE_PRODUCTION_LINE_MODEL;
+  protected override model = BASE_PRODUCTION_LINE_MODEL;
 
   static wrap(model: ProductionLineModel, context: ViewContext): ProductionLineView {
     const view = new ProductionLineView(context);
@@ -94,7 +94,7 @@ export class ProductionLineView extends View<ProductionLineModel> {
   }
 
   get extraGoods(): ExtraGoodView[] {
-    return this.model.extraGoods.map(eg => ExtraGoodView.wrap(eg, { ...this.context, productionLine: this }));
+    return (this.model.extraGoods ?? []).map(eg => ExtraGoodView.wrap(eg, { ...this.context, productionLine: this }));
   }
 
   get inRangeOfLocalDepartment(): boolean {
@@ -151,8 +151,30 @@ export class ProductionLineView extends View<ProductionLineModel> {
   }
 };
 
+export class TradeRouteView extends View<TradeRouteModel> {
+  protected override model = BASE_TRADE_ROUTE_MODEL;
+
+  static wrap(model: TradeRouteModel, context: ViewContext): TradeRouteView {
+    const view = new TradeRouteView(context);
+    view.wrap(model);
+    return view;
+  }
+
+  get fromIsland(): IslandId {
+    return this.model.fromIsland;
+  }
+
+  get toIsland(): IslandId {
+    return this.model.toIsland;
+  }
+
+  get good(): Good {
+    return this.model.good;
+  }
+}
+
 export class IslandView extends View<IslandModel> {
-  override model = BASE_ISLAND_MODEL;
+  protected override model = BASE_ISLAND_MODEL;
 
   static wrap(model: IslandModel, context: ViewContext): IslandView {
     const view = new IslandView(context);
@@ -178,7 +200,7 @@ export class IslandView extends View<IslandModel> {
 };
 
 export class WorldView extends View<WorldModel> {
-  override model = BASE_WORLD_MODEL;
+  protected override model = BASE_WORLD_MODEL;
 
   static wrap(model: WorldModel): WorldView {
     const view = new WorldView({});

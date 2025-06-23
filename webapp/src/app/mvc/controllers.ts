@@ -1,6 +1,8 @@
 import { Boost, Good, ProductionBuilding, Region, DepartmentOfLaborPolicy } from "../game/enums";
-import { BASE_ISLAND_MODEL, BASE_PRODUCTION_LINE_MODEL, DEFAULT_ISLAND_MODEL, DEFAULT_PRODUCTION_LINE_MODEL, DEFAULT_WORLD_MODEL, IslandModel, ProductionLineModel, WorldModel, ExtraGoodModel, BASE_EXTRA_GOOD_MODEL } from "./models";
-import { ExtraGoodView, IslandView, ProductionLineView, ViewContext, WorldView } from "./views";
+import { BASE_ISLAND_MODEL, BASE_PRODUCTION_LINE_MODEL, DEFAULT_ISLAND_MODEL, DEFAULT_PRODUCTION_LINE_MODEL, DEFAULT_WORLD_MODEL, IslandModel, ProductionLineModel, WorldModel, ExtraGoodModel, BASE_EXTRA_GOOD_MODEL, TradeRouteModel, IslandId } from "./models";
+import { ExtraGoodView, IslandView, ProductionLineView, TradeRouteView, ViewContext, WorldView } from "./views";
+
+let islandCounter = 0;
 
 export class ExtraGoodController extends ExtraGoodView {
   static override wrap(model: ExtraGoodModel, context: ViewContext): ExtraGoodController {
@@ -130,11 +132,15 @@ export class ProductionLineController extends ProductionLineView {
   private _extraGoods?: ExtraGoodController[];
 
   override get extraGoods(): ExtraGoodController[] {
+    if (!this.model.extraGoods) {
+      return [];
+    }
     this._extraGoods ??= this.model.extraGoods.map(eg => ExtraGoodController.wrap(eg, { ...this.context, productionLine: this }));
     return this._extraGoods;
   }
 
   addExtraGood(): ExtraGoodController {
+    this.model.extraGoods ??= [];
     this._extraGoods ??= this.model.extraGoods.map(eg => ExtraGoodController.wrap(eg, { ...this.context, productionLine: this }));
     const extraGood = structuredClone(BASE_EXTRA_GOOD_MODEL);
     this.model.extraGoods.push(extraGood);
@@ -145,20 +151,58 @@ export class ProductionLineController extends ProductionLineView {
 
   removeExtraGoodAt(index: number): void {
     if (!Number.isInteger(index) || index < 0
-      || index >= this.model.extraGoods.length) {
+      || index >= this.model.extraGoods!.length) {
       console.warn('Invalid productionLine index. ' +
-        `Was ${index} and length is ${this.model.extraGoods.length}`);
+        `Was ${index} and length is ${this.model.extraGoods!.length}`);
       return;
     }
-    this.model.extraGoods.splice(index, 1);
+    this.model.extraGoods!.splice(index, 1);
     this._extraGoods!.splice(index, 1);
+
+    if (this.model.extraGoods?.length == 0) {
+      delete this.model.extraGoods;
+    }
   }
 };
+
+export class TradeRouteController extends TradeRouteView {
+  static override wrap(model: TradeRouteModel, context: ViewContext): TradeRouteController {
+    const controller = new TradeRouteController(context);
+    controller.wrap(model);
+    return controller;
+  }
+
+  asView(): TradeRouteView {
+    return this;
+  }
+
+  override set fromIsland(value: IslandId) {
+    this.model.fromIsland = value;
+  }
+  override get fromIsland(): IslandId {
+    return super.fromIsland;
+  }
+
+  override set toIsland(value: IslandId) {
+    this.model.toIsland = value;
+  }
+  override get toIsland(): IslandId {
+    return super.toIsland;
+  }
+
+  override set good(value: Good) {
+    this.model.good = value;
+  }
+  override get good(): Good {
+    return super.good;
+  }
+}
 
 export class IslandController extends IslandView {
   static override wrap(model: IslandModel, context: ViewContext): IslandController {
     const controller = new IslandController(context);
     controller.wrap(model);
+    model.id ??= islandCounter++;
     return controller;
   }
 

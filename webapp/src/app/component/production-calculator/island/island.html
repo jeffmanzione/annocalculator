@@ -115,7 +115,7 @@
       <ng-container matColumnDef="extraGoods">
         <td mat-cell *matCellDef="let element" [attr.colspan]="productionLineColumns.length" class="extra-goods-row">
           <div *ngIf="element.showExtraGoods" class="extra-goods-outer-container">
-            <div>
+            <div class="extra-goods-inner-container">
               <button matButton="filled" color="primary" class="add-extra-good-button" (click)="addExtraGood(element)">
                 <mat-icon>add</mat-icon>
                 Add Extra Good
