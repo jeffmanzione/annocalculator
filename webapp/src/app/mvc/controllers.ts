@@ -1,8 +1,9 @@
 import { Boost, Good, ProductionBuilding, Region, DepartmentOfLaborPolicy } from "../game/enums";
-import { BASE_ISLAND_MODEL, BASE_PRODUCTION_LINE_MODEL, DEFAULT_ISLAND_MODEL, DEFAULT_PRODUCTION_LINE_MODEL, DEFAULT_WORLD_MODEL, IslandModel, ProductionLineModel, WorldModel, ExtraGoodModel, BASE_EXTRA_GOOD_MODEL, TradeRouteModel, IslandId } from "./models";
+import { BASE_ISLAND_MODEL, BASE_PRODUCTION_LINE_MODEL, DEFAULT_ISLAND_MODEL, DEFAULT_PRODUCTION_LINE_MODEL, DEFAULT_WORLD_MODEL, IslandModel, ProductionLineModel, WorldModel, ExtraGoodModel, BASE_EXTRA_GOOD_MODEL, TradeRouteModel, IslandId, BASE_TRADE_ROUTE_MODEL, TradeRouteId } from "./models";
 import { ExtraGoodView, IslandView, ProductionLineView, TradeRouteView, ViewContext, WorldView } from "./views";
 
 let islandCounter = 0;
+let tradeRouteCounter = 0;
 
 export class ExtraGoodController extends ExtraGoodView {
   static override wrap(model: ExtraGoodModel, context: ViewContext): ExtraGoodController {
@@ -169,6 +170,7 @@ export class TradeRouteController extends TradeRouteView {
   static override wrap(model: TradeRouteModel, context: ViewContext): TradeRouteController {
     const controller = new TradeRouteController(context);
     controller.wrap(model);
+    model.id ??= tradeRouteCounter++;
     return controller;
   }
 
@@ -176,18 +178,18 @@ export class TradeRouteController extends TradeRouteView {
     return this;
   }
 
-  override set fromIsland(value: IslandId) {
-    this.model.fromIsland = value;
+  override set sourceIsland(value: IslandId) {
+    this.model.sourceIsland = value;
   }
-  override get fromIsland(): IslandId {
-    return super.fromIsland;
+  override get sourceIsland(): IslandId {
+    return super.sourceIsland;
   }
 
-  override set toIsland(value: IslandId) {
-    this.model.toIsland = value;
+  override set targetIsland(value: IslandId) {
+    this.model.targetIsland = value;
   }
-  override get toIsland(): IslandId {
-    return super.toIsland;
+  override get targetIsland(): IslandId {
+    return super.targetIsland;
   }
 
   override set good(value: Good) {
@@ -288,15 +290,15 @@ export class WorldController extends WorldView {
   private _islands?: IslandController[];
 
   override get islands(): IslandController[] {
-    this._islands ??= this.model.islands.map(i => IslandController.wrap(i, { world: this }));
+    this._islands ??= this.model.islands.map(i => IslandController.wrap(i, this.selfContextC));
     return this._islands;
   }
 
   addIsland(): IslandController {
     const island = structuredClone(BASE_ISLAND_MODEL);
     this.model.islands.push(island);
-    const controller = IslandController.wrap(island, { ...this.context, world: this });
-    this._islands?.push(controller);
+    const controller = IslandController.wrap(island, this.selfContextC);
+    this._islands!.push(controller);
     return controller;
   }
 
@@ -308,7 +310,31 @@ export class WorldController extends WorldView {
       return;
     }
     this.model.islands.splice(index, 1);
-    this._islands?.splice(index, 1);
+    this._islands!.splice(index, 1);
+  }
+
+  private _tradeRoutes?: TradeRouteController[];
+
+  override get tradeRoutes(): TradeRouteController[] {
+    this._tradeRoutes ??= this.model.tradeRoutes.map(i => TradeRouteController.wrap(i, this.selfContextC));
+    return this._tradeRoutes;
+  }
+
+  addTradeRoute(): TradeRouteController {
+    const tradeRoute = structuredClone(BASE_TRADE_ROUTE_MODEL);
+    this.model.tradeRoutes.push(tradeRoute);
+    const controller = TradeRouteController.wrap(tradeRoute, this.selfContextC);
+    return controller;
+  }
+
+  removeTradeRoute(id: TradeRouteId) {
+    const index = this.model.tradeRoutes.findIndex(tr => tr.id = id);
+    this.model.tradeRoutes.splice(index, 1);
+    this._tradeRoutes!.splice(index, 1);
+  }
+
+  private get selfContextC(): ViewContext {
+    return { ...this.context, world: this };
   }
 };
 

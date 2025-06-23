@@ -1,6 +1,6 @@
 import { Boost, Good, ProductionBuilding, DepartmentOfLaborPolicy, Region } from "../game/enums";
 import { computeExtraGoodsModifier, lookupProductionInfo } from "../game/facts";
-import { BASE_ISLAND_MODEL, BASE_PRODUCTION_LINE_MODEL, BASE_WORLD_MODEL, DEFAULT_ISLAND_MODEL, DEFAULT_PRODUCTION_LINE_MODEL, DEFAULT_WORLD_MODEL, IslandModel, Model, ProductionLineModel, WorldModel, ExtraGoodModel, BASE_EXTRA_GOOD_MODEL, DEFAULT_EXTRA_GOOD_MODEL, TradeRouteModel, BASE_TRADE_ROUTE_MODEL, IslandId } from "./models";
+import { BASE_ISLAND_MODEL, BASE_PRODUCTION_LINE_MODEL, BASE_WORLD_MODEL, DEFAULT_ISLAND_MODEL, DEFAULT_PRODUCTION_LINE_MODEL, DEFAULT_WORLD_MODEL, IslandModel, Model, ProductionLineModel, WorldModel, ExtraGoodModel, BASE_EXTRA_GOOD_MODEL, DEFAULT_EXTRA_GOOD_MODEL, TradeRouteModel, BASE_TRADE_ROUTE_MODEL, IslandId, TradeRouteId } from "./models";
 
 export interface ViewContext {
   world?: WorldView;
@@ -160,12 +160,16 @@ export class TradeRouteView extends View<TradeRouteModel> {
     return view;
   }
 
-  get fromIsland(): IslandId {
-    return this.model.fromIsland;
+  get id(): TradeRouteId {
+    return this.model.id;
   }
 
-  get toIsland(): IslandId {
-    return this.model.toIsland;
+  get sourceIsland(): IslandId {
+    return this.model.sourceIsland;
+  }
+
+  get targetIsland(): IslandId {
+    return this.model.targetIsland;
   }
 
   get good(): Good {
@@ -180,6 +184,10 @@ export class IslandView extends View<IslandModel> {
     const view = new IslandView(context);
     view.wrap(model);
     return view;
+  }
+
+  get id(): IslandId {
+    return this.model.id!;
   }
 
   get name(): string {
@@ -197,6 +205,14 @@ export class IslandView extends View<IslandModel> {
   get dolPolicy(): DepartmentOfLaborPolicy {
     return this.model.dolPolicy ?? DEFAULT_ISLAND_MODEL.dolPolicy!;
   }
+
+  get outgoingTradeRoutes(): TradeRouteView[] {
+    return this.context.world!.lookupTradeRoutesStartingFrom(this);
+  }
+
+  get incomingTradeRoutes(): TradeRouteView[] {
+    return this.context.world!.lookupTradeRoutesEndingAt(this);
+  }
 };
 
 export class WorldView extends View<WorldModel> {
@@ -213,7 +229,29 @@ export class WorldView extends View<WorldModel> {
   }
 
   get islands(): IslandView[] {
-    return this.model.islands.map(i => IslandView.wrap(i, { world: this }));
+    return this.model.islands.map(i => IslandView.wrap(i, this.selfContext));
+  }
+
+  lookupIslandById(id: IslandId): IslandView {
+    return IslandView.wrap(this.model.islands.find(i => i.id == id)!, this.selfContext);
+  }
+
+  get tradeRoutes(): TradeRouteView[] {
+    return this.model.tradeRoutes.map(tr => TradeRouteView.wrap(tr, this.selfContext));
+  }
+
+  public lookupTradeRoutesStartingFrom(island: IslandId | IslandView): TradeRouteView[] {
+    const id = typeof island === 'number' ? island : island.id;
+    return this.model.tradeRoutes.filter(tr => tr.sourceIsland == id).map(tr => TradeRouteView.wrap(tr, this.selfContext));
+  }
+
+  public lookupTradeRoutesEndingAt(island: IslandId | IslandView): TradeRouteView[] {
+    const id = typeof island === 'number' ? island : island.id;
+    return this.model.tradeRoutes.filter(tr => tr.targetIsland == id).map(tr => TradeRouteView.wrap(tr, this.selfContext));
+  }
+
+  private get selfContext(): ViewContext {
+    return { world: this };
   }
 };
 

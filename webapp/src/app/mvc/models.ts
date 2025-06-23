@@ -1,7 +1,5 @@
 import { Good, ProductionBuilding, Boost, Region, DepartmentOfLaborPolicy } from "../game/enums";
 
-
-
 export interface Model { };
 
 export interface ExtraGoodModel extends Model {
@@ -23,10 +21,12 @@ export interface ProductionLineModel extends Model {
 };
 
 export type IslandId = number;
+export type TradeRouteId = number;
 
 export interface TradeRouteModel extends Model {
-  fromIsland: IslandId;
-  toIsland: IslandId;
+  id: TradeRouteId;
+  sourceIsland: IslandId;
+  targetIsland: IslandId;
   good: Good;
 };
 
@@ -75,14 +75,16 @@ export const DEFAULT_PRODUCTION_LINE_MODEL: ProductionLineModel = {
 };
 
 export const BASE_TRADE_ROUTE_MODEL: TradeRouteModel = {
-  fromIsland: -1,
-  toIsland: -1,
+  id: -1,
+  sourceIsland: -1,
+  targetIsland: -1,
   good: Good.Unknown,
 };
 
 export const DEFAULT_TRADE_ROUTE_MODEL: TradeRouteModel = {
-  fromIsland: -1,
-  toIsland: -1,
+  id: -1,
+  sourceIsland: -1,
+  targetIsland: -1,
   good: Good.Unknown,
 };
 
