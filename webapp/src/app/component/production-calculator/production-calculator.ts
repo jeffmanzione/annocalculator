@@ -12,6 +12,8 @@ import { SummaryPanel } from "./summary-panel/summary-panel";
 import { CardModule } from '../card/card';
 import { Region, DepartmentOfLaborPolicy, ProductionBuilding, Good, Boost } from '../../game/enums';
 import { WorldModel } from '../../mvc/models';
+import { Control } from './base/controller';
+import { TradeRoutesPanel } from "./trade-routes-panel/trade-routes-panel";
 
 @Component({
   selector: 'production-calculator-page',
@@ -26,6 +28,7 @@ import { WorldModel } from '../../mvc/models';
     MatInputModule,
     ReactiveFormsModule,
     SummaryPanel,
+    TradeRoutesPanel,
   ],
   templateUrl: './production-calculator.html',
   styleUrl: './production-calculator.scss',
@@ -36,25 +39,16 @@ import { WorldModel } from '../../mvc/models';
     }
   ],
 })
-export class ProductionCalculatorPage implements OnInit {
+export class ProductionCalculatorPage extends Control implements OnInit {
   private readonly worldModel: WorldModel = {
     tradeUnionBonus: 0.3,
     islands: [
       {
+        id: 1,
         name: 'Crown Falls',
         region: Region.CapeTrelawney,
         dolPolicy: DepartmentOfLaborPolicy.SkilledLaborAct,
         productionLines: [
-          {
-            building: ProductionBuilding.FlourMill,
-            inputGoods: [Good.Grain],
-            good: Good.Flour,
-            numBuildings: 5,
-            boosts: [Boost.Electricity],
-            hasTradeUnion: true,
-            tradeUnionItemsBonus: 0.15,
-            inRangeOfLocalDepartment: true,
-          },
           {
             building: ProductionBuilding.Bakery,
             inputGoods: [Good.Flour],
@@ -62,7 +56,7 @@ export class ProductionCalculatorPage implements OnInit {
             numBuildings: 10,
             boosts: [Boost.Electricity],
             hasTradeUnion: true,
-            tradeUnionItemsBonus: 0.15,
+            tradeUnionItemsBonus: 0.5,
             inRangeOfLocalDepartment: true,
             extraGoods: [
               {
@@ -71,25 +65,88 @@ export class ProductionCalculatorPage implements OnInit {
                 rateDenominator: 3,
               }
             ],
-          }
+          },
+          {
+            building: ProductionBuilding.FlourMill,
+            inputGoods: [Good.Grain],
+            good: Good.Flour,
+            numBuildings: 5,
+            boosts: [Boost.Electricity],
+            hasTradeUnion: true,
+            tradeUnionItemsBonus: 0.5,
+            inRangeOfLocalDepartment: true,
+          },
+          {
+            building: ProductionBuilding.Brewery,
+            inputGoods: [Good.Malt, Good.Hops],
+            good: Good.Beer,
+            numBuildings: 4,
+            boosts: [Boost.Electricity],
+            hasTradeUnion: true,
+            tradeUnionItemsBonus: 0.3,
+            inRangeOfLocalDepartment: true,
+          },
+          {
+            building: ProductionBuilding.Malthouse,
+            inputGoods: [Good.Grain],
+            good: Good.Malt,
+            numBuildings: 3,
+            boosts: [Boost.Electricity],
+            hasTradeUnion: true,
+            tradeUnionItemsBonus: 0.3,
+            inRangeOfLocalDepartment: true,
+          },
+          {
+            building: ProductionBuilding.AdvancedCoffeeRoaster,
+            inputGoods: [Good.Malt],
+            good: Good.Coffee,
+            numBuildings: 2,
+            boosts: [Boost.Electricity],
+            hasTradeUnion: true,
+            inRangeOfLocalDepartment: true,
+          },
         ]
       },
       {
+        id: 2,
         name: 'Farm Island',
         dolPolicy: DepartmentOfLaborPolicy.LandReformAct,
         productionLines: [
           {
             building: ProductionBuilding.GrainFarm,
             good: Good.Grain,
-            numBuildings: 5,
+            numBuildings: 8,
             boosts: [Boost.TracktorBarn],
             hasTradeUnion: true,
+            tradeUnionItemsBonus: 0.5,
             inRangeOfLocalDepartment: true,
-          }
+          },
+          {
+            building: ProductionBuilding.HopFarm,
+            good: Good.Hops,
+            numBuildings: 3,
+            boosts: [Boost.TracktorBarn],
+            hasTradeUnion: true,
+            tradeUnionItemsBonus: 0.5,
+            inRangeOfLocalDepartment: true,
+          },
         ]
       }
     ],
-    tradeRoutes: [],
+    tradeRoutes: [
+      {
+        id: 1,
+        sourceIsland: 2,
+        targetIsland: 1,
+        good: Good.Grain,
+      },
+      {
+        id: 2,
+        sourceIsland: 2,
+        targetIsland: 1,
+        good: Good.Hops,
+      }
+    ],
   };
   world: WorldController = WorldController.wrap(this.worldModel);
 
@@ -110,10 +167,9 @@ export class ProductionCalculatorPage implements OnInit {
 
   update(): void {
     this.world.tradeUnionBonus = this.formGroup!.value.tradeUnionBonusPercent / 100;
-
     if (this.islandComponents) {
       for (const i of this.islandComponents) {
-        i.update();
+        i.afterPushChange();
       }
     }
     this.summaryPanel?.update();

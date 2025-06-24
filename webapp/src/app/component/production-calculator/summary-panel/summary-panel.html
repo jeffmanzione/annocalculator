@@ -1,22 +1,20 @@
 <card>
-  <card-title>
-    Summary
-  </card-title>
+  <card-title>Summary</card-title>
   <card-content>
-    <table mat-table [dataSource]="computedData">
+    <table mat-table [dataSource]="computedData" class="summary-table">
       <ng-container matColumnDef="good">
         <th mat-header-cell *matHeaderCellDef>Good</th>
         <td mat-cell *matCellDef="let element">{{ element.good }}</td>
       </ng-container>
       <ng-container matColumnDef="total-production-per-min">
-        <th mat-header-cell *matHeaderCellDef>PPM (Total)</th>
+        <th mat-header-cell *matHeaderCellDef>Production (Total)</th>
         <td mat-cell *matCellDef="let element">
           <formatted-number [value]="element.totalProductionPerMin" suffix="/m"
             [formatFontSpec]="colorSpec"></formatted-number>
         </td>
       </ng-container>
       <ng-container matColumnDef="net-production-per-min">
-        <th mat-header-cell *matHeaderCellDef>PPM (Net)</th>
+        <th mat-header-cell *matHeaderCellDef>Production (Net)</th>
         <td mat-cell *matCellDef="let element">
           <formatted-number [value]="element.netProductionPerMin" suffix="/m"
             [formatFontSpec]="colorSpec"></formatted-number>

@@ -15,8 +15,8 @@ interface GoodSummaryRow {
   selector: 'summary-panel',
   imports: [
     CardModule,
-    MatTableModule,
     FormattedNumberModule,
+    MatTableModule,
   ],
   templateUrl: './summary-panel.html',
   styleUrl: './summary-panel.scss'
@@ -60,21 +60,19 @@ export class SummaryPanel implements OnInit {
       for (const pl of island.productionLines) {
         const row = this.getOrDefault(rows, pl.good, { good: pl.good, totalProductionPerMin: 0, netProductionPerMin: 0 });
         row.totalProductionPerMin += pl.goodsProducedPerMinute;
+        row.netProductionPerMin += pl.goodsProducedPerMinute;
         for (const eg of pl.extraGoods) {
           const row = this.getOrDefault(rows, eg.good, { good: eg.good, totalProductionPerMin: 0, netProductionPerMin: 0 });
           row.totalProductionPerMin += eg.producedPerMinute;
+          row.netProductionPerMin += eg.producedPerMinute;
+        }
+        for (const inputGood of pl.inputGoods) {
+          const row = this.getOrDefault(rows, inputGood, { good: inputGood, totalProductionPerMin: 0, netProductionPerMin: 0 });
+          row.netProductionPerMin -= pl.goodsProducedPerMinute;
         }
       }
     }
     this.computedData = Array.from(rows.values()).sort((r1, r2) => r1.good.localeCompare(r2.good));
     this.table?.renderRows();
   }
-
-  // addValues(values: Iterable<number>): number {
-  //   let total = 0;
-  //   for (const value of values) {
-  //     total += value;
-  //   }
-  //   return total;
-  // }
 }

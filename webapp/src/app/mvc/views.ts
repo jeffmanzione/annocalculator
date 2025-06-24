@@ -175,6 +175,10 @@ export class TradeRouteView extends View<TradeRouteModel> {
   get good(): Good {
     return this.model.good;
   }
+
+  get world(): WorldView {
+    return this.context.world!;
+  }
 }
 
 export class IslandView extends View<IslandModel> {
@@ -212,6 +216,14 @@ export class IslandView extends View<IslandModel> {
 
   get incomingTradeRoutes(): TradeRouteView[] {
     return this.context.world!.lookupTradeRoutesEndingAt(this);
+  }
+
+  get producedGoods(): Good[] {
+    return Array.from(new Set<Good>(this.model.productionLines.flatMap(pl => {
+      const goods = [pl.good];
+      pl.extraGoods?.forEach(eg => goods.push(eg.good));
+      return goods;
+    })));
   }
 };
 

@@ -1,36 +1,124 @@
-import { Component, EventEmitter } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
-import { TradeRouteController } from '../../../mvc/controllers';
-import { IslandId } from '../../../mvc/models';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { TradeRouteController, WorldController } from '../../../mvc/controllers';
+import { MatTable, MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { Control, ControlComponent } from '../base/controller';
+import { CommonModule } from '@angular/common';
+import { MatSelectModule } from '@angular/material/select';
+import { Good } from '../../../game/enums';
+import { lookupGoodIconUrl } from '../../../game/icons';
+import { EnumSelect } from '../../enum-select/enum-select';
+import { IslandView } from '../../../mvc/views';
+import { CardModule } from '../../card/card';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { TradeRouteId } from '../../../mvc/models';
 
 @Component({
   selector: 'trade-routes-panel',
-  imports: [],
+  imports: [
+    CardModule,
+    CommonModule,
+    EnumSelect,
+    FormsModule,
+    MatButtonModule,
+    MatIconModule,
+    MatTableModule,
+    MatSelectModule,
+    ReactiveFormsModule,
+  ],
   templateUrl: './trade-routes-panel.html',
   styleUrl: './trade-routes-panel.scss'
 })
-export class TradeRoutesPanel {
+export class TradeRoutesPanel extends ControlComponent<WorldController> implements OnInit {
+  readonly displayColumns = [
+    'sourceIsland',
+    'targetIsland',
+    'good',
+    'remove',
+  ];
+
+  dataSource!: MatTableDataSource<TradeRouteControl>;
+
+  @ViewChild('tradeRouteTable')
+  table!: MatTable<TradeRouteControl>;
+
+  tradeRoutes!: TradeRouteControl[];
+
+  ngOnInit(): void {
+    this.tradeRoutes = this.controller.tradeRoutes.map(tr => {
+      const control = new TradeRouteControl(tr);
+      this.registerChildControl(control);
+      return control;
+    });
+    this.dataSource = new MatTableDataSource(this.tradeRoutes);
+  }
+
+  addTradeRoute() {
+    const control = new TradeRouteControl(this.controller.addTradeRoute());
+    this.registerChildControl(control);
+    this.tradeRoutes.push(control);
+    this.pushUpChange();
+  }
+
+  removeTradeRouteAt(el: TradeRouteControl) {
+    const index = this.tradeRoutes.indexOf(el);
+    this.unregisterChildControl(this.tradeRoutes.splice(index, 1)[0]);
+    this.controller.removeTradeRoute(el.id);
+    this.pushUpChange();
+  }
+
+  override afterPushChange(): void {
+    this.table.renderRows();
+  }
+
+  lookupGoodIconUrl(good: Good | null): string {
+    return lookupGoodIconUrl(good ?? Good.Unknown);
+  }
 
 }
 
-export class TradeRouteControl {
-  readonly change = new EventEmitter<void>();
+export class TradeRouteControl extends Control {
 
   formGroup: FormGroup;
 
+  get id(): TradeRouteId {
+    return this.controller.id;
+  }
+
+  sourceIslandOptions: IslandView[] = [];
+  targetIslandOptions: IslandView[] = [];
+  sourceGoodOptions: Good[] = [];
+
   constructor(private readonly controller: TradeRouteController) {
+    super();
     this.formGroup = new FormGroup({
       sourceIsland: new FormControl(this.controller.sourceIsland),
       targetIsland: new FormControl(this.controller.targetIsland),
       good: new FormControl(this.controller.good),
     });
-    this.update();
-    this.formGroup.valueChanges.subscribe(_ => this.change.emit());
+    this.formGroup.valueChanges.subscribe(_ => this.pushUpChange());
+    this.beforeBubbleChange();
+    this.afterPushChange();
   }
 
-  update(): void {
+  override beforeBubbleChange(): void {
     this.controller.sourceIsland = this.formGroup.value.sourceIsland;
     this.controller.targetIsland = this.formGroup.value.targetIsland;
     this.controller.good = this.formGroup.value.good;
+  }
+
+  override afterPushChange(): void {
+    this.sourceIslandOptions = this.controller.world.islands.filter(i => i.id != this.controller.targetIsland);
+    this.targetIslandOptions = this.controller.world.islands.filter(i => i.id != this.controller.sourceIsland);
+    this.sourceGoodOptions = this.computeSourceGoods();
+  }
+
+  private computeSourceGoods(): Good[] {
+    if (this.controller.sourceIsland < 0) {
+      return [];
+    }
+    const island = this.controller.world.lookupIslandById(this.controller.sourceIsland);
+    return island.producedGoods;
   }
 }

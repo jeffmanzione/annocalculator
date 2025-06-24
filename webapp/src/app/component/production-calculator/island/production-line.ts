@@ -1,14 +1,13 @@
 import { FormControl, FormGroup } from "@angular/forms";
-import { ExtraGoodController, ProductionLineController } from "../../mvc/controllers";
-import { ProductionLineView } from "../../mvc/views";
-import { EventEmitter } from "@angular/core";
+import { ExtraGoodController, ProductionLineController } from "../../../mvc/controllers";
+import { ProductionLineView } from "../../../mvc/views";
 import { MatTableDataSource } from "@angular/material/table";
-import { Boost, ProductionBuilding } from "../../game/enums";
-import { lookupProductionInfo, requiresElectricity, lookupAllowedBoosts } from "../../game/facts";
+import { Boost, ProductionBuilding } from "../../../game/enums";
+import { lookupProductionInfo, requiresElectricity, lookupAllowedBoosts } from "../../../game/facts";
+import { Control } from "../base/controller";
 
 
-export class ProductionLineControl {
-  change = new EventEmitter<void>();
+export class ProductionLineControl extends Control {
 
   formGroup: FormGroup;
 
@@ -32,6 +31,7 @@ export class ProductionLineControl {
   goodsProducedPerMinute: number = 0;
 
   constructor(private readonly controller: ProductionLineController) {
+    super();
     this.formGroup = new FormGroup({
       building: new FormControl(this.controller.building),
       numBuildings: new FormControl(this.controller.numBuildings),
@@ -44,15 +44,17 @@ export class ProductionLineControl {
     });
     this.extraGoods = new MatTableDataSource(this.controller.extraGoods.map(eg => {
       const control = new ExtraGoodControl(eg);
-      control.change.subscribe(_ => this.change.emit());
+      this.registerChildControl(control);
+      control.afterPushChange();
       return control;
     }));
     // Show by default
     if (this.extraGoods.data.length > 0) {
       this.showExtraGoods = true;
     }
-    this.update();
-    this.formGroup.valueChanges.subscribe(_ => this.change.emit());
+    this.beforeBubbleChange();
+    this.afterPushChange();
+    this.formGroup.valueChanges.subscribe(_ => this.pushUpChange());
   }
 
   get view(): ProductionLineView {
@@ -135,18 +137,14 @@ export class ProductionLineControl {
     this.goodsProducedPerMinute = this.controller.goodsProducedPerMinute;
   }
 
-  update(): void {
+  override beforeBubbleChange(): void {
     // Form states must be adjusted separately and before model changes to prevent potential infinite
     // loops caused by interdependent component forms in the hierarchy.
     this.updateFormStates();
     this.updateModel();
+  }
 
-    if (this.extraGoods) {
-      for (const extraGood of this.extraGoods.data) {
-        extraGood.update();
-      }
-    }
-
+  override afterPushChange(): void {
     // Derived view fields must be after the model update so that they are fresh after the model update.
     this.updateAndFormatDerivedFields();
   }
@@ -154,51 +152,51 @@ export class ProductionLineControl {
   addExtraGood(): ExtraGoodControl {
     const control = new ExtraGoodControl(this.controller.addExtraGood());
     this.extraGoods!.data.push(control);
-    control.change.subscribe(_ => this.change.emit());
+    this.registerChildControl(control);
     return control;
   }
 
   removeExtraGoodAt(index: number): void {
     this.controller.removeExtraGoodAt(index);
-    this.extraGoods?.data.splice(index, 1);
+    const control = this.extraGoods?.data.splice(index, 1)[0]!;
     if (this.extraGoods?.data.length == 0) {
       this.showExtraGoods = false;
     }
+    this.unregisterChildControl(control);
   }
 
   toggleShowExtraGoods(): void {
     if (this.extraGoods?.data.length == 0) {
       this.addExtraGood();
+      this.pushUpChange();
     }
     this.showExtraGoods = !this.showExtraGoods;
   }
 }
 
-export class ExtraGoodControl {
-  change = new EventEmitter<void>();
-
+export class ExtraGoodControl extends Control {
   formGroup: FormGroup;
-
 
   processTimeSeconds: number = 0;
   producedPerMinute: number = 0;
 
-
   constructor(private readonly controller: ExtraGoodController) {
+    super();
     this.formGroup = new FormGroup({
       good: new FormControl(this.controller.good),
       rateNumerator: new FormControl(this.controller.rateNumerator),
       rateDenominator: new FormControl(this.controller.rateDenominator),
     });
-    this.update();
-    this.formGroup.valueChanges.subscribe(_ => this.change.emit());
+    this.formGroup.valueChanges.subscribe(_ => this.pushUpChange());
   }
 
-  update(): void {
+  override beforeBubbleChange(): void {
     this.controller.good = this.formGroup.value.good;
     this.controller.rateNumerator = this.formGroup.value.rateNumerator;
     this.controller.rateDenominator = this.formGroup.value.rateDenominator;
+  }
 
+  override afterPushChange(): void {
     this.processTimeSeconds = this.controller.processTimeSeconds;
     this.producedPerMinute = this.controller.producedPerMinute;
   }

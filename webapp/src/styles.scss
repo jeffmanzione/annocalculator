@@ -12,7 +12,7 @@ $web-font-family: "Roboto", sans-serif;
 
 $web-typography-level: mat.m2-define-typography-level($font-family: $web-font-family,
     $font-weight: 400,
-    $font-size: 11px,
+    $font-size: 9.5px,
     $line-height: 1,
   );
 
@@ -98,6 +98,6 @@ body {
   height: 100%;
 
   @include mat.table-overrides((background-color: theme-colors.$table-bg-color,
-      header-headline-size: 12px,
+      header-headline-size: 10.5px,
     ));
 }

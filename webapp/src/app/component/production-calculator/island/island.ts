@@ -8,8 +8,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
-import { ControllerComponent } from '../base/controller';
-import { ExtraGoodControl, ProductionLineControl } from '../production-line';
+import { ControlComponent } from '../base/controller';
+import { ExtraGoodControl, ProductionLineControl } from './production-line';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { FormattedNumberModule } from '../../formatted-number/formatted-number';
 import { EnumSelect } from '../../enum-select/enum-select';
@@ -38,7 +38,7 @@ import { TextFieldModule } from '@angular/cdk/text-field';
   templateUrl: './island.html',
   styleUrl: './island.scss'
 })
-export class Island extends ControllerComponent<IslandController> implements OnInit {
+export class Island extends ControlComponent<IslandController> implements OnInit {
   readonly regions = Object.values(Region).filter(r => r != Region.Unknown);
   readonly allDolPolicies = Object.values(DepartmentOfLaborPolicy);
   readonly goods = Object.values(Good).filter(g => g != Good.Unknown);
@@ -92,44 +92,48 @@ export class Island extends ControllerComponent<IslandController> implements OnI
   @ViewChild('productionLinesTable')
   table!: MatTable<ProductionLineControl>;
 
-
   ngOnInit(): void {
     this.formGroup = new FormGroup({
       name: new FormControl(this.controller.name),
       region: new FormControl(this.controller.region),
       dolPolicy: new FormControl(this.controller.dolPolicy),
     });
-    this.formGroup.valueChanges.subscribe(_ => this.change.emit());
+    this.formGroup.valueChanges.subscribe(_ => this.pushUpChange());
     this._productionLineControls = this.controller.productionLines.map(pl => {
       const control = new ProductionLineControl(pl);
-      control.change.subscribe(_ => this.change.emit());
+      this.registerChildControl(control);
       return control;
     });
+
+    if (this._productionLineControls.length == 0) {
+      this.addProductionLine();
+    }
+
     this.productionLinesDataSource = new MatTableDataSource(this._productionLineControls);
-    this.updateRegionSpecificSelectOptions();
+    this.afterPushChange();
   }
 
-  update(): void {
+  override beforeBubbleChange(): void {
     this.controller.name = this.formGroup.value.name;
-    if (this.controller.region != this.formGroup.value.region) {
-      this.updateRegionSpecificSelectOptions();
-    }
     this.controller.region = this.formGroup.value.region;
     this.controller.dolPolicy = this.formGroup.value.dolPolicy;
+    if (this._productionLineControls.length == 0) {
+      this.addProductionLine();
+    }
+  }
 
-    if (this.productionLineControls) {
-      for (const pl of this.productionLineControls) {
-        pl.update();
+  override afterPushChange(): void {
+    this.updateRegionSpecificSelectOptions();
+    if (this.extraGoodTables) {
+      for (const extraGoodTable of this.extraGoodTables) {
+        extraGoodTable.renderRows();
       }
     }
-    for (const extraGoodTable of this.extraGoodTables) {
-      extraGoodTable.renderRows();
-    }
-    this.table.renderRows();
+    this.table?.renderRows();
   }
 
   private updateRegionSpecificSelectOptions(): void {
-    const region = this.formGroup.value.region;
+    const region = this.controller.region;
     this.productionBuildings = Object.values(ProductionBuilding)
       .filter(pb => (lookupProductionInfo(pb)?.allowedRegions?.indexOf(region) ?? -1)
         != -1);
@@ -144,16 +148,16 @@ export class Island extends ControllerComponent<IslandController> implements OnI
 
   addProductionLine(): void {
     const control = new ProductionLineControl(this.controller.addProductionLine());
-    control.change.subscribe(_ => this.change.emit());
+    this.registerChildControl(control);
     this._productionLineControls.push(control);
-    this.change.emit();
+    this.pushUpChange();
   }
 
   removeProductionLineAt(el: ProductionLineControl): void {
     const index = this._productionLineControls.indexOf(el);
-    this._productionLineControls.splice(index, 1);
+    this.unregisterChildControl(this._productionLineControls.splice(index, 1)[0]);
     this.controller.removeProductionLineAt(index);
-    this.change.emit();
+    this.pushUpChange();
   }
 
   toggleShowExtraGoods(productionLine: ProductionLineControl): void {
@@ -163,13 +167,13 @@ export class Island extends ControllerComponent<IslandController> implements OnI
 
   addExtraGood(productionLine: ProductionLineControl): void {
     productionLine.addExtraGood();
-    this.change.emit();
+    this.pushUpChange();
   }
 
   removeExtraGoodAt(productionLine: ProductionLineControl, extraGood: ExtraGoodControl): void {
     const index = productionLine.extraGoods?.data.indexOf(extraGood)!;
     productionLine.removeExtraGoodAt(index);
-    this.change.emit();
+    this.pushUpChange();
   }
 
   lookupBuildingIconUrl(building: ProductionBuilding | null): string {
