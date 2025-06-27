@@ -75,7 +75,6 @@ export class TradeRoutesPanel extends ControlComponent<WorldController> implemen
   lookupGoodIconUrl(good: Good | null): string {
     return lookupGoodIconUrl(good ?? Good.Unknown);
   }
-
 }
 
 export class TradeRouteControl extends Control {

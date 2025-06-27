@@ -2,7 +2,7 @@
   <card-title>Summary</card-title>
   <card-content>
     <section class="table-container">
-      <table mat-table [dataSource]="computedData" multiTemplateDataRows class="summary-table" matSort>
+      <table mat-table [dataSource]="tableData" multiTemplateDataRows class="summary-table" matSort>
         <ng-container matColumnDef="good">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>Good</th>
           <td mat-cell *matCellDef="let element">{{ element.good }}</td>

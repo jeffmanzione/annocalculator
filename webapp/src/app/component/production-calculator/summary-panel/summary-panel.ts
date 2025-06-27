@@ -62,7 +62,7 @@ export class SummaryPanel implements OnInit, AfterViewInit {
     'net-per-min',
   ];
 
-  readonly computedData = new MatTableDataSource<GoodSummaryRow>();
+  readonly tableData = new MatTableDataSource<GoodSummaryRow>();
   private readonly rows = new Map<Good, GoodSummaryRow>();
 
   @Input()
@@ -83,15 +83,15 @@ export class SummaryPanel implements OnInit, AfterViewInit {
       this.rows.set(good, this.createBaseGoodSummaryRow(good));
     }
     this.update();
-    this.computedData.filterPredicate = (data: GoodSummaryRow, _: string): boolean => {
+    this.tableData.filterPredicate = (data: GoodSummaryRow, _: string): boolean => {
       return data.islandSummaries.length > 0;
     };
-    this.computedData.data = Array.from(this.rows.values());
+    this.tableData.data = Array.from(this.rows.values());
   }
 
   ngAfterViewInit(): void {
-    this.computedData.sort = this.sort;
-    this.computedData.sortingDataAccessor = (data: GoodSummaryRow, sortHeaderId: string): string | number => {
+    this.tableData.sort = this.sort;
+    this.tableData.sortingDataAccessor = (data: GoodSummaryRow, sortHeaderId: string): string | number => {
       switch (sortHeaderId) {
         case 'good':
           return data.good.toLocaleLowerCase();
@@ -145,7 +145,7 @@ export class SummaryPanel implements OnInit, AfterViewInit {
     }
     this.updateTableCells(baseTableCells);
     // Re-applies the filter. No idea why this is needed...
-    this.computedData.filter = '-';
+    this.tableData.filter = '-';
 
     this.table?.renderRows();
   }
@@ -153,7 +153,7 @@ export class SummaryPanel implements OnInit, AfterViewInit {
   toggleIslandSummary(row: GoodSummaryRow): void {
     row.showIslandSummary = !row.showIslandSummary;
     row.showIslandSummaryIcon = row.showIslandSummary ? 'arrow_drop_up' : 'arrow_drop_down';
-    this.islandTables.get(this.computedData.data.indexOf(row))?.renderRows();
+    this.islandTables.get(this.tableData.data.indexOf(row))?.renderRows();
   }
 
   availableProduction(cell?: GoodSummaryCell): number {
