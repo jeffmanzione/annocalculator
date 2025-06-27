@@ -191,12 +191,6 @@ export class ProductionCalculatorPage extends Control implements OnInit {
         targetIslandId: 1,
         good: Good.CottonFabric,
       },
-      // {
-      //   id: 5,
-      //   sourceIsland: 3,
-      //   targetIsland: 2,
-      //   good: Good.CottonFabric,
-      // },
     ],
   };
   world: WorldController = WorldController.wrap(this.worldModel);

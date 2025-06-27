@@ -2,9 +2,9 @@
   <card-title>Summary</card-title>
   <card-content>
     <section class="table-container">
-      <table mat-table [dataSource]="computedData" multiTemplateDataRows class="summary-table">
+      <table mat-table [dataSource]="computedData" multiTemplateDataRows class="summary-table" matSort>
         <ng-container matColumnDef="good">
-          <th mat-header-cell *matHeaderCellDef>Good</th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Good</th>
           <td mat-cell *matCellDef="let element">{{ element.good }}</td>
         </ng-container>
         <ng-container matColumnDef="show-islands">
@@ -16,14 +16,14 @@
           </td>
         </ng-container>
         <ng-container matColumnDef="total-production-per-min">
-          <th mat-header-cell *matHeaderCellDef>Production (Total)</th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Production (Total)</th>
           <td mat-cell *matCellDef="let element">
             <formatted-number [value]="element.totalProductionPerMin" suffix="/m" [formatFontSpec]="colorSpec"
               zeroOverride="-"></formatted-number>
           </td>
         </ng-container>
         <ng-container matColumnDef="net-production-per-min">
-          <th mat-header-cell *matHeaderCellDef>Production (Net)</th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Production (Net)</th>
           <td mat-cell *matCellDef="let element">
             <formatted-number [value]="element.netProductionPerMin" suffix="/m"
               [formatFontSpec]="colorSpec"></formatted-number>
@@ -81,7 +81,6 @@
         <tr mat-header-row *matHeaderRowDef="outerColumns; sticky: true"></tr>
         <tr mat-row *matRowDef="let row; columns: outerColumns;"></tr>
         <tr mat-row *matRowDef="let row; columns: ['island-summary']" class="island-summary-table-row"></tr>
-
       </table>
     </section>
   </card-content>

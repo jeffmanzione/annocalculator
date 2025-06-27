@@ -2,8 +2,8 @@ import { Boost, Good, ProductionBuilding, Region, DepartmentOfLaborPolicy } from
 import { BASE_ISLAND_MODEL, BASE_PRODUCTION_LINE_MODEL, DEFAULT_ISLAND_MODEL, DEFAULT_PRODUCTION_LINE_MODEL, DEFAULT_WORLD_MODEL, IslandModel, ProductionLineModel, WorldModel, ExtraGoodModel, BASE_EXTRA_GOOD_MODEL, TradeRouteModel, IslandId, BASE_TRADE_ROUTE_MODEL, TradeRouteId } from "./models";
 import { ExtraGoodView, IslandView, ProductionLineView, TradeRouteView, ViewContext, WorldView } from "./views";
 
-let islandCounter = 0;
-let tradeRouteCounter = 0;
+let islandCounter = 1000;
+let tradeRouteCounter = 1000;
 
 export class ExtraGoodController extends ExtraGoodView {
   static override wrap(model: ExtraGoodModel, context: ViewContext): ExtraGoodController {
@@ -171,7 +171,7 @@ export class TradeRouteController extends TradeRouteView {
     const controller = new TradeRouteController(context);
     controller.wrap(model);
     if (model.id < 0) {
-      model.id = tradeRouteCounter++;
+      controller.model.id = tradeRouteCounter++;
     }
     return controller;
   }
@@ -207,7 +207,7 @@ export class IslandController extends IslandView {
     const controller = new IslandController(context);
     controller.wrap(model);
     if (!model.id || model.id < 0) {
-      model.id = islandCounter++;
+      controller.model.id = islandCounter++;
     }
     return controller;
   }
@@ -333,7 +333,7 @@ export class WorldController extends WorldView {
   }
 
   removeTradeRoute(id: TradeRouteId) {
-    const index = this.model.tradeRoutes.findIndex(tr => tr.id = id);
+    const index = this.model.tradeRoutes.findIndex(tr => tr.id == id);
     this.model.tradeRoutes.splice(index, 1);
     this._tradeRoutes!.splice(index, 1);
   }

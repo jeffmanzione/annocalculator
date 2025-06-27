@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { AfterViewInit, Component, Input, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { CardModule } from '../../card/card';
 import { MatTable, MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { FormattedNumberModule, GREEN_RED_FONT_SPEC } from "../../formatted-number/formatted-number";
@@ -9,6 +9,7 @@ import { ReadonlyTable, Table } from '../../../tools/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
+import { MatSort, MatSortModule } from '@angular/material/sort';
 
 interface GoodSummaryCell {
   island: IslandView,
@@ -37,21 +38,22 @@ interface GoodSummaryRow {
     MatButtonModule,
     MatIconModule,
     MatTableModule,
+    MatSortModule,
   ],
   templateUrl: './summary-panel.html',
   styleUrl: './summary-panel.scss'
 })
-export class SummaryPanel implements OnInit {
-  colorSpec = GREEN_RED_FONT_SPEC;
+export class SummaryPanel implements OnInit, AfterViewInit {
+  readonly colorSpec = GREEN_RED_FONT_SPEC;
 
-  outerColumns = [
+  readonly outerColumns = [
     'good',
     'show-islands',
     'total-production-per-min',
     'net-production-per-min',
   ];
 
-  innerColumns = [
+  readonly innerColumns = [
     'island',
     'local-production-per-min',
     'local-consumption-per-min',
@@ -60,7 +62,7 @@ export class SummaryPanel implements OnInit {
     'net-per-min',
   ];
 
-  computedData!: MatTableDataSource<GoodSummaryRow>;
+  readonly computedData = new MatTableDataSource<GoodSummaryRow>();
 
   @Input()
   world!: WorldView;
@@ -68,11 +70,29 @@ export class SummaryPanel implements OnInit {
   @ViewChild(MatTable<GoodSummaryRow>)
   table!: MatTable<GoodSummaryRow>;
 
+  @ViewChild(MatSort)
+  sort!: MatSort;
+
   @ViewChildren(MatTable<GoodSummaryCell>)
   islandTables!: QueryList<MatTable<GoodSummaryCell>>;
 
   ngOnInit(): void {
     this.update();
+  }
+
+  ngAfterViewInit(): void {
+    this.computedData.sort = this.sort;
+    this.computedData.sortingDataAccessor = (data: GoodSummaryRow, sortHeaderId: string): string | number => {
+      switch (sortHeaderId) {
+        case 'good':
+          return data.good.toLocaleLowerCase();
+        case 'total-production-per-min':
+          return data.totalProductionPerMin;
+        case 'net-production-per-min':
+          return data.netProductionPerMin;
+      }
+      return 0;
+    };
   }
 
   update(): void {
@@ -115,7 +135,7 @@ export class SummaryPanel implements OnInit {
       }
     }
 
-    this.computedData = new MatTableDataSource(this.groupByGood(baseTable));
+    this.computedData.data = this.groupByGood(baseTable);
     this.table?.renderRows();
   }
 
@@ -129,7 +149,6 @@ export class SummaryPanel implements OnInit {
     if (!cell) return 0;
     return cell.localProductionPerMin - cell.localConsumptionPerMin + cell.importedPerMin - cell.exportedPerMin;
   }
-
 
   private buildBaseTable(): Table<IslandId, Good, GoodSummaryCell> {
     let cells = new Table<IslandId, Good, GoodSummaryCell>();

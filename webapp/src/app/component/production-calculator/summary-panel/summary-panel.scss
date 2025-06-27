@@ -22,6 +22,17 @@ card-content {
   overflow-y: scroll;
 }
 
+.island-summary-row {
+  width: 90%;
+  margin-left: auto;
+}
+
+:host ::ng-deep {
+  div.mat-sort-header-content {
+    margin: auto;
+  }
+}
+
 table.summary-table {
   border-collapse: collapse;
   display: table;
@@ -61,10 +72,6 @@ table.summary-table {
     mat-form-field {
       width: 100%;
     }
-  }
-
-  td.island-summary-row {
-    padding: 0;
   }
 
   .island-summary-table-row {
