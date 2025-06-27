@@ -13,8 +13,10 @@ import { CommonModule } from '@angular/common';
 interface GoodSummaryCell {
   island: IslandView,
   good: Good,
-  totalProductionPerMin: number,
-  netProductionPerMin: number,
+  localProductionPerMin: number,
+  localConsumptionPerMin: number,
+  importedPerMin: number,
+  exportedPerMin: number,
 };
 
 interface GoodSummaryRow {
@@ -50,10 +52,12 @@ export class SummaryPanel implements OnInit {
   ];
 
   innerColumns = [
-    'placeholder',
     'island',
-    'total-production-per-min',
-    'net-production-per-min',
+    'local-production-per-min',
+    'local-consumption-per-min',
+    'imported-per-min',
+    'exported-per-min',
+    'net-per-min',
   ];
 
   computedData!: MatTableDataSource<GoodSummaryRow>;
@@ -81,22 +85,23 @@ export class SummaryPanel implements OnInit {
 
     for (const [sourceIsland, good, targetIslands] of tradesTable) {
       const cell = baseTable.get(sourceIsland, good);
-      let totalAvailable = cell?.netProductionPerMin ?? 0;
+      let totalAvailable = this.availableProduction(cell);
       if (totalAvailable <= 0) { continue; }
 
       const sortedIslands = targetIslands
         .map(id => baseTable.get(id, good))
-        .filter(i => i != null && i.netProductionPerMin < 0)
-        .map(i => i!)
-        .sort((i1, i2) => i1.netProductionPerMin - i2.netProductionPerMin);
+        .filter(c => this.availableProduction(c) < 0)
+        .map(c => c!)
+        .sort((c1, c2) => this.availableProduction(c1) - this.availableProduction(c2));
 
       // First, distribute evenly what is available.
       for (let i = 0; i < sortedIslands.length; i++) {
         const targetCell = baseTable.get(sortedIslands[i].island.id, good);
         if (!targetCell) { continue; }
         const targetDistribution = totalAvailable / (sortedIslands.length - i);
-        const distribution = Math.min(targetDistribution, -targetCell.netProductionPerMin);
-        targetCell.netProductionPerMin += distribution;
+        const distribution = Math.min(targetDistribution, -this.availableProduction(targetCell));
+        targetCell.importedPerMin += distribution;
+        cell!.exportedPerMin += distribution;
         totalAvailable -= distribution;
       }
       // If there is any left after distribution, sprinkle the last bit evenly.
@@ -104,10 +109,10 @@ export class SummaryPanel implements OnInit {
         const targetCell = baseTable.get(sortedIslands[i].island.id, good);
         if (!targetCell) { continue; }
         const distribution = totalAvailable / (sortedIslands.length - i);
-        targetCell.netProductionPerMin += distribution;
+        targetCell.importedPerMin += distribution;
+        cell!.exportedPerMin += distribution;
         totalAvailable -= distribution;
       }
-      cell!.netProductionPerMin = totalAvailable;
     }
 
     this.computedData = new MatTableDataSource(this.groupByGood(baseTable));
@@ -120,24 +125,32 @@ export class SummaryPanel implements OnInit {
     this.islandTables.get(this.computedData.data.indexOf(row))?.renderRows();
   }
 
+  availableProduction(cell?: GoodSummaryCell): number {
+    if (!cell) return 0;
+    return cell.localProductionPerMin - cell.localConsumptionPerMin + cell.importedPerMin - cell.exportedPerMin;
+  }
+
 
   private buildBaseTable(): Table<IslandId, Good, GoodSummaryCell> {
     let cells = new Table<IslandId, Good, GoodSummaryCell>();
 
-    const updateStats = (island: IslandView, good: Good, totalProductionPerMin: number, netProductionPerMin: number): void => {
-      const tableRow = cells.getOrDefault(island.id, good, () => this.createGoodSummaryCell(island, good));
-      tableRow.totalProductionPerMin += totalProductionPerMin;
-      tableRow.netProductionPerMin += netProductionPerMin;
+    const updateStats = (island: IslandView, good: Good, netProductionPerMin: number): void => {
+      const tableCell = cells.getOrDefault(island.id, good, () => this.createGoodSummaryCell(island, good));
+      if (netProductionPerMin > 0) {
+        tableCell.localProductionPerMin += netProductionPerMin;
+      } else {
+        tableCell.localConsumptionPerMin -= netProductionPerMin;
+      }
     };
 
     for (const island of this.world.islands) {
       for (const pl of island.productionLines) {
-        updateStats(island, pl.good, pl.goodsProducedPerMinute, pl.goodsProducedPerMinute);
+        updateStats(island, pl.good, pl.goodsProducedPerMinute);
         for (const eg of pl.extraGoods) {
-          updateStats(island, eg.good, eg.producedPerMinute, eg.producedPerMinute);
+          updateStats(island, eg.good, eg.producedPerMinute);
         }
         for (const ig of pl.inputGoods) {
-          updateStats(island, ig, 0, -pl.goodsConsumedPerMinute);
+          updateStats(island, ig, -pl.goodsConsumedPerMinute);
         }
       }
     }
@@ -156,8 +169,8 @@ export class SummaryPanel implements OnInit {
     let rows = cellTable.reduceLeft((good, cells) => {
       const row = this.createGoodSummaryRow(good, cells);
       for (const cell of cells) {
-        row.totalProductionPerMin += cell.totalProductionPerMin;
-        row.netProductionPerMin += cell.netProductionPerMin;
+        row.totalProductionPerMin += cell.localProductionPerMin;
+        row.netProductionPerMin += this.availableProduction(cell);
       }
       return row;
     });
@@ -179,8 +192,10 @@ export class SummaryPanel implements OnInit {
     return {
       island: island,
       good: good,
-      totalProductionPerMin: 0,
-      netProductionPerMin: 0,
+      localProductionPerMin: 0,
+      importedPerMin: 0,
+      exportedPerMin: 0,
+      localConsumptionPerMin: 0,
     };
   }
 }
