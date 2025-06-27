@@ -24,7 +24,7 @@ interface GoodSummaryRow {
   good: Good,
   totalProductionPerMin: number,
   netProductionPerMin: number,
-  islandSummaries: MatTableDataSource<GoodSummaryCell>,
+  islandSummaries: GoodSummaryCell[],
   showIslandSummary: boolean,
   showIslandSummaryIcon: string,
 };
@@ -63,6 +63,7 @@ export class SummaryPanel implements OnInit, AfterViewInit {
   ];
 
   readonly computedData = new MatTableDataSource<GoodSummaryRow>();
+  private readonly rows = new Map<Good, GoodSummaryRow>();
 
   @Input()
   world!: WorldView;
@@ -77,7 +78,15 @@ export class SummaryPanel implements OnInit, AfterViewInit {
   islandTables!: QueryList<MatTable<GoodSummaryCell>>;
 
   ngOnInit(): void {
+    for (const good of Object.values(Good)) {
+      if (good == Good.Unknown) continue;
+      this.rows.set(good, this.createBaseGoodSummaryRow(good));
+    }
     this.update();
+    this.computedData.filterPredicate = (data: GoodSummaryRow, _: string): boolean => {
+      return data.islandSummaries.length > 0;
+    };
+    this.computedData.data = Array.from(this.rows.values());
   }
 
   ngAfterViewInit(): void {
@@ -100,23 +109,23 @@ export class SummaryPanel implements OnInit, AfterViewInit {
       return;
     }
 
-    const baseTable = this.buildBaseTable();
+    const baseTableCells = this.buildBaseTableCells();
     const tradesTable = this.buildTradesTable();
 
     for (const [sourceIsland, good, targetIslands] of tradesTable) {
-      const cell = baseTable.get(sourceIsland, good);
+      const cell = baseTableCells.get(sourceIsland, good);
       let totalAvailable = this.availableProduction(cell);
       if (totalAvailable <= 0) { continue; }
 
       const sortedIslands = targetIslands
-        .map(id => baseTable.get(id, good))
+        .map(id => baseTableCells.get(id, good))
         .filter(c => this.availableProduction(c) < 0)
         .map(c => c!)
         .sort((c1, c2) => this.availableProduction(c1) - this.availableProduction(c2));
 
       // First, distribute evenly what is available.
       for (let i = 0; i < sortedIslands.length; i++) {
-        const targetCell = baseTable.get(sortedIslands[i].island.id, good);
+        const targetCell = baseTableCells.get(sortedIslands[i].island.id, good);
         if (!targetCell) { continue; }
         const targetDistribution = totalAvailable / (sortedIslands.length - i);
         const distribution = Math.min(targetDistribution, -this.availableProduction(targetCell));
@@ -126,7 +135,7 @@ export class SummaryPanel implements OnInit, AfterViewInit {
       }
       // If there is any left after distribution, sprinkle the last bit evenly.
       for (let i = 0; i < sortedIslands.length; i++) {
-        const targetCell = baseTable.get(sortedIslands[i].island.id, good);
+        const targetCell = baseTableCells.get(sortedIslands[i].island.id, good);
         if (!targetCell) { continue; }
         const distribution = totalAvailable / (sortedIslands.length - i);
         targetCell.importedPerMin += distribution;
@@ -134,8 +143,10 @@ export class SummaryPanel implements OnInit, AfterViewInit {
         totalAvailable -= distribution;
       }
     }
+    this.updateTableCells(baseTableCells);
+    // Re-applies the filter. No idea why this is needed...
+    this.computedData.filter = '-';
 
-    this.computedData.data = this.groupByGood(baseTable);
     this.table?.renderRows();
   }
 
@@ -150,7 +161,7 @@ export class SummaryPanel implements OnInit, AfterViewInit {
     return cell.localProductionPerMin - cell.localConsumptionPerMin + cell.importedPerMin - cell.exportedPerMin;
   }
 
-  private buildBaseTable(): Table<IslandId, Good, GoodSummaryCell> {
+  private buildBaseTableCells(): Table<IslandId, Good, GoodSummaryCell> {
     let cells = new Table<IslandId, Good, GoodSummaryCell>();
 
     const updateStats = (island: IslandView, good: Good, netProductionPerMin: number): void => {
@@ -184,22 +195,25 @@ export class SummaryPanel implements OnInit, AfterViewInit {
     return trades;
   }
 
-  private groupByGood(cellTable: ReadonlyTable<IslandId, Good, GoodSummaryCell>): GoodSummaryRow[] {
-    let rows = cellTable.reduceLeft((good, cells) => {
-      const row = this.createGoodSummaryRow(good, cells);
+  private updateTableCells(cellTable: ReadonlyTable<IslandId, Good, GoodSummaryCell>): void {
+    for (const row of this.rows.values()) {
+      clearRow(row);
+    }
+    cellTable.reduceLeft((good, cells) => {
+      if (good == Good.Unknown) return;
+      const row = this.rows.get(good)!;
+      row.islandSummaries = Array.from(cells);
       for (const cell of cells) {
         row.totalProductionPerMin += cell.localProductionPerMin;
         row.netProductionPerMin += this.availableProduction(cell);
       }
-      return row;
     });
-    return Array.from(rows.values()).sort((r1, r2) => r1.good.localeCompare(r2.good));
   }
 
-  private createGoodSummaryRow(good: Good, cells: Iterable<GoodSummaryCell>): GoodSummaryRow {
+  private createBaseGoodSummaryRow(good: Good): GoodSummaryRow {
     return {
       good: good,
-      islandSummaries: new MatTableDataSource(Array.from(cells).sort((c1, c2) => c1.island.name.localeCompare(c2.island.name))),
+      islandSummaries: [],
       totalProductionPerMin: 0,
       netProductionPerMin: 0,
       showIslandSummary: false,
@@ -217,4 +231,10 @@ export class SummaryPanel implements OnInit, AfterViewInit {
       localConsumptionPerMin: 0,
     };
   }
+}
+
+function clearRow(row: GoodSummaryRow): void {
+  row.totalProductionPerMin = 0;
+  row.netProductionPerMin = 0;
+  row.islandSummaries = [];
 }
