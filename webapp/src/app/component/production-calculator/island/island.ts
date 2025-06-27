@@ -86,11 +86,11 @@ export class Island extends ControlComponent<IslandController> implements OnInit
 
   productionLinesDataSource!: MatTableDataSource<ProductionLineControl>;
 
-  @ViewChildren('extraGoodTables')
-  extraGoodTables!: QueryList<MatTable<ExtraGoodControl>>;
-
   @ViewChild('productionLinesTable')
   table!: MatTable<ProductionLineControl>;
+
+  @ViewChildren('extraGoodTables')
+  extraGoodTables!: QueryList<MatTable<ExtraGoodControl>>;
 
   ngOnInit(): void {
     this.formGroup = new FormGroup({

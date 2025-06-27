@@ -170,7 +170,9 @@ export class TradeRouteController extends TradeRouteView {
   static override wrap(model: TradeRouteModel, context: ViewContext): TradeRouteController {
     const controller = new TradeRouteController(context);
     controller.wrap(model);
-    model.id ??= tradeRouteCounter++;
+    if (model.id < 0) {
+      model.id = tradeRouteCounter++;
+    }
     return controller;
   }
 
@@ -178,18 +180,18 @@ export class TradeRouteController extends TradeRouteView {
     return this;
   }
 
-  override set sourceIsland(value: IslandId) {
-    this.model.sourceIsland = value;
+  override set sourceIslandId(value: IslandId) {
+    this.model.sourceIslandId = value;
   }
-  override get sourceIsland(): IslandId {
-    return super.sourceIsland;
+  override get sourceIslandId(): IslandId {
+    return super.sourceIslandId;
   }
 
-  override set targetIsland(value: IslandId) {
-    this.model.targetIsland = value;
+  override set targetIslandId(value: IslandId) {
+    this.model.targetIslandId = value;
   }
-  override get targetIsland(): IslandId {
-    return super.targetIsland;
+  override get targetIslandId(): IslandId {
+    return super.targetIslandId;
   }
 
   override set good(value: Good) {
@@ -204,7 +206,9 @@ export class IslandController extends IslandView {
   static override wrap(model: IslandModel, context: ViewContext): IslandController {
     const controller = new IslandController(context);
     controller.wrap(model);
-    model.id ??= islandCounter++;
+    if (!model.id || model.id < 0) {
+      model.id = islandCounter++;
+    }
     return controller;
   }
 
@@ -324,6 +328,7 @@ export class WorldController extends WorldView {
     const tradeRoute = structuredClone(BASE_TRADE_ROUTE_MODEL);
     this.model.tradeRoutes.push(tradeRoute);
     const controller = TradeRouteController.wrap(tradeRoute, this.selfContextC);
+    this._tradeRoutes!.push(controller);
     return controller;
   }
 

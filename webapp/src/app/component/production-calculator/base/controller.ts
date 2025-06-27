@@ -3,9 +3,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 export abstract class Control {
   private readonly _change = new EventEmitter<void>();
-  public get change() {
-    return this._change;
-  }
+  public get change() { return this._change; }
 
   private readonly _children: Control[] = [];
 
@@ -38,9 +36,9 @@ export abstract class Control {
     }
   }
 
-  beforeBubbleChange(): void { }
+  beforeBubbleChange(): void { return }
 
-  afterPushChange(): void { }
+  afterPushChange(): void { return }
 }
 
 @Component({
@@ -52,7 +50,5 @@ export abstract class ControlComponent<T> extends Control {
   controller!: T;
 
   @Output()
-  override get change(): EventEmitter<void> {
-    return super.change;
-  }
+  override get change(): EventEmitter<void> { return super.change; }
 }

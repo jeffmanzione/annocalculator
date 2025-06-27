@@ -42,6 +42,9 @@ export class FormattedNumber implements OnInit {
   @Input()
   suffix: string = '';
 
+  @Input()
+  zeroOverride?: string;
+
   constructor(@Inject(LOCALE_ID) private readonly locale: string) { }
 
   ngOnInit(): void {
@@ -93,6 +96,9 @@ export class FormattedNumber implements OnInit {
   }
 
   get formattedValue(): string {
+    if (this.zeroOverride && this.value == 0) {
+      return this.zeroOverride;
+    }
     const strValue = this.isPercent ? this.formatAsPercent() : this.formatAsNumber();
     return `${strValue}${this.suffix}`;
   }

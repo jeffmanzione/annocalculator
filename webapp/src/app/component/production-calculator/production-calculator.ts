@@ -105,11 +105,21 @@ export class ProductionCalculatorPage extends Control implements OnInit {
             hasTradeUnion: true,
             inRangeOfLocalDepartment: true,
           },
+          {
+            building: ProductionBuilding.FurDealer,
+            inputGoods: [Good.CottonFabric, Good.Furs],
+            good: Good.FurCoats,
+            numBuildings: 2,
+            boosts: [Boost.Electricity],
+            hasTradeUnion: true,
+            inRangeOfLocalDepartment: true,
+          },
         ]
       },
       {
         id: 2,
         name: 'Farm Island',
+        region: Region.OldWorld,
         dolPolicy: DepartmentOfLaborPolicy.LandReformAct,
         productionLines: [
           {
@@ -130,22 +140,63 @@ export class ProductionCalculatorPage extends Control implements OnInit {
             tradeUnionItemsBonus: 0.5,
             inRangeOfLocalDepartment: true,
           },
+          {
+            building: ProductionBuilding.HuntingCabin,
+            good: Good.Furs,
+            numBuildings: 10,
+          },
+        ]
+      },
+      {
+        id: 3,
+        name: 'Plantation Island',
+        region: Region.NewWorld,
+        productionLines: [
+          {
+            building: ProductionBuilding.CottonPlantation,
+            good: Good.Cotton,
+            numBuildings: 10,
+          },
+          {
+            building: ProductionBuilding.CottonMill,
+            good: Good.CottonFabric,
+            inputGoods: [Good.Cotton],
+            numBuildings: 5,
+          },
         ]
       }
     ],
     tradeRoutes: [
       {
         id: 1,
-        sourceIsland: 2,
-        targetIsland: 1,
+        sourceIslandId: 2,
+        targetIslandId: 1,
         good: Good.Grain,
       },
       {
         id: 2,
-        sourceIsland: 2,
-        targetIsland: 1,
+        sourceIslandId: 2,
+        targetIslandId: 1,
         good: Good.Hops,
-      }
+      },
+      {
+        id: 3,
+        sourceIslandId: 2,
+        targetIslandId: 1,
+        good: Good.Furs,
+      },
+      {
+        id: 4,
+        sourceIslandId: 3,
+        targetIslandId: 1,
+        good: Good.CottonFabric,
+      },
+      // {
+      //   id: 5,
+      //   sourceIsland: 3,
+      //   targetIsland: 2,
+      //   good: Good.CottonFabric,
+      // },
     ],
   };
   world: WorldController = WorldController.wrap(this.worldModel);

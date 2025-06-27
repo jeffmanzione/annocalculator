@@ -25,8 +25,8 @@ export type TradeRouteId = number;
 
 export interface TradeRouteModel extends Model {
   id: TradeRouteId;
-  sourceIsland: IslandId;
-  targetIsland: IslandId;
+  sourceIslandId: IslandId;
+  targetIslandId: IslandId;
   good: Good;
 };
 
@@ -76,15 +76,15 @@ export const DEFAULT_PRODUCTION_LINE_MODEL: ProductionLineModel = {
 
 export const BASE_TRADE_ROUTE_MODEL: TradeRouteModel = {
   id: -1,
-  sourceIsland: -1,
-  targetIsland: -1,
+  sourceIslandId: -1,
+  targetIslandId: -1,
   good: Good.Unknown,
 };
 
 export const DEFAULT_TRADE_ROUTE_MODEL: TradeRouteModel = {
   id: -1,
-  sourceIsland: -1,
-  targetIsland: -1,
+  sourceIslandId: -1,
+  targetIslandId: -1,
   good: Good.Unknown,
 };
 

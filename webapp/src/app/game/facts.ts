@@ -413,7 +413,7 @@ export const buildingInfo: ProductionInfo[] = [
   {
     building: ProductionBuilding.CottonMill,
     processingTimeSeconds: 30,
-    productionType: ProductionType.PlantFarm,
+    productionType: ProductionType.Factory,
     allowedRegions: [Region.NewWorld],
     good: Good.CottonFabric,
     inputGoods: [Good.Cotton],
@@ -485,7 +485,7 @@ export const buildingInfo: ProductionInfo[] = [
     productionType: ProductionType.Factory,
     allowedRegions: [Region.OldWorld, Region.CapeTrelawney],
     good: Good.FurCoats,
-    inputGoods: [Good.Wool, Good.Furs],
+    inputGoods: [Good.CottonFabric, Good.Furs],
   },
   {
     building: ProductionBuilding.Furnace,

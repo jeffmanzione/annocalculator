@@ -1,27 +1,70 @@
 <card>
   <card-title>Summary</card-title>
   <card-content>
-    <table mat-table [dataSource]="computedData" class="summary-table">
-      <ng-container matColumnDef="good">
-        <th mat-header-cell *matHeaderCellDef>Good</th>
-        <td mat-cell *matCellDef="let element">{{ element.good }}</td>
-      </ng-container>
-      <ng-container matColumnDef="total-production-per-min">
-        <th mat-header-cell *matHeaderCellDef>Production (Total)</th>
-        <td mat-cell *matCellDef="let element">
-          <formatted-number [value]="element.totalProductionPerMin" suffix="/m"
-            [formatFontSpec]="colorSpec"></formatted-number>
-        </td>
-      </ng-container>
-      <ng-container matColumnDef="net-production-per-min">
-        <th mat-header-cell *matHeaderCellDef>Production (Net)</th>
-        <td mat-cell *matCellDef="let element">
-          <formatted-number [value]="element.netProductionPerMin" suffix="/m"
-            [formatFontSpec]="colorSpec"></formatted-number>
-        </td>
-      </ng-container>
-      <tr mat-header-row *matHeaderRowDef="displayColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayColumns;"></tr>
-    </table>
+    <section class="table-container">
+      <table mat-table [dataSource]="computedData" multiTemplateDataRows class="summary-table">
+        <ng-container matColumnDef="good">
+          <th mat-header-cell *matHeaderCellDef>Good</th>
+          <td mat-cell *matCellDef="let element">{{ element.good }}</td>
+        </ng-container>
+        <ng-container matColumnDef="show-islands">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let element">
+            <button mat-icon-button (click)="toggleIslandSummary(element)">
+              <mat-icon [fontIcon]="element.showIslandSummaryIcon"></mat-icon>
+            </button>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="total-production-per-min">
+          <th mat-header-cell *matHeaderCellDef>Production (Total)</th>
+          <td mat-cell *matCellDef="let element">
+            <formatted-number [value]="element.totalProductionPerMin" suffix="/m" [formatFontSpec]="colorSpec"
+              zeroOverride="-"></formatted-number>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="net-production-per-min">
+          <th mat-header-cell *matHeaderCellDef>Production (Net)</th>
+          <td mat-cell *matCellDef="let element">
+            <formatted-number [value]="element.netProductionPerMin" suffix="/m"
+              [formatFontSpec]="colorSpec"></formatted-number>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="island-summary">
+          <td mat-cell *matCellDef="let element" [attr.colspan]="outerColumns.length">
+            <div *ngIf="element.showIslandSummary" class="island-summary-row">
+              <table mat-table [dataSource]="element.islandSummaries" class="island-summary-table">
+                <ng-container matColumnDef="placeholder">
+                  <th mat-header-cell *matHeaderCellDef>Placeholder</th>
+                  <td mat-cell *matCellDef="let element2"></td>
+                </ng-container>
+                <ng-container matColumnDef="island">
+                  <th mat-header-cell *matHeaderCellDef>Island</th>
+                  <td mat-cell *matCellDef="let element2">{{ element2.island.name }}</td>
+                </ng-container>
+                <ng-container matColumnDef="total-production-per-min">
+                  <th mat-header-cell *matHeaderCellDef>Production (Total)</th>
+                  <td mat-cell *matCellDef="let element2">
+                    <formatted-number [value]="element2.totalProductionPerMin" suffix="/m" [formatFontSpec]="colorSpec"
+                      zeroOverride="-"></formatted-number>
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="net-production-per-min">
+                  <th mat-header-cell *matHeaderCellDef>Production (Net)</th>
+                  <td mat-cell *matCellDef="let element2">
+                    <formatted-number [value]="element2.netProductionPerMin" suffix="/m"
+                      [formatFontSpec]="colorSpec"></formatted-number>
+                  </td>
+                </ng-container>
+                <tr mat-row *matRowDef="let row; columns: innerColumns;"></tr>
+              </table>
+            </div>
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="outerColumns; sticky: true"></tr>
+        <tr mat-row *matRowDef="let row; columns: outerColumns;"></tr>
+        <tr mat-row *matRowDef="let row; columns: ['island-summary']" class="island-summary-table-row"></tr>
+
+      </table>
+    </section>
   </card-content>
 </card>

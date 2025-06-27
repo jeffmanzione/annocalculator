@@ -93,8 +93,8 @@ export class TradeRouteControl extends Control {
   constructor(private readonly controller: TradeRouteController) {
     super();
     this.formGroup = new FormGroup({
-      sourceIsland: new FormControl(this.controller.sourceIsland),
-      targetIsland: new FormControl(this.controller.targetIsland),
+      sourceIsland: new FormControl(this.controller.sourceIslandId),
+      targetIsland: new FormControl(this.controller.targetIslandId),
       good: new FormControl(this.controller.good),
     });
     this.formGroup.valueChanges.subscribe(_ => this.pushUpChange());
@@ -103,22 +103,22 @@ export class TradeRouteControl extends Control {
   }
 
   override beforeBubbleChange(): void {
-    this.controller.sourceIsland = this.formGroup.value.sourceIsland;
-    this.controller.targetIsland = this.formGroup.value.targetIsland;
+    this.controller.sourceIslandId = this.formGroup.value.sourceIsland;
+    this.controller.targetIslandId = this.formGroup.value.targetIsland;
     this.controller.good = this.formGroup.value.good;
   }
 
   override afterPushChange(): void {
-    this.sourceIslandOptions = this.controller.world.islands.filter(i => i.id != this.controller.targetIsland);
-    this.targetIslandOptions = this.controller.world.islands.filter(i => i.id != this.controller.sourceIsland);
+    this.sourceIslandOptions = this.controller.world.islands.filter(i => i.id != this.controller.targetIslandId);
+    this.targetIslandOptions = this.controller.world.islands.filter(i => i.id != this.controller.sourceIslandId);
     this.sourceGoodOptions = this.computeSourceGoods();
   }
 
   private computeSourceGoods(): Good[] {
-    if (this.controller.sourceIsland < 0) {
+    if (this.controller.sourceIslandId < 0) {
       return [];
     }
-    const island = this.controller.world.lookupIslandById(this.controller.sourceIsland);
+    const island = this.controller.world.lookupIslandById(this.controller.sourceIslandId);
     return island.producedGoods;
   }
 }

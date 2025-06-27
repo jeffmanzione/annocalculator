@@ -142,6 +142,10 @@ export class ProductionLineView extends View<ProductionLineModel> {
         : 1);
   }
 
+  get goodsConsumedPerMinute(): number {
+    return this.numBuildings * 60 / this.buildingProcessTimeSeconds;
+  }
+
   get goodsProducedPerMinute(): number {
     return this.numBuildings * 60 / this.goodProcessTimeSeconds;
   }
@@ -164,12 +168,20 @@ export class TradeRouteView extends View<TradeRouteModel> {
     return this.model.id;
   }
 
-  get sourceIsland(): IslandId {
-    return this.model.sourceIsland;
+  get sourceIslandId(): IslandId {
+    return this.model.sourceIslandId;
   }
 
-  get targetIsland(): IslandId {
-    return this.model.targetIsland;
+  get sourceIsland(): IslandView {
+    return this.world.lookupIslandById(this.model.sourceIslandId);
+  }
+
+  get targetIslandId(): IslandId {
+    return this.model.targetIslandId;
+  }
+
+  get targetIsland(): IslandView {
+    return this.world.lookupIslandById(this.model.targetIslandId);
   }
 
   get good(): Good {
@@ -254,12 +266,12 @@ export class WorldView extends View<WorldModel> {
 
   public lookupTradeRoutesStartingFrom(island: IslandId | IslandView): TradeRouteView[] {
     const id = typeof island === 'number' ? island : island.id;
-    return this.model.tradeRoutes.filter(tr => tr.sourceIsland == id).map(tr => TradeRouteView.wrap(tr, this.selfContext));
+    return this.model.tradeRoutes.filter(tr => tr.sourceIslandId == id).map(tr => TradeRouteView.wrap(tr, this.selfContext));
   }
 
   public lookupTradeRoutesEndingAt(island: IslandId | IslandView): TradeRouteView[] {
     const id = typeof island === 'number' ? island : island.id;
-    return this.model.tradeRoutes.filter(tr => tr.targetIsland == id).map(tr => TradeRouteView.wrap(tr, this.selfContext));
+    return this.model.tradeRoutes.filter(tr => tr.targetIslandId == id).map(tr => TradeRouteView.wrap(tr, this.selfContext));
   }
 
   private get selfContext(): ViewContext {
