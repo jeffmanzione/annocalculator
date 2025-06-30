@@ -14,6 +14,7 @@ import { Region, DepartmentOfLaborPolicy, ProductionBuilding, Good, Boost } from
 import { WorldModel } from '../../mvc/models';
 import { Control } from './base/controller';
 import { TradeRoutesPanel } from "./trade-routes-panel/trade-routes-panel";
+import { JsonInput } from '../json-input/json-input';
 
 @Component({
   selector: 'production-calculator-page',
@@ -21,6 +22,7 @@ import { TradeRoutesPanel } from "./trade-routes-panel/trade-routes-panel";
     CardModule,
     CommonModule,
     Island,
+    JsonInput,
     MatButtonModule,
     MatExpansionModule,
     MatFormFieldModule,
@@ -40,7 +42,7 @@ import { TradeRoutesPanel } from "./trade-routes-panel/trade-routes-panel";
   ],
 })
 export class ProductionCalculatorPage extends Control implements OnInit {
-  private readonly worldModel: WorldModel = {
+  readonly worldModel: WorldModel = {
     tradeUnionBonus: 0.3,
     islands: [
       {
@@ -229,5 +231,10 @@ export class ProductionCalculatorPage extends Control implements OnInit {
   removeIslandAt(index: number): void {
     this.world.removeIslandAt(index);
     this.update();
+  }
+
+
+  updateModel(newModel: WorldModel): void {
+    console.log(newModel);
   }
 }

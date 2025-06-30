@@ -1,0 +1,4 @@
+<mat-form-field>
+  <textarea #input matInput (change)="updateModel()"></textarea>
+  <mat-error *ngIf="errorMessage != ''">{{ errorMessage }}</mat-error>
+</mat-form-field>
