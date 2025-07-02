@@ -28,7 +28,7 @@ import { TradeRouteId } from '../../../mvc/models';
     ReactiveFormsModule,
   ],
   templateUrl: './trade-routes-panel.html',
-  styleUrl: './trade-routes-panel.scss'
+  styleUrl: './trade-routes-panel.scss',
 })
 export class TradeRoutesPanel extends ControlComponent<WorldController> implements OnInit {
   readonly displayColumns = [

@@ -1,10 +1,11 @@
-import { Component, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { WorldController } from '../../mvc/controllers';
 import { Island } from "./island/island";
 import { MatExpansionModule } from '@angular/material/expansion';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { MatDialog, MatDialogConfig, MatDialogModule } from '@angular/material/dialog';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS, MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -14,7 +15,7 @@ import { Region, DepartmentOfLaborPolicy, ProductionBuilding, Good, Boost } from
 import { WorldModel } from '../../mvc/models';
 import { Control } from './base/controller';
 import { TradeRoutesPanel } from "./trade-routes-panel/trade-routes-panel";
-import { JsonInput } from '../json-input/json-input';
+import { SaveData, SaveDialog } from './save-dialog/save-dialog';
 
 @Component({
   selector: 'production-calculator-page',
@@ -22,8 +23,8 @@ import { JsonInput } from '../json-input/json-input';
     CardModule,
     CommonModule,
     Island,
-    JsonInput,
     MatButtonModule,
+    MatDialogModule,
     MatExpansionModule,
     MatFormFieldModule,
     MatIconModule,
@@ -42,7 +43,7 @@ import { JsonInput } from '../json-input/json-input';
   ],
 })
 export class ProductionCalculatorPage extends Control implements OnInit {
-  readonly worldModel: WorldModel = {
+  world: WorldController = WorldController.wrap({
     tradeUnionBonus: 0.3,
     islands: [
       {
@@ -194,10 +195,12 @@ export class ProductionCalculatorPage extends Control implements OnInit {
         good: Good.CottonFabric,
       },
     ],
-  };
-  world: WorldController = WorldController.wrap(this.worldModel);
+  });
 
   formGroup?: FormGroup;
+
+  private readonly changeDectorRef = inject(ChangeDetectorRef);
+  private readonly matDialog = inject(MatDialog);
 
   @ViewChildren(Island)
   islandComponents!: QueryList<Island>;
@@ -213,6 +216,7 @@ export class ProductionCalculatorPage extends Control implements OnInit {
   }
 
   update(): void {
+    this.changeDectorRef.detectChanges();
     this.world.tradeUnionBonus = this.formGroup!.value.tradeUnionBonusPercent / 100;
     if (this.islandComponents) {
       for (const i of this.islandComponents) {
@@ -233,8 +237,26 @@ export class ProductionCalculatorPage extends Control implements OnInit {
     this.update();
   }
 
+  openSaveDialog(): void {
+    this.matDialog
+      .open(SaveDialog, this.dialogConfig)
+      .afterClosed()
+      .subscribe((result) => this.updateModel(result));
+  }
 
-  updateModel(newModel: WorldModel): void {
-    console.log(newModel);
+  private updateModel(newModel: WorldModel): void {
+    if (!newModel) {
+      return;
+    }
+    this.world = WorldController.wrap(newModel);
+    this.update();
+  }
+
+  private get dialogConfig(): MatDialogConfig<SaveData<WorldModel>> {
+    return {
+      data: { obj: this.world.copyModel() } as SaveData<WorldModel>,
+      width: '600px',
+      height: '700px',
+    };
   }
 }

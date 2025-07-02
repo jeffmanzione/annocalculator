@@ -2,12 +2,16 @@
   <section class="global-parameters-section" [formGroup]="formGroup!">
     <card>
       <card-title>Global Parameters</card-title>
-      <card-content>
+      <card-content class="global-parameters-content">
         <mat-form-field>
           <mat-label>Palace Trade Union Bonus (%)</mat-label>
           <input matInput type="number" formControlName="tradeUnionBonusPercent">
         </mat-form-field>
-        <json-input [model]="worldModel" (change)="updateModel($event)"></json-input>
+        <div class="save-button-container">
+          <button mat-icon-button class="save-button" (click)="openSaveDialog()">
+            <mat-icon fontIcon="edit_square"></mat-icon>
+          </button>
+        </div>
       </card-content>
     </card>
   </section>

@@ -1,6 +1,5 @@
 import { CommonModule } from '@angular/common';
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 
 @Component({
@@ -8,25 +7,24 @@ import { MatInputModule } from '@angular/material/input';
   imports: [
     CommonModule,
     MatInputModule,
-    MatFormFieldModule,
   ],
   templateUrl: './json-input.html',
   styleUrl: './json-input.scss'
 })
 export class JsonInput<T> implements OnInit {
 
-  private _model!: T;
+  private _value!: T;
 
   @Input()
-  set model(value: T) {
-    this._model = value;
+  set value(value: T) {
+    this._value = value;
     if (this.textArea) {
       this.convertObjectToJsonString();
     }
   }
 
   @Output()
-  change = new EventEmitter<T>;
+  valueChange = new EventEmitter<T>;
 
   @ViewChild('input', { static: true, read: ElementRef })
   textArea!: ElementRef<HTMLTextAreaElement>;
@@ -38,14 +36,18 @@ export class JsonInput<T> implements OnInit {
   }
 
   private convertObjectToJsonString(): void {
-    this.textArea.nativeElement.value = JSON.stringify(this._model);
+    this.textArea.nativeElement.value = JSON.stringify(
+      this._value,
+      /*replacer=*/null,
+      /*spaces=*/2
+    );
   }
 
   updateModel(): void {
     try {
       const jsonText = this.textArea.nativeElement.value;
-      this._model = JSON.parse(jsonText) as T;
-      this.change.emit(this._model);
+      this._value = JSON.parse(jsonText) as T;
+      this.valueChange.emit(this._value);
       this.errorMessage = '';
     } catch (e) {
       if (e instanceof SyntaxError) {

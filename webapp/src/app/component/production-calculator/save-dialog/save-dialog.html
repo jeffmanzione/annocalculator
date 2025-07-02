@@ -1,0 +1,13 @@
+<h2 mat-dialog-title>Manual JSON Input</h2>
+<mat-dialog-content class="mat-typography">
+  <h3>
+    Paste or edit the calculator input JSON here.
+    Make sure your JSON is valid—invalid changes will be ignored.
+    Use this feature to share, backup, or restore your calculator state.
+  </h3>
+  <json-input [(value)]="obj"></json-input>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button matButton mat-dialog-close>Cancel</button>
+  <button matButton="filled" color="primary" [mat-dialog-close]="obj()" cdkFocusInitial>Apply Changes</button>
+</mat-dialog-actions>

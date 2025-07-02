@@ -23,6 +23,22 @@
   padding-bottom: 16px;
 }
 
+.global-parameters-content {
+  position: relative;
+}
+
+.save-button-container {
+  display: flex;
+  position: absolute;
+  height: 100%;
+  top: 0;
+  right: 0;
+}
+
+.save-button {
+  margin: auto;
+}
+
 .island-list-section {
   flex: 1;
   overflow-x: hidden;
@@ -49,7 +65,6 @@ mat-accordion {
     }
   }
 }
-
 
 mat-panel-title,
 mat-panel-description,

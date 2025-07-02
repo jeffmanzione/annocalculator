@@ -1,4 +1,4 @@
-import { Component, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { IslandController } from '../../../mvc/controllers';
 import { MatTable, MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { CommonModule } from '@angular/common';
@@ -36,7 +36,8 @@ import { TextFieldModule } from '@angular/cdk/text-field';
     TextFieldModule,
   ],
   templateUrl: './island.html',
-  styleUrl: './island.scss'
+  styleUrl: './island.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Island extends ControlComponent<IslandController> implements OnInit {
   readonly regions = Object.values(Region).filter(r => r != Region.Unknown);

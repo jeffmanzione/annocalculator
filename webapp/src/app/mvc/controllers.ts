@@ -341,5 +341,9 @@ export class WorldController extends WorldView {
   private get selfContextC(): ViewContext {
     return { ...this.context, world: this };
   }
+
+  copyModel(): WorldModel {
+    return structuredClone(this.model);
+  }
 };
 

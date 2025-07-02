@@ -41,7 +41,7 @@ interface GoodSummaryRow {
     MatSortModule,
   ],
   templateUrl: './summary-panel.html',
-  styleUrl: './summary-panel.scss'
+  styleUrl: './summary-panel.scss',
 })
 export class SummaryPanel implements OnInit, AfterViewInit {
   readonly colorSpec = GREEN_RED_FONT_SPEC;
@@ -66,7 +66,15 @@ export class SummaryPanel implements OnInit, AfterViewInit {
   private readonly rows = new Map<Good, GoodSummaryRow>();
 
   @Input()
-  world!: WorldView;
+  set world(value: WorldView) {
+    this._world = value;
+    this.update();
+  }
+  get world(): WorldView {
+    return this._world;
+  }
+
+  _world!: WorldView;
 
   @ViewChild(MatTable<GoodSummaryRow>)
   table!: MatTable<GoodSummaryRow>;
@@ -105,7 +113,7 @@ export class SummaryPanel implements OnInit, AfterViewInit {
   }
 
   update(): void {
-    if (!this.world) {
+    if (!this._world || this.rows.size == 0) {
       return;
     }
 
@@ -173,7 +181,7 @@ export class SummaryPanel implements OnInit, AfterViewInit {
       }
     };
 
-    for (const island of this.world.islands) {
+    for (const island of this._world.islands) {
       for (const pl of island.productionLines) {
         updateStats(island, pl.good, pl.goodsProducedPerMinute);
         for (const eg of pl.extraGoods) {
@@ -189,7 +197,7 @@ export class SummaryPanel implements OnInit, AfterViewInit {
 
   private buildTradesTable(): ReadonlyTable<IslandId, Good, IslandId[]> {
     const trades = new Table<IslandId, Good, IslandId[]>();
-    for (const tr of this.world.tradeRoutes) {
+    for (const tr of this._world.tradeRoutes) {
       trades.getOrDefault(tr.sourceIslandId, tr.good, () => []).push(tr.targetIslandId);
     }
     return trades;
