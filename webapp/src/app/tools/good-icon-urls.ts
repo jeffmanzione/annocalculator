@@ -22,6 +22,7 @@ const alternativeIconNames = new Map<Good, string>([
   [Good.Ponchos, 'Poncho'],
   [Good.Potatoes, 'Potato'],
   [Good.Saltpetre, 'Saltpeter'],
+  [Good.SangaCow, 'Icon_watusi_0'],
   [Good.Spices, 'Icon_spices_0'],
   [Good.TailoredSuits, 'Icon_suits_0'],
   [Good.Tapestries, 'Icon_tapestries_0'],

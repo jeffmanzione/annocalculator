@@ -3,7 +3,7 @@ import { ProductionCalculatorPage } from './component/production-calculator/prod
 import { AboutPage } from './component/about/about';
 
 export const routes: Routes = [
-  { path: '', pathMatch: 'full', redirectTo: 'productionCalculator' },
-  { path: 'productionCalculator', component: ProductionCalculatorPage },
+  { path: '', pathMatch: 'full', redirectTo: 'production-calculator' },
+  { path: 'production-calculator', component: ProductionCalculatorPage },
   { path: 'about', component: AboutPage },
 ];

@@ -17,7 +17,7 @@ import { Router } from '@angular/router';
 export class AppBar {
 
   readonly apps = [
-    { displayText: 'Production Calculator', path: '/productionCalculator' },
+    { displayText: 'Production Calculator', path: '/production-calculator' },
     { displayText: 'About', path: '/about' },
   ];
 

@@ -27,16 +27,20 @@
   position: relative;
 }
 
-.save-button-container {
+.buttons-container {
   display: flex;
   position: absolute;
   height: 100%;
   top: 0;
   right: 0;
-}
 
-.save-button {
-  margin: auto;
+  button {
+    margin: auto 8px auto auto;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
 }
 
 .island-list-section {

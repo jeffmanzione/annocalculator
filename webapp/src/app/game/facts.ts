@@ -196,6 +196,14 @@ export const buildingInfo: ProductionInfo[] = [
     inputGoods: [Good.CottonFabric, Good.Felt],
   },
   {
+    building: ProductionBuilding.Bootmakers,
+    processingTimeSeconds: 60,
+    productionType: ProductionType.Factory,
+    allowedRegions: [Region.OldWorld, Region.CapeTrelawney],
+    good: Good.LeatherBoots,
+    inputGoods: [Good.SangaCow],
+  },
+  {
     building: ProductionBuilding.BrassSmeltery,
     processingTimeSeconds: 60,
     productionType: ProductionType.Factory,
@@ -859,6 +867,13 @@ export const buildingInfo: ProductionInfo[] = [
     productionType: ProductionType.Mine,
     allowedRegions: [Region.OldWorld, Region.CapeTrelawney],
     good: Good.QuartzSand,
+  },
+  {
+    building: ProductionBuilding.SangaFarm,
+    processingTimeSeconds: 60,
+    productionType: ProductionType.AnimalFarm,
+    allowedRegions: [Region.Enbesa],
+    good: Good.SangaCow,
   },
   {
     building: ProductionBuilding.Sawmill,

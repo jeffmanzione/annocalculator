@@ -127,6 +127,7 @@ const goodsToIconUrl = new Map<Good, string>([
   [Good.Sails, 'https://static.wikia.nocookie.net/anno1800/images/2/22/Sails.png'],
   [Good.Salt, 'https://static.wikia.nocookie.net/anno1800/images/7/77/Salt.png'],
   [Good.Saltpetre, 'https://static.wikia.nocookie.net/anno1800/images/d/d7/Saltpeter.png'],
+  [Good.SangaCow, 'https://static.wikia.nocookie.net/anno1800/images/5/51/Icon_watusi_0.png'],
   [Good.Sausages, 'https://static.wikia.nocookie.net/anno1800/images/a/a0/Sausages.png'],
   [Good.Schnapps, 'https://static.wikia.nocookie.net/anno1800/images/4/47/Schnapps.png'],
   [Good.SealSkin, 'https://static.wikia.nocookie.net/anno1800/images/d/df/Seal_Skin.png'],
