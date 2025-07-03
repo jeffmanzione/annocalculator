@@ -13,9 +13,9 @@ export interface AppInfo {
 }
 
 export const apps: AppInfo[] = [
-  { path: '', target: 'calculator' },
   { path: 'calculator', target: ProductionCalculatorPage, name: 'Calculator' },
   { path: 'about', target: AboutPage, name: 'About' },
+  { path: '**', target: 'calculator' },
 ];
 
 export const routes: Routes = apps.map(convertToRoute);
