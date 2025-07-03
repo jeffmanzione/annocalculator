@@ -8,6 +8,4 @@ import { AppBar } from "./component/app-bar/app-bar";
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
-export class App {
-  protected title = 'webapp';
-}
+export class App { }

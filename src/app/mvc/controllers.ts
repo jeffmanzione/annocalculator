@@ -2,8 +2,14 @@ import { Boost, Good, ProductionBuilding, Region, DepartmentOfLaborPolicy } from
 import { BASE_ISLAND_MODEL, BASE_PRODUCTION_LINE_MODEL, DEFAULT_ISLAND_MODEL, DEFAULT_PRODUCTION_LINE_MODEL, DEFAULT_WORLD_MODEL, IslandModel, ProductionLineModel, WorldModel, ExtraGoodModel, BASE_EXTRA_GOOD_MODEL, TradeRouteModel, IslandId, BASE_TRADE_ROUTE_MODEL, TradeRouteId } from "./models";
 import { ExtraGoodView, IslandView, ProductionLineView, TradeRouteView, ViewContext, WorldView } from "./views";
 
-let islandCounter = 1000;
-let tradeRouteCounter = 1000;
+
+function getRandomInteger(): number {
+  // Ensure min and max are integers
+  const min = Math.ceil(0);
+  const max = Math.floor(Number.MAX_SAFE_INTEGER);
+  // Generate a random number between min (inclusive) and max (inclusive)
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
 
 export class ExtraGoodController extends ExtraGoodView {
   static override wrap(model: ExtraGoodModel, context: ViewContext): ExtraGoodController {
@@ -171,7 +177,7 @@ export class TradeRouteController extends TradeRouteView {
     const controller = new TradeRouteController(context);
     controller.wrap(model);
     if (model.id < 0) {
-      controller.model.id = tradeRouteCounter++;
+      controller.model.id = getRandomInteger();
     }
     return controller;
   }
@@ -207,7 +213,7 @@ export class IslandController extends IslandView {
     const controller = new IslandController(context);
     controller.wrap(model);
     if (!model.id || model.id < 0) {
-      controller.model.id = islandCounter++;
+      controller.model.id = getRandomInteger();
     }
     return controller;
   }

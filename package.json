@@ -1,5 +1,5 @@
 {
-  "name": "webapp",
+  "name": "annocalculator",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
@@ -20,7 +20,7 @@
     "@angular/router": "^20.0.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
-    "webapp": "file:"
+    "annocalculator": "file:"
   },
   "devDependencies": {
     "@angular/build": "^20.0.1",

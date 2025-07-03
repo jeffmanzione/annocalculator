@@ -1,5 +1,5 @@
 <div class="column left-column">
-  <section class="global-parameters-section" [formGroup]="formGroup!">
+  <section *ngIf="world" class="global-parameters-section" [formGroup]="formGroup!">
     <card>
       <card-title>Global Parameters</card-title>
       <card-content class="global-parameters-content">
@@ -25,7 +25,7 @@
     </card>
   </section>
   <section class="island-list-section">
-    <mat-accordion multi>
+    <mat-accordion multi *ngIf="world">
       <mat-expansion-panel *ngFor="let island of world.islands; index as i" [expanded]="true">
         <div class="underlay"></div>
         <mat-expansion-panel-header>
@@ -48,6 +48,6 @@
   </section>
 </div>
 <div class="column right-column">
-  <summary-panel [world]="world"></summary-panel>
-  <trade-routes-panel [controller]="world" (change)="update()"></trade-routes-panel>
+  <summary-panel *ngIf="world" [world]="world"></summary-panel>
+  <trade-routes-panel *ngIf="world" [controller]="world" (change)="update()"></trade-routes-panel>
 </div>

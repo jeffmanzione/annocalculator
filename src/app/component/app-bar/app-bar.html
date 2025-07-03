@@ -1,12 +1,14 @@
 <mat-toolbar color="primary" class="toolbar">
   <div class="underlay"></div>
   <div class="toolbar-items">
-    <button mat-button class="toolbar-title toolbar-text-shadow"
-      (click)="router.navigateByUrl('/')">AnnoCalculator.com</button>
+    <button mat-button class="toolbar-title toolbar-text-shadow" (click)="navigateTo('/')">
+      {{ website }}
+    </button>
     <div *ngFor="let app of apps" class="toolbar-item toolbar-text-shadow"
-      [ngClass]="app.path == router.url ? 'toolbar-item-selected': ''">
-      <button mat-button [disabled]="app.path == router.url" (click)="router.navigateByUrl(app.path)">{{ app.displayText
-        }}</button>
+      [ngClass]="isCurrentApp(app) ? 'toolbar-item-selected': ''">
+      <button mat-button [disabled]="isCurrentApp(app)" (click)="navigateTo(app)">
+        {{ app.name }}
+      </button>
     </div>
   </div>
 </mat-toolbar>

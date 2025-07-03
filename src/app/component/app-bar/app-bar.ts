@@ -1,8 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { Router } from '@angular/router';
+import { AppInfo, apps, isNotRedirect, WEBSITE_NAME } from '../../app.routes';
 
 @Component({
   selector: 'app-bar',
@@ -15,12 +16,15 @@ import { Router } from '@angular/router';
   styleUrl: './app-bar.scss',
 })
 export class AppBar {
+  readonly router = inject(Router);
+  readonly website = WEBSITE_NAME;
+  readonly apps = apps.filter(isNotRedirect);
 
-  readonly apps = [
-    { displayText: 'Production Calculator', path: '/production-calculator' },
-    { displayText: 'About', path: '/about' },
-  ];
+  isCurrentApp(app: AppInfo): boolean {
+    return '/' + app.path == this.router.url;
+  }
 
-  constructor(readonly router: Router) { }
-
+  navigateTo(app: AppInfo | string): void {
+    this.router.navigateByUrl(typeof app === 'string' ? app : app.path);
+  }
 }

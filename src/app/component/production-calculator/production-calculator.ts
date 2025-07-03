@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, inject, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, inject, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { WorldController } from '../../mvc/controllers';
 import { Island } from "./island/island";
 import { MatExpansionModule } from '@angular/material/expansion';
@@ -175,7 +175,6 @@ const defaultWorld: WorldModel = {
   ],
 };
 
-
 @Component({
   selector: 'production-calculator-page',
   imports: [
@@ -222,12 +221,13 @@ export class ProductionCalculatorPage extends Control implements OnInit {
     this.worldStorage = storageManager.lookupObjectItem(WORLD_KEY);
   }
 
+
   ngOnInit(): void {
     this.formGroup = new FormGroup({
       tradeUnionBonusPercent: new FormControl(0),
     });
-    this.setWorld(this.worldStorage.get() ?? defaultWorld);
     this.formGroup.valueChanges.subscribe(() => this.update());
+    this.setWorld(this.worldStorage.get() ?? defaultWorld);
   }
 
   setWorld(worldModel: WorldModel): void {
