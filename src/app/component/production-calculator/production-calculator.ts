@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectorRef, Component, inject, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { WorldController } from '../../mvc/controllers';
 import { Island } from "./island/island";
 import { MatExpansionModule } from '@angular/material/expansion';
@@ -18,6 +18,7 @@ import { TradeRoutesPanel } from "./trade-routes-panel/trade-routes-panel";
 import { SaveData, SaveDialog } from './save-dialog/save-dialog';
 import { LocalStorageManager, StorageItem } from '../../service/local-storage';
 import { Clipboard } from '@angular/cdk/clipboard';
+import { Router } from '@angular/router';
 
 const WORLD_KEY = 'anno-1800-production-calculator-world';
 
@@ -207,8 +208,8 @@ export class ProductionCalculatorPage extends Control implements OnInit {
 
   private readonly changeDectorRef = inject(ChangeDetectorRef);
   private readonly matDialog = inject(MatDialog);
-  private readonly worldStorage: StorageItem<WorldModel>;
   private readonly clipboard = inject(Clipboard);
+  private readonly worldStorage: StorageItem<WorldModel>;
 
   @ViewChildren(Island)
   islandComponents!: QueryList<Island>;
@@ -216,11 +217,13 @@ export class ProductionCalculatorPage extends Control implements OnInit {
   @ViewChild(SummaryPanel)
   summaryPanel!: SummaryPanel;
 
-  constructor(storageManager: LocalStorageManager) {
+  @ViewChild(TradeRoutesPanel)
+  tradeRoutesPanel!: TradeRoutesPanel;
+
+  constructor(private readonly router: Router, storageManager: LocalStorageManager) {
     super();
     this.worldStorage = storageManager.lookupObjectItem(WORLD_KEY);
   }
-
 
   ngOnInit(): void {
     this.formGroup = new FormGroup({
@@ -235,7 +238,8 @@ export class ProductionCalculatorPage extends Control implements OnInit {
       return;
     }
     this.world = WorldController.wrap(worldModel);
-    this.formGroup!.controls['tradeUnionBonusPercent'].setValue(this.world.tradeUnionBonus * 100, { emitEvent: false });
+    this.formGroup!.controls['tradeUnionBonusPercent']
+      .setValue(this.world.tradeUnionBonus * 100, { emitEvent: false });
   }
 
   update(): void {
@@ -246,6 +250,7 @@ export class ProductionCalculatorPage extends Control implements OnInit {
         i.afterPushChange();
       }
     }
+    this.tradeRoutesPanel?.afterPushChange();
     this.summaryPanel?.update();
     this.worldStorage.set(this.world.copyModel());
     console.log(this.world.toJsonString());
@@ -261,25 +266,28 @@ export class ProductionCalculatorPage extends Control implements OnInit {
     this.update();
   }
 
+  setWorldAndReload(worldModel: WorldModel): void {
+    this.worldStorage.set(worldModel);
+    window.location.reload();
+  }
+
   openSaveDialog(): void {
     this.matDialog
       .open(SaveDialog, this.dialogConfig)
       .afterClosed()
-      .subscribe((result) => this.setWorld(result));
+      .subscribe((result) => this.setWorldAndReload(result));
   }
 
   copyJsonToClipboard(): void {
     this.clipboard.copy(this.world.toJsonString());
   }
 
-  resetInput(): void {
-    this.setWorld(defaultWorld);
-    this.update();
+  resetInputToDefault(): void {
+    this.setWorldAndReload(defaultWorld);
   }
 
   clearInput(): void {
-    this.setWorld({ islands: [], tradeRoutes: [] });
-    this.update();
+    this.setWorldAndReload({ islands: [], tradeRoutes: [] });
   }
 
   private get dialogConfig(): MatDialogConfig<SaveData<WorldModel>> {

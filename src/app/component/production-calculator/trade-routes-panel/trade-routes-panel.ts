@@ -46,12 +46,7 @@ export class TradeRoutesPanel extends ControlComponent<WorldController> implemen
   tradeRoutes!: TradeRouteControl[];
 
   ngOnInit(): void {
-    this.tradeRoutes = this.controller.tradeRoutes.map(tr => {
-      const control = new TradeRouteControl(tr);
-      this.registerChildControl(control);
-      return control;
-    });
-    this.dataSource = new MatTableDataSource(this.tradeRoutes);
+    this.loadDataFromModel();
   }
 
   addTradeRoute() {
@@ -69,11 +64,26 @@ export class TradeRoutesPanel extends ControlComponent<WorldController> implemen
   }
 
   override afterPushChange(): void {
+    this.loadDataFromModel();
     this.table.renderRows();
   }
 
   lookupGoodIconUrl(good: Good | null): string {
     return lookupGoodIconUrl(good ?? Good.Unknown);
+  }
+
+  private loadDataFromModel(): void {
+    if (this.tradeRoutes) {
+      for (const control of this.tradeRoutes) {
+        this.unregisterChildControl(control);
+      }
+    }
+    this.tradeRoutes = this.controller.tradeRoutes.map(tr => {
+      const control = new TradeRouteControl(tr);
+      this.registerChildControl(control);
+      return control;
+    });
+    this.dataSource = new MatTableDataSource(this.tradeRoutes);
   }
 }
 
