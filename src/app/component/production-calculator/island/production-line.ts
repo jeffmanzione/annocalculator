@@ -194,6 +194,7 @@ export class ExtraGoodControl extends Control {
     this.controller.good = this.formGroup.value.good;
     this.controller.rateNumerator = this.formGroup.value.rateNumerator;
     this.controller.rateDenominator = this.formGroup.value.rateDenominator;
+    console.log(`beforeBubbleChange ${this.controller.rateNumerator} ${this.controller.rateDenominator}`);
   }
 
   override afterPushChange(): void {

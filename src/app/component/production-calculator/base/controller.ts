@@ -1,14 +1,14 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, inject, Input, Output } from '@angular/core';
 
 
 export abstract class Control {
-  private readonly _change = new EventEmitter<void>();
+  private readonly _change = new EventEmitter<Control>();
   public get change() { return this._change; }
 
   private readonly _children: Control[] = [];
 
   protected registerChildControl(control: Control): void {
-    control.change.subscribe(_ => this.pushUpChange());
+    control.change.subscribe(child => this.pushUpChange(child));
     this._children.push(control);
   }
 
@@ -16,20 +16,21 @@ export abstract class Control {
     this._children.splice(this._children.indexOf(control), 1);
   }
 
-  pushUpChange(): void {
-    this.privateBeforeBubbleChange();
-    this._change.emit();
+  pushUpChange(childChanged?: Control): void {
+    this.privateBeforeBubbleChange(childChanged);
+    this._change.emit(this);
     this.privateAfterPushChange();
   }
 
-  private privateBeforeBubbleChange(): void {
+  private privateBeforeBubbleChange(childChanged?: Control): void {
     for (const child of this._children) {
+      if (child == childChanged) continue;
       child.privateBeforeBubbleChange();
     }
     this.beforeBubbleChange();
   }
 
-  private privateAfterPushChange(): void {
+  protected privateAfterPushChange(): void {
     this.afterPushChange();
     for (const child of this._children) {
       child.privateAfterPushChange();
@@ -44,11 +45,20 @@ export abstract class Control {
 @Component({
   selector: 'controller',
   template: '',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export abstract class ControlComponent<T> extends Control {
+
+  private readonly changeDetector = inject(ChangeDetectorRef);
+
   @Input()
   controller!: T;
 
   @Output()
-  override get change(): EventEmitter<void> { return super.change; }
+  override get change(): EventEmitter<Control> { return super.change; }
+
+  protected override privateAfterPushChange(): void {
+    super.privateAfterPushChange();
+    this.changeDetector.markForCheck();
+  }
 }

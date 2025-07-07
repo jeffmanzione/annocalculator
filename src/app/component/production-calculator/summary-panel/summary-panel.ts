@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Input, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Input, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { CardModule } from '../../card/card';
 import { MatTable, MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { FormattedNumberModule, GREEN_RED_FONT_SPEC } from "../../formatted-number/formatted-number";
@@ -42,6 +42,7 @@ interface GoodSummaryRow {
   ],
   templateUrl: './summary-panel.html',
   styleUrl: './summary-panel.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SummaryPanel implements OnInit, AfterViewInit {
   readonly colorSpec = GREEN_RED_FONT_SPEC;
@@ -61,6 +62,8 @@ export class SummaryPanel implements OnInit, AfterViewInit {
     'exported-per-min',
     'net-per-min',
   ];
+
+  private readonly changeDetector = inject(ChangeDetectorRef);
 
   readonly tableData = new MatTableDataSource<GoodSummaryRow>();
   private readonly rows = new Map<Good, GoodSummaryRow>();
@@ -156,6 +159,8 @@ export class SummaryPanel implements OnInit, AfterViewInit {
     this.tableData.filter = '-';
 
     this.table?.renderRows();
+
+    this.changeDetector.markForCheck();
   }
 
   toggleIslandSummary(row: GoodSummaryRow): void {

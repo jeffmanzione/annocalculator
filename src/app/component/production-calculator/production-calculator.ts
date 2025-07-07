@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, inject, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { WorldController } from '../../mvc/controllers';
 import { Island } from "./island/island";
 import { MatExpansionModule } from '@angular/material/expansion';
@@ -200,6 +200,7 @@ const defaultWorld: WorldModel = {
       useValue: { appearance: 'outline', subscriptSizing: 'dynamic' }
     }
   ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProductionCalculatorPage extends Control implements OnInit {
   world!: WorldController;

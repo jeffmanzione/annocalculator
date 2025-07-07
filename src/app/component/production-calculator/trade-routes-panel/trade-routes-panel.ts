@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TradeRouteController, WorldController } from '../../../mvc/controllers';
 import { MatTable, MatTableDataSource, MatTableModule } from '@angular/material/table';
@@ -27,6 +27,7 @@ import { AcButton } from '../../button/button';
   ],
   templateUrl: './trade-routes-panel.html',
   styleUrl: './trade-routes-panel.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TradeRoutesPanel extends ControlComponent<WorldController> implements OnInit {
   readonly displayColumns = [
