@@ -10,19 +10,17 @@ import { lookupGoodIconUrl } from '../../../game/icons';
 import { EnumSelect } from '../../enum-select/enum-select';
 import { IslandView } from '../../../mvc/views';
 import { CardModule } from '../../card/card';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
 import { TradeRouteId } from '../../../mvc/models';
+import { AcButton } from '../../button/button';
 
 @Component({
   selector: 'trade-routes-panel',
   imports: [
+    AcButton,
     CardModule,
     CommonModule,
     EnumSelect,
     FormsModule,
-    MatButtonModule,
-    MatIconModule,
     MatTableModule,
     MatSelectModule,
     ReactiveFormsModule,

@@ -8,6 +8,7 @@
   <json-input [(value)]="obj"></json-input>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-  <button matButton mat-dialog-close>Cancel</button>
-  <button matButton="filled" color="primary" [mat-dialog-close]="obj()" cdkFocusInitial>Apply Changes</button>
+  <ac-button text="Cancel" mat-dialog-close></ac-button>
+  <ac-button appearance="filled" color="primary" [mat-dialog-close]="obj()" text="Apply Changes"
+    cdkFocusInitial></ac-button>
 </mat-dialog-actions>

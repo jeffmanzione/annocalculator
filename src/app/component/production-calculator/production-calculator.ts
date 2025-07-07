@@ -3,7 +3,6 @@ import { WorldController } from '../../mvc/controllers';
 import { Island } from "./island/island";
 import { MatExpansionModule } from '@angular/material/expansion';
 import { CommonModule } from '@angular/common';
-import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialog, MatDialogConfig, MatDialogModule } from '@angular/material/dialog';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
@@ -19,6 +18,7 @@ import { SaveData, SaveDialog } from './save-dialog/save-dialog';
 import { LocalStorageManager, StorageItem } from '../../service/local-storage';
 import { Clipboard } from '@angular/cdk/clipboard';
 import { Router } from '@angular/router';
+import { AcButton } from '../button/button';
 
 const WORLD_KEY = 'anno-1800-production-calculator-world';
 
@@ -179,10 +179,10 @@ const defaultWorld: WorldModel = {
 @Component({
   selector: 'production-calculator-page',
   imports: [
+    AcButton,
     CardModule,
     CommonModule,
     Island,
-    MatButtonModule,
     MatDialogModule,
     MatExpansionModule,
     MatFormFieldModule,
@@ -233,7 +233,7 @@ export class ProductionCalculatorPage extends Control implements OnInit {
     this.setWorld(this.worldStorage.get() ?? defaultWorld);
   }
 
-  setWorld(worldModel: WorldModel): void {
+  setWorld(worldModel?: WorldModel): void {
     if (!worldModel) {
       return;
     }
@@ -267,6 +267,7 @@ export class ProductionCalculatorPage extends Control implements OnInit {
   }
 
   setWorldAndReload(worldModel: WorldModel): void {
+    if (!worldModel) return;
     this.worldStorage.set(worldModel);
     window.location.reload();
   }

@@ -8,18 +8,13 @@
           <input matInput type="number" formControlName="tradeUnionBonusPercent">
         </mat-form-field>
         <div class="buttons-container">
-          <button mat-icon-button (click)="copyJsonToClipboard()">
-            <mat-icon fontIcon="content_copy"></mat-icon>
-          </button>
-          <button mat-icon-button (click)="openSaveDialog()">
-            <mat-icon fontIcon="edit_square"></mat-icon>
-          </button>
-          <button mat-icon-button (click)="resetInputToDefault()">
-            <mat-icon fontIcon="refresh"></mat-icon>
-          </button>
-          <button mat-icon-button (click)="clearInput()">
-            <mat-icon fontIcon="delete"></mat-icon>
-          </button>
+          <ac-button icon="content_copy" tooltip="Copy the JSON representation of your inputs to your clipboard."
+            (action)="copyJsonToClipboard()"></ac-button>
+          <ac-button icon="edit_square" tooltip="Manually edit the JSON inputs."
+            (action)="openSaveDialog()"></ac-button>
+          <ac-button icon="refresh" tooltip="Reset the inputs to a default example."
+            (action)="resetInputToDefault()"></ac-button>
+          <ac-button icon="delete" tooltip="Completely clear the inputs." (action)="clearInput()"></ac-button>
         </div>
       </card-content>
     </card>
@@ -31,9 +26,8 @@
         <mat-expansion-panel-header>
           <mat-panel-title><mat-icon>flag</mat-icon>{{ island.name }}</mat-panel-title>
           <mat-panel-description>
-            <button mat-icon-button class="delete-island-button" (click)="removeIslandAt(i)">
-              <mat-icon>delete</mat-icon>
-            </button>
+            <ac-button class="delete-island-button" icon="delete" (click)="removeIslandAt(i)">
+            </ac-button>
           </mat-panel-description>
         </mat-expansion-panel-header>
         <island [controller]="island" (change)="update()"></island>
@@ -41,10 +35,8 @@
     </mat-accordion>
   </section>
   <section class="add-island-button-section">
-    <button mat-raised-button color="primary" (click)="addIsland()">
-      <mat-icon>add</mat-icon>
-      Add Island
-    </button>
+    <ac-button appearance="filled" color="primary" icon="add" text="Add Island" (click)="addIsland()">
+    </ac-button>
   </section>
 </div>
 <div class="column right-column">

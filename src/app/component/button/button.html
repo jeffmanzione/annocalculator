@@ -1,0 +1,23 @@
+<button *ngIf="tooltip && icon && text" [matButton]="appearance" [color]="color" [matTooltip]="tooltip!"
+  (click)="onClick($event)">
+  <mat-icon [fontIcon]="icon"></mat-icon>
+  {{ text }}
+</button>
+<button *ngIf="tooltip && icon && !text" matIconButton [color]="color" [matTooltip]="tooltip!"
+  (click)="onClick($event)">
+  <mat-icon [fontIcon]="icon"></mat-icon>
+</button>
+<button *ngIf="tooltip && !icon && text" [matButton]="appearance" [color]="color" [matTooltip]="tooltip!"
+  (click)="onClick($event)">
+  {{ text }}
+</button>
+<button *ngIf="!tooltip && icon && text" [matButton]="appearance" [color]="color" (click)="onClick($event)">
+  <mat-icon [fontIcon]="icon"></mat-icon>
+  {{ text }}
+</button>
+<button *ngIf="!tooltip && icon && !text" matIconButton [color]="color" (click)="onClick($event)">
+  <mat-icon [fontIcon]="icon"></mat-icon>
+</button>
+<button *ngIf="!tooltip && !icon && text" [matButton]="appearance" [color]="color" (click)="onClick($event)">
+  {{ text }}
+</button>

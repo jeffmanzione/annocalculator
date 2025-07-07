@@ -2,11 +2,9 @@ import { ChangeDetectionStrategy, Component, OnInit, QueryList, ViewChild, ViewC
 import { IslandController } from '../../../mvc/controllers';
 import { MatTable, MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { CommonModule } from '@angular/common';
-import { MatButtonModule } from '@angular/material/button';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { ControlComponent } from '../base/controller';
 import { ExtraGoodControl, ProductionLineControl } from './production-line';
@@ -17,18 +15,18 @@ import { Boost, Region, DepartmentOfLaborPolicy, Good, ProductionBuilding } from
 import { lookupProductionInfo } from '../../../game/facts';
 import { lookupBuildingIconUrl, lookupGoodIconUrl, lookupBoostIconUrl, lookupRegionIconUrl, lookupPolicyIconUrl } from '../../../game/icons';
 import { TextFieldModule } from '@angular/cdk/text-field';
+import { AcButton } from '../../button/button';
 
 @Component({
   selector: 'island',
   imports: [
+    AcButton,
     CommonModule,
     EnumSelect,
     FormattedNumberModule,
     FormsModule,
-    MatButtonModule,
     MatCheckboxModule,
     MatFormFieldModule,
-    MatIconModule,
     MatInputModule,
     MatSelectModule,
     MatTableModule,

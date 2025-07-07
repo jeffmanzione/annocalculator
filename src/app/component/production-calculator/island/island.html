@@ -10,10 +10,8 @@
       [iconUrlLookupFn]="lookupPolicyIconUrl"></enum-select>
   </section>
   <section>
-    <button matButton="filled" color="primary" (click)="addProductionLine()">
-      <mat-icon>add</mat-icon>
-      Add Production Line
-    </button>
+    <ac-button appearance="filled" color="primary" icon="add" text="Add Production Line" (action)="addProductionLine()">
+    </ac-button>
   </section>
   <section>
     <table #productionLinesTable mat-table class="production-lines-table" [dataSource]="productionLinesDataSource"
@@ -35,9 +33,8 @@
       <ng-container matColumnDef="expandExtraGoods">
         <th mat-header-cell *matHeaderCellDef>EG</th>
         <td mat-cell *matCellDef="let element" class="extra-goods-field">
-          <button mat-icon-button (click)="toggleShowExtraGoods(element)">
-            <mat-icon [fontIcon]="element.expandExtraGoodsIcon"></mat-icon>
-          </button>
+          <ac-button [icon]="element.expandExtraGoodsIcon" (action)="toggleShowExtraGoods(element)">
+          </ac-button>
         </td>
       </ng-container>
       <ng-container matColumnDef="inputGoods">
@@ -107,19 +104,17 @@
       <ng-container matColumnDef="remove">
         <th mat-header-cell *matHeaderCellDef>Remove</th>
         <td mat-cell *matCellDef="let element" [formGroup]="element.formGroup" class="remove-field">
-          <button matIconButton (click)="removeProductionLineAt(element)">
-            <mat-icon>delete</mat-icon>
-          </button>
+          <ac-button icon="delete" (action)="removeProductionLineAt(element)">
+          </ac-button>
         </td>
       </ng-container>
       <ng-container matColumnDef="extraGoods">
         <td mat-cell *matCellDef="let element" [attr.colspan]="productionLineColumns.length" class="extra-goods-row">
           <div *ngIf="element.showExtraGoods" class="extra-goods-outer-container">
             <div class="extra-goods-inner-container">
-              <button matButton="filled" color="primary" class="add-extra-good-button" (click)="addExtraGood(element)">
-                <mat-icon>add</mat-icon>
-                Add Extra Good
-              </button>
+              <ac-button appearance="filled" color="primary" icon="add" text="Add Extra Good"
+                class="add-extra-good-button" (action)="addExtraGood(element)">
+              </ac-button>
               <table #extraGoodTables mat-table [dataSource]="element.extraGoods" class="extra-goods-table">
                 <ng-container matColumnDef="good">
                   <th mat-header-cell *matHeaderCellDef>Good</th>
@@ -163,9 +158,8 @@
                 <ng-container matColumnDef="remove">
                   <th mat-header-cell *matHeaderCellDef>Remove</th>
                   <td mat-cell *matCellDef="let element2">
-                    <button matIconButton (click)="removeExtraGoodAt(element, element2)">
-                      <mat-icon>delete</mat-icon>
-                    </button>
+                    <ac-button icon="delete" (action)="removeExtraGoodAt(element, element2)">
+                    </ac-button>
                   </td>
                 </ng-container>
                 <tr mat-header-row *matHeaderRowDef="extraGoodColumns; sticky: true"></tr>
