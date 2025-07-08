@@ -1,5 +1,16 @@
+// A Table-like data structure where dual keys can be used for efficient lookup of values.
+//
+// A Table<K1,K2,V> can be used to look up values from dual keys and produce views of Maps
+// filtered by the first key dimension of the table.
 
-
+/**
+ * Gets a value from a Map<K,V> or inserts a value if one is not already present.
+ * 
+ * @param map The map to search.
+ * @param key The key to search for.
+ * @param defaultValue The value to insert and return if the key is not found.
+ * @returns The value associated with key.
+ */
 export function getOrDefault<K, V>(map: Map<K, V>, key: K, defaultValue: () => V): V {
   if (map.has(key)) {
     return map.get(key)!;

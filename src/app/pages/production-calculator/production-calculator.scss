@@ -1,0 +1,112 @@
+:host {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 100%;
+}
+
+.column {
+  padding-right: 16px;
+
+  &:last-child {
+    padding-right: 0;
+  }
+}
+
+.left-column {
+  flex: 5;
+  display: flex;
+  flex-direction: column;
+}
+
+.global-parameters-section {
+  padding-bottom: 16px;
+  display: flex;
+  flex-direction: row;
+
+  card {
+    margin-right: 16px;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}
+
+.global-parameters-card {
+  flex: 1;
+}
+
+.buttons-container {
+  display: flex;
+  height: 100%;
+
+  ac-button {
+    margin: auto 4px;
+  }
+
+  background-color: white;
+  border-radius: 8px;
+  border: rgba(0, 0, 0, 0.3) solid 1px;
+}
+
+.island-list-section {
+  flex: 1;
+  overflow-x: hidden;
+  height: 100%;
+  position: relative;
+}
+
+mat-accordion {
+  width: 100%;
+  position: absolute;
+
+  mat-expansion-panel {
+    div.underlay {
+      z-index: 0;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url(/anno_1800_logo.png);
+      background-size: 300px;
+      background-repeat: space;
+      opacity: 5%;
+    }
+  }
+}
+
+mat-panel-title,
+mat-panel-description,
+island {
+  position: relative;
+  z-index: 1;
+}
+
+.right-column {
+  max-width: 600px;
+  width: 0;
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+
+  summary-panel {
+    padding-bottom: 16px;
+  }
+
+  summary-panel,
+  trade-routes-panel {
+    flex: 1;
+  }
+}
+
+.delete-island-button {
+  margin-left: auto;
+  order: 2;
+}
+
+.add-island-button-section {
+  border-top: 2px solid #ddd;
+  padding-top: 16px;
+}

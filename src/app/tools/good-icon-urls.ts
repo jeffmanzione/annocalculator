@@ -1,5 +1,5 @@
 
-import { Good } from "../game/enums";
+import { Good } from "../shared/game/enums";
 
 const alternativeIconNames = new Map<Good, string>([
   [Good.AluminiumProfiles, 'Aluminium_Profiles'],

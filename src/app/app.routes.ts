@@ -1,7 +1,7 @@
 import { Route, Routes } from '@angular/router';
-import { ProductionCalculatorPage } from './component/production-calculator/production-calculator';
-import { AboutPage } from './component/about/about';
 import { Type } from '@angular/core';
+import { AboutPage } from './pages/about/about';
+import { ProductionCalculatorPage } from './pages/production-calculator/production-calculator';
 
 
 export const WEBSITE_NAME = 'AnnoCalculator.com';
