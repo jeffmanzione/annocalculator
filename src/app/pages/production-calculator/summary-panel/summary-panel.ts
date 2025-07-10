@@ -1,7 +1,7 @@
 import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Input, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
-import { CardModule } from '../../../shared/components/card/card';
+import { CardModule } from '../../../components/card/card';
 import { MatTable, MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { FormattedNumberModule, GREEN_RED_FONT_SPEC } from "../../../shared/components/formatted-number/formatted-number";
+import { FormattedNumberModule, GREEN_RED_FONT_SPEC } from "../../../components/formatted-number/formatted-number";
 import { IslandView, WorldView } from '../../../shared/mvc/views';
 import { Good } from '../../../shared/game/enums';
 import { IslandId } from '../../../shared/mvc/models';

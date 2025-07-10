@@ -9,14 +9,14 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS, MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { SummaryPanel } from "./summary-panel/summary-panel";
-import { CardModule } from '../../shared/components/card/card';
+import { CardModule } from '../../components/card/card';
 import { Region, DepartmentOfLaborPolicy, ProductionBuilding, Good, Boost } from '../../shared/game/enums';
 import { World } from '../../shared/mvc/models';
 import { TradeRoutesPanel } from "./trade-routes-panel/trade-routes-panel";
 import { SaveData, SaveDialog } from './save-dialog/save-dialog';
-import { LocalStorageManager, StorageItem } from '../../shared/services/local-storage/local-storage';
+import { LocalStorageManager, StorageItem } from '../../services/local-storage/local-storage';
 import { Clipboard } from '@angular/cdk/clipboard';
-import { AcButton } from '../../shared/components/button/button';
+import { AcButton } from '../../components/button/button';
 
 const WORLD_KEY = 'anno-1800-production-calculator-world';
 

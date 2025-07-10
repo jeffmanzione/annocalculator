@@ -3,7 +3,7 @@ import { Component, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { Router } from '@angular/router';
-import { AppInfo, apps, isNotRedirect, WEBSITE_NAME } from '../../../app.routes';
+import { AppInfo, apps, isNotRedirect, WEBSITE_NAME } from '../../app.routes';
 
 @Component({
   selector: 'app-bar',

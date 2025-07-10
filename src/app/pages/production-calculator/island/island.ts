@@ -6,16 +6,16 @@ import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angul
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-import { ControlComponent } from '../base/controller';
+import { ControlComponent } from '../../../shared/control/control';
 import { ExtraGoodControl, ProductionLineControl } from './production-line';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { FormattedNumberModule } from '../../../shared/components/formatted-number/formatted-number';
-import { EnumSelect } from '../../../shared/components/enum-select/enum-select';
+import { FormattedNumberModule } from '../../../components/formatted-number/formatted-number';
+import { EnumSelect } from '../../../components/enum-select/enum-select';
 import { Boost, Region, DepartmentOfLaborPolicy, Good, ProductionBuilding } from '../../../shared/game/enums';
 import { lookupProductionInfo } from '../../../shared/game/facts';
 import { lookupBuildingIconUrl, lookupGoodIconUrl, lookupBoostIconUrl, lookupRegionIconUrl, lookupPolicyIconUrl } from '../../../shared/game/icons';
 import { TextFieldModule } from '@angular/cdk/text-field';
-import { AcButton } from '../../../shared/components/button/button';
+import { AcButton } from '../../../components/button/button';
 
 @Component({
   selector: 'island',

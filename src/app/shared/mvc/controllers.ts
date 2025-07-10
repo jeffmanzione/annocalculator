@@ -12,13 +12,7 @@ function generatePseudorandomInt(): number {
 
 export class ExtraGoodController extends ExtraGoodView {
   static override wrap(model: ExtraGood, context: ViewContext): ExtraGoodController {
-    const controller = new ExtraGoodController(context);
-    controller.wrap(model);
-    return controller;
-  }
-
-  asView(): ExtraGoodView {
-    return this;
+    return new ExtraGoodController(model, context);
   }
 
   override set good(value: Good) {
@@ -45,13 +39,7 @@ export class ExtraGoodController extends ExtraGoodView {
 
 export class ProductionLineController extends ProductionLineView {
   static override wrap(model: ProductionLine, context: ViewContext): ProductionLineController {
-    const controller = new ProductionLineController(context);
-    controller.wrap(model);
-    return controller;
-  }
-
-  asView(): ProductionLineView {
-    return this;
+    return new ProductionLineController(model, context);
   }
 
   override set building(value: ProductionBuilding) {
@@ -177,16 +165,11 @@ export class ProductionLineController extends ProductionLineView {
 
 export class TradeRouteController extends TradeRouteView {
   static override wrap(model: TradeRoute, context: ViewContext): TradeRouteController {
-    const controller = new TradeRouteController(context);
-    controller.wrap(model);
+    const controller = new TradeRouteController(model, context);
     if (model.id < 0) {
       controller.model.id = generatePseudorandomInt();
     }
     return controller;
-  }
-
-  asView(): TradeRouteView {
-    return this;
   }
 
   override set sourceIslandId(value: IslandId) {
@@ -213,16 +196,11 @@ export class TradeRouteController extends TradeRouteView {
 
 export class IslandController extends IslandView {
   static override wrap(model: Island, context: ViewContext): IslandController {
-    const controller = new IslandController(context);
-    controller.wrap(model);
+    const controller = new IslandController(model, context);
     if (!model.id || model.id < 0) {
       controller.model.id = generatePseudorandomInt();
     }
     return controller;
-  }
-
-  asView(): IslandView {
-    return this;
   }
 
   override set name(value: string) {
@@ -280,13 +258,7 @@ export class IslandController extends IslandView {
 
 export class WorldController extends WorldView {
   static override wrap(model: World): WorldController {
-    const controller = new WorldController({});
-    controller.wrap(model);
-    return controller;
-  }
-
-  asView(): WorldView {
-    return this;
+    return new WorldController(model, {});
   }
 
   override get tradeUnionBonus(): number {

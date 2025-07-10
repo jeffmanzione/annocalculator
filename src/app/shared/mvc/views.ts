@@ -9,26 +9,20 @@ export interface ViewContext {
 };
 
 export abstract class View<M extends Model> {
-  protected abstract model: M;
+  protected constructor(protected model: M, protected context: ViewContext) { }
 
-  constructor(protected context: ViewContext) { }
-
-  wrap(m: M): void {
-    this.model = m;
+  asView(): this {
+    return this;
   }
 
   toJsonString(): string {
     return JSON.stringify(this.model);
   }
-}
+};
 
-export class ExtraGoodView extends View<ExtraGood> {
-  protected override model = BASE_EXTRA_GOOD_MODEL;
-
+export class ExtraGoodView extends View<ExtraGood> implements ExtraGood {
   static wrap(model: ExtraGood, context: ViewContext): ExtraGoodView {
-    const view = new ExtraGoodView(context);
-    view.wrap(model);
-    return view;
+    return new ExtraGoodView(model, context);
   }
 
   get good(): Good {
@@ -56,13 +50,9 @@ export class ExtraGoodView extends View<ExtraGood> {
   }
 };
 
-export class ProductionLineView extends View<ProductionLine> {
-  protected override model = BASE_PRODUCTION_LINE_MODEL;
-
+export class ProductionLineView extends View<ProductionLine> implements ProductionLine {
   static wrap(model: ProductionLine, context: ViewContext): ProductionLineView {
-    const view = new ProductionLineView(context);
-    view.wrap(model);
-    return view;
+    return new ProductionLineView(model, context);
   }
 
   get building(): ProductionBuilding {
@@ -161,13 +151,9 @@ export class ProductionLineView extends View<ProductionLine> {
   }
 };
 
-export class TradeRouteView extends View<TradeRoute> {
-  protected override model = BASE_TRADE_ROUTE_MODEL;
-
+export class TradeRouteView extends View<TradeRoute> implements TradeRoute {
   static wrap(model: TradeRoute, context: ViewContext): TradeRouteView {
-    const view = new TradeRouteView(context);
-    view.wrap(model);
-    return view;
+    return new TradeRouteView(model, context);
   }
 
   get id(): TradeRouteId {
@@ -199,13 +185,9 @@ export class TradeRouteView extends View<TradeRoute> {
   }
 }
 
-export class IslandView extends View<Island> {
-  protected override model = BASE_ISLAND_MODEL;
-
+export class IslandView extends View<Island> implements Island {
   static wrap(model: Island, context: ViewContext): IslandView {
-    const view = new IslandView(context);
-    view.wrap(model);
-    return view;
+    return new IslandView(model, context);
   }
 
   get id(): IslandId {
@@ -249,13 +231,9 @@ export class IslandView extends View<Island> {
   }
 };
 
-export class WorldView extends View<World> {
-  protected override model = BASE_WORLD_MODEL;
-
+export class WorldView extends View<World> implements World {
   static wrap(model: World): WorldView {
-    const view = new WorldView({});
-    view.wrap(model);
-    return view;
+    return new WorldView(model, {});
   }
 
   get tradeUnionBonus(): number {

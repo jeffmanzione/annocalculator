@@ -2,16 +2,16 @@ import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TradeRouteController, WorldController } from '../../../shared/mvc/controllers';
 import { MatTable, MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { ControlComponent, FormGroupControl } from '../base/controller';
+import { ControlComponent, FormGroupControl } from '../../../shared/control/control';
 import { CommonModule } from '@angular/common';
 import { MatSelectModule } from '@angular/material/select';
 import { Good } from '../../../shared/game/enums';
 import { lookupGoodIconUrl } from '../../../shared/game/icons';
-import { EnumSelect } from '../../../shared/components/enum-select/enum-select';
+import { EnumSelect } from '../../../components/enum-select/enum-select';
 import { IslandView } from '../../../shared/mvc/views';
-import { CardModule } from '../../../shared/components/card/card';
+import { CardModule } from '../../../components/card/card';
 import { TradeRouteId } from '../../../shared/mvc/models';
-import { AcButton } from '../../../shared/components/button/button';
+import { AcButton } from '../../../components/button/button';
 
 @Component({
   selector: 'trade-routes-panel',

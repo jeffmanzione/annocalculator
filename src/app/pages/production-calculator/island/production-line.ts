@@ -3,7 +3,7 @@ import { ProductionLineView } from "../../../shared/mvc/views";
 import { MatTableDataSource } from "@angular/material/table";
 import { Boost, ProductionBuilding } from "../../../shared/game/enums";
 import { lookupProductionInfo, requiresElectricity, lookupAllowedBoosts } from "../../../shared/game/facts";
-import { FormGroupControl } from "../base/controller";
+import { FormGroupControl } from "../../../shared/control/control";
 
 
 export class ProductionLineControl extends FormGroupControl<ProductionLineController> {
@@ -170,7 +170,6 @@ export class ExtraGoodControl extends FormGroupControl<ExtraGoodController> {
 
   constructor(controller: ExtraGoodController) {
     super(controller, ['good', 'rateNumerator', 'rateDenominator']);
-    this.formGroup.valueChanges.subscribe(_ => this.pushUpChange());
   }
 
   override afterPushChange(): void {

@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, inject, model } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
-import { AcButton } from '../../../shared/components/button/button';
-import { JsonInput } from '../../../shared/components/json-input/json-input';
+import { AcButton } from '../../../components/button/button';
+import { JsonInput } from '../../../components/json-input/json-input';
 
 @Component({
   selector: 'save-dialog',
