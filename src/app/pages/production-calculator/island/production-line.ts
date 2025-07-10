@@ -1,15 +1,12 @@
-import { FormControl, FormGroup } from "@angular/forms";
 import { ExtraGoodController, ProductionLineController } from "../../../shared/mvc/controllers";
 import { ProductionLineView } from "../../../shared/mvc/views";
 import { MatTableDataSource } from "@angular/material/table";
 import { Boost, ProductionBuilding } from "../../../shared/game/enums";
 import { lookupProductionInfo, requiresElectricity, lookupAllowedBoosts } from "../../../shared/game/facts";
-import { Control } from "../base/controller";
+import { FormGroupControl } from "../base/controller";
 
 
-export class ProductionLineControl extends Control {
-
-  formGroup: FormGroup;
+export class ProductionLineControl extends FormGroupControl<ProductionLineController> {
 
   extraGoods?: MatTableDataSource<ExtraGoodControl>;
   showExtraGoods = false;
@@ -30,18 +27,24 @@ export class ProductionLineControl extends Control {
   goodProcessTimeSeconds: number = 0;
   goodsProducedPerMinute: number = 0;
 
-  constructor(private readonly controller: ProductionLineController) {
-    super();
-    this.formGroup = new FormGroup({
-      building: new FormControl(this.controller.building),
-      numBuildings: new FormControl(this.controller.numBuildings),
-      inputGoods: new FormControl(this.controller.inputGoods),
-      good: new FormControl(this.controller.good),
-      boosts: new FormControl(this.controller.boosts),
-      hasTradeUnion: new FormControl(this.controller.hasTradeUnion),
-      tradeUnionItemsBonusPercent: new FormControl(this.controller.tradeUnionItemsBonus * 100),
-      inRangeOfLocalDepartment: new FormControl(this.controller.inRangeOfLocalDepartment),
-    });
+  constructor(controller: ProductionLineController) {
+    super(controller, [
+      'building',
+      {
+        controlName: 'numBuildings',
+        updateObject: (v, o) => o.numBuildings = Number.parseInt(v),
+      },
+      'inputGoods',
+      'good',
+      'boosts',
+      'hasTradeUnion',
+      {
+        controlName: 'tradeUnionItemsBonusPercent',
+        readObject: (o) => (o.tradeUnionItemsBonus ?? 0) * 100,
+        updateObject: (v, o) => o.tradeUnionItemsBonus = (v ?? 0) / 100,
+      },
+      'inRangeOfLocalDepartment',
+    ]);
     this.extraGoods = new MatTableDataSource(this.controller.extraGoods.map(eg => {
       const control = new ExtraGoodControl(eg);
       this.registerChildControl(control);
@@ -54,7 +57,6 @@ export class ProductionLineControl extends Control {
     }
     this.beforeBubbleChange();
     this.afterPushChange();
-    this.formGroup.valueChanges.subscribe(_ => this.pushUpChange());
   }
 
   get view(): ProductionLineView {
@@ -117,19 +119,6 @@ export class ProductionLineControl extends Control {
     this.formGroup.controls[controlName].setValue(clearedValue, { onlySelf: true, emitEvent: false });
   }
 
-  // Updates the model based on the states of the form.
-  private updateModel(): void {
-    this.controller.building = this.formGroup.value.building;
-    this.controller.inputGoods = this.formGroup.value.inputGoods;
-    this.controller.good = this.formGroup.value.good;
-    this.controller.numBuildings = Number.parseInt(this.formGroup.value.numBuildings);
-    // Must use getRawValue() as .disable() clears value.boosts
-    this.controller.boosts = this.formGroup.controls['boosts'].getRawValue();
-    this.controller.tradeUnionItemsBonus = (this.formGroup.value.tradeUnionItemsBonusPercent ?? 0) / 100;
-    this.controller.inRangeOfLocalDepartment = this.formGroup.value.inRangeOfLocalDepartment;
-    this.controller.hasTradeUnion = this.formGroup.value.hasTradeUnion;
-  }
-
   private updateAndFormatDerivedFields(): void {
     this.efficiency = this.controller.efficiency;
     this.buildingProcessTimeSeconds = this.controller.buildingProcessTimeSeconds;
@@ -137,14 +126,14 @@ export class ProductionLineControl extends Control {
     this.goodsProducedPerMinute = this.controller.goodsProducedPerMinute;
   }
 
-  override beforeBubbleChange(): void {
+  override beforeModelUpdate(): void {
     // Form states must be adjusted separately and before model changes to prevent potential infinite
     // loops caused by interdependent component forms in the hierarchy.
     this.updateFormStates();
-    this.updateModel();
   }
 
   override afterPushChange(): void {
+    this.updateFormStates();
     // Derived view fields must be after the model update so that they are fresh after the model update.
     this.updateAndFormatDerivedFields();
   }
@@ -174,27 +163,14 @@ export class ProductionLineControl extends Control {
   }
 }
 
-export class ExtraGoodControl extends Control {
-  formGroup: FormGroup;
+export class ExtraGoodControl extends FormGroupControl<ExtraGoodController> {
 
   processTimeSeconds: number = 0;
   producedPerMinute: number = 0;
 
-  constructor(private readonly controller: ExtraGoodController) {
-    super();
-    this.formGroup = new FormGroup({
-      good: new FormControl(this.controller.good),
-      rateNumerator: new FormControl(this.controller.rateNumerator),
-      rateDenominator: new FormControl(this.controller.rateDenominator),
-    });
+  constructor(controller: ExtraGoodController) {
+    super(controller, ['good', 'rateNumerator', 'rateDenominator']);
     this.formGroup.valueChanges.subscribe(_ => this.pushUpChange());
-  }
-
-  override beforeBubbleChange(): void {
-    this.controller.good = this.formGroup.value.good;
-    this.controller.rateNumerator = this.formGroup.value.rateNumerator;
-    this.controller.rateDenominator = this.formGroup.value.rateDenominator;
-    console.log(`beforeBubbleChange ${this.controller.rateNumerator} ${this.controller.rateDenominator}`);
   }
 
   override afterPushChange(): void {

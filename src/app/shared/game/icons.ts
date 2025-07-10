@@ -166,6 +166,7 @@ const regionToImageUrl = new Map<Region, string>([
 ]);
 
 const policyToImageUrl = new Map<DepartmentOfLaborPolicy, string>([
+  [DepartmentOfLaborPolicy.None, ''],
   [DepartmentOfLaborPolicy.LandReformAct, 'https://static.wikia.nocookie.net/anno1800/images/7/7d/Icon_agricultural_subsidy.png'],
   [DepartmentOfLaborPolicy.SkilledLaborAct, 'https://static.wikia.nocookie.net/anno1800/images/3/31/Icon_manufacturing_reform.png'],
   [DepartmentOfLaborPolicy.GalvanicGrantsAct, 'https://static.wikia.nocookie.net/anno1800/images/5/5d/Icon_efficiency_program.png'],

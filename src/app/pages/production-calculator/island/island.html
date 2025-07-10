@@ -86,13 +86,13 @@
       <ng-container matColumnDef="buildingProcessTimeSeconds">
         <th mat-header-cell *matHeaderCellDef>Building Process Time</th>
         <td mat-cell class="keep-top" *matCellDef="let element" class="computed-field">
-          <formatted-number [value]="element.buildingProcessTimeSeconds" suffix="/s"></formatted-number>
+          <formatted-number [value]="element.buildingProcessTimeSeconds" suffix="s"></formatted-number>
         </td>
       </ng-container>
       <ng-container matColumnDef="goodProcessTimeSeconds">
         <th mat-header-cell *matHeaderCellDef>Good Process Time</th>
         <td mat-cell class="keep-top" *matCellDef="let element" class="computed-field">
-          <formatted-number [value]="element.goodProcessTimeSeconds" suffix="/s"></formatted-number>
+          <formatted-number [value]="element.goodProcessTimeSeconds" suffix="s"></formatted-number>
         </td>
       </ng-container>
       <ng-container matColumnDef="goodsProducedPerMinute">
@@ -146,7 +146,7 @@
                 <ng-container matColumnDef="processTimeSeconds">
                   <th mat-header-cell *matHeaderCellDef>Good Process Time</th>
                   <td mat-cell class="keep-top" *matCellDef="let element2">
-                    <formatted-number [value]="element2.processTimeSeconds" suffix="/s"></formatted-number>
+                    <formatted-number [value]="element2.processTimeSeconds" suffix="s"></formatted-number>
                   </td>
                 </ng-container>
                 <ng-container matColumnDef="producedPerMinute">

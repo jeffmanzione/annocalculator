@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core';
-import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TradeRouteController, WorldController } from '../../../shared/mvc/controllers';
 import { MatTable, MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { Control, ControlComponent } from '../base/controller';
+import { ControlComponent, FormGroupControl } from '../base/controller';
 import { CommonModule } from '@angular/common';
 import { MatSelectModule } from '@angular/material/select';
 import { Good } from '../../../shared/game/enums';
@@ -31,8 +31,8 @@ import { AcButton } from '../../../shared/components/button/button';
 })
 export class TradeRoutesPanel extends ControlComponent<WorldController> implements OnInit {
   readonly displayColumns = [
-    'sourceIsland',
-    'targetIsland',
+    'sourceIslandId',
+    'targetIslandId',
     'good',
     'remove',
   ];
@@ -45,7 +45,12 @@ export class TradeRoutesPanel extends ControlComponent<WorldController> implemen
   tradeRoutes!: TradeRouteControl[];
 
   ngOnInit(): void {
-    this.loadDataFromModel();
+    this.tradeRoutes = this.controller.tradeRoutes.map(tr => {
+      const control = new TradeRouteControl(tr);
+      this.registerChildControl(control);
+      return control;
+    });
+    this.dataSource = new MatTableDataSource(this.tradeRoutes);
   }
 
   addTradeRoute() {
@@ -63,32 +68,15 @@ export class TradeRoutesPanel extends ControlComponent<WorldController> implemen
   }
 
   override afterPushChange(): void {
-    this.loadDataFromModel();
     this.table.renderRows();
   }
 
   lookupGoodIconUrl(good: Good | null): string {
     return lookupGoodIconUrl(good ?? Good.Unknown);
   }
-
-  private loadDataFromModel(): void {
-    if (this.tradeRoutes) {
-      for (const control of this.tradeRoutes) {
-        this.unregisterChildControl(control);
-      }
-    }
-    this.tradeRoutes = this.controller.tradeRoutes.map(tr => {
-      const control = new TradeRouteControl(tr);
-      this.registerChildControl(control);
-      return control;
-    });
-    this.dataSource = new MatTableDataSource(this.tradeRoutes);
-  }
 }
 
-export class TradeRouteControl extends Control {
-
-  formGroup: FormGroup;
+export class TradeRouteControl extends FormGroupControl<TradeRouteController> {
 
   get id(): TradeRouteId {
     return this.controller.id;
@@ -98,22 +86,13 @@ export class TradeRouteControl extends Control {
   targetIslandOptions: IslandView[] = [];
   sourceGoodOptions: Good[] = [];
 
-  constructor(private readonly controller: TradeRouteController) {
-    super();
-    this.formGroup = new FormGroup({
-      sourceIsland: new FormControl(this.controller.sourceIslandId),
-      targetIsland: new FormControl(this.controller.targetIslandId),
-      good: new FormControl(this.controller.good),
-    });
-    this.formGroup.valueChanges.subscribe(_ => this.pushUpChange());
+  constructor(controller: TradeRouteController) {
+    super(
+      controller,
+      ['sourceIslandId', 'targetIslandId', 'good']
+    );
     this.beforeBubbleChange();
     this.afterPushChange();
-  }
-
-  override beforeBubbleChange(): void {
-    this.controller.sourceIslandId = this.formGroup.value.sourceIsland;
-    this.controller.targetIslandId = this.formGroup.value.targetIsland;
-    this.controller.good = this.formGroup.value.good;
   }
 
   override afterPushChange(): void {

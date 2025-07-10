@@ -12,7 +12,6 @@ import { SummaryPanel } from "./summary-panel/summary-panel";
 import { CardModule } from '../../shared/components/card/card';
 import { Region, DepartmentOfLaborPolicy, ProductionBuilding, Good, Boost } from '../../shared/game/enums';
 import { World } from '../../shared/mvc/models';
-import { Control } from './base/controller';
 import { TradeRoutesPanel } from "./trade-routes-panel/trade-routes-panel";
 import { SaveData, SaveDialog } from './save-dialog/save-dialog';
 import { LocalStorageManager, StorageItem } from '../../shared/services/local-storage/local-storage';
@@ -201,7 +200,7 @@ const defaultWorld: World = {
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ProductionCalculatorPage extends Control implements OnInit {
+export class ProductionCalculatorPage implements OnInit {
 
   readonly defaultActions = [
     {
@@ -245,7 +244,6 @@ export class ProductionCalculatorPage extends Control implements OnInit {
   tradeRoutesPanel!: TradeRoutesPanel;
 
   constructor(storageManager: LocalStorageManager) {
-    super();
     this.worldStorage = storageManager.lookupObjectItem(WORLD_KEY);
   }
 
@@ -277,7 +275,8 @@ export class ProductionCalculatorPage extends Control implements OnInit {
     this.tradeRoutesPanel?.afterPushChange();
     this.summaryPanel?.update();
     this.worldStorage.set(this.world.copyModel());
-    console.log(this.world.toJsonString());
+    // Convert this into a debug-only print.
+    // console.log(this.world.toJsonString());
   }
 
   addIsland(): void {
