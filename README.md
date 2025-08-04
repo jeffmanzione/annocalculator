@@ -69,7 +69,7 @@ If you spot a bug or have an idea for a new feature:
 
 ## 📄 License
 
-GNU License. See [LICENSE](https://github.com/jeffmanzione/annocalculator/blob/main/LICENSE) for more details.
+GNU GPL 3.0 License. See [LICENSE](https://github.com/jeffmanzione/annocalculator/blob/main/LICENSE) for more details.
 
 ## 🎮 About the Creator
 
