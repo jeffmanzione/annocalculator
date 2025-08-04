@@ -1,59 +1,78 @@
-# Webapp
+# AnnoCalculator.com
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.0.1.
+A web-based production calculator for **Anno 1800** that helps players model and optimize their supply chains—including all the complicated boosts, trade union items, and extra goods modifiers.
 
-## Development server
+Built with ❤️ by a fan who got tired of using spreadsheets.
 
-To start a local development server, run:
+## 🌐 Live Site
+
+Visit the tool here: [https://AnnoCalculator.com](https://AnnoCalculator.com)
+
+## 🚀 Features
+
+- 📦 **Production Planning** — Easily calculate how many buildings you need for each good
+- 🛠️ **Bonus Simulation** — Customize and stack production boosts, items, and extra goods
+- 🧮 **Real-time Calculations** — Instant feedback as you tweak settings
+- 💾 **JSON Import/Export** — Save your setups or share them with others
+- 🧱 **Multi-Island Support** — Plan across multiple islands and balance production
+
+## 🖼️ Screenshots
+
+![Whole app screenshot](https://github.com/jeffmanzione/annocalculator/blob/main/screenshots/whole_app.png "Whole app screenshot")
+![Summary screenshot](https://github.com/jeffmanzione/annocalculator/blob/main/screenshots/summary.png "Summary screenshot")
+![Island editor screenshot](https://github.com/jeffmanzione/annocalculator/blob/main/screenshots/island_editor.png "Island editor screenshot")
+
+## 🧑‍💻 Tech Stack
+
+- [Angular](https://angular.io/) — Frontend framework
+- [TypeScript](https://www.typescriptlang.org/) — Strict typing for better maintainability
+- [SCSS](https://sass-lang.com/) — Styling
+
+## 🛠️ Development
+
+### Prerequisites
+
+- [Node.js](https://nodejs.org/) (22.x or later recommended)
+- [Angular CLI](https://angular.io/cli)
+
+### Setup
+
+```bash
+git clone https://github.com/your-username/anno-calculator.git
+cd anno-calculator
+npm install
+```
+
+### Running Locally
 
 ```bash
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Navigate to http://localhost:4200/ in your browser.
 
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+### Building for Production
 
 ```bash
-ng generate component component-name
+ng build --configuration production
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+Output will be in the dist/ directory.
 
-```bash
-ng generate --help
-```
+## 🐛 Contributing / Bug Reports
 
-## Building
+If you spot a bug or have an idea for a new feature:
 
-To build the project run:
+1. Open an issue in this repo
+2. Or submit a pull request
+3. Or just email/message me—I'm always open to feedback!
 
-```bash
-ng build
-```
+## 📄 License
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+GNU License. See [LICENSE](https://github.com/jeffmanzione/annocalculator/blob/main/LICENSE) for more details.
 
-## Running unit tests
+## 🎮 About the Creator
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+I'm a long-time Anno player who built this tool after finding spreadsheets too limiting for managing complex production chains. This project is purely fan-made and not affiliated with Ubisoft.
 
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+> Anno is a trademark of Ubisoft. This tool is not endorsed by or associated with Ubisoft in any way.
