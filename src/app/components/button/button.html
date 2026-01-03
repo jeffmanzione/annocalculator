@@ -1,23 +1,43 @@
-<button *ngIf="tooltip && icon && text" [matButton]="appearance" [color]="color" [matTooltip]="tooltip!"
-  (click)="onClick($event)">
-  <mat-icon [fontIcon]="icon"></mat-icon>
-  {{ text }}
-</button>
-<button *ngIf="tooltip && icon && !text" matIconButton [color]="color" [matTooltip]="tooltip!"
-  (click)="onClick($event)">
-  <mat-icon [fontIcon]="icon"></mat-icon>
-</button>
-<button *ngIf="tooltip && !icon && text" [matButton]="appearance" [color]="color" [matTooltip]="tooltip!"
-  (click)="onClick($event)">
-  {{ text }}
-</button>
-<button *ngIf="!tooltip && icon && text" [matButton]="appearance" [color]="color" (click)="onClick($event)">
-  <mat-icon [fontIcon]="icon"></mat-icon>
-  {{ text }}
-</button>
-<button *ngIf="!tooltip && icon && !text" matIconButton [color]="color" (click)="onClick($event)">
-  <mat-icon [fontIcon]="icon"></mat-icon>
-</button>
-<button *ngIf="!tooltip && !icon && text" [matButton]="appearance" [color]="color" (click)="onClick($event)">
-  {{ text }}
-</button>
+@if (tooltip) {
+  @if (icon) {
+    @if (text) {
+      <button [matButton]="appearance" [color]="color" [matTooltip]="tooltip!" (click)="onClick($event)">
+        <mat-icon [fontIcon]="icon"></mat-icon>
+        {{ text }}
+      </button>
+    } @else {
+      <button matIconButton [color]="color" [matTooltip]="tooltip!" (click)="onClick($event)">
+        <mat-icon [fontIcon]="icon"></mat-icon>
+      </button>
+    }
+  } @else {
+    @if (icon) {
+      <button [matButton]="appearance" [color]="color" [matTooltip]="tooltip!" (click)="onClick($event)">
+        {{ text }}
+      </button>
+    } @else {
+      Invalid button parameters (tooltip without button or text)
+    }
+  }
+} @else {
+  @if (icon) {
+    @if (text) {
+      <button [color]="color" [matButton]="appearance" (click)="onClick($event)">
+        <mat-icon [fontIcon]="icon"></mat-icon>
+        {{ text }}
+      </button>
+    } @else if (!text) {
+      <button matIconButton [color]="color" (click)="onClick($event)">
+        <mat-icon [fontIcon]="icon"></mat-icon>
+      </button>
+    }
+  } @else {
+    @if (text) {
+      <button [matButton]="appearance" [color]="color" (click)="onClick($event)">
+        {{ text }}
+      </button>
+    } @else {
+      Invalid button parameters (No text or icon)
+    }
+  }
+}

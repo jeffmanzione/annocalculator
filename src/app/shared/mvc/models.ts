@@ -1,13 +1,19 @@
-import { Good, ProductionBuilding, Boost, Region, DepartmentOfLaborPolicy } from "../game/enums";
+import {
+  Good,
+  ProductionBuilding,
+  Boost,
+  Region,
+  DepartmentOfLaborPolicy,
+} from '../game/enums';
 
 // Marker interface for all models.
-export interface Model { };
+export interface Model { }
 
 export interface ExtraGood extends Model {
   good: Good;
-  rateNumerator?: number,
-  rateDenominator?: number,
-};
+  rateNumerator?: number;
+  rateDenominator?: number;
+}
 
 export interface ProductionLine extends Model {
   building: ProductionBuilding;
@@ -19,7 +25,7 @@ export interface ProductionLine extends Model {
   tradeUnionItemsBonus?: number;
   extraGoods?: ExtraGood[];
   inRangeOfLocalDepartment?: boolean;
-};
+}
 
 export type IslandId = number;
 export type TradeRouteId = number;
@@ -29,7 +35,7 @@ export interface TradeRoute extends Model {
   sourceIslandId: IslandId;
   targetIslandId: IslandId;
   good: Good;
-};
+}
 
 export interface Island extends Model {
   id?: IslandId;
@@ -37,13 +43,13 @@ export interface Island extends Model {
   region?: Region;
   productionLines: ProductionLine[];
   dolPolicy?: DepartmentOfLaborPolicy;
-};
+}
 
 export interface World extends Model {
   tradeUnionBonus?: number;
   islands: Island[];
   tradeRoutes: TradeRoute[];
-};
+}
 
 export const BASE_EXTRA_GOOD_MODEL: ExtraGood = {
   good: Good.Unknown,
@@ -70,7 +76,7 @@ export const DEFAULT_PRODUCTION_LINE_MODEL: ProductionLine = {
   numBuildings: 0,
   boosts: [],
   hasTradeUnion: false,
-  tradeUnionItemsBonus: 0.0,
+  tradeUnionItemsBonus: 0,
   extraGoods: [],
   inRangeOfLocalDepartment: false,
 };
@@ -107,8 +113,7 @@ export const BASE_WORLD_MODEL: World = {
 };
 
 export const DEFAULT_WORLD_MODEL: World = {
-  tradeUnionBonus: 0.0,
+  tradeUnionBonus: 0,
   islands: [],
   tradeRoutes: [],
 };
-

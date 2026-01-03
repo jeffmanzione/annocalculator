@@ -1,11 +1,17 @@
 import { Component, Input, NgModule } from '@angular/core';
-import { MatCardModule } from '@angular/material/card';
+import {
+  MatCardModule,
+  MatCard,
+  MatCardHeader,
+  MatCardTitle,
+  MatCardContent,
+} from '@angular/material/card';
 
 @Component({
   selector: 'card',
   templateUrl: './card.html',
   styleUrl: './card.scss',
-  standalone: false,
+  imports: [MatCard, MatCardHeader, MatCardTitle, MatCardContent],
 })
 export class Card {
   @Input()
@@ -16,31 +22,18 @@ export class Card {
   selector: 'card-title',
   template: '<ng-content/>',
   styles: ':host { width: 100%; }',
-  standalone: false,
 })
-export class CardTitle { }
+export class CardTitle {}
 
 @Component({
   selector: 'card-content',
   template: '<ng-content/>',
   styles: ':host { width: 100%; }',
-  standalone: false,
 })
-export class CardContent { }
+export class CardContent {}
 
 @NgModule({
-  imports: [
-    MatCardModule,
-  ],
-  declarations: [
-    Card,
-    CardTitle,
-    CardContent,
-  ],
-  exports: [
-    Card,
-    CardTitle,
-    CardContent,
-  ]
+  imports: [MatCardModule, Card, CardTitle, CardContent],
+  exports: [Card, CardTitle, CardContent],
 })
-export class CardModule { }
+export class CardModule {}

@@ -1,9 +1,23 @@
-import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { TradeRouteController, WorldController } from '../../../shared/mvc/controllers';
-import { MatTable, MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { ControlComponent, FormGroupControl } from '../../../shared/control/control';
-import { CommonModule } from '@angular/common';
+import {
+  TradeRouteController,
+  WorldController,
+} from '../../../shared/mvc/controllers';
+import {
+  MatTable,
+  MatTableDataSource,
+  MatTableModule,
+} from '@angular/material/table';
+import {
+  ControlComponent,
+  FormGroupControl,
+} from '../../../shared/control/control';
 import { MatSelectModule } from '@angular/material/select';
 import { Good } from '../../../shared/game/enums';
 import { lookupGoodIconUrl } from '../../../shared/game/icons';
@@ -18,7 +32,6 @@ import { AcButton } from '../../../components/button/button';
   imports: [
     AcButton,
     CardModule,
-    CommonModule,
     EnumSelect,
     FormsModule,
     MatTableModule,
@@ -29,7 +42,10 @@ import { AcButton } from '../../../components/button/button';
   styleUrl: './trade-routes-panel.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TradeRoutesPanel extends ControlComponent<WorldController> implements OnInit {
+export class TradeRoutesPanel
+  extends ControlComponent<WorldController>
+  implements OnInit
+{
   readonly displayColumns = [
     'sourceIslandId',
     'targetIslandId',
@@ -45,7 +61,7 @@ export class TradeRoutesPanel extends ControlComponent<WorldController> implemen
   tradeRoutes!: TradeRouteControl[];
 
   ngOnInit(): void {
-    this.tradeRoutes = this.controller.tradeRoutes.map(tr => {
+    this.tradeRoutes = this.controller.tradeRoutes.map((tr) => {
       const control = new TradeRouteControl(tr);
       this.registerChildControl(control);
       return control;
@@ -77,7 +93,6 @@ export class TradeRoutesPanel extends ControlComponent<WorldController> implemen
 }
 
 export class TradeRouteControl extends FormGroupControl<TradeRouteController> {
-
   get id(): TradeRouteId {
     return this.controller.id;
   }
@@ -87,17 +102,18 @@ export class TradeRouteControl extends FormGroupControl<TradeRouteController> {
   sourceGoodOptions: Good[] = [];
 
   constructor(controller: TradeRouteController) {
-    super(
-      controller,
-      ['sourceIslandId', 'targetIslandId', 'good']
-    );
+    super(controller, ['sourceIslandId', 'targetIslandId', 'good']);
     this.beforeBubbleChange();
     this.afterPushChange();
   }
 
   override afterPushChange(): void {
-    this.sourceIslandOptions = this.controller.world.islands.filter(i => i.id != this.controller.targetIslandId);
-    this.targetIslandOptions = this.controller.world.islands.filter(i => i.id != this.controller.sourceIslandId);
+    this.sourceIslandOptions = this.controller.world.islands.filter(
+      (i) => i.id != this.controller.targetIslandId,
+    );
+    this.targetIslandOptions = this.controller.world.islands.filter(
+      (i) => i.id != this.controller.sourceIslandId,
+    );
     this.sourceGoodOptions = this.computeSourceGoods();
   }
 
@@ -105,7 +121,9 @@ export class TradeRouteControl extends FormGroupControl<TradeRouteController> {
     if (this.controller.sourceIslandId < 0) {
       return [];
     }
-    const island = this.controller.world.lookupIslandById(this.controller.sourceIslandId);
+    const island = this.controller.world.lookupIslandById(
+      this.controller.sourceIslandId,
+    );
     return island.producedGoods;
   }
 }

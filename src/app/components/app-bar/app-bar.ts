@@ -7,11 +7,7 @@ import { AppInfo, apps, isNotRedirect, WEBSITE_NAME } from '../../app.routes';
 
 @Component({
   selector: 'app-bar',
-  imports: [
-    CommonModule,
-    MatButtonModule,
-    MatToolbarModule,
-  ],
+  imports: [CommonModule, MatButtonModule, MatToolbarModule],
   templateUrl: './app-bar.html',
   styleUrl: './app-bar.scss',
 })

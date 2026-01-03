@@ -77,7 +77,7 @@ export enum ProductionBuilding {
   LinenMill = 'Linen Mill',
   LinseedFarm = 'Linseed Farm',
   LobsterFishery = 'Lobster Fishery',
-  LumberjacksHut = 'Lumberjack\'s Hut',
+  LumberjacksHut = "Lumberjack's Hut",
   Malthouse = 'Malthouse',
   MarquetryWorkshop = 'Marquetry Workshop',
   MotorAssemblyLine = 'Motor Assembly Line',
@@ -120,7 +120,7 @@ export enum ProductionBuilding {
   Steelworks = 'Steelworks',
   SugarCanePlantation = 'Sugar Cane Plantation',
   SugarRefinery = 'Sugar Refinery',
-  TailorsShop = 'Tailor\'s Shop',
+  TailorsShop = "Tailor's Shop",
   TapestryLooms = 'Tapestry Looms',
   TeaSpicer = 'Tea Spicer',
   TeffFarm = 'Teff Farm',
@@ -132,7 +132,7 @@ export enum ProductionBuilding {
   WhalingStation = 'Whaling Station',
   WindowMakers = 'Window Makers',
   ZincMine = 'Zinc Mine',
-};
+}
 
 export enum ProductionType {
   Mine = 'Mine',
@@ -142,7 +142,7 @@ export enum ProductionType {
   HuntingCabin = 'Hunting Cabin',
   Orchard = 'Orchard',
   Oil = 'Oil',
-};
+}
 
 export enum Good {
   Unknown = 'Unknown',
@@ -288,7 +288,7 @@ export enum Good {
   Wool = 'Wool',
   WorkClothes = 'Work Clothes',
   Zinc = 'Zinc',
-};
+}
 
 export enum Boost {
   None = 'None',
@@ -296,7 +296,7 @@ export enum Boost {
   TracktorBarn = 'Tracktor Barn',
   Fertilizer = 'Fertilizer',
   Silo = 'Silo',
-};
+}
 
 export enum DepartmentOfLaborPolicy {
   None = 'None',
@@ -305,7 +305,7 @@ export enum DepartmentOfLaborPolicy {
   GalvanicGrantsAct = 'Galvanic Grants Act',
   FactoryInspectionsAct = 'Factory Inspections Act',
   UnionSubsidiesAct = 'Union Subsidies Act',
-};
+}
 
 export enum Region {
   Unknown = 'Unknown',
@@ -314,4 +314,4 @@ export enum Region {
   CapeTrelawney = 'Cape Trelawney',
   Arctic = 'The Arctic',
   Enbesa = 'Enbesa',
-};
+}

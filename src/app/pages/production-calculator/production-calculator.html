@@ -1,43 +1,53 @@
 <div class="column left-column">
-  <section *ngIf="world" class="global-parameters-section">
-    <card presentation="accent">
-      <card-title>Default Actions</card-title>
-      <card-content class="buttons-container">
-        <ac-button *ngFor="let action of defaultActions" [icon]="action.icon" [tooltip]="action.tooltip"
-          (action)="action.fn()"></ac-button>
-      </card-content>
-    </card>
-    <card class="global-parameters-card">
-      <card-title>Global Parameters</card-title>
-      <card-content [formGroup]="formGroup!">
-        <mat-form-field>
-          <mat-label>Palace Trade Union Bonus (%)</mat-label>
-          <input matInput type="number" formControlName="tradeUnionBonusPercent">
-        </mat-form-field>
-      </card-content>
-    </card>
-  </section>
+  @if (world) {
+    <section class="global-parameters-section">
+      <card presentation="accent">
+        <card-title>Default Actions</card-title>
+        <card-content class="buttons-container">
+          @for (action of defaultActions; track action) {
+            <ac-button [icon]="action.icon" [tooltip]="action.tooltip" (action)="action.fn()"></ac-button>
+          }
+        </card-content>
+      </card>
+      <card class="global-parameters-card">
+        <card-title>Global Parameters</card-title>
+        <card-content [formGroup]="formGroup!">
+          <mat-form-field>
+            <mat-label>Palace Trade Union Bonus (%)</mat-label>
+            <input matInput type="number" formControlName="tradeUnionBonusPercent" />
+          </mat-form-field>
+        </card-content>
+      </card>
+    </section>
+  }
   <section class="island-list-section">
-    <mat-accordion multi *ngIf="world">
-      <mat-expansion-panel *ngFor="let island of world.islands; index as i" [expanded]="true">
-        <div class="underlay"></div>
-        <mat-expansion-panel-header>
-          <mat-panel-title><mat-icon>flag</mat-icon>{{ island.name }}</mat-panel-title>
-          <mat-panel-description>
-            <ac-button class="delete-island-button" icon="delete" (click)="removeIslandAt(i)">
-            </ac-button>
-          </mat-panel-description>
-        </mat-expansion-panel-header>
-        <island [controller]="island" (change)="update()"></island>
-      </mat-expansion-panel>
-    </mat-accordion>
+    @if (world) {
+      <mat-accordion multi>
+        @for (island of world.islands; track island; let i = $index) {
+          <mat-expansion-panel [expanded]="true">
+            <div class="underlay"></div>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                <mat-icon>flag</mat-icon>
+                {{ island.name }}
+              </mat-panel-title>
+              <mat-panel-description>
+                <ac-button class="delete-island-button" icon="delete" (click)="removeIslandAt(i)"></ac-button>
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+            <island [controller]="island" (change)="update()"></island>
+          </mat-expansion-panel>
+        }
+      </mat-accordion>
+    }
   </section>
   <section class="add-island-button-section">
-    <ac-button appearance="filled" color="primary" icon="add" text="Add Island" (click)="addIsland()">
-    </ac-button>
+    <ac-button appearance="filled" color="primary" icon="add" text="Add Island" (click)="addIsland()"></ac-button>
   </section>
 </div>
 <div class="column right-column">
-  <summary-panel *ngIf="world" [world]="world"></summary-panel>
-  <trade-routes-panel *ngIf="world" [controller]="world" (change)="update()"></trade-routes-panel>
+  @if (world) {
+    <summary-panel [world]="world"></summary-panel>
+    <trade-routes-panel [controller]="world" (change)="update()"></trade-routes-panel>
+  }
 </div>

@@ -1,40 +1,56 @@
-import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Input, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  inject,
+  Input,
+  OnInit,
+  QueryList,
+  ViewChild,
+  ViewChildren,
+} from '@angular/core';
 import { CardModule } from '../../../components/card/card';
-import { MatTable, MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { FormattedNumberModule, GREEN_RED_FONT_SPEC } from "../../../components/formatted-number/formatted-number";
+import {
+  MatTable,
+  MatTableDataSource,
+  MatTableModule,
+} from '@angular/material/table';
+import {
+  FormattedNumber,
+  GREEN_RED_FONT_SPEC,
+} from '../../../components/formatted-number/formatted-number';
 import { IslandView, WorldView } from '../../../shared/mvc/views';
 import { Good } from '../../../shared/game/enums';
 import { IslandId } from '../../../shared/mvc/models';
 import { ReadonlyTable, Table } from '../../../tools/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { CommonModule } from '@angular/common';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 
 interface GoodSummaryCell {
-  island: IslandView,
-  good: Good,
-  localProductionPerMin: number,
-  localConsumptionPerMin: number,
-  importedPerMin: number,
-  exportedPerMin: number,
-};
+  island: IslandView;
+  good: Good;
+  localProductionPerMin: number;
+  localConsumptionPerMin: number;
+  importedPerMin: number;
+  exportedPerMin: number;
+}
 
 interface GoodSummaryRow {
-  good: Good,
-  totalProductionPerMin: number,
-  netProductionPerMin: number,
-  islandSummaries: GoodSummaryCell[],
-  showIslandSummary: boolean,
-  showIslandSummaryIcon: string,
-};
+  good: Good;
+  totalProductionPerMin: number;
+  netProductionPerMin: number;
+  islandSummaries: GoodSummaryCell[];
+  showIslandSummary: boolean;
+  showIslandSummaryIcon: string;
+}
 
 @Component({
   selector: 'summary-panel',
   imports: [
     CardModule,
-    CommonModule,
-    FormattedNumberModule,
+    FormattedNumber,
     MatButtonModule,
     MatIconModule,
     MatTableModule,
@@ -94,7 +110,10 @@ export class SummaryPanel implements OnInit, AfterViewInit {
       this.rows.set(good, this.createBaseGoodSummaryRow(good));
     }
     this.update();
-    this.tableData.filterPredicate = (data: GoodSummaryRow, _: string): boolean => {
+    this.tableData.filterPredicate = (
+      data: GoodSummaryRow,
+      _: string,
+    ): boolean => {
       return data.islandSummaries.length > 0;
     };
     this.tableData.data = Array.from(this.rows.values());
@@ -102,7 +121,10 @@ export class SummaryPanel implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     this.tableData.sort = this.sort;
-    this.tableData.sortingDataAccessor = (data: GoodSummaryRow, sortHeaderId: string): string | number => {
+    this.tableData.sortingDataAccessor = (
+      data: GoodSummaryRow,
+      sortHeaderId: string,
+    ): string | number => {
       switch (sortHeaderId) {
         case 'good':
           return data.good.toLocaleLowerCase();
@@ -126,20 +148,30 @@ export class SummaryPanel implements OnInit, AfterViewInit {
     for (const [sourceIsland, good, targetIslands] of tradesTable) {
       const cell = baseTableCells.get(sourceIsland, good);
       let totalAvailable = this.availableProduction(cell);
-      if (totalAvailable <= 0) { continue; }
+      if (totalAvailable <= 0) {
+        continue;
+      }
 
       const sortedIslands = targetIslands
-        .map(id => baseTableCells.get(id, good))
-        .filter(c => this.availableProduction(c) < 0)
-        .map(c => c!)
-        .sort((c1, c2) => this.availableProduction(c1) - this.availableProduction(c2));
+        .map((id) => baseTableCells.get(id, good))
+        .filter((c) => this.availableProduction(c) < 0)
+        .map((c) => c!)
+        .sort(
+          (c1, c2) =>
+            this.availableProduction(c1) - this.availableProduction(c2),
+        );
 
       // First, distribute evenly what is available.
       for (let i = 0; i < sortedIslands.length; i++) {
         const targetCell = baseTableCells.get(sortedIslands[i].island.id, good);
-        if (!targetCell) { continue; }
+        if (!targetCell) {
+          continue;
+        }
         const targetDistribution = totalAvailable / (sortedIslands.length - i);
-        const distribution = Math.min(targetDistribution, -this.availableProduction(targetCell));
+        const distribution = Math.min(
+          targetDistribution,
+          -this.availableProduction(targetCell),
+        );
         targetCell.importedPerMin += distribution;
         cell!.exportedPerMin += distribution;
         totalAvailable -= distribution;
@@ -147,7 +179,9 @@ export class SummaryPanel implements OnInit, AfterViewInit {
       // If there is any left after distribution, sprinkle the last bit evenly.
       for (let i = 0; i < sortedIslands.length; i++) {
         const targetCell = baseTableCells.get(sortedIslands[i].island.id, good);
-        if (!targetCell) { continue; }
+        if (!targetCell) {
+          continue;
+        }
         const distribution = totalAvailable / (sortedIslands.length - i);
         targetCell.importedPerMin += distribution;
         cell!.exportedPerMin += distribution;
@@ -165,20 +199,33 @@ export class SummaryPanel implements OnInit, AfterViewInit {
 
   toggleIslandSummary(row: GoodSummaryRow): void {
     row.showIslandSummary = !row.showIslandSummary;
-    row.showIslandSummaryIcon = row.showIslandSummary ? 'arrow_drop_up' : 'arrow_drop_down';
+    row.showIslandSummaryIcon = row.showIslandSummary
+      ? 'arrow_drop_up'
+      : 'arrow_drop_down';
     this.islandTables.get(this.tableData.data.indexOf(row))?.renderRows();
   }
 
   availableProduction(cell?: GoodSummaryCell): number {
     if (!cell) return 0;
-    return cell.localProductionPerMin - cell.localConsumptionPerMin + cell.importedPerMin - cell.exportedPerMin;
+    return (
+      cell.localProductionPerMin -
+      cell.localConsumptionPerMin +
+      cell.importedPerMin -
+      cell.exportedPerMin
+    );
   }
 
   private buildBaseTableCells(): Table<IslandId, Good, GoodSummaryCell> {
     let cells = new Table<IslandId, Good, GoodSummaryCell>();
 
-    const updateStats = (island: IslandView, good: Good, netProductionPerMin: number): void => {
-      const tableCell = cells.getOrDefault(island.id, good, () => this.createGoodSummaryCell(island, good));
+    const updateStats = (
+      island: IslandView,
+      good: Good,
+      netProductionPerMin: number,
+    ): void => {
+      const tableCell = cells.getOrDefault(island.id, good, () =>
+        this.createGoodSummaryCell(island, good),
+      );
       if (netProductionPerMin > 0) {
         tableCell.localProductionPerMin += netProductionPerMin;
       } else {
@@ -203,12 +250,16 @@ export class SummaryPanel implements OnInit, AfterViewInit {
   private buildTradesTable(): ReadonlyTable<IslandId, Good, IslandId[]> {
     const trades = new Table<IslandId, Good, IslandId[]>();
     for (const tr of this._world.tradeRoutes) {
-      trades.getOrDefault(tr.sourceIslandId, tr.good, () => []).push(tr.targetIslandId);
+      trades
+        .getOrDefault(tr.sourceIslandId, tr.good, () => [])
+        .push(tr.targetIslandId);
     }
     return trades;
   }
 
-  private updateTableCells(cellTable: ReadonlyTable<IslandId, Good, GoodSummaryCell>): void {
+  private updateTableCells(
+    cellTable: ReadonlyTable<IslandId, Good, GoodSummaryCell>,
+  ): void {
     for (const row of this.rows.values()) {
       clearRow(row);
     }
@@ -234,7 +285,10 @@ export class SummaryPanel implements OnInit, AfterViewInit {
     };
   }
 
-  private createGoodSummaryCell(island: IslandView, good: Good): GoodSummaryCell {
+  private createGoodSummaryCell(
+    island: IslandView,
+    good: Good,
+  ): GoodSummaryCell {
     return {
       island: island,
       good: good,

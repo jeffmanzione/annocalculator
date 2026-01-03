@@ -7,35 +7,41 @@
   src: url('/fonts/ElizabethRegular-OV76.ttf');
 }
 
-
 @include mat.core();
 
 $web-primary: mat.m2-define-palette(mat.$m2-indigo-palette);
 $web-accent: mat.m2-define-palette(mat.$m2-pink-palette, A200, A100, A400);
 $web-warn: mat.m2-define-palette(mat.$m2-red-palette);
 
-$web-font-family: "Roboto", sans-serif;
+$web-font-family: 'Roboto', sans-serif;
 
-$web-typography-level: mat.m2-define-typography-level($font-family: $web-font-family,
-    $font-weight: 400,
-    $font-size: 9.5px,
-    $line-height: 1,
-  );
+$web-typography-level: mat.m2-define-typography-level(
+  $font-family: $web-font-family,
+  $font-weight: 400,
+  $font-size: 9.5px,
+  $line-height: 1,
+);
 
-$web-fonts: mat.m2-define-typography-config($font-family: $web-font-family,
-    $body-1: $web-typography-level,
-    $body-2: $web-typography-level);
+$web-fonts: mat.m2-define-typography-config(
+  $font-family: $web-font-family,
+  $body-1: $web-typography-level,
+  $body-2: $web-typography-level,
+);
 
-$web-theme: mat.m2-define-light-theme((color: (primary: $web-primary,
-        accent: $web-accent,
-        warn: $web-warn ),
-      typography: $web-fonts,
-      density: -5),
-  );
+$web-theme: mat.m2-define-light-theme(
+  (
+    color: (
+      primary: $web-primary,
+      accent: $web-accent,
+      warn: $web-warn,
+    ),
+    typography: $web-fonts,
+    density: -5,
+  )
+);
 
 @include mat.all-component-themes($web-theme);
 @include mat.all-component-typographies($web-fonts);
-
 
 ::-webkit-scrollbar {
   width: theme-colors.$scrollbar-width;
@@ -96,7 +102,10 @@ body {
   background-color: theme-colors.$bg-color;
   height: 100%;
 
-  @include mat.table-overrides((background-color: theme-colors.$table-bg-color,
+  @include mat.table-overrides(
+    (
+      background-color: theme-colors.$table-bg-color,
       header-headline-size: 10.5px,
-    ));
+    )
+  );
 }

@@ -1,18 +1,21 @@
-import { CommonModule } from '@angular/common';
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import { MatInputModule } from '@angular/material/input';
 
 @Component({
   selector: 'json-input',
-  imports: [
-    CommonModule,
-    MatInputModule,
-  ],
+  imports: [MatInputModule],
   templateUrl: './json-input.html',
-  styleUrl: './json-input.scss'
+  styleUrl: './json-input.scss',
 })
 export class JsonInput<T> implements OnInit {
-
   private _value!: T;
 
   @Input()
@@ -24,7 +27,7 @@ export class JsonInput<T> implements OnInit {
   }
 
   @Output()
-  valueChange = new EventEmitter<T>;
+  valueChange = new EventEmitter<T>();
 
   @ViewChild('input', { static: true, read: ElementRef })
   textArea!: ElementRef<HTMLTextAreaElement>;
@@ -38,8 +41,8 @@ export class JsonInput<T> implements OnInit {
   private convertObjectToJsonString(): void {
     this.textArea.nativeElement.value = JSON.stringify(
       this._value,
-      /*replacer=*/null,
-      /*spaces=*/2
+      /*replacer=*/ null,
+      /*spaces=*/ 2,
     );
   }
 

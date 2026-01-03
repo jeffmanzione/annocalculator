@@ -4,11 +4,12 @@
     <button mat-button class="toolbar-title toolbar-text-shadow" (click)="navigateTo('/')">
       {{ website }}
     </button>
-    <div *ngFor="let app of apps" class="toolbar-item toolbar-text-shadow"
-      [ngClass]="isCurrentApp(app) ? 'toolbar-item-selected': ''">
-      <button mat-button [disabled]="isCurrentApp(app)" (click)="navigateTo(app)">
-        {{ app.name }}
-      </button>
-    </div>
+    @for (app of apps; track app) {
+      <div class="toolbar-item toolbar-text-shadow" [ngClass]="isCurrentApp(app) ? 'toolbar-item-selected' : ''">
+        <button mat-button [disabled]="isCurrentApp(app)" (click)="navigateTo(app)">
+          {{ app.name }}
+        </button>
+      </div>
+    }
   </div>
 </mat-toolbar>

@@ -1,7 +1,34 @@
-import { Boost, Good, ProductionBuilding, Region, DepartmentOfLaborPolicy } from "../game/enums";
-import { BASE_ISLAND_MODEL, BASE_PRODUCTION_LINE_MODEL, DEFAULT_ISLAND_MODEL, DEFAULT_PRODUCTION_LINE_MODEL, DEFAULT_WORLD_MODEL, Island, ProductionLine, World, ExtraGood, BASE_EXTRA_GOOD_MODEL, TradeRoute, IslandId, BASE_TRADE_ROUTE_MODEL, TradeRouteId } from "./models";
-import { ExtraGoodView, IslandView, ProductionLineView, TradeRouteView, ViewContext, WorldView } from "./views";
-
+import {
+  Boost,
+  Good,
+  ProductionBuilding,
+  Region,
+  DepartmentOfLaborPolicy,
+} from '../game/enums';
+import {
+  BASE_ISLAND_MODEL,
+  BASE_PRODUCTION_LINE_MODEL,
+  DEFAULT_ISLAND_MODEL,
+  DEFAULT_PRODUCTION_LINE_MODEL,
+  DEFAULT_WORLD_MODEL,
+  Island,
+  ProductionLine,
+  World,
+  ExtraGood,
+  BASE_EXTRA_GOOD_MODEL,
+  TradeRoute,
+  IslandId,
+  BASE_TRADE_ROUTE_MODEL,
+  TradeRouteId,
+} from './models';
+import {
+  ExtraGoodView,
+  IslandView,
+  ProductionLineView,
+  TradeRouteView,
+  ViewContext,
+  WorldView,
+} from './views';
 
 function generatePseudorandomInt(): number {
   // Ensure min and max are integers
@@ -11,7 +38,10 @@ function generatePseudorandomInt(): number {
 }
 
 export class ExtraGoodController extends ExtraGoodView {
-  static override wrap(model: ExtraGood, context: ViewContext): ExtraGoodController {
+  static override wrap(
+    model: ExtraGood,
+    context: ViewContext,
+  ): ExtraGoodController {
     return new ExtraGoodController(model, context);
   }
 
@@ -35,10 +65,13 @@ export class ExtraGoodController extends ExtraGoodView {
   override get rateDenominator(): number {
     return super.rateDenominator;
   }
-};
+}
 
 export class ProductionLineController extends ProductionLineView {
-  static override wrap(model: ProductionLine, context: ViewContext): ProductionLineController {
+  static override wrap(
+    model: ProductionLine,
+    context: ViewContext,
+  ): ProductionLineController {
     return new ProductionLineController(model, context);
   }
 
@@ -59,7 +92,6 @@ export class ProductionLineController extends ProductionLineView {
   override get inputGoods(): Good[] {
     return super.inputGoods;
   }
-
 
   override set good(value: Good) {
     this.model.good = value;
@@ -102,7 +134,10 @@ export class ProductionLineController extends ProductionLineView {
   }
 
   override set tradeUnionItemsBonus(value: number) {
-    if (value == null || value == DEFAULT_PRODUCTION_LINE_MODEL.tradeUnionItemsBonus) {
+    if (
+      value == null ||
+      value == DEFAULT_PRODUCTION_LINE_MODEL.tradeUnionItemsBonus
+    ) {
       delete this.model.tradeUnionItemsBonus;
       return;
     }
@@ -113,7 +148,10 @@ export class ProductionLineController extends ProductionLineView {
   }
 
   override set inRangeOfLocalDepartment(value: boolean) {
-    if (value == null || value == DEFAULT_PRODUCTION_LINE_MODEL.inRangeOfLocalDepartment) {
+    if (
+      value == null ||
+      value == DEFAULT_PRODUCTION_LINE_MODEL.inRangeOfLocalDepartment
+    ) {
       delete this.model.inRangeOfLocalDepartment;
       return;
     }
@@ -129,29 +167,37 @@ export class ProductionLineController extends ProductionLineView {
     if (!this.model.extraGoods) {
       return [];
     }
-    this._extraGoods ??= this.model.extraGoods.map(
-      eg => ExtraGoodController.wrap(eg, { ...this.context, productionLine: this })
+    this._extraGoods ??= this.model.extraGoods.map((eg) =>
+      ExtraGoodController.wrap(eg, { ...this.context, productionLine: this }),
     );
     return this._extraGoods;
   }
 
   addExtraGood(): ExtraGoodController {
     this.model.extraGoods ??= [];
-    this._extraGoods ??= this.model.extraGoods.map(
-      eg => ExtraGoodController.wrap(eg, { ...this.context, productionLine: this })
+    this._extraGoods ??= this.model.extraGoods.map((eg) =>
+      ExtraGoodController.wrap(eg, { ...this.context, productionLine: this }),
     );
     const extraGood = structuredClone(BASE_EXTRA_GOOD_MODEL);
     this.model.extraGoods.push(extraGood);
-    const controller = ExtraGoodController.wrap(extraGood, { ...this.context, productionLine: this });
+    const controller = ExtraGoodController.wrap(extraGood, {
+      ...this.context,
+      productionLine: this,
+    });
     this._extraGoods.push(controller);
     return controller;
   }
 
   removeExtraGoodAt(index: number): void {
-    if (!Number.isInteger(index) || index < 0
-      || index >= this.model.extraGoods!.length) {
-      console.warn('Invalid productionLine index. ' +
-        `Was ${index} and length is ${this.model.extraGoods!.length}`);
+    if (
+      !Number.isInteger(index) ||
+      index < 0 ||
+      index >= this.model.extraGoods!.length
+    ) {
+      console.warn(
+        'Invalid productionLine index. ' +
+          `Was ${index} and length is ${this.model.extraGoods!.length}`,
+      );
       return;
     }
     this.model.extraGoods!.splice(index, 1);
@@ -161,10 +207,13 @@ export class ProductionLineController extends ProductionLineView {
       delete this.model.extraGoods;
     }
   }
-};
+}
 
 export class TradeRouteController extends TradeRouteView {
-  static override wrap(model: TradeRoute, context: ViewContext): TradeRouteController {
+  static override wrap(
+    model: TradeRoute,
+    context: ViewContext,
+  ): TradeRouteController {
     const controller = new TradeRouteController(model, context);
     if (model.id < 0) {
       controller.model.id = generatePseudorandomInt();
@@ -231,7 +280,9 @@ export class IslandController extends IslandView {
   private _productionLines?: ProductionLineController[];
 
   override get productionLines(): ProductionLineController[] {
-    this._productionLines ??= this.model.productionLines.map(pl => ProductionLineController.wrap(pl, { ...this.context, island: this }));
+    this._productionLines ??= this.model.productionLines.map((pl) =>
+      ProductionLineController.wrap(pl, { ...this.context, island: this }),
+    );
     return this._productionLines;
   }
 
@@ -239,22 +290,30 @@ export class IslandController extends IslandView {
     const productionLine = structuredClone(BASE_PRODUCTION_LINE_MODEL);
     this.model.productionLines.push(productionLine);
     this._productionLines ??= [];
-    const controller = ProductionLineController.wrap(productionLine, { ...this.context, island: this });
+    const controller = ProductionLineController.wrap(productionLine, {
+      ...this.context,
+      island: this,
+    });
     this._productionLines.push(controller);
     return controller;
   }
 
   removeProductionLineAt(index: number): void {
-    if (!Number.isInteger(index) || index < 0
-      || index >= this.model.productionLines.length) {
-      console.warn('Invalid productionLine index. ' +
-        `Was ${index} and length is ${this.model.productionLines.length}`);
+    if (
+      !Number.isInteger(index) ||
+      index < 0 ||
+      index >= this.model.productionLines.length
+    ) {
+      console.warn(
+        'Invalid productionLine index. ' +
+          `Was ${index} and length is ${this.model.productionLines.length}`,
+      );
       return;
     }
     this.model.productionLines.splice(index, 1);
     this._productionLines!.splice(index, 1);
   }
-};
+}
 
 export class WorldController extends WorldView {
   static override wrap(model: World): WorldController {
@@ -275,7 +334,9 @@ export class WorldController extends WorldView {
   private _islands?: IslandController[];
 
   override get islands(): IslandController[] {
-    this._islands ??= this.model.islands.map(i => IslandController.wrap(i, this.selfContextC));
+    this._islands ??= this.model.islands.map((i) =>
+      IslandController.wrap(i, this.selfContextC),
+    );
     return this._islands;
   }
 
@@ -288,10 +349,15 @@ export class WorldController extends WorldView {
   }
 
   removeIslandAt(index: number): void {
-    if (!Number.isInteger(index) || index < 0
-      || index >= this.model.islands.length) {
-      console.warn('Invalid islands index. ' +
-        `Was ${index} and length is ${this.model.islands.length}`);
+    if (
+      !Number.isInteger(index) ||
+      index < 0 ||
+      index >= this.model.islands.length
+    ) {
+      console.warn(
+        'Invalid islands index. ' +
+          `Was ${index} and length is ${this.model.islands.length}`,
+      );
       return;
     }
     this.model.islands.splice(index, 1);
@@ -301,7 +367,9 @@ export class WorldController extends WorldView {
   private _tradeRoutes?: TradeRouteController[];
 
   override get tradeRoutes(): TradeRouteController[] {
-    this._tradeRoutes ??= this.model.tradeRoutes.map(i => TradeRouteController.wrap(i, this.selfContextC));
+    this._tradeRoutes ??= this.model.tradeRoutes.map((i) =>
+      TradeRouteController.wrap(i, this.selfContextC),
+    );
     return this._tradeRoutes;
   }
 
@@ -314,7 +382,7 @@ export class WorldController extends WorldView {
   }
 
   removeTradeRoute(id: TradeRouteId) {
-    const index = this.model.tradeRoutes.findIndex(tr => tr.id == id);
+    const index = this.model.tradeRoutes.findIndex((tr) => tr.id == id);
     this.model.tradeRoutes.splice(index, 1);
     this._tradeRoutes!.splice(index, 1);
   }
@@ -326,5 +394,4 @@ export class WorldController extends WorldView {
   copyModel(): World {
     return structuredClone(this.model);
   }
-};
-
+}

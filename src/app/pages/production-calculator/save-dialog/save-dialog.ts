@@ -1,15 +1,16 @@
-import { ChangeDetectionStrategy, Component, inject, model } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  model,
+} from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { AcButton } from '../../../components/button/button';
 import { JsonInput } from '../../../components/json-input/json-input';
 
 @Component({
   selector: 'save-dialog',
-  imports: [
-    AcButton,
-    JsonInput,
-    MatDialogModule,
-  ],
+  imports: [AcButton, JsonInput, MatDialogModule],
   templateUrl: './save-dialog.html',
   styleUrl: './save-dialog.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -25,4 +26,4 @@ export class SaveDialog<T> {
 
 export interface SaveData<T> {
   obj: T;
-};
+}

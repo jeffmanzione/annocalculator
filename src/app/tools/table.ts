@@ -5,13 +5,17 @@
 
 /**
  * Gets a value from a Map<K,V> or inserts a value if one is not already present.
- * 
+ *
  * @param map The map to search.
  * @param key The key to search for.
  * @param defaultValue The value to insert and return if the key is not found.
  * @returns The value associated with key.
  */
-export function getOrDefault<K, V>(map: Map<K, V>, key: K, defaultValue: () => V): V {
+export function getOrDefault<K, V>(
+  map: Map<K, V>,
+  key: K,
+  defaultValue: () => V,
+): V {
   if (map.has(key)) {
     return map.get(key)!;
   }
@@ -25,14 +29,18 @@ export interface ReadonlyMap<K, V> extends Iterable<[K, V]> {
   [Symbol.iterator](): SetIterable<[K, V]>;
   keys(): SetIterable<K>;
   values(): SetIterable<V>;
-};
+}
 
-interface SetIterable<T> extends IteratorObject<T, BuiltinIteratorReturn, unknown> {
+interface SetIterable<T> extends IteratorObject<
+  T,
+  BuiltinIteratorReturn,
+  unknown
+> {
   [Symbol.iterator](): SetIterable<T>;
 }
 
 class ReadonlyMapDelegate<K, V> implements ReadonlyMap<K, V> {
-  constructor(private readonly delegate: Map<K, V>) { }
+  constructor(private readonly delegate: Map<K, V>) {}
 
   get(k: K): V | undefined {
     return this.delegate.get(k);
@@ -57,7 +65,10 @@ export interface ReadonlyMultiSet<K, V> extends Iterable<[K, Iterable<V>]> {
   agg<Z>(aggFn: (k: K, vs: Iterable<V>) => Z): ReadonlyMap<K, Z>;
 }
 
-abstract class AbstractReadonlyMultiSet<K, V> implements ReadonlyMultiSet<K, V> {
+abstract class AbstractReadonlyMultiSet<K, V> implements ReadonlyMultiSet<
+  K,
+  V
+> {
   abstract get(k: K): SetIterable<V>;
   abstract [Symbol.iterator](): SetIterable<[K, Iterable<V>]>;
   abstract flatIterator(): SetIterable<[K, V]>;
@@ -76,13 +87,12 @@ interface MutableMultiSetMixin<K, V> {
 }
 
 interface MutableMultiSet<K, V>
-  extends ReadonlyMultiSet<K, V>,
-  MutableMultiSetMixin<K, V> { }
+  extends ReadonlyMultiSet<K, V>, MutableMultiSetMixin<K, V> {}
 
 abstract class AbstractMutibleMultiSet<K, V>
   extends AbstractReadonlyMultiSet<K, V>
-  implements MutableMultiSet<K, V> {
-
+  implements MutableMultiSet<K, V>
+{
   abstract put(k: K, v: V): void;
 }
 
@@ -90,7 +100,7 @@ export class MultiSet<K, V> extends AbstractMutibleMultiSet<K, V> {
   private readonly map = new Map<K, Set<V>>();
 
   override *get(k: K): Generator<V> {
-    yield* (this.map.get(k) ?? []);
+    yield* this.map.get(k) ?? [];
   }
 
   override *flatIterator(): Generator<[K, V]> {
@@ -110,8 +120,13 @@ export class MultiSet<K, V> extends AbstractMutibleMultiSet<K, V> {
   }
 }
 
-class MultiSetTableDelegate<K1, K2, V> extends AbstractReadonlyMultiSet<K1, [K2, V]> {
-  constructor(private readonly delegate: ReadonlyTable<K1, K2, V>) { super(); }
+class MultiSetTableDelegate<K1, K2, V> extends AbstractReadonlyMultiSet<
+  K1,
+  [K2, V]
+> {
+  constructor(private readonly delegate: ReadonlyTable<K1, K2, V>) {
+    super();
+  }
 
   override *get(k1: K1): Generator<[K2, V]> {
     yield* this.delegate.drill(k1);
@@ -142,7 +157,11 @@ export interface ReadonlyTable<K1, K2, V> extends Iterable<[K1, K2, V]> {
   asMultiSet(): ReadonlyMultiSet<K1, [K2, V]>;
 }
 
-abstract class AbstractReadonlyTable<K1, K2, V> implements ReadonlyTable<K1, K2, V> {
+abstract class AbstractReadonlyTable<K1, K2, V> implements ReadonlyTable<
+  K1,
+  K2,
+  V
+> {
   abstract get(k1: K1, k2: K2): V | undefined;
   abstract keys(): SetIterable<K1>;
   abstract drill(k1: K1): ReadonlyMap<K2, V>;
@@ -169,8 +188,14 @@ abstract class AbstractReadonlyTable<K1, K2, V> implements ReadonlyTable<K1, K2,
   }
 }
 
-class ReadonlyTableDelegate<K1, K2, V> extends AbstractReadonlyTable<K1, K2, V> {
-  constructor(private readonly delegate: ReadonlyTable<K1, K2, V>) { super(); }
+class ReadonlyTableDelegate<K1, K2, V> extends AbstractReadonlyTable<
+  K1,
+  K2,
+  V
+> {
+  constructor(private readonly delegate: ReadonlyTable<K1, K2, V>) {
+    super();
+  }
 
   override get(k1: K1, k2: K2): V | undefined {
     return this.delegate.get(k1, k2);
@@ -195,13 +220,12 @@ interface MutableTableMixin<K1, K2, V> {
 }
 
 interface MutableTable<K1, K2, V>
-  extends ReadonlyTable<K1, K2, V>,
-  MutableTableMixin<K1, K2, V> { }
+  extends ReadonlyTable<K1, K2, V>, MutableTableMixin<K1, K2, V> {}
 
 abstract class AbstractMutableTable<K1, K2, V>
   extends AbstractReadonlyTable<K1, K2, V>
-  implements MutableTable<K1, K2, V> {
-
+  implements MutableTable<K1, K2, V>
+{
   abstract getOrDefault(k1: K1, k2: K2, defaultValue: () => V): V;
   abstract set(k1: K1, k2: K2, v: V): void;
   abstract asView(): ReadonlyTable<K1, K2, V>;
@@ -242,4 +266,4 @@ export class Table<K1, K2, V> extends AbstractMutableTable<K1, K2, V> {
   override asView(): ReadonlyTable<K1, K2, V> {
     return new ReadonlyTableDelegate(this);
   }
-};
+}

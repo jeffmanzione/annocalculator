@@ -1,4 +1,6 @@
 <div>
   <textarea #input matInput (change)="updateModel()"></textarea>
-  <div *ngIf="errorMessage != ''">{{ errorMessage }}</div>
+  @if (errorMessage != '') {
+    <div>{{ errorMessage }}</div>
+  }
 </div>

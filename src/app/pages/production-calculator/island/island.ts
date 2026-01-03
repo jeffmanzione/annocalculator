@@ -1,19 +1,46 @@
-import { ChangeDetectionStrategy, Component, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnInit,
+  QueryList,
+  ViewChild,
+  ViewChildren,
+} from '@angular/core';
 import { IslandController } from '../../../shared/mvc/controllers';
-import { MatTable, MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { CommonModule } from '@angular/common';
-import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {
+  MatTable,
+  MatTableDataSource,
+  MatTableModule,
+} from '@angular/material/table';
+import {
+  FormControl,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { ControlComponent } from '../../../shared/control/control';
 import { ExtraGoodControl, ProductionLineControl } from './production-line';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { FormattedNumberModule } from '../../../components/formatted-number/formatted-number';
+import { FormattedNumber } from '../../../components/formatted-number/formatted-number';
 import { EnumSelect } from '../../../components/enum-select/enum-select';
-import { Boost, Region, DepartmentOfLaborPolicy, Good, ProductionBuilding } from '../../../shared/game/enums';
+import {
+  Boost,
+  Region,
+  DepartmentOfLaborPolicy,
+  Good,
+  ProductionBuilding,
+} from '../../../shared/game/enums';
 import { lookupProductionInfo } from '../../../shared/game/facts';
-import { lookupBuildingIconUrl, lookupGoodIconUrl, lookupBoostIconUrl, lookupRegionIconUrl, lookupPolicyIconUrl } from '../../../shared/game/icons';
+import {
+  lookupBuildingIconUrl,
+  lookupGoodIconUrl,
+  lookupBoostIconUrl,
+  lookupRegionIconUrl,
+  lookupPolicyIconUrl,
+} from '../../../shared/game/icons';
 import { TextFieldModule } from '@angular/cdk/text-field';
 import { AcButton } from '../../../components/button/button';
 
@@ -21,9 +48,8 @@ import { AcButton } from '../../../components/button/button';
   selector: 'island',
   imports: [
     AcButton,
-    CommonModule,
     EnumSelect,
-    FormattedNumberModule,
+    FormattedNumber,
     FormsModule,
     MatCheckboxModule,
     MatFormFieldModule,
@@ -37,10 +63,13 @@ import { AcButton } from '../../../components/button/button';
   styleUrl: './island.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class Island extends ControlComponent<IslandController> implements OnInit {
-  readonly regions = Object.values(Region).filter(r => r != Region.Unknown);
+export class Island
+  extends ControlComponent<IslandController>
+  implements OnInit
+{
+  readonly regions = Object.values(Region).filter((r) => r != Region.Unknown);
   readonly allDolPolicies = Object.values(DepartmentOfLaborPolicy);
-  readonly goods = Object.values(Good).filter(g => g != Good.Unknown);
+  readonly goods = Object.values(Good).filter((g) => g != Good.Unknown);
 
   dolPolicies!: DepartmentOfLaborPolicy[];
   productionBuildings!: ProductionBuilding[];
@@ -97,8 +126,8 @@ export class Island extends ControlComponent<IslandController> implements OnInit
       region: new FormControl(this.controller.region),
       dolPolicy: new FormControl(this.controller.dolPolicy),
     });
-    this.formGroup.valueChanges.subscribe(_ => this.pushUpChange());
-    this._productionLineControls = this.controller.productionLines.map(pl => {
+    this.formGroup.valueChanges.subscribe((_) => this.pushUpChange());
+    this._productionLineControls = this.controller.productionLines.map((pl) => {
       const control = new ProductionLineControl(pl);
       this.registerChildControl(control);
       return control;
@@ -108,7 +137,9 @@ export class Island extends ControlComponent<IslandController> implements OnInit
       this.addProductionLine();
     }
 
-    this.productionLinesDataSource = new MatTableDataSource(this._productionLineControls);
+    this.productionLinesDataSource = new MatTableDataSource(
+      this._productionLineControls,
+    );
     this.afterPushChange();
   }
 
@@ -133,10 +164,14 @@ export class Island extends ControlComponent<IslandController> implements OnInit
 
   private updateRegionSpecificSelectOptions(): void {
     const region = this.controller.region;
-    this.productionBuildings = Object.values(ProductionBuilding)
-      .filter(pb => (lookupProductionInfo(pb)?.allowedRegions?.indexOf(region) ?? -1)
-        != -1);
-    this.dolPolicies = (region == Region.OldWorld || region == Region.CapeTrelawney) ? this.allDolPolicies : [DepartmentOfLaborPolicy.None];
+    this.productionBuildings = Object.values(ProductionBuilding).filter(
+      (pb) =>
+        (lookupProductionInfo(pb)?.allowedRegions?.indexOf(region) ?? -1) != -1,
+    );
+    this.dolPolicies =
+      region == Region.OldWorld || region == Region.CapeTrelawney
+        ? this.allDolPolicies
+        : [DepartmentOfLaborPolicy.None];
 
     if (region == Region.OldWorld || region == Region.CapeTrelawney) {
       this.enableControl('dolPolicy');
@@ -146,7 +181,9 @@ export class Island extends ControlComponent<IslandController> implements OnInit
   }
 
   addProductionLine(): void {
-    const control = new ProductionLineControl(this.controller.addProductionLine());
+    const control = new ProductionLineControl(
+      this.controller.addProductionLine(),
+    );
     this.registerChildControl(control);
     this._productionLineControls.push(control);
     this.pushUpChange();
@@ -154,14 +191,18 @@ export class Island extends ControlComponent<IslandController> implements OnInit
 
   removeProductionLineAt(el: ProductionLineControl): void {
     const index = this._productionLineControls.indexOf(el);
-    this.unregisterChildControl(this._productionLineControls.splice(index, 1)[0]);
+    this.unregisterChildControl(
+      this._productionLineControls.splice(index, 1)[0],
+    );
     this.controller.removeProductionLineAt(index);
     this.pushUpChange();
   }
 
   toggleShowExtraGoods(productionLine: ProductionLineControl): void {
     productionLine.toggleShowExtraGoods();
-    this.extraGoodTables.get(this._productionLineControls.indexOf(productionLine))?.renderRows();
+    this.extraGoodTables
+      .get(this._productionLineControls.indexOf(productionLine))
+      ?.renderRows();
   }
 
   addExtraGood(productionLine: ProductionLineControl): void {
@@ -169,7 +210,10 @@ export class Island extends ControlComponent<IslandController> implements OnInit
     this.pushUpChange();
   }
 
-  removeExtraGoodAt(productionLine: ProductionLineControl, extraGood: ExtraGoodControl): void {
+  removeExtraGoodAt(
+    productionLine: ProductionLineControl,
+    extraGood: ExtraGoodControl,
+  ): void {
     const index = productionLine.extraGoods?.data.indexOf(extraGood)!;
     productionLine.removeExtraGoodAt(index);
     this.pushUpChange();
@@ -196,11 +240,16 @@ export class Island extends ControlComponent<IslandController> implements OnInit
   }
 
   private enableControl(controlName: string): void {
-    this.formGroup.controls[controlName].enable({ emitEvent: false })
+    this.formGroup.controls[controlName].enable({ emitEvent: false });
   }
 
-  private clearAndDisableControl(controlName: string, clearedValue: any = 0): void {
-    this.formGroup.controls[controlName].setValue(clearedValue, { emitEvent: false });
+  private clearAndDisableControl(
+    controlName: string,
+    clearedValue: any = 0,
+  ): void {
+    this.formGroup.controls[controlName].setValue(clearedValue, {
+      emitEvent: false,
+    });
     this.formGroup.controls[controlName].disable({ emitEvent: false });
   }
 }

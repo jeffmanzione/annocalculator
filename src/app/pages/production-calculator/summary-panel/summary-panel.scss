@@ -3,10 +3,14 @@
 @use '../../../../theme-colors';
 
 :host {
-  @include mat.table-overrides((header-container-height: 30px,
+  @include mat.table-overrides(
+    (
+      header-container-height: 30px,
       header-headline-line-height: 1,
       header-headline-weight: 500,
-      row-item-container-height: 24px));
+      row-item-container-height: 24px,
+    )
+  );
 }
 
 card-content {
@@ -46,7 +50,6 @@ table.summary-table {
       z-index: 99 !important;
     }
   }
-
 
   thead {
     display: table-header-group;

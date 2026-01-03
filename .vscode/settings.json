@@ -1,0 +1,5 @@
+{
+  "prettier.bracketSameLine": false,
+  "prettier.enable": true,
+  "prettier.configPath": ".prettierrc"
+}

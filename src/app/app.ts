@@ -6,6 +6,6 @@ import { AppBar } from './components/app-bar/app-bar';
   selector: 'app-root',
   imports: [RouterOutlet, AppBar],
   templateUrl: './app.html',
-  styleUrl: './app.scss'
+  styleUrl: './app.scss',
 })
-export class App { }
+export class App {}

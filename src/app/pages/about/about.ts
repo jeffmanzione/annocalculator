@@ -4,8 +4,6 @@ import { Component } from '@angular/core';
   selector: 'about-page',
   imports: [],
   templateUrl: './about.html',
-  styleUrl: './about.scss'
+  styleUrl: './about.scss',
 })
-export class AboutPage {
-
-}
+export class AboutPage {}

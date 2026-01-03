@@ -1,16 +1,11 @@
 import { Component, forwardRef, Input } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
-import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 
 @Component({
   selector: 'enum-select',
-  imports: [
-    CommonModule,
-    MatSelectModule,
-    MatFormFieldModule,
-  ],
+  imports: [MatSelectModule, MatFormFieldModule],
   templateUrl: './enum-select.html',
   styleUrl: './enum-select.scss',
   providers: [
@@ -18,8 +13,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => EnumSelect),
       multi: true,
-    }
-  ]
+    },
+  ],
 })
 export class EnumSelect<T> implements ControlValueAccessor {
   @Input()

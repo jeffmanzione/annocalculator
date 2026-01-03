@@ -1,5 +1,12 @@
-import { IslandView } from "../mvc/views";
-import { ProductionBuilding, ProductionType, Good, Region, DepartmentOfLaborPolicy, Boost } from "./enums";
+import { IslandView } from '../mvc/views';
+import {
+  ProductionBuilding,
+  ProductionType,
+  Good,
+  Region,
+  DepartmentOfLaborPolicy,
+  Boost,
+} from './enums';
 
 export interface ProductionInfo {
   building: ProductionBuilding;
@@ -9,7 +16,7 @@ export interface ProductionInfo {
   inputGoods?: Good[];
   allowedRegions: Region[];
   requiresElectricity?: boolean;
-};
+}
 
 export const improvedByLandReformAct = new Set<ProductionBuilding>([
   ProductionBuilding.GrainFarm,
@@ -41,22 +48,34 @@ export const improvedBySkilledLaborAct = new Set<ProductionBuilding>([
   ProductionBuilding.ChemicalPlantLacquer,
 ]);
 
-export function computeExtraGoodsModifier(productionBuilding: ProductionBuilding, good: Good, island: IslandView): number {
+export function computeExtraGoodsModifier(
+  productionBuilding: ProductionBuilding,
+  good: Good,
+  island: IslandView,
+): number {
   const productionInfo = lookupProductionInfo(productionBuilding);
-  if (productionInfo == null || good != productionInfo.good) {
-    return 1.0;
-  } else if (improvedByLandReformAct.has(productionBuilding) && island.dolPolicy == DepartmentOfLaborPolicy.LandReformAct) {
+  if (productionInfo?.good != good) {
+    return 1;
+  } else if (
+    improvedByLandReformAct.has(productionBuilding) &&
+    island.dolPolicy == DepartmentOfLaborPolicy.LandReformAct
+  ) {
     return 1.5;
-  } else if (improvedBySkilledLaborAct.has(productionBuilding) && island.dolPolicy == DepartmentOfLaborPolicy.SkilledLaborAct) {
-    return 1. + 1. / 3.;
+  } else if (
+    improvedBySkilledLaborAct.has(productionBuilding) &&
+    island.dolPolicy == DepartmentOfLaborPolicy.SkilledLaborAct
+  ) {
+    return 1 + 1 / 3;
   } else {
-    return 1.0;
+    return 1;
   }
 }
 
-export function lookupProductionInfo(building: ProductionBuilding): ProductionInfo | undefined {
+export function lookupProductionInfo(
+  building: ProductionBuilding,
+): ProductionInfo | undefined {
   return builingsToInfo.get(building);
-};
+}
 
 export function requiresElectricity(building: ProductionBuilding): boolean {
   return builingsToInfo.get(building)?.requiresElectricity ?? false;
@@ -64,7 +83,7 @@ export function requiresElectricity(building: ProductionBuilding): boolean {
 
 export function lookupAllowedBoosts(building: ProductionBuilding): Boost[] {
   const info = lookupProductionInfo(building);
-  if (!info || info.allowedRegions.indexOf(Region.Enbesa) != -1) {
+  if (!info || info.allowedRegions.includes(Region.Enbesa)) {
     return [];
   }
   if (info.productionType == ProductionType.AnimalFarm) {
@@ -285,7 +304,12 @@ export const buildingInfo: ProductionInfo[] = [
     building: ProductionBuilding.CharcoalKiln,
     processingTimeSeconds: 30,
     productionType: ProductionType.Orchard,
-    allowedRegions: [Region.OldWorld, Region.CapeTrelawney, Region.NewWorld, Region.Arctic],
+    allowedRegions: [
+      Region.OldWorld,
+      Region.CapeTrelawney,
+      Region.NewWorld,
+      Region.Arctic,
+    ],
     good: Good.Coal,
   },
   {
@@ -886,7 +910,12 @@ export const buildingInfo: ProductionInfo[] = [
     building: ProductionBuilding.Sawmill,
     processingTimeSeconds: 15,
     productionType: ProductionType.Factory,
-    allowedRegions: [Region.OldWorld, Region.CapeTrelawney, Region.NewWorld, Region.Arctic],
+    allowedRegions: [
+      Region.OldWorld,
+      Region.CapeTrelawney,
+      Region.NewWorld,
+      Region.Arctic,
+    ],
     good: Good.Timber,
     inputGoods: [Good.Wood],
   },
@@ -1084,6 +1113,6 @@ export const buildingInfo: ProductionInfo[] = [
   },
 ];
 
-const builingsToInfo = new Map<ProductionBuilding, ProductionInfo>(buildingInfo.map(i => [i.building, i]));
-
-
+const builingsToInfo = new Map<ProductionBuilding, ProductionInfo>(
+  buildingInfo.map((i) => [i.building, i]),
+);

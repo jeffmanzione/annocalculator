@@ -1,5 +1,5 @@
-import { ProductionBuilding, Good } from "../shared/game/enums";
-import { lookupProductionInfo, buildingInfo } from "../shared/game/facts";
+import { ProductionBuilding, Good } from '../shared/game/enums';
+import { lookupProductionInfo, buildingInfo } from '../shared/game/facts';
 
 console.log('All buildings without a production chain:');
 for (const building of Object.values(ProductionBuilding)) {
@@ -9,7 +9,7 @@ for (const building of Object.values(ProductionBuilding)) {
 }
 
 console.log('All goods without a production chain:');
-const usedGoods = new Set<Good>(buildingInfo.map(info => info.good));
+const usedGoods = new Set<Good>(buildingInfo.map((info) => info.good));
 for (const good of Object.values(Good)) {
   if (!usedGoods.has(good)) {
     console.log(`  ${good}`);

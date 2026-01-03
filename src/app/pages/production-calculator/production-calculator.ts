@@ -1,20 +1,44 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  inject,
+  OnInit,
+  QueryList,
+  ViewChild,
+  ViewChildren,
+} from '@angular/core';
 import { WorldController } from '../../shared/mvc/controllers';
-import { Island } from "./island/island";
+import { Island } from './island/island';
 import { MatExpansionModule } from '@angular/material/expansion';
-import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
-import { MatDialog, MatDialogConfig, MatDialogModule } from '@angular/material/dialog';
+import {
+  MatDialog,
+  MatDialogConfig,
+  MatDialogModule,
+} from '@angular/material/dialog';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { MAT_FORM_FIELD_DEFAULT_OPTIONS, MatFormFieldModule } from '@angular/material/form-field';
+import {
+  MAT_FORM_FIELD_DEFAULT_OPTIONS,
+  MatFormFieldModule,
+} from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { SummaryPanel } from "./summary-panel/summary-panel";
+import { SummaryPanel } from './summary-panel/summary-panel';
 import { CardModule } from '../../components/card/card';
-import { Region, DepartmentOfLaborPolicy, ProductionBuilding, Good, Boost } from '../../shared/game/enums';
+import {
+  Region,
+  DepartmentOfLaborPolicy,
+  ProductionBuilding,
+  Good,
+  Boost,
+} from '../../shared/game/enums';
 import { World } from '../../shared/mvc/models';
-import { TradeRoutesPanel } from "./trade-routes-panel/trade-routes-panel";
+import { TradeRoutesPanel } from './trade-routes-panel/trade-routes-panel';
 import { SaveData, SaveDialog } from './save-dialog/save-dialog';
-import { LocalStorageManager, StorageItem } from '../../services/local-storage/local-storage';
+import {
+  LocalStorageManager,
+  StorageItem,
+} from '../../services/local-storage/local-storage';
 import { Clipboard } from '@angular/cdk/clipboard';
 import { AcButton } from '../../components/button/button';
 
@@ -43,7 +67,7 @@ const defaultWorld: World = {
               good: Good.Chocolate,
               rateNumerator: 1,
               rateDenominator: 3,
-            }
+            },
           ],
         },
         {
@@ -94,7 +118,7 @@ const defaultWorld: World = {
           hasTradeUnion: true,
           inRangeOfLocalDepartment: true,
         },
-      ]
+      ],
     },
     {
       id: 2,
@@ -125,7 +149,7 @@ const defaultWorld: World = {
           good: Good.Furs,
           numBuildings: 10,
         },
-      ]
+      ],
     },
     {
       id: 3,
@@ -143,8 +167,8 @@ const defaultWorld: World = {
           inputGoods: [Good.Cotton],
           numBuildings: 5,
         },
-      ]
-    }
+      ],
+    },
   ],
   tradeRoutes: [
     {
@@ -179,7 +203,6 @@ const defaultWorld: World = {
   imports: [
     AcButton,
     CardModule,
-    CommonModule,
     Island,
     MatDialogModule,
     MatExpansionModule,
@@ -195,13 +218,12 @@ const defaultWorld: World = {
   providers: [
     {
       provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
-      useValue: { appearance: 'outline', subscriptSizing: 'dynamic' }
-    }
+      useValue: { appearance: 'outline', subscriptSizing: 'dynamic' },
+    },
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProductionCalculatorPage implements OnInit {
-
   readonly defaultActions = [
     {
       icon: 'content_copy',
@@ -260,13 +282,16 @@ export class ProductionCalculatorPage implements OnInit {
       return;
     }
     this.world = WorldController.wrap(worldModel);
-    this.formGroup!.controls['tradeUnionBonusPercent']
-      .setValue(this.world.tradeUnionBonus * 100, { emitEvent: false });
+    this.formGroup!.controls['tradeUnionBonusPercent'].setValue(
+      this.world.tradeUnionBonus * 100,
+      { emitEvent: false },
+    );
   }
 
   update(): void {
     this.changeDectorRef.detectChanges();
-    this.world.tradeUnionBonus = this.formGroup!.value.tradeUnionBonusPercent / 100;
+    this.world.tradeUnionBonus =
+      this.formGroup!.value.tradeUnionBonusPercent / 100;
     if (this.islandComponents) {
       for (const i of this.islandComponents) {
         i.afterPushChange();
@@ -292,7 +317,7 @@ export class ProductionCalculatorPage implements OnInit {
   setWorldAndReload(worldModel: World): void {
     if (!worldModel) return;
     this.worldStorage.set(worldModel);
-    window.location.reload();
+    globalThis.location.reload();
   }
 
   private openSaveDialog(): void {

@@ -3,7 +3,6 @@ import { Type } from '@angular/core';
 import { AboutPage } from './pages/about/about';
 import { ProductionCalculatorPage } from './pages/production-calculator/production-calculator';
 
-
 export const WEBSITE_NAME = 'AnnoCalculator.com';
 
 export interface AppInfo {
@@ -25,13 +24,13 @@ function convertToRoute(app: AppInfo): Route {
     return {
       path: app.path,
       pathMatch: 'full',
-      redirectTo: app.target
+      redirectTo: app.target,
     };
   }
   return {
     path: app.path,
     component: app.target,
-    title: `${WEBSITE_NAME} - ${app.name}`
+    title: `${WEBSITE_NAME} - ${app.name}`,
   };
 }
 

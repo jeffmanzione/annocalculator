@@ -2,7 +2,6 @@
 @use '@angular/material' as mat;
 @use '../../../../theme-colors';
 
-
 card-content {
   display: flex;
   flex-direction: column;
@@ -54,12 +53,14 @@ table {
 }
 
 :host {
-  @include mat.table-overrides((header-container-height: 30px,
+  @include mat.table-overrides(
+    (
+      header-container-height: 30px,
       header-headline-line-height: 1,
       header-headline-weight: 500,
-    ));
+    )
+  );
 }
-
 
 .add-trade-route-button {
   display: flex;

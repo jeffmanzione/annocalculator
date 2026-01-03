@@ -1,5 +1,4 @@
-
-import { Good } from "../shared/game/enums";
+import { Good } from '../shared/game/enums';
 
 const alternativeIconNames = new Map<Good, string>([
   [Good.AluminiumProfiles, 'Aluminium_Profiles'],
@@ -45,14 +44,18 @@ function convertGoodToIconFileNames(good: Good): string[] {
 async function fetchWikiPageContent(good: Good): Promise<string> {
   for (const fileName of convertGoodToIconFileNames(good)) {
     try {
-      const url = new URL(`https://anno1800.fandom.com/wiki/File:${fileName}.png`);
+      const url = new URL(
+        `https://anno1800.fandom.com/wiki/File:${fileName}.png`,
+      );
       const response = await fetch(url);
       if (response.status != 200) {
         continue;
       }
       if (response.ok) {
         const content = await response.text();
-        const regex = new RegExp(`https://static\\.wikia\\.nocookie\\.net/anno1800/images/[A-Za-z0-9_/]+/${fileName}\\.png`);
+        const regex = new RegExp(
+          String.raw`https://static\.wikia\.nocookie\.net/anno1800/images/[A-Za-z0-9_/]+/${fileName}\.png`,
+        );
         const matches = regex.exec(content);
         if (!matches) {
           continue;
@@ -64,17 +67,19 @@ async function fetchWikiPageContent(good: Good): Promise<string> {
     }
   }
   return '';
-};
-
-async function fetchAllGoodImageUrls(): Promise<Map<Good, string>> {
-  const goodImages: [Good, string][] = await Promise.all(Object.values(Good).map(async g => [g, await fetchWikiPageContent(g)]));
-  return new Map<Good, string>(goodImages);
 }
 
-(async () => {
+async function fetchAllGoodImageUrls(): Promise<Map<Good, string>> {
+  const goodImages: [Good, string][] = await Promise.all(
+    Object.values(Good).map(async (g) => [g, await fetchWikiPageContent(g)]),
+  );
+  return new Map<Good, string>(goodImages);
+}
+try {
   for (const [good, url] of await fetchAllGoodImageUrls()) {
-    const goodEnumKey = good.toString().replaceAll(' ', '').replaceAll('\'', '');
+    const goodEnumKey = good.toString().replaceAll(' ', '').replaceAll("'", '');
     console.log(`[Good.${goodEnumKey}, '${url}'],`);
   }
-})();
-
+} catch (e) {
+  console.error(e);
+}

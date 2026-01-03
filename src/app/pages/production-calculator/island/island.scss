@@ -3,10 +3,13 @@
 @use '../../../../theme-colors';
 
 :host {
-  @include mat.table-overrides((header-container-height: 30px,
+  @include mat.table-overrides(
+    (
+      header-container-height: 30px,
       header-headline-line-height: 1,
       header-headline-weight: 500,
-    ));
+    )
+  );
 }
 
 .extra-goods-outer-container {
@@ -19,7 +22,6 @@
   min-width: 80%;
 }
 
-
 table.production-lines-table {
   border-collapse: collapse;
   display: table;
@@ -29,7 +31,6 @@ table.production-lines-table {
   }
 
   table.extra-goods-table {
-
     th {
       // No idea where the th z-index is overridden directly to 100. It's not in the code.
       z-index: 99 !important;
@@ -149,6 +150,6 @@ mat-checkbox {
   }
 
   .mdc-text-field--outlined.mdc-text-field--disabled .mdc-text-field__input {
-    color: rgba(0, 0, 0, 0.87)
+    color: rgba(0, 0, 0, 0.87);
   }
 }

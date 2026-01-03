@@ -7,7 +7,8 @@
 
 // Note: Color palettes are generated from primary: #02c6ee, secondary: #ffbe00
 $_palettes: (
-  primary: (0: #000000,
+  primary: (
+    0: #000000,
     10: #001f27,
     20: #003642,
     25: #004150,
@@ -24,7 +25,8 @@ $_palettes: (
     99: #f9fdff,
     100: #ffffff,
   ),
-  secondary: (0: #000000,
+  secondary: (
+    0: #000000,
     10: #261900,
     20: #402d00,
     25: #4e3800,
@@ -41,7 +43,8 @@ $_palettes: (
     99: #fffbff,
     100: #ffffff,
   ),
-  tertiary: (0: #000000,
+  tertiary: (
+    0: #000000,
     10: #30004a,
     20: #4c0f6d,
     25: #581f79,
@@ -58,7 +61,8 @@ $_palettes: (
     99: #fffbff,
     100: #ffffff,
   ),
-  neutral: (0: #000000,
+  neutral: (
+    0: #000000,
     10: #161d1f,
     20: #2b3134,
     25: #363c3f,
@@ -85,7 +89,8 @@ $_palettes: (
     94: #e9eff2,
     96: #eef5f8,
   ),
-  neutral-variant: (0: #000000,
+  neutral-variant: (
+    0: #000000,
     10: #111d22,
     20: #263237,
     25: #313d42,
@@ -102,7 +107,8 @@ $_palettes: (
     99: #f9fdff,
     100: #ffffff,
   ),
-  error: (0: #000000,
+  error: (
+    0: #000000,
     10: #410002,
     20: #690005,
     25: #7e0007,
@@ -148,7 +154,9 @@ $tertiary-palette: map.merge(map.get($_palettes, tertiary), $_rest);
 }
 
 @mixin high-contrast-overrides($theme-type) {
-  @include mat.theme-overrides((primary: _high-contrast-value(#00313d, #daf4ff, $theme-type),
+  @include mat.theme-overrides(
+    (
+      primary: _high-contrast-value(#00313d, #daf4ff, $theme-type),
       on-primary: _high-contrast-value(#ffffff, #000000, $theme-type),
       primary-container: _high-contrast-value(#005062, #2ed3fc, $theme-type),
       on-primary-container: _high-contrast-value(#ffffff, #000d12, $theme-type),
@@ -197,9 +205,9 @@ $tertiary-palette: map.merge(map.get($_palettes, tertiary), $_rest);
       on-error-container: _high-contrast-value(#ffffff, #220001, $theme-type),
       surface-variant: _high-contrast-value(#d7e5ea, #3c494d, $theme-type),
       on-surface-variant: _high-contrast-value(#000000, #ffffff, $theme-type),
-    ))
+    )
+  );
 }
-
 
 $bg-color: rgb(238, 238, 245);
 $table-bg-color: rgb(245, 245, 245);

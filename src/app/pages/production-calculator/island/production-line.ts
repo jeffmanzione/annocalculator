@@ -1,13 +1,18 @@
-import { ExtraGoodController, ProductionLineController } from "../../../shared/mvc/controllers";
-import { ProductionLineView } from "../../../shared/mvc/views";
-import { MatTableDataSource } from "@angular/material/table";
-import { Boost, ProductionBuilding } from "../../../shared/game/enums";
-import { lookupProductionInfo, requiresElectricity, lookupAllowedBoosts } from "../../../shared/game/facts";
-import { FormGroupControl } from "../../../shared/control/control";
-
+import {
+  ExtraGoodController,
+  ProductionLineController,
+} from '../../../shared/mvc/controllers';
+import { ProductionLineView } from '../../../shared/mvc/views';
+import { MatTableDataSource } from '@angular/material/table';
+import { Boost, ProductionBuilding } from '../../../shared/game/enums';
+import {
+  lookupProductionInfo,
+  requiresElectricity,
+  lookupAllowedBoosts,
+} from '../../../shared/game/facts';
+import { FormGroupControl } from '../../../shared/control/control';
 
 export class ProductionLineControl extends FormGroupControl<ProductionLineController> {
-
   extraGoods?: MatTableDataSource<ExtraGoodControl>;
   showExtraGoods = false;
   get expandExtraGoodsIcon(): string {
@@ -32,7 +37,7 @@ export class ProductionLineControl extends FormGroupControl<ProductionLineContro
       'building',
       {
         controlName: 'numBuildings',
-        updateObject: (v, o) => o.numBuildings = Number.parseInt(v),
+        updateObject: (v, o) => (o.numBuildings = Number.parseInt(v)),
       },
       'inputGoods',
       'good',
@@ -41,16 +46,18 @@ export class ProductionLineControl extends FormGroupControl<ProductionLineContro
       {
         controlName: 'tradeUnionItemsBonusPercent',
         readObject: (o) => (o.tradeUnionItemsBonus ?? 0) * 100,
-        updateObject: (v, o) => o.tradeUnionItemsBonus = (v ?? 0) / 100,
+        updateObject: (v, o) => (o.tradeUnionItemsBonus = (v ?? 0) / 100),
       },
       'inRangeOfLocalDepartment',
     ]);
-    this.extraGoods = new MatTableDataSource(this.controller.extraGoods.map(eg => {
-      const control = new ExtraGoodControl(eg);
-      this.registerChildControl(control);
-      control.afterPushChange();
-      return control;
-    }));
+    this.extraGoods = new MatTableDataSource(
+      this.controller.extraGoods.map((eg) => {
+        const control = new ExtraGoodControl(eg);
+        this.registerChildControl(control);
+        control.afterPushChange();
+        return control;
+      }),
+    );
     // Show by default
     if (this.extraGoods.data.length > 0) {
       this.showExtraGoods = true;
@@ -69,8 +76,13 @@ export class ProductionLineControl extends FormGroupControl<ProductionLineContro
     // For convenience, set production good to the default good when selecting a building.
     if (this.controller.building != building) {
       const productionInfo = lookupProductionInfo(building);
-      this.formGroup.controls['good'].setValue(productionInfo!.good, { emitEvent: false });
-      this.formGroup.controls['inputGoods'].setValue(productionInfo!.inputGoods ?? [], { emitEvent: false });
+      this.formGroup.controls['good'].setValue(productionInfo!.good, {
+        emitEvent: false,
+      });
+      this.formGroup.controls['inputGoods'].setValue(
+        productionInfo!.inputGoods ?? [],
+        { emitEvent: false },
+      );
     }
     this.updateBoostOptions();
     // Some buildings require electricity, and if so, we automatically select it, otherwise, we
@@ -85,7 +97,10 @@ export class ProductionLineControl extends FormGroupControl<ProductionLineContro
 
     // Local department effects have no effect without a DoL on the island and a Trade Union in
     // range.
-    if (!this.controller.islandHasDepartmentOfLabor || !this.formGroup.value.hasTradeUnion) {
+    if (
+      !this.controller.islandHasDepartmentOfLabor ||
+      !this.formGroup.value.hasTradeUnion
+    ) {
       this.clearAndDisableControl('inRangeOfLocalDepartment', false);
     } else {
       this.enableControl('inRangeOfLocalDepartment');
@@ -99,29 +114,41 @@ export class ProductionLineControl extends FormGroupControl<ProductionLineContro
   }
 
   private updateBoostOptions(): void {
-    this.allowedBoosts = new Set(lookupAllowedBoosts(this.formGroup.value.building));
+    this.allowedBoosts = new Set(
+      lookupAllowedBoosts(this.formGroup.value.building),
+    );
     const selectedBoosts = (this.formGroup.value.boosts ?? []) as Boost[];
 
-    if (!selectedBoosts.every(b => !this.allowedBoosts.has(b))) {
+    if (!selectedBoosts.every((b) => !this.allowedBoosts.has(b))) {
       this.formGroup.controls['boosts'].setValue(
-        selectedBoosts.filter(b => this.allowedBoosts.has(b)),
-        { emitEvent: false }
+        selectedBoosts.filter((b) => this.allowedBoosts.has(b)),
+        { emitEvent: false },
       );
     }
   }
 
   private enableControl(controlName: string): void {
-    this.formGroup.controls[controlName].enable({ emitEvent: false })
+    this.formGroup.controls[controlName].enable({ emitEvent: false });
   }
 
-  private clearAndDisableControl(controlName: string, clearedValue: any = 0): void {
-    this.formGroup.controls[controlName].disable({ onlySelf: true, emitEvent: false });
-    this.formGroup.controls[controlName].setValue(clearedValue, { onlySelf: true, emitEvent: false });
+  private clearAndDisableControl(
+    controlName: string,
+    clearedValue: any = 0,
+  ): void {
+    this.formGroup.controls[controlName].disable({
+      onlySelf: true,
+      emitEvent: false,
+    });
+    this.formGroup.controls[controlName].setValue(clearedValue, {
+      onlySelf: true,
+      emitEvent: false,
+    });
   }
 
   private updateAndFormatDerivedFields(): void {
     this.efficiency = this.controller.efficiency;
-    this.buildingProcessTimeSeconds = this.controller.buildingProcessTimeSeconds;
+    this.buildingProcessTimeSeconds =
+      this.controller.buildingProcessTimeSeconds;
     this.goodProcessTimeSeconds = this.controller.goodProcessTimeSeconds;
     this.goodsProducedPerMinute = this.controller.goodsProducedPerMinute;
   }
@@ -164,7 +191,6 @@ export class ProductionLineControl extends FormGroupControl<ProductionLineContro
 }
 
 export class ExtraGoodControl extends FormGroupControl<ExtraGoodController> {
-
   processTimeSeconds: number = 0;
   producedPerMinute: number = 0;
 
@@ -176,5 +202,4 @@ export class ExtraGoodControl extends FormGroupControl<ExtraGoodController> {
     this.processTimeSeconds = this.controller.processTimeSeconds;
     this.producedPerMinute = this.controller.producedPerMinute;
   }
-};
-
+}

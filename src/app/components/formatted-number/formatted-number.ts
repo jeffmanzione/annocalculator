@@ -1,5 +1,11 @@
 import { CommonModule, formatNumber, formatPercent } from '@angular/common';
-import { Component, Inject, Input, LOCALE_ID, NgModule, OnInit } from '@angular/core';
+import {
+  Component,
+  Inject,
+  Input,
+  LOCALE_ID,
+  OnInit,
+} from '@angular/core';
 
 export interface FontSpec {
   color?: string;
@@ -22,10 +28,9 @@ export const GREEN_RED_FONT_SPEC: FormatFontSpec = {
 @Component({
   selector: 'formatted-number',
   templateUrl: './formatted-number.html',
-  standalone: false,
+  imports: [CommonModule],
 })
 export class FormattedNumber implements OnInit {
-
   @Input()
   value!: number;
 
@@ -98,21 +103,9 @@ export class FormattedNumber implements OnInit {
     if (this.zeroOverride && this.value == 0) {
       return this.zeroOverride;
     }
-    const strValue = this.isPercent ? this.formatAsPercent() : this.formatAsNumber();
+    const strValue = this.isPercent
+      ? this.formatAsPercent()
+      : this.formatAsNumber();
     return `${strValue}${this.suffix}`;
   }
-
 }
-
-@NgModule({
-  declarations: [
-    FormattedNumber,
-  ],
-  imports: [
-    CommonModule,
-  ],
-  exports: [
-    FormattedNumber,
-  ]
-})
-export class FormattedNumberModule { }
