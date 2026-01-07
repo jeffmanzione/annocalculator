@@ -2,9 +2,9 @@ import {
   ChangeDetectionStrategy,
   Component,
   OnInit,
-  QueryList,
+  // QueryList,
   ViewChild,
-  ViewChildren,
+  // ViewChildren,
 } from '@angular/core';
 import { IslandController } from '../../../shared/mvc/controllers';
 import {
@@ -22,7 +22,10 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { ControlComponent } from '../../../shared/control/control';
-import { ExtraGoodControl, ProductionLineControl } from './production-line';
+import {
+  // ExtraGoodControl,
+  ProductionLineControl,
+} from './production-line';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { FormattedNumber } from '../../../components/formatted-number/formatted-number';
 import { EnumSelect } from '../../../components/enum-select/enum-select';
@@ -32,6 +35,7 @@ import {
   DepartmentOfLaborPolicy,
   Good,
   ProductionBuilding,
+  Item,
 } from '../../../shared/game/enums';
 import { lookupProductionInfo } from '../../../shared/game/facts';
 import {
@@ -40,14 +44,17 @@ import {
   lookupBoostIconUrl,
   lookupRegionIconUrl,
   lookupPolicyIconUrl,
+  lookupItemIconUrl,
 } from '../../../shared/game/icons';
 import { TextFieldModule } from '@angular/cdk/text-field';
 import { AcButton } from '../../../components/button/button';
+import { EnumRow } from '../../../components/enum-row/enum-row';
 
 @Component({
   selector: 'island',
   imports: [
     AcButton,
+    EnumRow,
     EnumSelect,
     FormattedNumber,
     FormsModule,
@@ -77,12 +84,13 @@ export class Island
   readonly productionLineColumns = [
     'building',
     'numBuildings',
-    'expandExtraGoods',
+    // 'expandExtraGoods',
     'inputGoods',
     'good',
     'boosts',
     'hasTradeUnion',
-    'tradeUnionItemsBonusPercent',
+    'items',
+    // 'tradeUnionItemsBonusPercent',
     'inRangeOfLocalDepartment',
     'efficiency',
     'buildingProcessTimeSeconds',
@@ -91,20 +99,20 @@ export class Island
     'remove',
   ];
 
-  readonly extraGoodColumns = [
-    'good',
-    'rateNumerator',
-    'divideSymbol',
-    'rateDenominator',
-    'processTimeSeconds',
-    'producedPerMinute',
-    'remove',
-  ];
+  // readonly extraGoodColumns = [
+  //   'good',
+  //   'rateNumerator',
+  //   'divideSymbol',
+  //   'rateDenominator',
+  //   'processTimeSeconds',
+  //   'producedPerMinute',
+  //   'remove',
+  // ];
 
   formGroup!: FormGroup;
 
   private _productionLineControls!: ProductionLineControl[];
-
+  Boost: any;
   get productionLineControls(): ProductionLineControl[] {
     if (this._productionLineControls.length == 0) {
       this.addProductionLine();
@@ -117,8 +125,15 @@ export class Island
   @ViewChild('productionLinesTable')
   table!: MatTable<ProductionLineControl>;
 
-  @ViewChildren('extraGoodTables')
-  extraGoodTables!: QueryList<MatTable<ExtraGoodControl>>;
+  // @ViewChildren('extraGoodTables')
+  // extraGoodTables!: QueryList<MatTable<ExtraGoodControl>>;
+
+  get multipleSelectLimit(): number {
+    return this.controller.dolPolicy ==
+      DepartmentOfLaborPolicy.UnionSubsidiesAct
+      ? 4
+      : 3;
+  }
 
   ngOnInit(): void {
     this.formGroup = new FormGroup({
@@ -154,11 +169,11 @@ export class Island
 
   override afterPushChange(): void {
     this.updateRegionSpecificSelectOptions();
-    if (this.extraGoodTables) {
-      for (const extraGoodTable of this.extraGoodTables) {
-        extraGoodTable.renderRows();
-      }
-    }
+    // if (this.extraGoodTables) {
+    //   for (const extraGoodTable of this.extraGoodTables) {
+    //     extraGoodTable.renderRows();
+    //   }
+    // }
     this.table?.renderRows();
   }
 
@@ -198,26 +213,26 @@ export class Island
     this.pushUpChange();
   }
 
-  toggleShowExtraGoods(productionLine: ProductionLineControl): void {
-    productionLine.toggleShowExtraGoods();
-    this.extraGoodTables
-      .get(this._productionLineControls.indexOf(productionLine))
-      ?.renderRows();
-  }
+  // toggleShowExtraGoods(productionLine: ProductionLineControl): void {
+  //   productionLine.toggleShowExtraGoods();
+  //   this.extraGoodTables
+  //     .get(this._productionLineControls.indexOf(productionLine))
+  //     ?.renderRows();
+  // }
 
-  addExtraGood(productionLine: ProductionLineControl): void {
-    productionLine.addExtraGood();
-    this.pushUpChange();
-  }
+  // addExtraGood(productionLine: ProductionLineControl): void {
+  //   productionLine.addExtraGood();
+  //   this.pushUpChange();
+  // }
 
-  removeExtraGoodAt(
-    productionLine: ProductionLineControl,
-    extraGood: ExtraGoodControl,
-  ): void {
-    const index = productionLine.extraGoods?.data.indexOf(extraGood)!;
-    productionLine.removeExtraGoodAt(index);
-    this.pushUpChange();
-  }
+  // removeExtraGoodAt(
+  //   productionLine: ProductionLineControl,
+  //   extraGood: ExtraGoodControl,
+  // ): void {
+  //   const index = productionLine.extraGoods?.data.indexOf(extraGood)!;
+  //   productionLine.removeExtraGoodAt(index);
+  //   this.pushUpChange();
+  // }
 
   lookupBuildingIconUrl(building: ProductionBuilding | null): string {
     return lookupBuildingIconUrl(building ?? ProductionBuilding.Unknown);
@@ -229,6 +244,10 @@ export class Island
 
   lookupBoostIconUrl(boost: Boost | null): string {
     return lookupBoostIconUrl(boost ?? Boost.None);
+  }
+
+  lookupItemIconUrl(item: Item | null): string {
+    return lookupItemIconUrl(item ?? Item.Unknown);
   }
 
   lookupRegionIconUrl(region: Region | null): string {

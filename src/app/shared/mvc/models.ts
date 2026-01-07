@@ -4,6 +4,7 @@ import {
   Boost,
   Region,
   DepartmentOfLaborPolicy,
+  Item,
 } from '../game/enums';
 
 // Marker interface for all models.
@@ -22,8 +23,13 @@ export interface ProductionLine extends Model {
   numBuildings: number;
   boosts?: Boost[];
   hasTradeUnion?: boolean;
-  tradeUnionItemsBonus?: number;
-  extraGoods?: ExtraGood[];
+  items?: Item[];
+
+  // /** @deprecated Replaced by items. */
+  // tradeUnionItemsBonus?: number;
+  // /** @deprecated Replaced by items. */
+  // extraGoods?: ExtraGood[];
+
   inRangeOfLocalDepartment?: boolean;
 }
 
@@ -76,8 +82,9 @@ export const DEFAULT_PRODUCTION_LINE_MODEL: ProductionLine = {
   numBuildings: 0,
   boosts: [],
   hasTradeUnion: false,
-  tradeUnionItemsBonus: 0,
-  extraGoods: [],
+  items: [],
+  // tradeUnionItemsBonus: 0,
+  // extraGoods: [],
   inRangeOfLocalDepartment: false,
 };
 

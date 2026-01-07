@@ -1,0 +1,24 @@
+@for (value of values; track value) {
+  <div
+    #tooltip="matTooltip"
+    class="item-container"
+    [matTooltip]="value?.toString()"
+    [matTooltipPosition]="tooltipPosition"
+    matTooltipPositionAtOrigin="true"
+    matTooltipShowDelay="800"
+    matTooltipClass="tooltip-style">
+    @if (iconUrlLookupFn(value)) {
+      <img
+        [src]="iconUrlLookupFn(value)"
+        [alt]="value"
+        class="item-icon"
+        [class.item-icon-right-padding]="values.length > 1" />
+    }
+    @if (values.length == 1) {
+      <div class="item-text">{{ value }}</div>
+    }
+  </div>
+}
+@if (values.length == 0) {
+  <div class="item-text">{{ placeholderText }}</div>
+}

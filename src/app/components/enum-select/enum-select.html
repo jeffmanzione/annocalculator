@@ -12,23 +12,12 @@
       placeholder="None"
       [class.placeholder]="valueAsArray.length == 0">
       <mat-select-trigger>
-        @for (value of valueAsArray; track value) {
-          <div class="selected-option">
-            @if (iconUrlLookupFn(value)) {
-              <img
-                [src]="iconUrlLookupFn(value)"
-                [alt]="value"
-                class="icon"
-                [class.icon-right-padding]="valueAsArray.length > 1" />
-            }
-            @if (valueAsArray.length == 1) {
-              <div class="selected-text">{{ value }}</div>
-            }
-          </div>
-        }
+        <enum-row [values]="valueAsArray" [iconUrlLookupFn]="iconUrlLookupFn"></enum-row>
       </mat-select-trigger>
       @for (option of options; track option) {
-        <mat-option [value]="option">
+        <mat-option
+          [value]="option"
+          [disabled]="multiple && valueAsArray.length >= multipleSelectLimit && !valueAsArray.includes(option)">
           <div class="option">
             @if (iconUrlLookupFn(option)) {
               <img [src]="iconUrlLookupFn(option)" [alt]="option" class="icon" />
@@ -48,17 +37,12 @@
     [multiple]="multiple"
     placeholder="None">
     <mat-select-trigger>
-      @for (value of valueAsArray; track value) {
-        <div class="selected-option">
-          @if (iconUrlLookupFn(value)) {
-            <img [src]="iconUrlLookupFn(value)" [alt]="value" class="icon" />
-          }
-          <div class="selected-text">{{ value }}</div>
-        </div>
-      }
+      <enum-row [values]="valueAsArray" [iconUrlLookupFn]="iconUrlLookupFn"></enum-row>
     </mat-select-trigger>
     @for (option of options; track option) {
-      <mat-option [value]="option">
+      <mat-option
+        [value]="option"
+        [disabled]="multiple && valueAsArray.length >= multipleSelectLimit && !valueAsArray.includes(option)">
         <div class="option">
           @if (iconUrlLookupFn(option)) {
             <img [src]="iconUrlLookupFn(option)" [alt]="option" class="icon" />

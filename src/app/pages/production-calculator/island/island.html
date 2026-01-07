@@ -50,26 +50,22 @@
             </mat-form-field>
           </td>
         </ng-container>
-        <ng-container matColumnDef="expandExtraGoods">
+        <!-- <ng-container matColumnDef="expandExtraGoods">
           <th mat-header-cell *matHeaderCellDef>EG</th>
           <td mat-cell *matCellDef="let element" class="extra-goods-field">
             <ac-button [icon]="element.expandExtraGoodsIcon" (action)="toggleShowExtraGoods(element)"></ac-button>
           </td>
-        </ng-container>
+        </ng-container> -->
         <ng-container matColumnDef="inputGoods">
           <th mat-header-cell *matHeaderCellDef>Inputs</th>
-          <td mat-cell *matCellDef="let element" [formGroup]="element.formGroup">
-            <enum-select
-              formControlName="inputGoods"
-              [options]="goods"
-              [iconUrlLookupFn]="lookupGoodIconUrl"
-              [multiple]="true"></enum-select>
+          <td mat-cell *matCellDef="let element">
+            <enum-row [values]="element.inputGoods" [iconUrlLookupFn]="lookupGoodIconUrl"></enum-row>
           </td>
         </ng-container>
         <ng-container matColumnDef="good">
           <th mat-header-cell *matHeaderCellDef>Output</th>
-          <td mat-cell *matCellDef="let element" [formGroup]="element.formGroup">
-            <enum-select formControlName="good" [options]="goods" [iconUrlLookupFn]="lookupGoodIconUrl"></enum-select>
+          <td mat-cell *matCellDef="let element">
+            <enum-row [values]="element.outputGoods" [iconUrlLookupFn]="lookupGoodIconUrl"></enum-row>
           </td>
         </ng-container>
         <ng-container matColumnDef="boosts">
@@ -88,14 +84,25 @@
             <mat-checkbox formControlName="hasTradeUnion"></mat-checkbox>
           </td>
         </ng-container>
-        <ng-container matColumnDef="tradeUnionItemsBonusPercent">
+        <ng-container matColumnDef="items">
+          <th mat-header-cell *matHeaderCellDef>Items</th>
+          <td mat-cell *matCellDef="let element" [formGroup]="element.formGroup">
+            <enum-select
+              formControlName="items"
+              [options]="element.allowedItems"
+              [iconUrlLookupFn]="lookupItemIconUrl"
+              [multiple]="true"
+              [multipleSelectLimit]="multipleSelectLimit"></enum-select>
+          </td>
+        </ng-container>
+        <!-- <ng-container matColumnDef="tradeUnionItemsBonusPercent">
           <th mat-header-cell *matHeaderCellDef>Trade Union Bonus (%)</th>
           <td mat-cell *matCellDef="let element" [formGroup]="element.formGroup" class="trade-bonus-field">
             <mat-form-field>
               <input matInput type="text" inputmode="numeric" min="0" formControlName="tradeUnionItemsBonusPercent" />
             </mat-form-field>
           </td>
-        </ng-container>
+        </ng-container> -->
         <ng-container matColumnDef="inRangeOfLocalDepartment">
           <th mat-header-cell *matHeaderCellDef>Local Dept</th>
           <td mat-cell *matCellDef="let element" [formGroup]="element.formGroup" class="checkbox-field">
@@ -132,7 +139,7 @@
             <ac-button icon="delete" (action)="removeProductionLineAt(element)"></ac-button>
           </td>
         </ng-container>
-        <ng-container matColumnDef="extraGoods">
+        <!-- <ng-container matColumnDef="extraGoods">
           <td mat-cell *matCellDef="let element" [attr.colspan]="productionLineColumns.length" class="extra-goods-row">
             @if (element.showExtraGoods) {
               <div class="extra-goods-outer-container">
@@ -201,11 +208,11 @@
               </div>
             }
           </td>
-        </ng-container>
+        </ng-container> -->
 
         <tr mat-header-row *matHeaderRowDef="productionLineColumns; sticky: true"></tr>
         <tr mat-row *matRowDef="let row; columns: productionLineColumns" class="production-line-row"></tr>
-        <tr mat-row *matRowDef="let row; columns: ['extraGoods']" class="extra-good-table-row"></tr>
+        <!-- <tr mat-row *matRowDef="let row; columns: ['extraGoods']" class="extra-good-table-row"></tr> -->
       </table>
     </section>
   </ng-container>

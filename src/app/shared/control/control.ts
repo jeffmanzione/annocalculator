@@ -81,6 +81,10 @@ export abstract class ControlComponent<T> extends Control {
     return super.update;
   }
 
+  forceAfterPushChange(): void {
+    this.privateAfterPushChange();
+  }
+
   protected override privateAfterPushChange(): void {
     super.privateAfterPushChange();
     this.changeDetector.markForCheck();
@@ -93,6 +97,7 @@ export abstract class ControlComponent<T> extends Control {
 
 export interface ControlConverter<T> {
   controlName: string;
+  disabled?: boolean;
   readObject?: (obj: T) => any;
   updateObject?: (value: any, obj: T) => void;
 }
@@ -114,12 +119,13 @@ export abstract class FormGroupControl<T> extends Control {
     for (let converter of this.converters) {
       this.formGroup.addControl(
         converter.controlName,
-        new FormControl(
-          converter.readObject
+        new FormControl({
+          value: converter.readObject
             ? converter.readObject(this.controller)
             : // @ts-ignore
-            this.controller[converter.controlName],
-        ),
+              this.controller[converter.controlName],
+          disabled: converter.disabled,
+        }),
         { emitEvent: false },
       );
     }

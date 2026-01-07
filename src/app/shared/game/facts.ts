@@ -1,12 +1,17 @@
+import { ExtraGood } from '../mvc/models';
 import { IslandView } from '../mvc/views';
 import {
   ProductionBuilding,
   ProductionType,
   Good,
+  Rarity,
   Region,
   DepartmentOfLaborPolicy,
   Boost,
+  AdministrativeBuilding,
+  Item,
 } from './enums';
+import * as itemsJson from '../data/items.json';
 
 export interface ProductionInfo {
   building: ProductionBuilding;
@@ -17,6 +22,20 @@ export interface ProductionInfo {
   allowedRegions: Region[];
   requiresElectricity?: boolean;
 }
+
+export interface ItemInfo {
+  item: Item;
+  iconUrl: string;
+  rarity: Rarity;
+  administrativeBuilding: AdministrativeBuilding;
+  targets: ProductionBuilding[];
+  extraGoods?: ExtraGood[];
+  replacementGoods?: { from: Good; to: Good }[];
+  providesElectricity?: boolean;
+  productivityEffect?: number;
+}
+
+export const items: ItemInfo[] = (itemsJson as any).default as ItemInfo[];
 
 export const improvedByLandReformAct = new Set<ProductionBuilding>([
   ProductionBuilding.GrainFarm,
@@ -77,6 +96,10 @@ export function lookupProductionInfo(
   return builingsToInfo.get(building);
 }
 
+export function lookupItemInfo(item: Item): ItemInfo | undefined {
+  return itemToInfo.get(item);
+}
+
 export function requiresElectricity(building: ProductionBuilding): boolean {
   return builingsToInfo.get(building)?.requiresElectricity ?? false;
 }
@@ -96,6 +119,12 @@ export function lookupAllowedBoosts(building: ProductionBuilding): Boost[] {
     return [Boost.TracktorBarn, Boost.Fertilizer];
   }
   return [];
+}
+
+export function lookupAllowedItems(building: ProductionBuilding): Item[] {
+  return items
+    .filter((itemInfo) => itemInfo.targets.includes(building))
+    .map((itemInfo) => itemInfo.item);
 }
 
 export const buildingInfo: ProductionInfo[] = [
@@ -1116,3 +1145,5 @@ export const buildingInfo: ProductionInfo[] = [
 const builingsToInfo = new Map<ProductionBuilding, ProductionInfo>(
   buildingInfo.map((i) => [i.building, i]),
 );
+
+const itemToInfo = new Map<Item, ItemInfo>(items.map((i) => [i.item, i]));

@@ -23,7 +23,7 @@ import {
 import { IslandView, WorldView } from '../../../shared/mvc/views';
 import { Good } from '../../../shared/game/enums';
 import { IslandId } from '../../../shared/mvc/models';
-import { ReadonlyTable, Table } from '../../../tools/table';
+import { ReadonlyTable, Table } from '../../../../tools/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSort, MatSortModule } from '@angular/material/sort';
@@ -236,9 +236,9 @@ export class SummaryPanel implements OnInit, AfterViewInit {
     for (const island of this._world.islands) {
       for (const pl of island.productionLines) {
         updateStats(island, pl.good, pl.goodsProducedPerMinute);
-        for (const eg of pl.extraGoods) {
-          updateStats(island, eg.good, eg.producedPerMinute);
-        }
+        // for (const eg of pl.extraGoods) {
+        //   updateStats(island, eg.good, eg.producedPerMinute);
+        // }
         for (const ig of pl.inputGoods) {
           updateStats(island, ig, -pl.goodsConsumedPerMinute);
         }

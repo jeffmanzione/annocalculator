@@ -4,8 +4,9 @@ import {
   Boost,
   Region,
   DepartmentOfLaborPolicy,
+  Item,
 } from './enums';
-import { buildingInfo } from './facts';
+import { buildingInfo, lookupItemInfo } from './facts';
 
 // I can finally let go of that pent up gas.
 const defaultIconUrl =
@@ -642,8 +643,8 @@ const policyToImageUrl = new Map<DepartmentOfLaborPolicy, string>([
 
 const lookupUrlFn =
   <T>(map: Map<T, string>) =>
-  (key: T) =>
-    map.get(key) ?? defaultIconUrl;
+    (key: T) =>
+      map.get(key) ?? defaultIconUrl;
 
 export const lookupGoodIconUrl = lookupUrlFn(goodsToIconUrl);
 
@@ -655,3 +656,4 @@ export const lookupBuildingIconUrl = lookupUrlFn(productionBuildingToIconUrl);
 export const lookupBoostIconUrl = lookupUrlFn(boostTypeToImageUrl);
 export const lookupRegionIconUrl = lookupUrlFn(regionToImageUrl);
 export const lookupPolicyIconUrl = lookupUrlFn(policyToImageUrl);
+export const lookupItemIconUrl = (item: Item) => lookupItemInfo(item)?.iconUrl ?? defaultIconUrl;

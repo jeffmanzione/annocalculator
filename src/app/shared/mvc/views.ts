@@ -4,8 +4,13 @@ import {
   ProductionBuilding,
   DepartmentOfLaborPolicy,
   Region,
+  Item,
 } from '../game/enums';
-import { computeExtraGoodsModifier, lookupProductionInfo } from '../game/facts';
+import {
+  computeExtraGoodsModifier,
+  lookupItemInfo,
+  lookupProductionInfo,
+} from '../game/facts';
 import {
   DEFAULT_ISLAND_MODEL,
   DEFAULT_PRODUCTION_LINE_MODEL,
@@ -14,8 +19,8 @@ import {
   Model,
   ProductionLine,
   World,
-  ExtraGood,
-  DEFAULT_EXTRA_GOOD_MODEL,
+  // ExtraGood,
+  // DEFAULT_EXTRA_GOOD_MODEL,
   TradeRoute,
   IslandId,
   TradeRouteId,
@@ -42,39 +47,39 @@ export abstract class View<M extends Model> {
   }
 }
 
-export class ExtraGoodView extends View<ExtraGood> implements ExtraGood {
-  static wrap(model: ExtraGood, context: ViewContext): ExtraGoodView {
-    return new ExtraGoodView(model, context);
-  }
+// export class ExtraGoodView extends View<ExtraGood> implements ExtraGood {
+//   static wrap(model: ExtraGood, context: ViewContext): ExtraGoodView {
+//     return new ExtraGoodView(model, context);
+//   }
 
-  get good(): Good {
-    return this.model.good;
-  }
+//   get good(): Good {
+//     return this.model.good;
+//   }
 
-  get rateNumerator(): number {
-    return this.model.rateNumerator ?? DEFAULT_EXTRA_GOOD_MODEL.rateNumerator!;
-  }
+//   get rateNumerator(): number {
+//     return this.model.rateNumerator ?? DEFAULT_EXTRA_GOOD_MODEL.rateNumerator!;
+//   }
 
-  get rateDenominator(): number {
-    return (
-      this.model.rateDenominator ?? DEFAULT_EXTRA_GOOD_MODEL.rateDenominator!
-    );
-  }
+//   get rateDenominator(): number {
+//     return (
+//       this.model.rateDenominator ?? DEFAULT_EXTRA_GOOD_MODEL.rateDenominator!
+//     );
+//   }
 
-  get rate(): number {
-    return this.rateNumerator / this.rateDenominator;
-  }
+//   get rate(): number {
+//     return this.rateNumerator / this.rateDenominator;
+//   }
 
-  get processTimeSeconds(): number {
-    return this.context.productionLine!.buildingProcessTimeSeconds / this.rate;
-  }
+//   get processTimeSeconds(): number {
+//     return this.context.productionLine!.buildingProcessTimeSeconds / this.rate;
+//   }
 
-  get producedPerMinute(): number {
-    return (
-      (this.context.productionLine!.numBuildings * 60) / this.processTimeSeconds
-    );
-  }
-}
+//   get producedPerMinute(): number {
+//     return (
+//       (this.context.productionLine!.numBuildings * 60) / this.processTimeSeconds
+//     );
+//   }
+// }
 
 export class ProductionLineView
   extends View<ProductionLine>
@@ -111,18 +116,27 @@ export class ProductionLineView
     );
   }
 
-  get tradeUnionItemsBonus(): number {
+  get items(): Item[] {
+    return this.model.items ?? DEFAULT_PRODUCTION_LINE_MODEL.items!;
+  };
+
+  get itemProductivityBonus(): number {
     return (
-      this.model.tradeUnionItemsBonus ??
-      DEFAULT_PRODUCTION_LINE_MODEL.tradeUnionItemsBonus!
+      this.model.items
+        ?.map((item) => (lookupItemInfo(item)?.productivityEffect ?? 0) / 100)
+        ?.reduce((a, v) => a + v, 0) ?? 0
     );
   }
 
-  get extraGoods(): ExtraGoodView[] {
-    return (this.model.extraGoods ?? []).map((eg) =>
-      ExtraGoodView.wrap(eg, { ...this.context, productionLine: this }),
-    );
-  }
+  // get extraGoods(): ExtraGoodView[] {
+  //   return (
+  //     this.model.items
+  //       ?.flatMap((item) => lookupItemInfo(item)?.extraGoods ?? [])
+  //       .map((eg) =>
+  //         ExtraGoodView.wrap(eg, { ...this.context, productionLine: this }),
+  //       ) ?? []
+  //   );
+  // }
 
   get inRangeOfLocalDepartment(): boolean {
     return (
@@ -163,7 +177,7 @@ export class ProductionLineView
       ) {
         efficiency += this.context.world!.tradeUnionBonus;
       }
-      efficiency += this.tradeUnionItemsBonus;
+      efficiency += this.itemProductivityBonus;
     }
     return efficiency;
   }
@@ -275,7 +289,9 @@ export class IslandView extends View<Island> implements Island {
       new Set<Good>(
         this.model.productionLines.flatMap((pl) => {
           const goods = [pl.good];
-          pl.extraGoods?.forEach((eg) => goods.push(eg.good));
+          pl.items
+            ?.flatMap((item) => lookupItemInfo(item)?.extraGoods ?? [])
+            ?.forEach((eg) => goods.push(eg.good));
           return goods;
         }),
       ),
