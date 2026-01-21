@@ -1,0 +1,6 @@
+<div class="tooltip-container">
+  @if (iconUrlLookupFn(enumValue)) {
+    <img [src]="iconUrlLookupFn(enumValue)" [alt]="enumValue" class="item-icon-big" />
+  }
+  <div class="tooltip-text">{{ enumValue }}</div>
+</div>

@@ -1,17 +1,20 @@
 import { ExtraGood } from '../mvc/models';
-import { IslandView } from '../mvc/views';
 import {
   ProductionBuilding,
   ProductionType,
   Good,
   Rarity,
   Region,
-  DepartmentOfLaborPolicy,
   Boost,
   AdministrativeBuilding,
   Item,
 } from './enums';
 import * as itemsJson from '../data/items.json';
+
+export interface ElectrictyExtraGood {
+  good: Good;
+  processingTimeSeconds: number;
+}
 
 export interface ProductionInfo {
   building: ProductionBuilding;
@@ -21,6 +24,7 @@ export interface ProductionInfo {
   inputGoods?: Good[];
   allowedRegions: Region[];
   requiresElectricity?: boolean;
+  electricityExtraGoods?: ElectrictyExtraGood[];
 }
 
 export interface ItemInfo {
@@ -45,7 +49,7 @@ export const improvedByLandReformAct = new Set<ProductionBuilding>([
   ProductionBuilding.Vineyard,
   ProductionBuilding.SheepFarm,
   ProductionBuilding.PigFarm,
-  ProductionBuilding.CattleFarm,
+  ProductionBuilding.CattleFarmOldWorld,
 ]);
 
 export const improvedBySkilledLaborAct = new Set<ProductionBuilding>([
@@ -67,27 +71,14 @@ export const improvedBySkilledLaborAct = new Set<ProductionBuilding>([
   ProductionBuilding.ChemicalPlantLacquer,
 ]);
 
-export function computeExtraGoodsModifier(
-  productionBuilding: ProductionBuilding,
-  good: Good,
-  island: IslandView,
-): number {
-  const productionInfo = lookupProductionInfo(productionBuilding);
-  if (productionInfo?.good != good) {
-    return 1;
-  } else if (
-    improvedByLandReformAct.has(productionBuilding) &&
-    island.dolPolicy == DepartmentOfLaborPolicy.LandReformAct
-  ) {
-    return 1.5;
-  } else if (
-    improvedBySkilledLaborAct.has(productionBuilding) &&
-    island.dolPolicy == DepartmentOfLaborPolicy.SkilledLaborAct
-  ) {
-    return 1 + 1 / 3;
-  } else {
-    return 1;
-  }
+export const dungProducingBuildings = new Set<ProductionBuilding>([
+  ProductionBuilding.AlpacaFarm,
+  ProductionBuilding.CattleFarmNewWorld,
+  ProductionBuilding.NanduFarm,
+]);
+
+export function producesDung(building: ProductionBuilding | null): boolean {
+  return dungProducingBuildings.has(building ?? ProductionBuilding.Unknown);
 }
 
 export function lookupProductionInfo(
@@ -104,9 +95,21 @@ export function requiresElectricity(building: ProductionBuilding): boolean {
   return builingsToInfo.get(building)?.requiresElectricity ?? false;
 }
 
+export function supportsElectricty(region: Region): boolean {
+  return (
+    region == Region.CapeTrelawney ||
+    region == Region.OldWorld ||
+    region == Region.NewWorld
+  );
+}
+
 export function lookupAllowedBoosts(building: ProductionBuilding): Boost[] {
   const info = lookupProductionInfo(building);
-  if (!info || info.allowedRegions.includes(Region.Enbesa)) {
+  if (
+    !info ||
+    info.allowedRegions.includes(Region.Enbesa) ||
+    info.allowedRegions.includes(Region.Arctic)
+  ) {
     return [];
   }
   if (info.productionType == ProductionType.AnimalFarm) {
@@ -116,7 +119,7 @@ export function lookupAllowedBoosts(building: ProductionBuilding): Boost[] {
   } else if (info.productionType == ProductionType.Mine) {
     return [Boost.Electricity];
   } else if (info.productionType == ProductionType.PlantFarm) {
-    return [Boost.TracktorBarn, Boost.Fertilizer];
+    return [Boost.TractorBarn, Boost.Fertiliser];
   }
   return [];
 }
@@ -161,6 +164,20 @@ export const buildingInfo: ProductionInfo[] = [
     productionType: ProductionType.AnimalFarm,
     allowedRegions: [Region.NewWorld],
     good: Good.AlpacaWool,
+    electricityExtraGoods: [
+      {
+        good: Good.Saltpetre,
+        processingTimeSeconds: 240 / 4,
+      },
+    ],
+  },
+  {
+    building: ProductionBuilding.AluminiumSmelter,
+    processingTimeSeconds: 90,
+    productionType: ProductionType.Factory,
+    allowedRegions: [Region.NewWorld],
+    inputGoods: [Good.Bauxite, Good.Coal],
+    good: Good.AluminiumProfiles,
   },
   {
     building: ProductionBuilding.Apiary,
@@ -183,6 +200,38 @@ export const buildingInfo: ProductionInfo[] = [
     allowedRegions: [Region.OldWorld, Region.CapeTrelawney],
     good: Good.Goulash,
     inputGoods: [Good.Beef, Good.RedPeppers],
+  },
+  {
+    building: ProductionBuilding.ArtisansWorkshopBilliardTables,
+    processingTimeSeconds: 60,
+    productionType: ProductionType.Factory,
+    allowedRegions: [Region.OldWorld, Region.CapeTrelawney],
+    good: Good.BilliardTables,
+    inputGoods: [Good.CherryWood, Good.Felt, Good.Celluloid],
+  },
+  {
+    building: ProductionBuilding.ArtisansWorkshopCognac,
+    processingTimeSeconds: 60,
+    productionType: ProductionType.Factory,
+    allowedRegions: [Region.OldWorld, Region.CapeTrelawney],
+    good: Good.Cognac,
+    inputGoods: [Good.Grapes, Good.CherryWood, Good.Sugar],
+  },
+  {
+    building: ProductionBuilding.ArtisansWorkshopToys,
+    processingTimeSeconds: 60,
+    productionType: ProductionType.Factory,
+    allowedRegions: [Region.OldWorld, Region.CapeTrelawney],
+    good: Good.Toys,
+    inputGoods: [Good.Felt, Good.Celluloid, Good.Lacquer],
+  },
+  {
+    building: ProductionBuilding.ArtisansWorkshopViolins,
+    processingTimeSeconds: 60,
+    productionType: ProductionType.Factory,
+    allowedRegions: [Region.OldWorld, Region.CapeTrelawney],
+    good: Good.Violins,
+    inputGoods: [Good.Steel, Good.CherryWood, Good.Lacquer],
   },
   {
     building: ProductionBuilding.AssemblyLineBiscuits,
@@ -220,6 +269,13 @@ export const buildingInfo: ProductionInfo[] = [
     inputGoods: [Good.Flour],
   },
   {
+    building: ProductionBuilding.BauxiteMine,
+    processingTimeSeconds: 10,
+    productionType: ProductionType.Mine,
+    allowedRegions: [Region.NewWorld],
+    good: Good.Bauxite,
+  },
+  {
     building: ProductionBuilding.BearHuntingCabin,
     processingTimeSeconds: 90,
     productionType: ProductionType.HuntingCabin,
@@ -234,6 +290,14 @@ export const buildingInfo: ProductionInfo[] = [
     good: Good.PennyFarthings,
     inputGoods: [Good.Steel, Good.Caoutchouc],
     requiresElectricity: true,
+  },
+  {
+    building: ProductionBuilding.BombFactory,
+    processingTimeSeconds: 60,
+    productionType: ProductionType.Factory,
+    allowedRegions: [Region.OldWorld, Region.CapeTrelawney, Region.NewWorld],
+    good: Good.Bombs,
+    inputGoods: [Good.Saltpetre, Good.Dynamite, Good.Steel],
   },
   {
     building: ProductionBuilding.BombinWeaver,
@@ -257,7 +321,7 @@ export const buildingInfo: ProductionInfo[] = [
     productionType: ProductionType.Factory,
     allowedRegions: [Region.OldWorld, Region.CapeTrelawney],
     good: Good.Brass,
-    inputGoods: [Good.Copper, Good.Zinc],
+    inputGoods: [Good.Copper, Good.Zinc, Good.Coal],
   },
   {
     building: ProductionBuilding.Brewery,
@@ -315,11 +379,32 @@ export const buildingInfo: ProductionInfo[] = [
     good: Good.CaribouMeat,
   },
   {
-    building: ProductionBuilding.CattleFarm,
+    building: ProductionBuilding.CattleFarmOldWorld,
     processingTimeSeconds: 120,
     productionType: ProductionType.AnimalFarm,
-    allowedRegions: [Region.OldWorld, Region.CapeTrelawney, Region.NewWorld],
+    allowedRegions: [Region.OldWorld, Region.CapeTrelawney],
     good: Good.Beef,
+  },
+  {
+    building: ProductionBuilding.CattleFarmNewWorld,
+    processingTimeSeconds: 60,
+    productionType: ProductionType.AnimalFarm,
+    allowedRegions: [Region.NewWorld],
+    good: Good.Beef,
+    electricityExtraGoods: [
+      {
+        good: Good.Milk,
+        processingTimeSeconds: 60 / 6,
+      },
+    ],
+  },
+  {
+    building: ProductionBuilding.CeramicsWorkshop,
+    processingTimeSeconds: 30,
+    productionType: ProductionType.Factory,
+    allowedRegions: [Region.Enbesa],
+    inputGoods: [Good.Clay, Good.IndigoDye],
+    good: Good.Ceramics,
   },
   {
     building: ProductionBuilding.ChampagneCellar,
@@ -340,6 +425,22 @@ export const buildingInfo: ProductionInfo[] = [
       Region.Arctic,
     ],
     good: Good.Coal,
+  },
+  {
+    building: ProductionBuilding.Chandler,
+    processingTimeSeconds: 30,
+    productionType: ProductionType.Factory,
+    allowedRegions: [Region.Enbesa],
+    inputGoods: [Good.Cotton, Good.Beeswax],
+    good: Good.OrnateCandles,
+  },
+  {
+    building: ProductionBuilding.ChemicalPlantCelluloid,
+    processingTimeSeconds: 30,
+    productionType: ProductionType.Factory,
+    allowedRegions: [Region.NewWorld],
+    good: Good.Celluloid,
+    inputGoods: [Good.Cotton, Good.CamphorWax, Good.Ethanol],
   },
   {
     building: ProductionBuilding.ChemicalPlantEthanol,
@@ -396,6 +497,13 @@ export const buildingInfo: ProductionInfo[] = [
     allowedRegions: [Region.NewWorld],
     good: Good.Cigars,
     inputGoods: [Good.Tobacco, Good.WoodVeneers],
+  },
+  {
+    building: ProductionBuilding.ClayCollector,
+    processingTimeSeconds: 15,
+    productionType: ProductionType.River,
+    allowedRegions: [Region.Enbesa],
+    good: Good.Clay,
   },
   {
     building: ProductionBuilding.ClayPit,
@@ -494,12 +602,36 @@ export const buildingInfo: ProductionInfo[] = [
     good: Good.GoldOre,
   },
   {
+    building: ProductionBuilding.DryHouse,
+    processingTimeSeconds: 30,
+    productionType: ProductionType.Factory,
+    allowedRegions: [Region.Enbesa],
+    inputGoods: [Good.Salt, Good.SangaCow],
+    good: Good.DriedMeat,
+  },
+  {
     building: ProductionBuilding.DynamiteFactory,
     processingTimeSeconds: 60,
     productionType: ProductionType.Factory,
     allowedRegions: [Region.OldWorld, Region.CapeTrelawney],
     good: Good.Dynamite,
     inputGoods: [Good.Tallow, Good.Saltpetre],
+  },
+  {
+    building: ProductionBuilding.Embroiderer,
+    processingTimeSeconds: 60,
+    productionType: ProductionType.Factory,
+    allowedRegions: [Region.Enbesa],
+    inputGoods: [Good.Linen],
+    good: Good.Finery,
+  },
+  {
+    building: ProductionBuilding.FeltProducer,
+    processingTimeSeconds: 30,
+    productionType: ProductionType.Factory,
+    allowedRegions: [Region.NewWorld],
+    inputGoods: [Good.AlpacaWool],
+    good: Good.Felt,
   },
   {
     building: ProductionBuilding.FilamentFactory,
@@ -617,6 +749,14 @@ export const buildingInfo: ProductionInfo[] = [
     requiresElectricity: true,
   },
   {
+    building: ProductionBuilding.HaciendaFertilizerWorks,
+    processingTimeSeconds: 30,
+    productionType: ProductionType.Factory,
+    allowedRegions: [Region.NewWorld],
+    good: Good.Fertiliser,
+    inputGoods: [Good.Dung],
+  },
+  {
     building: ProductionBuilding.HeavyWeaponsFactory,
     processingTimeSeconds: 120,
     productionType: ProductionType.Factory,
@@ -624,6 +764,21 @@ export const buildingInfo: ProductionInfo[] = [
     good: Good.AdvancedWeapons,
     inputGoods: [Good.Dynamite, Good.Steel],
     requiresElectricity: true,
+  },
+  {
+    building: ProductionBuilding.HeliumExtractor,
+    processingTimeSeconds: 15,
+    productionType: ProductionType.Mine,
+    allowedRegions: [Region.NewWorld],
+    inputGoods: [Good.Clay, Good.IndustrialLubricant],
+    good: Good.Helium,
+  },
+  {
+    building: ProductionBuilding.HerbGarden,
+    processingTimeSeconds: 30,
+    productionType: ProductionType.PlantFarm,
+    allowedRegions: [Region.NewWorld],
+    good: Good.Herbs,
   },
   {
     building: ProductionBuilding.HibiscusFarm,
@@ -662,11 +817,27 @@ export const buildingInfo: ProductionInfo[] = [
     inputGoods: [Good.Huskies, Good.Sleds],
   },
   {
+    building: ProductionBuilding.IceCreamFactory,
+    processingTimeSeconds: 60,
+    productionType: ProductionType.Factory,
+    allowedRegions: [Region.NewWorld],
+    inputGoods: [Good.Milk, Good.Chocolate, Good.Citrus],
+    good: Good.IceCream,
+  },
+  {
     building: ProductionBuilding.IndigoFarm,
     processingTimeSeconds: 60,
     productionType: ProductionType.PlantFarm,
     allowedRegions: [Region.Enbesa],
     good: Good.IndigoDye,
+  },
+  {
+    building: ProductionBuilding.IndustrialOilPress,
+    processingTimeSeconds: 30,
+    productionType: ProductionType.Factory,
+    allowedRegions: [Region.NewWorld],
+    inputGoods: [Good.FishOil, Good.Saltpetre],
+    good: Good.IndustrialLubricant,
   },
   {
     building: ProductionBuilding.IronMine,
@@ -682,6 +853,14 @@ export const buildingInfo: ProductionInfo[] = [
     allowedRegions: [Region.OldWorld, Region.CapeTrelawney],
     good: Good.Jewellery,
     inputGoods: [Good.Gold, Good.Pearls],
+  },
+  {
+    building: ProductionBuilding.Lanternsmith,
+    processingTimeSeconds: 60,
+    productionType: ProductionType.Factory,
+    allowedRegions: [Region.Enbesa],
+    inputGoods: [Good.Glass, Good.OrnateCandles],
+    good: Good.Lanterns,
   },
   {
     building: ProductionBuilding.LightBulbFactory,
@@ -728,12 +907,20 @@ export const buildingInfo: ProductionInfo[] = [
     good: Good.Wood,
   },
   {
+    building: ProductionBuilding.Luminer,
+    processingTimeSeconds: 60,
+    productionType: ProductionType.Factory,
+    allowedRegions: [Region.Enbesa],
+    inputGoods: [Good.Paper, Good.IndigoDye],
+    good: Good.IlluminatedScript,
+  },
+  {
     building: ProductionBuilding.Malthouse,
     processingTimeSeconds: 30,
     productionType: ProductionType.Factory,
     allowedRegions: [Region.OldWorld, Region.CapeTrelawney],
-    good: Good.Malt,
     inputGoods: [Good.Grain],
+    good: Good.Malt,
   },
   {
     building: ProductionBuilding.MarquetryWorkshop,
@@ -744,6 +931,13 @@ export const buildingInfo: ProductionInfo[] = [
     inputGoods: [Good.Wood],
   },
   {
+    building: ProductionBuilding.MineralMine,
+    processingTimeSeconds: 15,
+    productionType: ProductionType.Mine,
+    allowedRegions: [Region.NewWorld],
+    good: Good.Minerals,
+  },
+  {
     building: ProductionBuilding.MotorAssemblyLine,
     processingTimeSeconds: 90,
     productionType: ProductionType.Factory,
@@ -751,6 +945,19 @@ export const buildingInfo: ProductionInfo[] = [
     good: Good.SteamMotors,
     inputGoods: [Good.Steel, Good.Brass],
     requiresElectricity: true,
+  },
+  {
+    building: ProductionBuilding.NanduFarm,
+    processingTimeSeconds: 30,
+    productionType: ProductionType.AnimalFarm,
+    allowedRegions: [Region.NewWorld],
+    good: Good.NanduLeather,
+    electricityExtraGoods: [
+      {
+        good: Good.NanduFeathers,
+        processingTimeSeconds: 120 / 4,
+      },
+    ],
   },
   {
     building: ProductionBuilding.OilLampFactory,
@@ -766,6 +973,13 @@ export const buildingInfo: ProductionInfo[] = [
     productionType: ProductionType.Oil,
     allowedRegions: [Region.OldWorld, Region.CapeTrelawney, Region.NewWorld],
     good: Good.Oil,
+  },
+  {
+    building: ProductionBuilding.OrchardCamphorWax,
+    processingTimeSeconds: 30,
+    productionType: ProductionType.Orchard,
+    allowedRegions: [Region.NewWorld],
+    good: Good.CamphorWax,
   },
   {
     building: ProductionBuilding.OrchardCherryWood,
@@ -810,20 +1024,43 @@ export const buildingInfo: ProductionInfo[] = [
     good: Good.Resin,
   },
   {
+    building: ProductionBuilding.OrchidFarm,
+    processingTimeSeconds: 30,
+    productionType: ProductionType.PlantFarm,
+    allowedRegions: [Region.NewWorld],
+    good: Good.Orchid,
+  },
+  {
+    building: ProductionBuilding.PamphletPrinter,
+    processingTimeSeconds: 60,
+    productionType: ProductionType.Factory,
+    allowedRegions: [Region.OldWorld, Region.CapeTrelawney, Region.NewWorld],
+    inputGoods: [Good.Wood, Good.Cotton],
+    good: Good.Pamphlets,
+  },
+  {
     building: ProductionBuilding.PaperMill,
     processingTimeSeconds: 15,
     productionType: ProductionType.Factory,
     allowedRegions: [Region.Enbesa],
-    good: Good.Paper,
     inputGoods: [Good.Wood],
+    good: Good.Paper,
   },
   {
     building: ProductionBuilding.ParkaFactory,
     processingTimeSeconds: 90,
     productionType: ProductionType.Factory,
     allowedRegions: [Region.Arctic],
-    good: Good.Parkas,
     inputGoods: [Good.BearFur, Good.SealSkin],
+    good: Good.Parkas,
+  },
+  {
+    building: ProductionBuilding.PerfumeMixer,
+    processingTimeSeconds: 60,
+    productionType: ProductionType.Factory,
+    allowedRegions: [Region.NewWorld],
+    inputGoods: [Good.Orchid, Good.Ethanol, Good.CoconutOil],
+    good: Good.Perfumes,
   },
   {
     building: ProductionBuilding.PearlFarm,
@@ -837,8 +1074,8 @@ export const buildingInfo: ProductionInfo[] = [
     processingTimeSeconds: 60,
     productionType: ProductionType.Factory,
     allowedRegions: [Region.Arctic],
-    good: Good.Pemmican,
     inputGoods: [Good.WhaleOil, Good.CaribouMeat],
+    good: Good.Pemmican,
   },
   {
     building: ProductionBuilding.PigFarm,
@@ -846,6 +1083,14 @@ export const buildingInfo: ProductionInfo[] = [
     productionType: ProductionType.AnimalFarm,
     allowedRegions: [Region.OldWorld, Region.CapeTrelawney],
     good: Good.Pigs,
+  },
+  {
+    building: ProductionBuilding.PipeMaker,
+    processingTimeSeconds: 90,
+    productionType: ProductionType.Factory,
+    allowedRegions: [Region.Enbesa],
+    inputGoods: [Good.Clay, Good.Tobacco],
+    good: Good.ClayPipes,
   },
   {
     building: ProductionBuilding.PlantainPlantation,
@@ -1080,6 +1325,14 @@ export const buildingInfo: ProductionInfo[] = [
     good: Good.Teff,
   },
   {
+    building: ProductionBuilding.TeffMill,
+    processingTimeSeconds: 30,
+    productionType: ProductionType.Factory,
+    allowedRegions: [Region.Enbesa],
+    inputGoods: [Good.Teff],
+    good: Good.SpicedFlour,
+  },
+  {
     building: ProductionBuilding.TelephoneManufacturer,
     processingTimeSeconds: 90,
     productionType: ProductionType.Factory,
@@ -1109,6 +1362,28 @@ export const buildingInfo: ProductionInfo[] = [
     productionType: ProductionType.PlantFarm,
     allowedRegions: [Region.OldWorld, Region.CapeTrelawney],
     good: Good.Grapes,
+  },
+  {
+    building: ProductionBuilding.WanzaWoodcutter,
+    processingTimeSeconds: 15,
+    productionType: ProductionType.Orchard,
+    allowedRegions: [Region.Enbesa],
+    good: Good.WanzaTimber,
+  },
+  {
+    building: ProductionBuilding.WaterDropFactory,
+    processingTimeSeconds: 60,
+    productionType: ProductionType.Factory,
+    allowedRegions: [Region.OldWorld, Region.CapeTrelawney, Region.NewWorld],
+    good: Good.WaterDrop,
+  },
+  {
+    building: ProductionBuilding.WatKitchen,
+    processingTimeSeconds: 60,
+    productionType: ProductionType.Factory,
+    allowedRegions: [Region.Enbesa],
+    inputGoods: [Good.SpicedFlour, Good.Lobster],
+    good: Good.SeafoodStew,
   },
   {
     building: ProductionBuilding.WeaponFactory,

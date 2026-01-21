@@ -2,9 +2,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   OnInit,
-  // QueryList,
   ViewChild,
-  // ViewChildren,
 } from '@angular/core';
 import { IslandController } from '../../../shared/mvc/controllers';
 import {
@@ -22,10 +20,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { ControlComponent } from '../../../shared/control/control';
-import {
-  // ExtraGoodControl,
-  ProductionLineControl,
-} from './production-line';
+import { ProductionLineControl } from './production-line';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { FormattedNumber } from '../../../components/formatted-number/formatted-number';
 import { EnumSelect } from '../../../components/enum-select/enum-select';
@@ -36,8 +31,12 @@ import {
   Good,
   ProductionBuilding,
   Item,
+  AdministrativeBuilding,
 } from '../../../shared/game/enums';
-import { lookupProductionInfo } from '../../../shared/game/facts';
+import {
+  lookupItemInfo,
+  lookupProductionInfo,
+} from '../../../shared/game/facts';
 import {
   lookupBuildingIconUrl,
   lookupGoodIconUrl,
@@ -49,22 +48,32 @@ import {
 import { TextFieldModule } from '@angular/cdk/text-field';
 import { AcButton } from '../../../components/button/button';
 import { EnumRow } from '../../../components/enum-row/enum-row';
+import { ItemTooltip } from './tooltips/item/item-tooltip';
+import {
+  SimpleTooltip,
+  TooltipDirective,
+} from '../../../components/enum-tooltip/enum-tooltip';
+import { CompositeNumber } from '../../../components/composite-number/composite-number';
 
 @Component({
   selector: 'island',
   imports: [
     AcButton,
+    CompositeNumber,
     EnumRow,
     EnumSelect,
     FormattedNumber,
     FormsModule,
+    ItemTooltip,
     MatCheckboxModule,
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
     MatTableModule,
     ReactiveFormsModule,
+    SimpleTooltip,
     TextFieldModule,
+    TooltipDirective,
   ],
   templateUrl: './island.html',
   styleUrl: './island.scss',
@@ -81,38 +90,50 @@ export class Island
   dolPolicies!: DepartmentOfLaborPolicy[];
   productionBuildings!: ProductionBuilding[];
 
-  readonly productionLineColumns = [
-    'building',
-    'numBuildings',
-    // 'expandExtraGoods',
-    'inputGoods',
-    'good',
-    'boosts',
-    'hasTradeUnion',
-    'items',
-    // 'tradeUnionItemsBonusPercent',
-    'inRangeOfLocalDepartment',
-    'efficiency',
-    'buildingProcessTimeSeconds',
-    'goodProcessTimeSeconds',
-    'goodsProducedPerMinute',
-    'remove',
-  ];
+  get productionLineColumns(): string[] {
+    const columns = [
+      'building',
+      'numBuildings',
+      'expandExtraGoods',
+      'inputGoods',
+      'good',
+      'boosts',
+      'hasTradeUnion',
+      'items',
+    ];
+    if (
+      this.controller.region == Region.OldWorld ||
+      this.controller.region == Region.CapeTrelawney
+    ) {
+      columns.push('inRangeOfLocalDepartment');
+    } else if (this.controller.region == Region.NewWorld) {
+      columns.push('inRangeOfHaciendaFertiliserWorks');
+    }
+    columns.push(
+      'efficiency',
+      'buildingProcessTimeSeconds',
+      'goodProcessTimeSeconds',
+      'goodsProducedPerMinute',
+      'remove',
+    );
+    return columns;
+  }
 
-  // readonly extraGoodColumns = [
-  //   'good',
-  //   'rateNumerator',
-  //   'divideSymbol',
-  //   'rateDenominator',
-  //   'processTimeSeconds',
-  //   'producedPerMinute',
-  //   'remove',
-  // ];
+  readonly extraGoodColumns = [
+    'good',
+    'source',
+    'rateNumerator',
+    'divideSymbol',
+    'rateDenominator',
+    'processTimeSeconds',
+    'producedPerMinute',
+  ];
 
   formGroup!: FormGroup;
 
   private _productionLineControls!: ProductionLineControl[];
   Boost: any;
+
   get productionLineControls(): ProductionLineControl[] {
     if (this._productionLineControls.length == 0) {
       this.addProductionLine();
@@ -125,14 +146,17 @@ export class Island
   @ViewChild('productionLinesTable')
   table!: MatTable<ProductionLineControl>;
 
-  // @ViewChildren('extraGoodTables')
-  // extraGoodTables!: QueryList<MatTable<ExtraGoodControl>>;
-
   get multipleSelectLimit(): number {
     return this.controller.dolPolicy ==
       DepartmentOfLaborPolicy.UnionSubsidiesAct
       ? 4
       : 3;
+  }
+
+  get inRangeHeader(): string {
+    return this.controller.region == Region.NewWorld
+      ? 'Fert Works'
+      : 'Local Dept';
   }
 
   ngOnInit(): void {
@@ -169,11 +193,6 @@ export class Island
 
   override afterPushChange(): void {
     this.updateRegionSpecificSelectOptions();
-    // if (this.extraGoodTables) {
-    //   for (const extraGoodTable of this.extraGoodTables) {
-    //     extraGoodTable.renderRows();
-    //   }
-    // }
     this.table?.renderRows();
   }
 
@@ -213,27 +232,6 @@ export class Island
     this.pushUpChange();
   }
 
-  // toggleShowExtraGoods(productionLine: ProductionLineControl): void {
-  //   productionLine.toggleShowExtraGoods();
-  //   this.extraGoodTables
-  //     .get(this._productionLineControls.indexOf(productionLine))
-  //     ?.renderRows();
-  // }
-
-  // addExtraGood(productionLine: ProductionLineControl): void {
-  //   productionLine.addExtraGood();
-  //   this.pushUpChange();
-  // }
-
-  // removeExtraGoodAt(
-  //   productionLine: ProductionLineControl,
-  //   extraGood: ExtraGoodControl,
-  // ): void {
-  //   const index = productionLine.extraGoods?.data.indexOf(extraGood)!;
-  //   productionLine.removeExtraGoodAt(index);
-  //   this.pushUpChange();
-  // }
-
   lookupBuildingIconUrl(building: ProductionBuilding | null): string {
     return lookupBuildingIconUrl(building ?? ProductionBuilding.Unknown);
   }
@@ -256,6 +254,16 @@ export class Island
 
   lookupPolicyIconUrl(policy: DepartmentOfLaborPolicy | null): string {
     return lookupPolicyIconUrl(policy ?? DepartmentOfLaborPolicy.None);
+  }
+
+  isHarborItem(item: Item): boolean {
+    if (!item || item == Item.Unknown) {
+      return false;
+    }
+    return (
+      lookupItemInfo(item)!.administrativeBuilding ==
+      AdministrativeBuilding.HarbourmastersOffice
+    );
   }
 
   private enableControl(controlName: string): void {

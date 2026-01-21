@@ -51,6 +51,10 @@ const goodsToIconUrl = new Map<Good, string>([
     'https://static.wikia.nocookie.net/anno1800/images/7/70/Icon_beeswax_0.png',
   ],
   [
+    Good.BilliardTables,
+    'https://static.wikia.nocookie.net/anno1800/images/8/85/Billiard_Tables.png',
+  ],
+  [
     Good.Biscuits,
     'https://static.wikia.nocookie.net/anno1800/images/f/f5/Biscuits.png',
   ],
@@ -91,8 +95,16 @@ const goodsToIconUrl = new Map<Good, string>([
     'https://static.wikia.nocookie.net/anno1800/images/e/e9/Caribou_Meat.png',
   ],
   [
+    Good.Celluloid,
+    'https://static.wikia.nocookie.net/anno1800/images/4/43/Celluloid.png',
+  ],
+  [
     Good.Cement,
     'https://static.wikia.nocookie.net/anno1800/images/d/de/Cement.png',
+  ],
+  [
+    Good.Ceramics,
+    'https://static.wikia.nocookie.net/anno1800/images/d/d2/Icon_ceramics_0.png',
   ],
   [
     Good.Champagne,
@@ -119,6 +131,10 @@ const goodsToIconUrl = new Map<Good, string>([
     'https://static.wikia.nocookie.net/anno1800/images/b/b4/Citrus.png',
   ],
   [
+    Good.ClayPipes,
+    'https://static.wikia.nocookie.net/anno1800/images/5/5b/Icon_tobacco_pipes_0.png',
+  ],
+  [
     Good.Clay,
     'https://static.wikia.nocookie.net/anno1800/images/a/a2/Clay.png',
   ],
@@ -137,6 +153,10 @@ const goodsToIconUrl = new Map<Good, string>([
   [
     Good.CoconutOil,
     'https://static.wikia.nocookie.net/anno1800/images/e/e6/Coconut_Oil.png',
+  ],
+  [
+    Good.Cognac,
+    'https://static.wikia.nocookie.net/anno1800/images/d/d6/Cognac.png',
   ],
   [
     Good.Coffee,
@@ -163,6 +183,14 @@ const goodsToIconUrl = new Map<Good, string>([
     'https://static.wikia.nocookie.net/anno1800/images/1/15/Cotton_fabric.png',
   ],
   [
+    Good.DriedMeat,
+    'https://static.wikia.nocookie.net/anno1800/images/6/6c/Icon_dried_meat_0.png',
+  ],
+  [
+    Good.Dung,
+    'https://static.wikia.nocookie.net/anno1800/images/3/3f/Dung.png',
+  ],
+  [
     Good.Dynamite,
     'https://static.wikia.nocookie.net/anno1800/images/f/fc/Dynamite.png',
   ],
@@ -179,8 +207,16 @@ const goodsToIconUrl = new Map<Good, string>([
     'https://static.wikia.nocookie.net/anno1800/images/b/b0/Felt.png',
   ],
   [
+    Good.Fertiliser,
+    'https://static.wikia.nocookie.net/anno1800/images/4/49/Fertiliser.png',
+  ],
+  [
     Good.Filaments,
     'https://static.wikia.nocookie.net/anno1800/images/d/d8/Filaments.png',
+  ],
+  [
+    Good.Finery,
+    'https://static.wikia.nocookie.net/anno1800/images/6/6e/Icon_traditional_clothing_0.png',
   ],
   [
     Good.Fish,
@@ -279,8 +315,16 @@ const goodsToIconUrl = new Map<Good, string>([
     'https://static.wikia.nocookie.net/anno1800/images/5/5d/Ice_Cream.png',
   ],
   [
+    Good.IlluminatedScript,
+    'https://static.wikia.nocookie.net/anno1800/images/1/13/Icon_scriptures_0.png',
+  ],
+  [
     Good.IndigoDye,
     'https://static.wikia.nocookie.net/anno1800/images/1/1b/Icon_indigo_0.png',
+  ],
+  [
+    Good.IndustrialLubricant,
+    'https://static.wikia.nocookie.net/anno1800/images/a/a3/Industrial_Lubricant.png',
   ],
   [
     Good.Iron,
@@ -294,6 +338,10 @@ const goodsToIconUrl = new Map<Good, string>([
   [
     Good.Lacquer,
     'https://static.wikia.nocookie.net/anno1800/images/4/4c/Lacquer.png',
+  ],
+  [
+    Good.Lanterns,
+    'https://static.wikia.nocookie.net/anno1800/images/5/5d/Icon_lanterns_0.png',
   ],
   [
     Good.LeatherBoots,
@@ -347,6 +395,14 @@ const goodsToIconUrl = new Map<Good, string>([
   [
     Good.OilLamps,
     'https://static.wikia.nocookie.net/anno1800/images/5/57/Oil_Lamps.png',
+  ],
+  [
+    Good.Orchid,
+    'https://static.wikia.nocookie.net/anno1800/images/3/3f/Orchid.png',
+  ],
+  [
+    Good.OrnateCandles,
+    'https://static.wikia.nocookie.net/anno1800/images/1/1c/Icon_candles_0.png',
   ],
   [
     Good.Pamphlets,
@@ -438,6 +494,10 @@ const goodsToIconUrl = new Map<Good, string>([
     'https://static.wikia.nocookie.net/anno1800/images/4/47/Schnapps.png',
   ],
   [
+    Good.SeafoodStew,
+    'https://static.wikia.nocookie.net/anno1800/images/9/91/Icon_wat_stew_0.png',
+  ],
+  [
     Good.SealSkin,
     'https://static.wikia.nocookie.net/anno1800/images/d/df/Seal_Skin.png',
   ],
@@ -464,6 +524,10 @@ const goodsToIconUrl = new Map<Good, string>([
   [
     Good.Souvenirs,
     'https://static.wikia.nocookie.net/anno1800/images/5/56/Souvenirs.png',
+  ],
+  [
+    Good.SpicedFlour,
+    'https://static.wikia.nocookie.net/anno1800/images/3/36/Icon_teff_flour_0.png',
   ],
   [
     Good.Spices,
@@ -538,6 +602,10 @@ const goodsToIconUrl = new Map<Good, string>([
     'https://static.wikia.nocookie.net/anno1800/images/3/3f/Violins.png',
   ],
   [
+    Good.WanzaTimber,
+    'https://static.wikia.nocookie.net/anno1800/images/f/fb/Icon_wansa_wood_0.png',
+  ],
+  [
     Good.WaterDrop,
     'https://static.wikia.nocookie.net/anno1800/images/9/9c/Water_Drop.png',
   ],
@@ -581,7 +649,7 @@ const boostTypeToImageUrl = new Map<Boost, string>([
     'https://static.wikia.nocookie.net/anno1800/images/0/05/Electricity.png',
   ],
   [
-    Boost.TracktorBarn,
+    Boost.TractorBarn,
     'https://static.wikia.nocookie.net/anno1800/images/6/6a/TractorBarn.png',
   ],
   [
@@ -589,8 +657,8 @@ const boostTypeToImageUrl = new Map<Boost, string>([
     'https://static.wikia.nocookie.net/anno1800/images/5/5f/Silo.png',
   ],
   [
-    Boost.Fertilizer,
-    'https://static.wikia.nocookie.net/anno1800/images/3/3f/Dung.png',
+    Boost.Fertiliser,
+    'https://static.wikia.nocookie.net/anno1800/images/4/49/Fertiliser.png',
   ],
 ]);
 
@@ -643,8 +711,8 @@ const policyToImageUrl = new Map<DepartmentOfLaborPolicy, string>([
 
 const lookupUrlFn =
   <T>(map: Map<T, string>) =>
-    (key: T) =>
-      map.get(key) ?? defaultIconUrl;
+  (key: T) =>
+    map.get(key) ?? defaultIconUrl;
 
 export const lookupGoodIconUrl = lookupUrlFn(goodsToIconUrl);
 
@@ -656,4 +724,5 @@ export const lookupBuildingIconUrl = lookupUrlFn(productionBuildingToIconUrl);
 export const lookupBoostIconUrl = lookupUrlFn(boostTypeToImageUrl);
 export const lookupRegionIconUrl = lookupUrlFn(regionToImageUrl);
 export const lookupPolicyIconUrl = lookupUrlFn(policyToImageUrl);
-export const lookupItemIconUrl = (item: Item) => lookupItemInfo(item)?.iconUrl ?? defaultIconUrl;
+export const lookupItemIconUrl = (item: Item) =>
+  lookupItemInfo(item)?.iconUrl ?? defaultIconUrl;

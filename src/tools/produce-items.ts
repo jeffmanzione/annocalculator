@@ -1,5 +1,11 @@
 import * as fs from 'node:fs';
-import { Rarity, AdministrativeBuilding, ProductionBuilding, Good, Item } from '../app/shared/game/enums';
+import {
+  Rarity,
+  AdministrativeBuilding,
+  ProductionBuilding,
+  Good,
+  Item,
+} from '../app/shared/game/enums';
 import { ItemInfo } from '../app/shared/game/facts';
 
 // --- Helper to map strings to Enum values ---
@@ -9,23 +15,21 @@ function getEnumValue<T>(enumObj: T, value: string): T[keyof T] | undefined {
   return match ? (match[1] as T[keyof T]) : undefined;
 }
 
-const allocationToAdminBuilding = new Map<string, AdministrativeBuilding>(
-  [
-    ['guildhouseitem', AdministrativeBuilding.TradeUnion],
-    ['harborofficeitem', AdministrativeBuilding.HarbourmastersOffice],
-    ['lodgeitem', AdministrativeBuilding.ArcticLodge],
-  ]
-);
+const allocationToAdminBuilding = new Map<string, AdministrativeBuilding>([
+  ['guildhouseitem', AdministrativeBuilding.TradeUnion],
+  ['harborofficeitem', AdministrativeBuilding.HarbourmastersOffice],
+  ['lodgeitem', AdministrativeBuilding.ArcticLodge],
+]);
 
 const allocationToAdminBuildingName = new Map<string, string>([
   ['guildhouseitem', 'Trade Union'],
   ['harborofficeitem', "Harbourmaster's Office"],
-  ['lodgeitem', 'ArcticLodge'],
+  ['lodgeitem', 'Arctic Lodge'],
 ]);
 
 const typeToAdminBuilding = (type: string): AdministrativeBuilding => {
   return allocationToAdminBuilding.get(type) || AdministrativeBuilding.Unknown;
-}
+};
 
 /**
  * Main function to transform the raw JSON data
@@ -33,7 +37,12 @@ const typeToAdminBuilding = (type: string): AdministrativeBuilding => {
 export function transformTradeUnionItems(rawData: any[]): ItemInfo[] {
   return rawData.map((raw) => {
     const item: ItemInfo = {
-      item: getEnumValue(Item, raw.name) || getEnumValue(Item, `${raw.name} (${allocationToAdminBuildingName.get(raw.type)})`)!,
+      item:
+        getEnumValue(Item, raw.name) ||
+        getEnumValue(
+          Item,
+          `${raw.name} (${allocationToAdminBuildingName.get(raw.type)})`,
+        )!,
 
       iconUrl: `https://anno-toolkit.jansepke.de/${raw.icon}`,
       // Map rarity: "common" (JSON) -> Rarity.Common (Enum)
@@ -42,9 +51,13 @@ export function transformTradeUnionItems(rawData: any[]): ItemInfo[] {
       administrativeBuilding: typeToAdminBuilding(raw.type),
 
       // Map effect targets to ProductionBuilding enum
-      targets: Array.from(new Set<ProductionBuilding>(raw.effectTargets
-        .map((t: any) => getEnumValue(ProductionBuilding, t.label))
-        .filter((t: any) => t !== undefined))),
+      targets: Array.from(
+        new Set<ProductionBuilding>(
+          raw.effectTargets
+            .map((t: any) => getEnumValue(ProductionBuilding, t.label))
+            .filter((t: any) => t !== undefined),
+        ),
+      ),
 
       extraGoods: [],
       replacementGoods: [],

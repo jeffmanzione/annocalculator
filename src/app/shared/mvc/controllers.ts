@@ -6,6 +6,7 @@ import {
   DepartmentOfLaborPolicy,
   Item,
 } from '../game/enums';
+import { lookupItemInfo, lookupProductionInfo } from '../game/facts';
 import {
   BASE_ISLAND_MODEL,
   BASE_PRODUCTION_LINE_MODEL,
@@ -15,14 +16,12 @@ import {
   Island,
   ProductionLine,
   World,
-  // ExtraGood,
   TradeRoute,
   IslandId,
   BASE_TRADE_ROUTE_MODEL,
   TradeRouteId,
 } from './models';
 import {
-  // ExtraGoodView,
   IslandView,
   ProductionLineView,
   TradeRouteView,
@@ -37,36 +36,6 @@ function generatePseudorandomInt(): number {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-// export class ExtraGoodController extends ExtraGoodView {
-//   static override wrap(
-//     model: ExtraGood,
-//     context: ViewContext,
-//   ): ExtraGoodController {
-//     return new ExtraGoodController(model, context);
-//   }
-
-//   override set good(value: Good) {
-//     this.model.good = value;
-//   }
-//   override get good(): Good {
-//     return super.good;
-//   }
-
-//   override set rateNumerator(value: number) {
-//     this.model.rateNumerator = value;
-//   }
-//   override get rateNumerator(): number {
-//     return super.rateNumerator;
-//   }
-
-//   override set rateDenominator(value: number) {
-//     this.model.rateDenominator = value;
-//   }
-//   override get rateDenominator(): number {
-//     return super.rateDenominator;
-//   }
-// }
-
 export class ProductionLineController extends ProductionLineView {
   static override wrap(
     model: ProductionLine,
@@ -75,29 +44,34 @@ export class ProductionLineController extends ProductionLineView {
     return new ProductionLineController(model, context);
   }
 
+  private updateGoods(): void {
+    const productionInfo = lookupProductionInfo(this.model.building)!;
+    if (!productionInfo) {
+      return;
+    }
+    this.model.good = productionInfo.good;
+
+    const inputGoodMappings = new Map<Good, Good>(
+      productionInfo.inputGoods?.map((ig) => [ig, ig]),
+    );
+
+    for (const item of this.model.items ?? []) {
+      const itemInfo = lookupItemInfo(item)!;
+      for (const replacementGood of itemInfo.replacementGoods ?? []) {
+        inputGoodMappings.set(replacementGood.from, replacementGood.to);
+      }
+    }
+    this.model.inputGoods = [...inputGoodMappings.values()].filter(
+      (g) => g != Good.Unknown,
+    );
+  }
+
   override set building(value: ProductionBuilding) {
     this.model.building = value;
+    this.updateGoods();
   }
   override get building(): ProductionBuilding {
     return super.building;
-  }
-
-  override set inputGoods(value: Good[]) {
-    if (value == null || value == DEFAULT_PRODUCTION_LINE_MODEL.inputGoods) {
-      delete this.model.inputGoods;
-      return;
-    }
-    this.model.inputGoods = value;
-  }
-  override get inputGoods(): Good[] {
-    return super.inputGoods;
-  }
-
-  override set good(value: Good) {
-    this.model.good = value;
-  }
-  override get good(): Good {
-    return super.good;
   }
 
   override set numBuildings(value: number) {
@@ -127,6 +101,7 @@ export class ProductionLineController extends ProductionLineView {
       return;
     }
     this.model.items = value;
+    this.updateGoods();
   }
   override get items(): Item[] {
     return super.items;
@@ -156,6 +131,20 @@ export class ProductionLineController extends ProductionLineView {
   }
   override get inRangeOfLocalDepartment(): boolean {
     return super.inRangeOfLocalDepartment;
+  }
+
+  override set inRangeOfHaciendaFertiliserWorks(value: boolean) {
+    if (
+      value == null ||
+      value == DEFAULT_PRODUCTION_LINE_MODEL.inRangeOfHaciendaFertiliserWorks
+    ) {
+      delete this.model.inRangeOfHaciendaFertiliserWorks;
+      return;
+    }
+    this.model.inRangeOfHaciendaFertiliserWorks = value;
+  }
+  override get inRangeOfHaciendaFertiliserWorks(): boolean {
+    return super.inRangeOfHaciendaFertiliserWorks;
   }
 }
 
@@ -256,7 +245,7 @@ export class IslandController extends IslandView {
     ) {
       console.warn(
         'Invalid productionLine index. ' +
-        `Was ${index} and length is ${this.model.productionLines.length}`,
+          `Was ${index} and length is ${this.model.productionLines.length}`,
       );
       return;
     }
@@ -306,7 +295,7 @@ export class WorldController extends WorldView {
     ) {
       console.warn(
         'Invalid islands index. ' +
-        `Was ${index} and length is ${this.model.islands.length}`,
+          `Was ${index} and length is ${this.model.islands.length}`,
       );
       return;
     }

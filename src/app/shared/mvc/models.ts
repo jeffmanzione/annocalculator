@@ -8,12 +8,13 @@ import {
 } from '../game/enums';
 
 // Marker interface for all models.
-export interface Model { }
+export interface Model {}
 
 export interface ExtraGood extends Model {
   good: Good;
   rateNumerator?: number;
   rateDenominator?: number;
+  source?: Item;
 }
 
 export interface ProductionLine extends Model {
@@ -24,13 +25,8 @@ export interface ProductionLine extends Model {
   boosts?: Boost[];
   hasTradeUnion?: boolean;
   items?: Item[];
-
-  // /** @deprecated Replaced by items. */
-  // tradeUnionItemsBonus?: number;
-  // /** @deprecated Replaced by items. */
-  // extraGoods?: ExtraGood[];
-
   inRangeOfLocalDepartment?: boolean;
+  inRangeOfHaciendaFertiliserWorks?: boolean;
 }
 
 export type IslandId = number;
@@ -83,9 +79,8 @@ export const DEFAULT_PRODUCTION_LINE_MODEL: ProductionLine = {
   boosts: [],
   hasTradeUnion: false,
   items: [],
-  // tradeUnionItemsBonus: 0,
-  // extraGoods: [],
   inRangeOfLocalDepartment: false,
+  inRangeOfHaciendaFertiliserWorks: false,
 };
 
 export const BASE_TRADE_ROUTE_MODEL: TradeRoute = {

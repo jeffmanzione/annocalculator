@@ -20,8 +20,12 @@ import {
   FormattedNumber,
   GREEN_RED_FONT_SPEC,
 } from '../../../components/formatted-number/formatted-number';
-import { IslandView, WorldView } from '../../../shared/mvc/views';
-import { Good } from '../../../shared/game/enums';
+import {
+  ExtraGoodView,
+  IslandView,
+  WorldView,
+} from '../../../shared/mvc/views';
+import { Boost, Good, Region } from '../../../shared/game/enums';
 import { IslandId } from '../../../shared/mvc/models';
 import { ReadonlyTable, Table } from '../../../../tools/table';
 import { MatButtonModule } from '@angular/material/button';
@@ -236,11 +240,20 @@ export class SummaryPanel implements OnInit, AfterViewInit {
     for (const island of this._world.islands) {
       for (const pl of island.productionLines) {
         updateStats(island, pl.good, pl.goodsProducedPerMinute);
-        // for (const eg of pl.extraGoods) {
-        //   updateStats(island, eg.good, eg.producedPerMinute);
-        // }
+        for (const eg of pl.extraGoods) {
+          const egView = ExtraGoodView.wrap(eg, { productionLine: pl });
+          updateStats(island, egView.good, egView.producedPerMinute);
+        }
         for (const ig of pl.inputGoods) {
           updateStats(island, ig, -pl.goodsConsumedPerMinute);
+        }
+        if (pl.boosts.includes(Boost.Silo)) {
+          updateStats(
+            island,
+            island.region == Region.NewWorld ? Good.Corn : Good.Grain,
+            -0.2 * pl.numBuildings,
+          );
+          // TODO: Do same for fertilizer.
         }
       }
     }

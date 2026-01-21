@@ -1,11 +1,5 @@
 import { CommonModule, formatNumber, formatPercent } from '@angular/common';
-import {
-  Component,
-  Inject,
-  Input,
-  LOCALE_ID,
-  OnInit,
-} from '@angular/core';
+import { Component, Inject, Input, LOCALE_ID, OnInit } from '@angular/core';
 
 export interface FontSpec {
   color?: string;
@@ -49,7 +43,10 @@ export class FormattedNumber implements OnInit {
   @Input()
   zeroOverride?: string;
 
-  constructor(@Inject(LOCALE_ID) private readonly locale: string) { }
+  @Input()
+  showPlusIfPositive: boolean = false;
+
+  constructor(@Inject(LOCALE_ID) private readonly locale: string) {}
 
   ngOnInit(): void {
     this.format ??= this.isPercent ? '1.0-0' : '1.0-1';
@@ -99,6 +96,10 @@ export class FormattedNumber implements OnInit {
     return formatNumber(this.value, this.locale, this.format);
   }
 
+  private get numberPrefix(): string {
+    return this.showPlusIfPositive && this.value > 0 ? '+' : '';
+  }
+
   get formattedValue(): string {
     if (this.zeroOverride && this.value == 0) {
       return this.zeroOverride;
@@ -106,6 +107,6 @@ export class FormattedNumber implements OnInit {
     const strValue = this.isPercent
       ? this.formatAsPercent()
       : this.formatAsNumber();
-    return `${strValue}${this.suffix}`;
+    return `${this.numberPrefix}${strValue}${this.suffix}`;
   }
 }

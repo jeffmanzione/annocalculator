@@ -1,3 +1,4 @@
+import { NumberConstituent } from '../../components/composite-number/composite-number';
 import {
   Boost,
   Good,
@@ -7,9 +8,11 @@ import {
   Item,
 } from '../game/enums';
 import {
-  computeExtraGoodsModifier,
+  improvedByLandReformAct,
+  improvedBySkilledLaborAct,
   lookupItemInfo,
   lookupProductionInfo,
+  supportsElectricty as allowsElectricty,
 } from '../game/facts';
 import {
   DEFAULT_ISLAND_MODEL,
@@ -19,11 +22,11 @@ import {
   Model,
   ProductionLine,
   World,
-  // ExtraGood,
-  // DEFAULT_EXTRA_GOOD_MODEL,
   TradeRoute,
   IslandId,
   TradeRouteId,
+  ExtraGood,
+  DEFAULT_EXTRA_GOOD_MODEL,
 } from './models';
 
 export interface ViewContext {
@@ -36,7 +39,7 @@ export abstract class View<M extends Model> {
   protected constructor(
     protected model: M,
     protected context: ViewContext,
-  ) { }
+  ) {}
 
   asView(): this {
     return this;
@@ -47,43 +50,48 @@ export abstract class View<M extends Model> {
   }
 }
 
-// export class ExtraGoodView extends View<ExtraGood> implements ExtraGood {
-//   static wrap(model: ExtraGood, context: ViewContext): ExtraGoodView {
-//     return new ExtraGoodView(model, context);
-//   }
+export class ExtraGoodView extends View<ExtraGood> implements ExtraGood {
+  static wrap(model: ExtraGood, context: ViewContext): ExtraGoodView {
+    return new ExtraGoodView(model, context);
+  }
 
-//   get good(): Good {
-//     return this.model.good;
-//   }
+  get good(): Good {
+    return this.model.good;
+  }
 
-//   get rateNumerator(): number {
-//     return this.model.rateNumerator ?? DEFAULT_EXTRA_GOOD_MODEL.rateNumerator!;
-//   }
+  get source(): Item {
+    return this.model.source ?? DEFAULT_EXTRA_GOOD_MODEL.source!;
+  }
 
-//   get rateDenominator(): number {
-//     return (
-//       this.model.rateDenominator ?? DEFAULT_EXTRA_GOOD_MODEL.rateDenominator!
-//     );
-//   }
+  get rateNumerator(): number {
+    return this.model.rateNumerator ?? DEFAULT_EXTRA_GOOD_MODEL.rateNumerator!;
+  }
 
-//   get rate(): number {
-//     return this.rateNumerator / this.rateDenominator;
-//   }
+  get rateDenominator(): number {
+    return (
+      this.model.rateDenominator ?? DEFAULT_EXTRA_GOOD_MODEL.rateDenominator!
+    );
+  }
 
-//   get processTimeSeconds(): number {
-//     return this.context.productionLine!.buildingProcessTimeSeconds / this.rate;
-//   }
+  get rate(): number {
+    return this.rateNumerator / this.rateDenominator;
+  }
 
-//   get producedPerMinute(): number {
-//     return (
-//       (this.context.productionLine!.numBuildings * 60) / this.processTimeSeconds
-//     );
-//   }
-// }
+  get processTimeSeconds(): number {
+    return this.context.productionLine!.buildingProcessTimeSeconds / this.rate;
+  }
+
+  get producedPerMinute(): number {
+    return (
+      (this.context.productionLine!.numBuildings * 60) / this.processTimeSeconds
+    );
+  }
+}
 
 export class ProductionLineView
   extends View<ProductionLine>
-  implements ProductionLine {
+  implements ProductionLine
+{
   static wrap(model: ProductionLine, context: ViewContext): ProductionLineView {
     return new ProductionLineView(model, context);
   }
@@ -118,7 +126,7 @@ export class ProductionLineView
 
   get items(): Item[] {
     return this.model.items ?? DEFAULT_PRODUCTION_LINE_MODEL.items!;
-  };
+  }
 
   get itemProductivityBonus(): number {
     return (
@@ -128,16 +136,6 @@ export class ProductionLineView
     );
   }
 
-  // get extraGoods(): ExtraGoodView[] {
-  //   return (
-  //     this.model.items
-  //       ?.flatMap((item) => lookupItemInfo(item)?.extraGoods ?? [])
-  //       .map((eg) =>
-  //         ExtraGoodView.wrap(eg, { ...this.context, productionLine: this }),
-  //       ) ?? []
-  //   );
-  // }
-
   get inRangeOfLocalDepartment(): boolean {
     return (
       this.model.inRangeOfLocalDepartment ??
@@ -145,31 +143,43 @@ export class ProductionLineView
     );
   }
 
+  get inRangeOfHaciendaFertiliserWorks(): boolean {
+    return (
+      this.context.island?.region == Region.NewWorld &&
+      (this.model.inRangeOfHaciendaFertiliserWorks ?? false)
+    );
+  }
+
   get efficiency(): number {
     let efficiency = 1;
-    for (const boost of this.boosts) {
-      switch (boost) {
-        case Boost.Electricity:
-          efficiency += 1;
-          if (
-            this.inRangeOfLocalDepartment &&
-            this.context.island!.dolPolicy ==
-            DepartmentOfLaborPolicy.GalvanicGrantsAct
-          ) {
-            efficiency += 0.5;
-          }
-          break;
-        case Boost.TracktorBarn:
-          efficiency += 2;
-          break;
-        case Boost.Fertilizer:
-          efficiency += 1;
-          break;
-        case Boost.Silo:
-          efficiency += 1;
-          break;
+
+    const boostSet = new Set<Boost>(this.boosts);
+    if (
+      allowsElectricty(this.context.island?.region ?? Region.Unknown) &&
+      (boostSet.has(Boost.Electricity) ||
+        this.items.some(
+          (item) => lookupItemInfo(item)?.providesElectricity ?? false,
+        ))
+    ) {
+      efficiency += 1;
+      if (
+        this.inRangeOfLocalDepartment &&
+        this.context.island!.dolPolicy ==
+          DepartmentOfLaborPolicy.GalvanicGrantsAct
+      ) {
+        efficiency += 0.5;
       }
     }
+    if (boostSet.has(Boost.TractorBarn)) {
+      efficiency += 2;
+    }
+    if (boostSet.has(Boost.Fertiliser)) {
+      efficiency += 1;
+    }
+    if (boostSet.has(Boost.Silo)) {
+      efficiency += 1;
+    }
+
     if (this.hasTradeUnion) {
       if (
         this.inRangeOfLocalDepartment &&
@@ -182,6 +192,68 @@ export class ProductionLineView
     return efficiency;
   }
 
+  get affectedByGalvanicGrants(): boolean {
+    return (
+      this.inRangeOfLocalDepartment &&
+      this.context.island!.dolPolicy ==
+        DepartmentOfLaborPolicy.GalvanicGrantsAct
+    );
+  }
+
+  get efficiencyConstituents(): NumberConstituent[] {
+    const constituents: NumberConstituent[] = [
+      { value: 1, description: 'Base Productivity' },
+    ];
+
+    const boostSet = new Set<Boost>(this.boosts);
+    if (
+      allowsElectricty(this.context.island?.region ?? Region.Unknown) &&
+      (boostSet.has(Boost.Electricity) ||
+        this.items.some(
+          (item) => lookupItemInfo(item)?.providesElectricity ?? false,
+        ))
+    ) {
+      constituents.push({ value: 1, description: 'Electricity' });
+      if (this.affectedByGalvanicGrants) {
+        constituents.push({
+          value: 0.5,
+          description: DepartmentOfLaborPolicy.GalvanicGrantsAct,
+        });
+      }
+    }
+    if (boostSet.has(Boost.TractorBarn)) {
+      constituents.push({ value: 2, description: Boost.TractorBarn });
+    }
+    if (boostSet.has(Boost.Fertiliser)) {
+      constituents.push({ value: 1, description: Boost.Fertiliser });
+    }
+    if (boostSet.has(Boost.Silo)) {
+      constituents.push({ value: 1, description: Boost.Silo });
+    }
+
+    if (this.hasTradeUnion) {
+      if (
+        this.inRangeOfLocalDepartment &&
+        this.context.island!.dolPolicy != DepartmentOfLaborPolicy.None
+      ) {
+        constituents.push({
+          value: this.context.world!.tradeUnionBonus,
+          description: 'Palace Trade Union Bonus',
+        });
+      }
+      for (const item of this.items) {
+        const itemInfo = lookupItemInfo(item)!;
+        if ((itemInfo.productivityEffect ?? 0) > 0) {
+          constituents.push({
+            value: itemInfo.productivityEffect! / 100,
+            description: item,
+          });
+        }
+      }
+    }
+    return constituents;
+  }
+
   get buildingProcessTimeSeconds(): number {
     return (
       (lookupProductionInfo(this.building)?.processingTimeSeconds ?? 0) /
@@ -189,17 +261,93 @@ export class ProductionLineView
     );
   }
 
+  private computeExtraGoodsModifier(): number {
+    const productionInfo = lookupProductionInfo(this.building);
+    if (productionInfo?.good != this.good) {
+      return 1;
+    }
+
+    let modifier = 1;
+
+    if (this.hasTradeUnion && this.inRangeOfLocalDepartment) {
+      if (
+        improvedByLandReformAct.has(this.building) &&
+        this.context.island?.dolPolicy == DepartmentOfLaborPolicy.LandReformAct
+      ) {
+        // 1 extra good for every 2 produced.
+        modifier *= 3 / 2;
+      } else if (
+        improvedBySkilledLaborAct.has(this.building) &&
+        this.context.island?.dolPolicy ==
+          DepartmentOfLaborPolicy.SkilledLaborAct
+      ) {
+        // 1 extra good for every 3 produced
+        modifier *= 4 / 3;
+      }
+    }
+    if (this.boosts.includes(Boost.TractorBarn)) {
+      // 1 extra good for every 3 produced
+      modifier *= 4 / 3;
+    }
+    if (this.boosts.includes(Boost.Silo)) {
+      // 1 extra good for every 3 produced
+      modifier *= 4 / 3;
+    }
+    if (this.boosts.includes(Boost.Fertiliser)) {
+      // 1 extra good for every 3 produced
+      modifier *= 4 / 3;
+    }
+    return modifier;
+  }
+
+  get extraGoods(): ExtraGoodView[] {
+    const extraGoods = [];
+
+    if (this.inRangeOfHaciendaFertiliserWorks) {
+      extraGoods.push(
+        ExtraGoodView.wrap(
+          {
+            good: Good.Dung,
+            rateNumerator: 1,
+            rateDenominator: 3,
+          },
+          { productionLine: this, ...this.context },
+        ),
+      );
+    }
+
+    extraGoods.push(...this.itemExtraGoods);
+    return extraGoods;
+  }
+
+  get itemExtraGoods(): ExtraGoodView[] {
+    const extraGoods: ExtraGoodView[] = [];
+    for (const item of this.items) {
+      const itemInfo = lookupItemInfo(item);
+      for (const eg of itemInfo?.extraGoods ?? []) {
+        extraGoods.push(
+          ExtraGoodView.wrap(
+            { ...eg, source: item },
+            { productionLine: this, ...this.context },
+          ),
+        );
+      }
+    }
+    extraGoods.sort((eg1, eg2) => {
+      const goodNameCmp = eg1.good.localeCompare(eg2.good);
+      if (goodNameCmp != 0) {
+        return goodNameCmp;
+      }
+      return (
+        eg2.rateNumerator / eg2.rateDenominator -
+        eg1.rateNumerator / eg1.rateDenominator
+      );
+    });
+    return extraGoods;
+  }
+
   get goodProcessTimeSeconds(): number {
-    return (
-      this.buildingProcessTimeSeconds /
-      (this.hasTradeUnion && this.inRangeOfLocalDepartment
-        ? computeExtraGoodsModifier(
-          this.building,
-          this.good,
-          this.context.island!,
-        )
-        : 1)
-    );
+    return this.buildingProcessTimeSeconds / this.computeExtraGoodsModifier();
   }
 
   get goodsConsumedPerMinute(): number {
@@ -212,6 +360,10 @@ export class ProductionLineView
 
   get islandHasDepartmentOfLabor(): boolean {
     return this.context.island?.dolPolicy != DepartmentOfLaborPolicy.None;
+  }
+
+  get region(): Region {
+    return this.context.island?.region ?? Region.Unknown;
   }
 }
 

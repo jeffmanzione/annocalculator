@@ -6,8 +6,10 @@
   display: inline-flex;
 }
 
-.item-icon {
+.item-icon-small {
   width: 24px;
+  height: 24px;
+  margin: auto;
 }
 
 .item-icon-right-padding {
@@ -15,17 +17,11 @@
 }
 
 .item-text {
-  padding-left: 6px;
   margin: auto 0;
   min-width: 0;
   letter-spacing: -0.25px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
-::ng-deep .tooltip-style {
-  background-color: #ff5722;
-  color: white;
-  font-size: 14px;
+.item-text-left-padding {
+  padding-left: 6px;
 }
