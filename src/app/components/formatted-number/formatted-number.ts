@@ -49,7 +49,7 @@ export class FormattedNumber implements OnInit {
   constructor(@Inject(LOCALE_ID) private readonly locale: string) {}
 
   ngOnInit(): void {
-    this.format ??= this.isPercent ? '1.0-0' : '1.0-1';
+    this.format ??= this.isPercent ? '1.0-0' : '1.0-2';
   }
 
   get color(): string | undefined {

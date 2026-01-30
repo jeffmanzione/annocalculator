@@ -11,6 +11,7 @@ import {
 } from '../formatted-number/formatted-number';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { CommonModule } from '@angular/common';
+import { MatIcon } from '@angular/material/icon';
 
 export interface NumberConstituent {
   value: number;
@@ -21,7 +22,7 @@ export interface NumberConstituent {
   selector: 'composite-number',
   templateUrl: './composite-number.html',
   styleUrl: './composite-number.scss',
-  imports: [CommonModule, OverlayModule, FormattedNumber],
+  imports: [CommonModule, OverlayModule, FormattedNumber, MatIcon],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CompositeNumber {

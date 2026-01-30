@@ -1,4 +1,9 @@
-<div cdkOverlayOrigin #trigger="cdkOverlayOrigin" (mouseenter)="showTooltipAt()" (mouseleave)="hideTooltipAt()">
+<div
+  cdkOverlayOrigin
+  #trigger="cdkOverlayOrigin"
+  (mouseenter)="showTooltipAt()"
+  (mouseleave)="hideTooltipAt()"
+  class="container">
   <formatted-number
     [value]="value"
     [isPercent]="isPercent"
@@ -6,6 +11,7 @@
     [formatFontSpec]="formatFontSpec"
     [suffix]="suffix"
     [zeroOverride]="zeroOverride"></formatted-number>
+  <mat-icon>info_outlined</mat-icon>
 </div>
 <ng-template
   cdkConnectedOverlay

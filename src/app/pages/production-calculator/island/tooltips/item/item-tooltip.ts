@@ -31,7 +31,7 @@ export class ItemTooltip extends EnumTooltip<Item> {
     return this.itemInfo!.iconUrl;
   }
 
-  iconGoodUrlLookupFn(good: Good | null): string {
-    return lookupGoodIconUrl(good ?? Good.Unknown);
+  iconGoodUrlLookupFn(good: Good | null | undefined): string {
+    return lookupGoodIconUrl((good ?? Good.Unknown) || Good.Unknown);
   }
 }

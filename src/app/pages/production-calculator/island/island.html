@@ -136,12 +136,6 @@
             <formatted-number [value]="element.buildingProcessTimeSeconds" suffix="s"></formatted-number>
           </td>
         </ng-container>
-        <ng-container matColumnDef="goodProcessTimeSeconds">
-          <th mat-header-cell *matHeaderCellDef>Good Process Time</th>
-          <td mat-cell class="keep-top" *matCellDef="let element" class="computed-field">
-            <formatted-number [value]="element.goodProcessTimeSeconds" suffix="s"></formatted-number>
-          </td>
-        </ng-container>
         <ng-container matColumnDef="goodsProducedPerMinute">
           <th mat-header-cell *matHeaderCellDef>Goods per Minute</th>
           <td mat-cell class="keep-top" *matCellDef="let element" class="computed-field">
@@ -174,8 +168,8 @@
                       <td mat-cell *matCellDef="let element2">
                         <enum-row
                           [values]="!!element2.source ? [element2.source] : []"
-                          [iconUrlLookupFn]="lookupItemIconUrl"
-                          [tooltip]="itemTooltip"
+                          [iconUrlLookupFn]="extraGoodLookupIconUrlFn(element2)"
+                          [tooltip]="element2.sourceType === 'Boost' ? boostTooltip : itemTooltip"
                           placeholderText="-"></enum-row>
                       </td>
                     </ng-container>
@@ -193,12 +187,6 @@
                       <th mat-header-cell *matHeaderCellDef>D</th>
                       <td mat-cell *matCellDef="let element2" class="fraction-field">
                         <formatted-number [value]="element2.rateDenominator"></formatted-number>
-                      </td>
-                    </ng-container>
-                    <ng-container matColumnDef="processTimeSeconds">
-                      <th mat-header-cell *matHeaderCellDef>Good Process Time</th>
-                      <td mat-cell class="keep-top" *matCellDef="let element2">
-                        <formatted-number [value]="element2.processTimeSeconds" suffix="s"></formatted-number>
                       </td>
                     </ng-container>
                     <ng-container matColumnDef="producedPerMinute">
@@ -229,6 +217,6 @@
   <simple-tooltip [value]="value" [iconUrlLookupFn]="lookupGoodIconUrl"></simple-tooltip>
 </ng-template>
 <ng-template #boostTooltip let-value="value">
-  <simple-tooltip [value]="value" [iconUrlLookupFn]="lookupBoostIconUrl"></simple-tooltip>
+  <boost-tooltip [value]="value"></boost-tooltip>
 </ng-template>
 <ng-template #itemTooltip let-value="value"><item-tooltip [value]="value"></item-tooltip></ng-template>

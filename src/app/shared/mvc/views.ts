@@ -12,7 +12,8 @@ import {
   improvedBySkilledLaborAct,
   lookupItemInfo,
   lookupProductionInfo,
-  supportsElectricty as allowsElectricty,
+  regionSupportsElectricty,
+  buildingSupportsElectricity,
 } from '../game/facts';
 import {
   DEFAULT_ISLAND_MODEL,
@@ -56,11 +57,15 @@ export class ExtraGoodView extends View<ExtraGood> implements ExtraGood {
   }
 
   get good(): Good {
-    return this.model.good;
+    return this.model.good || this.context.productionLine?.good!;
   }
 
-  get source(): Item {
+  get source(): Item | Boost {
     return this.model.source ?? DEFAULT_EXTRA_GOOD_MODEL.source!;
+  }
+
+  get sourceType(): 'Item' | 'Boost' | undefined {
+    return this.model.sourceType ?? DEFAULT_EXTRA_GOOD_MODEL.sourceType;
   }
 
   get rateNumerator(): number {
@@ -78,12 +83,22 @@ export class ExtraGoodView extends View<ExtraGood> implements ExtraGood {
   }
 
   get processTimeSeconds(): number {
-    return this.context.productionLine!.buildingProcessTimeSeconds / this.rate;
+    if (this.sourceType === 'Boost') {
+      return 60 / this.model.producedPerMinute!;
+    }
+    return this.context.productionLine!.buildingProcessTimeSeconds;
+  }
+
+  get producedPerMinutePerBuilding(): number {
+    return this.sourceType === 'Boost'
+      ? this.model.producedPerMinute!
+      : (60 / this.processTimeSeconds) * this.rate;
   }
 
   get producedPerMinute(): number {
     return (
-      (this.context.productionLine!.numBuildings * 60) / this.processTimeSeconds
+      this.context.productionLine!.numBuildings *
+      this.producedPerMinutePerBuilding
     );
   }
 }
@@ -152,10 +167,10 @@ export class ProductionLineView
 
   get efficiency(): number {
     let efficiency = 1;
-
     const boostSet = new Set<Boost>(this.boosts);
     if (
-      allowsElectricty(this.context.island?.region ?? Region.Unknown) &&
+      regionSupportsElectricty(this.context.island?.region ?? Region.Unknown) &&
+      buildingSupportsElectricity(this.building) &&
       (boostSet.has(Boost.Electricity) ||
         this.items.some(
           (item) => lookupItemInfo(item)?.providesElectricity ?? false,
@@ -207,7 +222,8 @@ export class ProductionLineView
 
     const boostSet = new Set<Boost>(this.boosts);
     if (
-      allowsElectricty(this.context.island?.region ?? Region.Unknown) &&
+      regionSupportsElectricty(this.context.island?.region ?? Region.Unknown) &&
+      buildingSupportsElectricity(this.building) &&
       (boostSet.has(Boost.Electricity) ||
         this.items.some(
           (item) => lookupItemInfo(item)?.providesElectricity ?? false,
@@ -316,7 +332,29 @@ export class ProductionLineView
       );
     }
 
-    extraGoods.push(...this.itemExtraGoods);
+    extraGoods.push(...this.electricityExtraGoods, ...this.itemExtraGoods);
+    return extraGoods;
+  }
+
+  get electricityExtraGoods(): ExtraGoodView[] {
+    if (!this.boosts.includes(Boost.Electricity)) {
+      return [];
+    }
+    const productionInfo = lookupProductionInfo(this.building);
+    const extraGoods: ExtraGoodView[] = [];
+    for (const eeg of productionInfo?.electricityExtraGoods ?? []) {
+      extraGoods.push(
+        ExtraGoodView.wrap(
+          {
+            good: eeg.good,
+            source: Boost.Electricity,
+            sourceType: 'Boost',
+            producedPerMinute: 60 / eeg.processingTimeSeconds,
+          },
+          { productionLine: this, ...this.context },
+        ),
+      );
+    }
     return extraGoods;
   }
 
@@ -346,16 +384,15 @@ export class ProductionLineView
     return extraGoods;
   }
 
-  get goodProcessTimeSeconds(): number {
-    return this.buildingProcessTimeSeconds / this.computeExtraGoodsModifier();
-  }
-
   get goodsConsumedPerMinute(): number {
     return (this.numBuildings * 60) / this.buildingProcessTimeSeconds;
   }
 
   get goodsProducedPerMinute(): number {
-    return (this.numBuildings * 60) / this.goodProcessTimeSeconds;
+    return (
+      (this.numBuildings * 60) /
+      (this.buildingProcessTimeSeconds / this.computeExtraGoodsModifier())
+    );
   }
 
   get islandHasDepartmentOfLabor(): boolean {
@@ -443,7 +480,9 @@ export class IslandView extends View<Island> implements Island {
           const goods = [pl.good];
           pl.items
             ?.flatMap((item) => lookupItemInfo(item)?.extraGoods ?? [])
-            ?.forEach((eg) => goods.push(eg.good));
+            ?.forEach((eg) =>
+              goods.push(eg.good ?? this.context.productionLine?.good!),
+            );
           return goods;
         }),
       ),

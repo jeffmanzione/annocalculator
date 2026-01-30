@@ -253,7 +253,9 @@ export class SummaryPanel implements OnInit, AfterViewInit {
             island.region == Region.NewWorld ? Good.Corn : Good.Grain,
             -0.2 * pl.numBuildings,
           );
-          // TODO: Do same for fertilizer.
+        }
+        if (pl.boosts.includes(Boost.Fertiliser)) {
+          updateStats(island, Good.Fertiliser, -0.2 * pl.numBuildings);
         }
       }
     }

@@ -13,8 +13,12 @@
       <div class="item-text extra-goods-container">
         @for (eg of itemInfo!.extraGoods; track eg) {
           <div class="extra-good">
-            <img [src]="iconGoodUrlLookupFn(eg.good)" [alt]="eg.good" class="good-icon-small" />
-            <div class="extra-good-name">{{ eg.good }}: {{ eg.rateNumerator }} / {{ eg.rateDenominator }}</div>
+            @if (eg.good) {
+              <img [src]="iconGoodUrlLookupFn(eg.good)" [alt]="eg.good" class="good-icon-small" />
+            }
+            <div class="extra-good-name">
+              {{ eg.good ?? 'Extra Goods' }}: {{ eg.rateNumerator }} / {{ eg.rateDenominator }}
+            </div>
           </div>
         }
       </div>

@@ -83,6 +83,10 @@ const goodsToIconUrl = new Map<Good, string>([
     'https://static.wikia.nocookie.net/anno1800/images/3/30/Camphor_Wax.png',
   ],
   [
+    Good.Calamari,
+    'https://static.wikia.nocookie.net/anno1800/images/6/6e/Calamari.png',
+  ],
+  [
     Good.CannedFood,
     'https://static.wikia.nocookie.net/anno1800/images/c/c8/Canned_food.png',
   ],
@@ -175,6 +179,10 @@ const goodsToIconUrl = new Map<Good, string>([
     'https://static.wikia.nocookie.net/anno1800/images/f/f8/Corn.png',
   ],
   [
+    Good.Costumes,
+    'https://static.wikia.nocookie.net/anno1800/images/f/fc/Costumes.png',
+  ],
+  [
     Good.Cotton,
     'https://static.wikia.nocookie.net/anno1800/images/c/c3/Cotton.png',
   ],
@@ -195,12 +203,20 @@ const goodsToIconUrl = new Map<Good, string>([
     'https://static.wikia.nocookie.net/anno1800/images/f/fc/Dynamite.png',
   ],
   [
+    Good.ElectricCables,
+    'https://static.wikia.nocookie.net/anno1800/images/9/9b/Electric_Cables.png',
+  ],
+  [
     Good.Elevators,
     'https://static.wikia.nocookie.net/anno1800/images/d/db/Elevators.png',
   ],
   [
     Good.Ethanol,
     'https://static.wikia.nocookie.net/anno1800/images/9/95/Ethanol.png',
+  ],
+  [
+    Good.Fans,
+    'https://static.wikia.nocookie.net/anno1800/images/d/da/Fans.png',
   ],
   [
     Good.Felt,
@@ -215,8 +231,16 @@ const goodsToIconUrl = new Map<Good, string>([
     'https://static.wikia.nocookie.net/anno1800/images/d/d8/Filaments.png',
   ],
   [
+    Good.FilmReel,
+    'https://static.wikia.nocookie.net/anno1800/images/4/44/Film_Reel.png',
+  ],
+  [
     Good.Finery,
     'https://static.wikia.nocookie.net/anno1800/images/6/6e/Icon_traditional_clothing_0.png',
+  ],
+  [
+    Good.FireExtinguishers,
+    'https://static.wikia.nocookie.net/anno1800/images/b/b1/Fire_Extinguishers.png',
   ],
   [
     Good.Fish,
@@ -330,6 +354,10 @@ const goodsToIconUrl = new Map<Good, string>([
     Good.Iron,
     'https://static.wikia.nocookie.net/anno1800/images/4/45/Iron.png',
   ],
+  [
+    Good.Jalea,
+    'https://static.wikia.nocookie.net/anno1800/images/f/fc/Jalea.png',
+  ],
   [Good.Jam, 'https://static.wikia.nocookie.net/anno1800/images/f/fa/Jam.png'],
   [
     Good.Jewellery,
@@ -372,12 +400,24 @@ const goodsToIconUrl = new Map<Good, string>([
     'https://static.wikia.nocookie.net/anno1800/images/d/de/Malt.png',
   ],
   [
+    Good.Medicine,
+    'https://static.wikia.nocookie.net/anno1800/images/2/27/Medicine.png',
+  ],
+  [
+    Good.Mezcal,
+    'https://static.wikia.nocookie.net/anno1800/images/9/99/Mezcal.png',
+  ],
+  [
     Good.Milk,
     'https://static.wikia.nocookie.net/anno1800/images/9/92/Milk.png',
   ],
   [
     Good.Minerals,
     'https://static.wikia.nocookie.net/anno1800/images/1/10/Minerals.png',
+  ],
+  [
+    Good.Motor,
+    'https://static.wikia.nocookie.net/anno1800/images/0/0f/Motor.png',
   ],
   [
     Good.MudBricks,
@@ -433,6 +473,10 @@ const goodsToIconUrl = new Map<Good, string>([
     'https://static.wikia.nocookie.net/anno1800/images/7/71/Perfumes.png',
   ],
   [
+    Good.Pigments,
+    'https://static.wikia.nocookie.net/anno1800/images/c/c0/Pigments.png',
+  ],
+  [
     Good.Pigs,
     'https://static.wikia.nocookie.net/anno1800/images/e/e3/Pigs.png',
   ],
@@ -443,6 +487,10 @@ const goodsToIconUrl = new Map<Good, string>([
   [
     Good.PocketWatches,
     'https://static.wikia.nocookie.net/anno1800/images/b/be/Pocket_watch.png',
+  ],
+  [
+    Good.PoliceEquipment,
+    'https://static.wikia.nocookie.net/anno1800/images/9/96/Police_Equipment.png',
   ],
   [
     Good.Ponchos,
@@ -494,6 +542,10 @@ const goodsToIconUrl = new Map<Good, string>([
     'https://static.wikia.nocookie.net/anno1800/images/4/47/Schnapps.png',
   ],
   [
+    Good.Scooter,
+    'https://static.wikia.nocookie.net/anno1800/images/a/ac/Scooter.png',
+  ],
+  [
     Good.SeafoodStew,
     'https://static.wikia.nocookie.net/anno1800/images/9/91/Icon_wat_stew_0.png',
   ],
@@ -520,6 +572,10 @@ const goodsToIconUrl = new Map<Good, string>([
   [
     Good.Soap,
     'https://static.wikia.nocookie.net/anno1800/images/6/65/Soap.png',
+  ],
+  [
+    Good.SoccerBalls,
+    'https://static.wikia.nocookie.net/anno1800/images/9/9a/Soccer_Balls.png',
   ],
   [
     Good.Souvenirs,

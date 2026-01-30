@@ -11,10 +11,15 @@ import {
 export interface Model {}
 
 export interface ExtraGood extends Model {
-  good: Good;
+  good?: Good;
+
+  source?: Item | Boost;
+  sourceType?: 'Item' | 'Boost';
+
   rateNumerator?: number;
   rateDenominator?: number;
-  source?: Item;
+
+  producedPerMinute?: number;
 }
 
 export interface ProductionLine extends Model {

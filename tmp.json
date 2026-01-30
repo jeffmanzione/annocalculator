@@ -4,7 +4,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_normal_dressed_106_0.png",
     "rarity": "Common",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Jewellers"],
+    "targets": [
+      "Jewellers"
+    ],
     "productivityEffect": 10,
     "providesElectricity": false
   },
@@ -13,7 +15,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_normal_dressed_401_0.png",
     "rarity": "Uncommon",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Jewellers"],
+    "targets": [
+      "Jewellers"
+    ],
     "productivityEffect": 10,
     "providesElectricity": false
   },
@@ -22,7 +26,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_normal_dressed_206_0.png",
     "rarity": "Rare",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Jewellers"],
+    "targets": [
+      "Jewellers"
+    ],
     "replacementGoods": [
       {
         "from": "Gold",
@@ -37,7 +43,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_normal_dressed_201_c_0.png",
     "rarity": "Epic",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Jewellers"],
+    "targets": [
+      "Jewellers"
+    ],
     "replacementGoods": [
       {
         "from": "Gold",
@@ -52,7 +60,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_well_dressed_106_0.png",
     "rarity": "Legendary",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Jewellers"],
+    "targets": [
+      "Jewellers"
+    ],
     "extraGoods": [
       {
         "good": "Pocket Watches",
@@ -68,7 +78,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_baker_101_0.png",
     "rarity": "Common",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Bakery"],
+    "targets": [
+      "Bakery"
+    ],
     "replacementGoods": [
       {
         "from": "Flour",
@@ -83,7 +95,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_baker_202_b_0.png",
     "rarity": "Uncommon",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Bakery"],
+    "targets": [
+      "Bakery"
+    ],
     "productivityEffect": 0,
     "providesElectricity": false
   },
@@ -92,7 +106,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_baker_401_b_0.png",
     "rarity": "Rare",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Bakery"],
+    "targets": [
+      "Bakery"
+    ],
     "extraGoods": [
       {
         "good": "Chocolate",
@@ -108,7 +124,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_baker_201_0.png",
     "rarity": "Epic",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Bakery"],
+    "targets": [
+      "Bakery"
+    ],
     "productivityEffect": 40,
     "providesElectricity": false
   },
@@ -117,7 +135,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_baker_102_0.png",
     "rarity": "Legendary",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Bakery"],
+    "targets": [
+      "Bakery"
+    ],
     "extraGoods": [
       {
         "good": "Grapes",
@@ -138,7 +158,12 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_torcedor_709_0.png",
     "rarity": "Common",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Cigar Factory", "Lumberjack's Hut", "Marquetry Workshop", "Tobacco Plantation"],
+    "targets": [
+      "Cigar Factory",
+      "Lumberjack's Hut",
+      "Marquetry Workshop",
+      "Tobacco Plantation"
+    ],
     "productivityEffect": 10,
     "providesElectricity": false
   },
@@ -147,7 +172,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_torcedor_511_0.png",
     "rarity": "Uncommon",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Cigar Factory"],
+    "targets": [
+      "Cigar Factory"
+    ],
     "productivityEffect": 0,
     "providesElectricity": false
   },
@@ -156,7 +183,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_torcedor_703_0.png",
     "rarity": "Rare",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Cigar Factory"],
+    "targets": [
+      "Cigar Factory"
+    ],
     "productivityEffect": 30,
     "providesElectricity": false
   },
@@ -165,7 +194,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_teacher_805_0.png",
     "rarity": "Epic",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Cigar Factory"],
+    "targets": [
+      "Cigar Factory"
+    ],
     "replacementGoods": [
       {
         "from": "Wood Veneers",
@@ -180,7 +211,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_torcedor_512_0.png",
     "rarity": "Legendary",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Cigar Factory"],
+    "targets": [
+      "Cigar Factory"
+    ],
     "productivityEffect": 0,
     "providesElectricity": false
   },
@@ -189,7 +222,12 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_worker_406_0.png",
     "rarity": "Common",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Rum Distillery", "Lumberjack's Hut", "Sugar Cane Plantation", "Advanced Rum Distillery"],
+    "targets": [
+      "Rum Distillery",
+      "Lumberjack's Hut",
+      "Sugar Cane Plantation",
+      "Advanced Rum Distillery"
+    ],
     "productivityEffect": 10,
     "providesElectricity": false
   },
@@ -198,7 +236,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_sommelier_101_0.png",
     "rarity": "Common",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Champagne Cellar"],
+    "targets": [
+      "Champagne Cellar"
+    ],
     "productivityEffect": 0,
     "providesElectricity": false
   },
@@ -207,7 +247,10 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_well_dressed_203_0.png",
     "rarity": "Uncommon",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Rum Distillery", "Advanced Rum Distillery"],
+    "targets": [
+      "Rum Distillery",
+      "Advanced Rum Distillery"
+    ],
     "productivityEffect": 0,
     "providesElectricity": false
   },
@@ -216,7 +259,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_sommelier_201_0.png",
     "rarity": "Uncommon",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Champagne Cellar"],
+    "targets": [
+      "Champagne Cellar"
+    ],
     "productivityEffect": 20,
     "providesElectricity": false
   },
@@ -225,7 +270,11 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_sommelier_401_0.png",
     "rarity": "Rare",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Champagne Cellar", "Rum Distillery", "Advanced Rum Distillery"],
+    "targets": [
+      "Champagne Cellar",
+      "Rum Distillery",
+      "Advanced Rum Distillery"
+    ],
     "productivityEffect": 20,
     "providesElectricity": false
   },
@@ -234,7 +283,11 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_sommelier_318_0.png",
     "rarity": "Epic",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Champagne Cellar", "Rum Distillery", "Advanced Rum Distillery"],
+    "targets": [
+      "Champagne Cellar",
+      "Rum Distillery",
+      "Advanced Rum Distillery"
+    ],
     "productivityEffect": 40,
     "providesElectricity": false
   },
@@ -243,7 +296,11 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_sommelier_824_0.png",
     "rarity": "Legendary",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Champagne Cellar", "Rum Distillery", "Advanced Rum Distillery"],
+    "targets": [
+      "Champagne Cellar",
+      "Rum Distillery",
+      "Advanced Rum Distillery"
+    ],
     "productivityEffect": 50,
     "providesElectricity": false
   },
@@ -267,7 +324,11 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_mason_718_0.png",
     "rarity": "Common",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Sugar Cane Plantation", "Tobacco Plantation", "Corn Farm"],
+    "targets": [
+      "Sugar Cane Plantation",
+      "Tobacco Plantation",
+      "Corn Farm"
+    ],
     "productivityEffect": 7,
     "providesElectricity": false
   },
@@ -276,7 +337,13 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_farmer_818_0.png",
     "rarity": "Uncommon",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Sugar Cane Plantation", "Tobacco Plantation", "Corn Farm", "Herb Garden", "Orchid Farm"],
+    "targets": [
+      "Sugar Cane Plantation",
+      "Tobacco Plantation",
+      "Corn Farm",
+      "Herb Garden",
+      "Orchid Farm"
+    ],
     "productivityEffect": 12,
     "providesElectricity": false
   },
@@ -300,7 +367,11 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_farmer_201_0.png",
     "rarity": "Rare",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Sugar Cane Plantation", "Tobacco Plantation", "Corn Farm"],
+    "targets": [
+      "Sugar Cane Plantation",
+      "Tobacco Plantation",
+      "Corn Farm"
+    ],
     "extraGoods": [
       {
         "good": "Cocoa",
@@ -338,7 +409,12 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_normaldress_308_0.png",
     "rarity": "Epic",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Sugar Cane Plantation", "Tobacco Plantation", "Corn Farm", "Orchid Farm"],
+    "targets": [
+      "Sugar Cane Plantation",
+      "Tobacco Plantation",
+      "Corn Farm",
+      "Orchid Farm"
+    ],
     "extraGoods": [
       {
         "good": "Cocoa",
@@ -444,7 +520,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/icon_craftsman_common_0.png",
     "rarity": "Common",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Steelworks"],
+    "targets": [
+      "Steelworks"
+    ],
     "productivityEffect": 0,
     "providesElectricity": false
   },
@@ -453,7 +531,11 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_worker_401_0.png",
     "rarity": "Common",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Weapon Factory", "Heavy Weapons Factory", "Bomb Factory"],
+    "targets": [
+      "Weapon Factory",
+      "Heavy Weapons Factory",
+      "Bomb Factory"
+    ],
     "productivityEffect": 0,
     "providesElectricity": false
   },
@@ -462,7 +544,13 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_worker_208_0.png",
     "rarity": "Uncommon",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Steelworks", "Iron Mine", "Coal Mine", "Charcoal Kiln", "Furnace"],
+    "targets": [
+      "Steelworks",
+      "Iron Mine",
+      "Coal Mine",
+      "Charcoal Kiln",
+      "Furnace"
+    ],
     "productivityEffect": 20,
     "providesElectricity": false
   },
@@ -471,7 +559,11 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_worker_210_0.png",
     "rarity": "Uncommon",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Weapon Factory", "Heavy Weapons Factory", "Bomb Factory"],
+    "targets": [
+      "Weapon Factory",
+      "Heavy Weapons Factory",
+      "Bomb Factory"
+    ],
     "productivityEffect": 20,
     "providesElectricity": false
   },
@@ -480,7 +572,11 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_worker_203_0.png",
     "rarity": "Rare",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Steelworks", "Weapon Factory", "Heavy Weapons Factory"],
+    "targets": [
+      "Steelworks",
+      "Weapon Factory",
+      "Heavy Weapons Factory"
+    ],
     "productivityEffect": 30,
     "providesElectricity": false
   },
@@ -489,7 +585,12 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_worker_410_0.png",
     "rarity": "Epic",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Steelworks", "Weapon Factory", "Heavy Weapons Factory", "Aluminium Smelter"],
+    "targets": [
+      "Steelworks",
+      "Weapon Factory",
+      "Heavy Weapons Factory",
+      "Aluminium Smelter"
+    ],
     "productivityEffect": 40,
     "providesElectricity": false
   },
@@ -498,7 +599,11 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_well_dressed_111_0.png",
     "rarity": "Legendary",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Steelworks", "Weapon Factory", "Heavy Weapons Factory"],
+    "targets": [
+      "Steelworks",
+      "Weapon Factory",
+      "Heavy Weapons Factory"
+    ],
     "productivityEffect": 50,
     "providesElectricity": false
   },
@@ -507,7 +612,10 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_worker_104_0.png",
     "rarity": "Common",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Lumberjack's Hut", "Wanza Woodcutter"],
+    "targets": [
+      "Lumberjack's Hut",
+      "Wanza Woodcutter"
+    ],
     "productivityEffect": 10,
     "providesElectricity": false
   },
@@ -516,7 +624,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_worker_211_0.png",
     "rarity": "Common",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Charcoal Kiln"],
+    "targets": [
+      "Charcoal Kiln"
+    ],
     "productivityEffect": 10,
     "providesElectricity": false
   },
@@ -525,7 +635,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_shepherd_507_0.png",
     "rarity": "Common",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Hunting Cabin"],
+    "targets": [
+      "Hunting Cabin"
+    ],
     "productivityEffect": 10,
     "providesElectricity": false
   },
@@ -534,7 +646,10 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_farmer_201_b_0.png",
     "rarity": "Uncommon",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Lumberjack's Hut", "Wanza Woodcutter"],
+    "targets": [
+      "Lumberjack's Hut",
+      "Wanza Woodcutter"
+    ],
     "productivityEffect": 0,
     "providesElectricity": false
   },
@@ -543,7 +658,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_worker_404_0.png",
     "rarity": "Uncommon",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Charcoal Kiln"],
+    "targets": [
+      "Charcoal Kiln"
+    ],
     "productivityEffect": 0,
     "providesElectricity": false
   },
@@ -552,7 +669,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_shepherd_514_0.png",
     "rarity": "Uncommon",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Hunting Cabin"],
+    "targets": [
+      "Hunting Cabin"
+    ],
     "productivityEffect": 0,
     "providesElectricity": false
   },
@@ -561,7 +680,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_explorer_716_0.png",
     "rarity": "Rare",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Charcoal Kiln"],
+    "targets": [
+      "Charcoal Kiln"
+    ],
     "extraGoods": [
       {
         "good": "Caoutchouc",
@@ -577,7 +698,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/icon_hunter_native_0.png",
     "rarity": "Rare",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Hunting Cabin"],
+    "targets": [
+      "Hunting Cabin"
+    ],
     "extraGoods": [
       {
         "good": "Wool",
@@ -593,7 +716,11 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_forester_401_0.png",
     "rarity": "Epic",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Lumberjack's Hut", "Wanza Woodcutter", "Charcoal Kiln"],
+    "targets": [
+      "Lumberjack's Hut",
+      "Wanza Woodcutter",
+      "Charcoal Kiln"
+    ],
     "extraGoods": [
       {
         "good": "Cotton",
@@ -609,7 +736,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/icon_hunter_common_0.png",
     "rarity": "Epic",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Hunting Cabin"],
+    "targets": [
+      "Hunting Cabin"
+    ],
     "extraGoods": [
       {
         "good": "Beef",
@@ -625,7 +754,13 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_hunter_300_0.png",
     "rarity": "Legendary",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Lumberjack's Hut", "Wanza Woodcutter", "Charcoal Kiln", "Hunting Cabin", "Industrial Oil Press"],
+    "targets": [
+      "Lumberjack's Hut",
+      "Wanza Woodcutter",
+      "Charcoal Kiln",
+      "Hunting Cabin",
+      "Industrial Oil Press"
+    ],
     "productivityEffect": 50,
     "providesElectricity": false
   },
@@ -634,7 +769,10 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_farmer_204_0.png",
     "rarity": "Common",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Potato Farm", "Hop Farm"],
+    "targets": [
+      "Potato Farm",
+      "Hop Farm"
+    ],
     "productivityEffect": 10,
     "providesElectricity": false
   },
@@ -643,7 +781,10 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_worker_405_0.png",
     "rarity": "Common",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Grain Farm", "Red Pepper Farm"],
+    "targets": [
+      "Grain Farm",
+      "Red Pepper Farm"
+    ],
     "productivityEffect": 10,
     "providesElectricity": false
   },
@@ -652,7 +793,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_farmer_402_0.png",
     "rarity": "Common",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Vineyard"],
+    "targets": [
+      "Vineyard"
+    ],
     "productivityEffect": 10,
     "providesElectricity": false
   },
@@ -661,7 +804,10 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_worker_106_0.png",
     "rarity": "Uncommon",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Potato Farm", "Hop Farm"],
+    "targets": [
+      "Potato Farm",
+      "Hop Farm"
+    ],
     "productivityEffect": 0,
     "providesElectricity": false
   },
@@ -670,7 +816,10 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_worker_416_0.png",
     "rarity": "Uncommon",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Grain Farm", "Red Pepper Farm"],
+    "targets": [
+      "Grain Farm",
+      "Red Pepper Farm"
+    ],
     "productivityEffect": 0,
     "providesElectricity": false
   },
@@ -679,7 +828,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_farmer_101_0.png",
     "rarity": "Uncommon",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Vineyard"],
+    "targets": [
+      "Vineyard"
+    ],
     "productivityEffect": 0,
     "providesElectricity": false
   },
@@ -688,7 +839,10 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_farmer_313_0.png",
     "rarity": "Rare",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Potato Farm", "Hop Farm"],
+    "targets": [
+      "Potato Farm",
+      "Hop Farm"
+    ],
     "productivityEffect": 50,
     "providesElectricity": false
   },
@@ -697,7 +851,11 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_farmer_104_0.png",
     "rarity": "Rare",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Grain Farm", "Red Pepper Farm", "Vineyard"],
+    "targets": [
+      "Grain Farm",
+      "Red Pepper Farm",
+      "Vineyard"
+    ],
     "productivityEffect": 50,
     "providesElectricity": false
   },
@@ -706,7 +864,10 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_farmer_302_0.png",
     "rarity": "Epic",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Potato Farm", "Hop Farm"],
+    "targets": [
+      "Potato Farm",
+      "Hop Farm"
+    ],
     "extraGoods": [
       {
         "good": "Schnapps",
@@ -722,7 +883,11 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_normal_dressed_105_0.png",
     "rarity": "Epic",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Grain Farm", "Red Pepper Farm", "Vineyard"],
+    "targets": [
+      "Grain Farm",
+      "Red Pepper Farm",
+      "Vineyard"
+    ],
     "extraGoods": [
       {
         "good": "Champagne",
@@ -738,7 +903,13 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_well_dressed_107_0.png",
     "rarity": "Legendary",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Grain Farm", "Hop Farm", "Potato Farm", "Vineyard", "Red Pepper Farm"],
+    "targets": [
+      "Grain Farm",
+      "Hop Farm",
+      "Potato Farm",
+      "Vineyard",
+      "Red Pepper Farm"
+    ],
     "productivityEffect": 70,
     "providesElectricity": false
   },
@@ -764,7 +935,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_miner_102_0.png",
     "rarity": "Common",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Oil Refinery"],
+    "targets": [
+      "Oil Refinery"
+    ],
     "productivityEffect": 0,
     "providesElectricity": false
   },
@@ -790,7 +963,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_worker_411_0.png",
     "rarity": "Uncommon",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Oil Refinery"],
+    "targets": [
+      "Oil Refinery"
+    ],
     "productivityEffect": 20,
     "providesElectricity": false
   },
@@ -862,7 +1037,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_worker_401_0.png",
     "rarity": "Common",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Spectacle Factory"],
+    "targets": [
+      "Spectacle Factory"
+    ],
     "productivityEffect": 0,
     "providesElectricity": false
   },
@@ -871,7 +1048,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_normal_dressed_102_0.png",
     "rarity": "Uncommon",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Spectacle Factory"],
+    "targets": [
+      "Spectacle Factory"
+    ],
     "productivityEffect": 0,
     "providesElectricity": false
   },
@@ -880,7 +1059,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_well_dressed_408_0.png",
     "rarity": "Rare",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Spectacle Factory"],
+    "targets": [
+      "Spectacle Factory"
+    ],
     "productivityEffect": 30,
     "providesElectricity": false
   },
@@ -889,7 +1070,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_travelagent_723_0.png",
     "rarity": "Epic",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Spectacle Factory"],
+    "targets": [
+      "Spectacle Factory"
+    ],
     "extraGoods": [
       {
         "good": "Glass",
@@ -905,7 +1088,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_well_dressed_206_0.png",
     "rarity": "Legendary",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Spectacle Factory"],
+    "targets": [
+      "Spectacle Factory"
+    ],
     "extraGoods": [
       {
         "good": "Pocket Watches",
@@ -927,7 +1112,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_worker_209_0.png",
     "rarity": "Common",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Soap Factory"],
+    "targets": [
+      "Soap Factory"
+    ],
     "productivityEffect": 0,
     "providesElectricity": false
   },
@@ -936,7 +1123,11 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_bartender_314_0.png",
     "rarity": "Uncommon",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Soap Factory", "Pig Farm", "Rendering Works"],
+    "targets": [
+      "Soap Factory",
+      "Pig Farm",
+      "Rendering Works"
+    ],
     "productivityEffect": 20,
     "providesElectricity": false
   },
@@ -945,7 +1136,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_grocer724_0.png",
     "rarity": "Rare",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Soap Factory"],
+    "targets": [
+      "Soap Factory"
+    ],
     "productivityEffect": 30,
     "providesElectricity": false
   },
@@ -954,7 +1147,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_worker_418_0.png",
     "rarity": "Epic",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Soap Factory"],
+    "targets": [
+      "Soap Factory"
+    ],
     "replacementGoods": [
       {
         "from": "Tallow",
@@ -969,7 +1164,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_well_dressed_206_0.png",
     "rarity": "Legendary",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Soap Factory"],
+    "targets": [
+      "Soap Factory"
+    ],
     "extraGoods": [
       {
         "good": "Dynamite",
@@ -985,7 +1182,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_worker_106_0.png",
     "rarity": "Common",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Clockmakers"],
+    "targets": [
+      "Clockmakers"
+    ],
     "productivityEffect": 0,
     "providesElectricity": false
   },
@@ -994,7 +1193,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_worker_202_0.png",
     "rarity": "Uncommon",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Clockmakers"],
+    "targets": [
+      "Clockmakers"
+    ],
     "productivityEffect": 0,
     "providesElectricity": false
   },
@@ -1003,7 +1204,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_worker_407_0.png",
     "rarity": "Rare",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Clockmakers"],
+    "targets": [
+      "Clockmakers"
+    ],
     "productivityEffect": 30,
     "providesElectricity": false
   },
@@ -1012,7 +1215,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_well_dressed_407_0.png",
     "rarity": "Epic",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Clockmakers"],
+    "targets": [
+      "Clockmakers"
+    ],
     "replacementGoods": [
       {
         "from": "Gold",
@@ -1027,7 +1232,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_well_dressed_108_0.png",
     "rarity": "Legendary",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Clockmakers"],
+    "targets": [
+      "Clockmakers"
+    ],
     "extraGoods": [
       {
         "good": "Jewellery",
@@ -1043,7 +1250,12 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_worker_413_0.png",
     "rarity": "Common",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Framework Knitters", "Sheep Farm", "Linen Mill", "Embroiderer"],
+    "targets": [
+      "Framework Knitters",
+      "Sheep Farm",
+      "Linen Mill",
+      "Embroiderer"
+    ],
     "productivityEffect": 10,
     "providesElectricity": false
   },
@@ -1052,7 +1264,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_worker_204_0.png",
     "rarity": "Common",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Fur Dealer"],
+    "targets": [
+      "Fur Dealer"
+    ],
     "productivityEffect": 10,
     "providesElectricity": false
   },
@@ -1061,7 +1275,12 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_worker_329_0.png",
     "rarity": "Uncommon",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Framework Knitters", "Embroiderer", "Tailor's Shop", "Costume Shop"],
+    "targets": [
+      "Framework Knitters",
+      "Embroiderer",
+      "Tailor's Shop",
+      "Costume Shop"
+    ],
     "productivityEffect": 0,
     "providesElectricity": false
   },
@@ -1070,7 +1289,11 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_worker_325_0.png",
     "rarity": "Uncommon",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Fur Dealer", "Tailor's Shop", "Costume Shop"],
+    "targets": [
+      "Fur Dealer",
+      "Tailor's Shop",
+      "Costume Shop"
+    ],
     "productivityEffect": 0,
     "providesElectricity": false
   },
@@ -1079,7 +1302,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_normaldress_304_0.png",
     "rarity": "Rare",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Framework Knitters"],
+    "targets": [
+      "Framework Knitters"
+    ],
     "extraGoods": [
       {
         "good": "Sails",
@@ -1095,7 +1320,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_well_dressed_409_0.png",
     "rarity": "Rare",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Fur Dealer"],
+    "targets": [
+      "Fur Dealer"
+    ],
     "replacementGoods": [
       {
         "from": "Cotton Fabric",
@@ -1110,7 +1337,11 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_well_dressed_401_0.png",
     "rarity": "Epic",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Framework Knitters", "Fur Dealer", "Tailor's Shop"],
+    "targets": [
+      "Framework Knitters",
+      "Fur Dealer",
+      "Tailor's Shop"
+    ],
     "extraGoods": [
       {
         "good": "Ponchos",
@@ -1126,7 +1357,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/icon_boris_franke_0.png",
     "rarity": "Epic",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Fur Dealer"],
+    "targets": [
+      "Fur Dealer"
+    ],
     "extraGoods": [
       {
         "good": "Ponchos",
@@ -1161,7 +1394,11 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_normaldress_810_0.png",
     "rarity": "Legendary",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Framework Knitters", "Fur Dealer", "Costume Shop"],
+    "targets": [
+      "Framework Knitters",
+      "Fur Dealer",
+      "Costume Shop"
+    ],
     "extraGoods": [
       {
         "good": "Ponchos",
@@ -1181,7 +1418,10 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_worker_604_0.png",
     "rarity": "Common",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Poncho Darner", "Alpaca Farm"],
+    "targets": [
+      "Poncho Darner",
+      "Alpaca Farm"
+    ],
     "productivityEffect": 10,
     "providesElectricity": false
   },
@@ -1190,7 +1430,12 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_carpenter_721_0.png",
     "rarity": "Common",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Alpaca Farm", "Cotton Plantation", "Cotton Mill", "Felt Producer"],
+    "targets": [
+      "Alpaca Farm",
+      "Cotton Plantation",
+      "Cotton Mill",
+      "Felt Producer"
+    ],
     "productivityEffect": 10,
     "providesElectricity": false
   },
@@ -1199,7 +1444,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_worker_821_0.png",
     "rarity": "Uncommon",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Poncho Darner"],
+    "targets": [
+      "Poncho Darner"
+    ],
     "productivityEffect": 0,
     "providesElectricity": false
   },
@@ -1217,7 +1464,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_normal_dressed_601_0.png",
     "rarity": "Rare",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Poncho Darner"],
+    "targets": [
+      "Poncho Darner"
+    ],
     "extraGoods": [
       {
         "good": "Sails",
@@ -1248,7 +1497,11 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_well_dressed_602_0.png",
     "rarity": "Epic",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Poncho Darner", "Bootmakers", "Costume Shop"],
+    "targets": [
+      "Poncho Darner",
+      "Bootmakers",
+      "Costume Shop"
+    ],
     "extraGoods": [
       {
         "good": "Work Clothes",
@@ -1264,7 +1517,10 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_teacher_515_0.png",
     "rarity": "Legendary",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Poncho Darner", "Costume Shop"],
+    "targets": [
+      "Poncho Darner",
+      "Costume Shop"
+    ],
     "extraGoods": [
       {
         "good": "Work Clothes",
@@ -1285,7 +1541,12 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_worker_821_0.png",
     "rarity": "Common",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Chocolate Factory", "Cocoa Plantation", "Sugar Cane Plantation", "Sugar Refinery"],
+    "targets": [
+      "Chocolate Factory",
+      "Cocoa Plantation",
+      "Sugar Cane Plantation",
+      "Sugar Refinery"
+    ],
     "productivityEffect": 10,
     "providesElectricity": false
   },
@@ -1294,7 +1555,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_farmer_818_0.png",
     "rarity": "Common",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Fried Plantain Kitchen"],
+    "targets": [
+      "Fried Plantain Kitchen"
+    ],
     "productivityEffect": 0,
     "providesElectricity": false
   },
@@ -1303,7 +1566,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_baker_101_0.png",
     "rarity": "Uncommon",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Chocolate Factory"],
+    "targets": [
+      "Chocolate Factory"
+    ],
     "productivityEffect": 0,
     "providesElectricity": false
   },
@@ -1312,7 +1577,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_blacksmith_317_0.png",
     "rarity": "Uncommon",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Fried Plantain Kitchen"],
+    "targets": [
+      "Fried Plantain Kitchen"
+    ],
     "productivityEffect": 20,
     "providesElectricity": false
   },
@@ -1321,7 +1588,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_baker_202_b_0.png",
     "rarity": "Rare",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Chocolate Factory"],
+    "targets": [
+      "Chocolate Factory"
+    ],
     "extraGoods": [
       {
         "good": "Coffee",
@@ -1343,7 +1612,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_baker_201_0.png",
     "rarity": "Rare",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Fried Plantain Kitchen"],
+    "targets": [
+      "Fried Plantain Kitchen"
+    ],
     "extraGoods": [
       {
         "good": "Chocolate",
@@ -1365,7 +1636,11 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_baker_401_0.png",
     "rarity": "Epic",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Chocolate Factory", "Fried Plantain Kitchen", "Ice Cream Factory"],
+    "targets": [
+      "Chocolate Factory",
+      "Fried Plantain Kitchen",
+      "Ice Cream Factory"
+    ],
     "extraGoods": [
       {
         "good": "Sugar",
@@ -1381,7 +1656,11 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_baker_102_0.png",
     "rarity": "Legendary",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Chocolate Factory", "Fried Plantain Kitchen", "Ice Cream Factory"],
+    "targets": [
+      "Chocolate Factory",
+      "Fried Plantain Kitchen",
+      "Ice Cream Factory"
+    ],
     "extraGoods": [
       {
         "good": "Sugar",
@@ -1402,7 +1681,10 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_worker_104_0.png",
     "rarity": "Common",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Light Bulb Factory", "Cable Factory"],
+    "targets": [
+      "Light Bulb Factory",
+      "Cable Factory"
+    ],
     "productivityEffect": 0,
     "providesElectricity": false
   },
@@ -1411,7 +1693,11 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_worker_102_b_0.png",
     "rarity": "Common",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Gramophone Factory", "Fan Factory", "Motor Assembly Plant"],
+    "targets": [
+      "Gramophone Factory",
+      "Fan Factory",
+      "Motor Assembly Plant"
+    ],
     "productivityEffect": 0,
     "providesElectricity": false
   },
@@ -1429,7 +1715,10 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_mason_718_0.png",
     "rarity": "Uncommon",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Light Bulb Factory", "Motor Assembly Plant"],
+    "targets": [
+      "Light Bulb Factory",
+      "Motor Assembly Plant"
+    ],
     "productivityEffect": 20,
     "providesElectricity": false
   },
@@ -1438,7 +1727,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_worker_103_0.png",
     "rarity": "Uncommon",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Gramophone Factory"],
+    "targets": [
+      "Gramophone Factory"
+    ],
     "productivityEffect": 0,
     "providesElectricity": false
   },
@@ -1463,7 +1754,10 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_normal_dressed_401_0.png",
     "rarity": "Rare",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Light Bulb Factory", "Gramophone Factory"],
+    "targets": [
+      "Light Bulb Factory",
+      "Gramophone Factory"
+    ],
     "extraGoods": [
       {
         "good": "Filaments",
@@ -1495,7 +1789,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_normal_dressed_202_0.png",
     "rarity": "Epic",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Gramophone Factory"],
+    "targets": [
+      "Gramophone Factory"
+    ],
     "replacementGoods": [
       {
         "from": "Wood Veneers",
@@ -1519,7 +1815,12 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_normal_dressed_102_0.png",
     "rarity": "Legendary",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Light Bulb Factory", "Gramophone Factory", "Chemical Plant: Film Reels", "Fan Factory"],
+    "targets": [
+      "Light Bulb Factory",
+      "Gramophone Factory",
+      "Chemical Plant: Film Reels",
+      "Fan Factory"
+    ],
     "extraGoods": [
       {
         "good": "Pocket Watches",
@@ -1699,7 +2000,10 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_farmer_601_0.png",
     "rarity": "Common",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Coffee Roaster", "Advanced Coffee Roaster"],
+    "targets": [
+      "Coffee Roaster",
+      "Advanced Coffee Roaster"
+    ],
     "productivityEffect": 0,
     "providesElectricity": false
   },
@@ -1708,7 +2012,10 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_worker_203_0.png",
     "rarity": "Uncommon",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Coffee Roaster", "Advanced Coffee Roaster"],
+    "targets": [
+      "Coffee Roaster",
+      "Advanced Coffee Roaster"
+    ],
     "productivityEffect": 0,
     "providesElectricity": false
   },
@@ -1717,7 +2024,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_normaldress_815_0.png",
     "rarity": "Rare",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Coffee Roaster"],
+    "targets": [
+      "Coffee Roaster"
+    ],
     "productivityEffect": 30,
     "providesElectricity": false
   },
@@ -1726,7 +2035,10 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_welldress_812_0.png",
     "rarity": "Epic",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Coffee Roaster", "Advanced Coffee Roaster"],
+    "targets": [
+      "Coffee Roaster",
+      "Advanced Coffee Roaster"
+    ],
     "extraGoods": [
       {
         "good": "Chocolate",
@@ -1742,7 +2054,10 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_curator_702_0.png",
     "rarity": "Legendary",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Coffee Roaster", "Advanced Coffee Roaster"],
+    "targets": [
+      "Coffee Roaster",
+      "Advanced Coffee Roaster"
+    ],
     "extraGoods": [
       {
         "good": "Coffee Beans",
@@ -1758,7 +2073,14 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_worker_417_0.png",
     "rarity": "Common",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Schnapps Distillery", "Brewery", "Potato Farm", "Hop Farm", "Grain Farm", "Malthouse"],
+    "targets": [
+      "Schnapps Distillery",
+      "Brewery",
+      "Potato Farm",
+      "Hop Farm",
+      "Grain Farm",
+      "Malthouse"
+    ],
     "productivityEffect": 10,
     "providesElectricity": false
   },
@@ -1767,7 +2089,11 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_worker_108_0.png",
     "rarity": "Uncommon",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Schnapps Distillery", "Brewery", "Mezcal Bar"],
+    "targets": [
+      "Schnapps Distillery",
+      "Brewery",
+      "Mezcal Bar"
+    ],
     "productivityEffect": 0,
     "providesElectricity": false
   },
@@ -1776,7 +2102,10 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_well_dressed_203_0.png",
     "rarity": "Rare",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Schnapps Distillery", "Brewery"],
+    "targets": [
+      "Schnapps Distillery",
+      "Brewery"
+    ],
     "productivityEffect": 0,
     "providesElectricity": false
   },
@@ -1785,7 +2114,10 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_normal_dressed_201_c_0.png",
     "rarity": "Epic",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Schnapps Distillery", "Brewery"],
+    "targets": [
+      "Schnapps Distillery",
+      "Brewery"
+    ],
     "productivityEffect": 0,
     "providesElectricity": true
   },
@@ -1794,7 +2126,10 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/icon_priest_uncommon_0.png",
     "rarity": "Legendary",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Schnapps Distillery", "Brewery"],
+    "targets": [
+      "Schnapps Distillery",
+      "Brewery"
+    ],
     "extraGoods": [
       {
         "good": "Rum",
@@ -1810,7 +2145,12 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_worker_416_0.png",
     "rarity": "Common",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Tortilla Maker", "Cattle Farm (Old World)", "Cattle Farm (New World)", "Corn Farm"],
+    "targets": [
+      "Tortilla Maker",
+      "Cattle Farm (Old World)",
+      "Cattle Farm (New World)",
+      "Corn Farm"
+    ],
     "productivityEffect": 10,
     "providesElectricity": false
   },
@@ -1819,7 +2159,10 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_bartender_813_0.png",
     "rarity": "Uncommon",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Tortilla Maker", "Jalea Kitchen"],
+    "targets": [
+      "Tortilla Maker",
+      "Jalea Kitchen"
+    ],
     "productivityEffect": 0,
     "providesElectricity": false
   },
@@ -1828,7 +2171,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_baker_202_b_0.png",
     "rarity": "Rare",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Tortilla Maker"],
+    "targets": [
+      "Tortilla Maker"
+    ],
     "replacementGoods": [
       {
         "from": "Beef",
@@ -1843,7 +2188,10 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_farmer_602_0.png",
     "rarity": "Epic",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Tortilla Maker", "Jalea Kitchen"],
+    "targets": [
+      "Tortilla Maker",
+      "Jalea Kitchen"
+    ],
     "productivityEffect": 0,
     "providesElectricity": false
   },
@@ -1852,7 +2200,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_entertainer_508_0.png",
     "rarity": "Legendary",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Tortilla Maker"],
+    "targets": [
+      "Tortilla Maker"
+    ],
     "extraGoods": [
       {
         "good": "Fried Plantains",
@@ -1874,7 +2224,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_worker_101_0.png",
     "rarity": "Common",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Slaughterhouse"],
+    "targets": [
+      "Slaughterhouse"
+    ],
     "productivityEffect": 0,
     "providesElectricity": false
   },
@@ -1883,7 +2235,10 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_worker_103_0.png",
     "rarity": "Uncommon",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Slaughterhouse", "Pig Farm"],
+    "targets": [
+      "Slaughterhouse",
+      "Pig Farm"
+    ],
     "productivityEffect": 20,
     "providesElectricity": false
   },
@@ -1892,7 +2247,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_baker_101_0.png",
     "rarity": "Rare",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Slaughterhouse"],
+    "targets": [
+      "Slaughterhouse"
+    ],
     "extraGoods": [
       {
         "good": "Tallow",
@@ -1908,7 +2265,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_baker_402_0.png",
     "rarity": "Epic",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Slaughterhouse"],
+    "targets": [
+      "Slaughterhouse"
+    ],
     "extraGoods": [
       {
         "good": "Tallow",
@@ -1924,7 +2283,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_baker_102_0.png",
     "rarity": "Legendary",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Slaughterhouse"],
+    "targets": [
+      "Slaughterhouse"
+    ],
     "extraGoods": [
       {
         "good": "Goulash",
@@ -1946,7 +2307,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_worker_417_0.png",
     "rarity": "Common",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Cannery"],
+    "targets": [
+      "Cannery"
+    ],
     "productivityEffect": 0,
     "providesElectricity": false
   },
@@ -1971,7 +2334,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_baker_401_c_0.png",
     "rarity": "Rare",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Cannery"],
+    "targets": [
+      "Cannery"
+    ],
     "productivityEffect": 30,
     "providesElectricity": false
   },
@@ -1980,7 +2345,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_baker_201_0.png",
     "rarity": "Epic",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Cannery"],
+    "targets": [
+      "Cannery"
+    ],
     "extraGoods": [
       {
         "good": "Sausages",
@@ -2002,7 +2369,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_well_dressed_401_0.png",
     "rarity": "Legendary",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Cannery"],
+    "targets": [
+      "Cannery"
+    ],
     "extraGoods": [
       {
         "good": "Tortillas",
@@ -2024,7 +2393,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_worker_329_0.png",
     "rarity": "Common",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Artisanal Kitchen"],
+    "targets": [
+      "Artisanal Kitchen"
+    ],
     "productivityEffect": 0,
     "providesElectricity": false
   },
@@ -2033,7 +2404,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_bartender_314_0.png",
     "rarity": "Uncommon",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Artisanal Kitchen"],
+    "targets": [
+      "Artisanal Kitchen"
+    ],
     "productivityEffect": 0,
     "providesElectricity": false
   },
@@ -2042,7 +2415,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_baker_401_0.png",
     "rarity": "Rare",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Artisanal Kitchen"],
+    "targets": [
+      "Artisanal Kitchen"
+    ],
     "replacementGoods": [
       {
         "from": "Beef",
@@ -2057,7 +2432,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_normal_dressed_401_0.png",
     "rarity": "Epic",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Artisanal Kitchen"],
+    "targets": [
+      "Artisanal Kitchen"
+    ],
     "productivityEffect": 40,
     "providesElectricity": false
   },
@@ -2066,7 +2443,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_well_dressed_201_0.png",
     "rarity": "Legendary",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Artisanal Kitchen"],
+    "targets": [
+      "Artisanal Kitchen"
+    ],
     "extraGoods": [
       {
         "good": "Sausages",
@@ -2088,7 +2467,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_worker_102_b_0.png",
     "rarity": "Common",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Bicycle Factory"],
+    "targets": [
+      "Bicycle Factory"
+    ],
     "productivityEffect": 0,
     "providesElectricity": false
   },
@@ -2097,7 +2478,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_worker_104_0.png",
     "rarity": "Common",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Cab Assembly Line"],
+    "targets": [
+      "Cab Assembly Line"
+    ],
     "productivityEffect": 0,
     "providesElectricity": false
   },
@@ -2106,7 +2489,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_worker_401_0.png",
     "rarity": "Common",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Sewing Machine Factory"],
+    "targets": [
+      "Sewing Machine Factory"
+    ],
     "productivityEffect": 0,
     "providesElectricity": false
   },
@@ -2115,7 +2500,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_worker_404_0.png",
     "rarity": "Uncommon",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Bicycle Factory"],
+    "targets": [
+      "Bicycle Factory"
+    ],
     "productivityEffect": 20,
     "providesElectricity": false
   },
@@ -2124,7 +2511,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_worker_106_0.png",
     "rarity": "Uncommon",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Cab Assembly Line"],
+    "targets": [
+      "Cab Assembly Line"
+    ],
     "productivityEffect": 20,
     "providesElectricity": false
   },
@@ -2133,7 +2522,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_worker_105_0.png",
     "rarity": "Uncommon",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Sewing Machine Factory"],
+    "targets": [
+      "Sewing Machine Factory"
+    ],
     "productivityEffect": 20,
     "providesElectricity": false
   },
@@ -2142,7 +2533,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_worker_206_0.png",
     "rarity": "Rare",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Cab Assembly Line"],
+    "targets": [
+      "Cab Assembly Line"
+    ],
     "extraGoods": [
       {
         "good": "Penny Farthings",
@@ -2158,7 +2551,10 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_normal_dressed_401_0.png",
     "rarity": "Rare",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Bicycle Factory", "Sewing Machine Factory"],
+    "targets": [
+      "Bicycle Factory",
+      "Sewing Machine Factory"
+    ],
     "productivityEffect": 30,
     "providesElectricity": false
   },
@@ -2167,7 +2563,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_well_dressed_406_0.png",
     "rarity": "Epic",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Cab Assembly Line"],
+    "targets": [
+      "Cab Assembly Line"
+    ],
     "extraGoods": [
       {
         "good": "Light Bulbs",
@@ -2189,7 +2587,10 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_normal_dressed_202_0.png",
     "rarity": "Epic",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Bicycle Factory", "Sewing Machine Factory"],
+    "targets": [
+      "Bicycle Factory",
+      "Sewing Machine Factory"
+    ],
     "extraGoods": [
       {
         "good": "Pocket Watches",
@@ -2244,7 +2645,13 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_carpenter_721_0.png",
     "rarity": "Common",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Sawmill", "Window Makers", "Coachmakers", "Marquetry Workshop", "Gramophone Factory"],
+    "targets": [
+      "Sawmill",
+      "Window Makers",
+      "Coachmakers",
+      "Marquetry Workshop",
+      "Gramophone Factory"
+    ],
     "extraGoods": [
       {
         "good": "Wood",
@@ -2260,7 +2667,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_carpenter_722_0.png",
     "rarity": "Common",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Window Makers"],
+    "targets": [
+      "Window Makers"
+    ],
     "productivityEffect": 10,
     "providesElectricity": false
   },
@@ -2303,7 +2712,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_worker_204_0.png",
     "rarity": "Uncommon",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Window Makers"],
+    "targets": [
+      "Window Makers"
+    ],
     "replacementGoods": [
       {
         "from": "Glass",
@@ -2318,7 +2729,13 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_worker_106_0.png",
     "rarity": "Rare",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Sawmill", "Window Makers", "Coachmakers", "Marquetry Workshop", "Gramophone Factory"],
+    "targets": [
+      "Sawmill",
+      "Window Makers",
+      "Coachmakers",
+      "Marquetry Workshop",
+      "Gramophone Factory"
+    ],
     "productivityEffect": 30,
     "providesElectricity": false
   },
@@ -2327,7 +2744,13 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_worker_202_0.png",
     "rarity": "Epic",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Sawmill", "Window Makers", "Coachmakers", "Marquetry Workshop", "Gramophone Factory"],
+    "targets": [
+      "Sawmill",
+      "Window Makers",
+      "Coachmakers",
+      "Marquetry Workshop",
+      "Gramophone Factory"
+    ],
     "extraGoods": [
       {
         "good": "Pearls",
@@ -2343,7 +2766,13 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_well_dressed_107_0.png",
     "rarity": "Legendary",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Sawmill", "Window Makers", "Coachmakers", "Marquetry Workshop", "Gramophone Factory"],
+    "targets": [
+      "Sawmill",
+      "Window Makers",
+      "Coachmakers",
+      "Marquetry Workshop",
+      "Gramophone Factory"
+    ],
     "extraGoods": [
       {
         "good": "Wood Veneers",
@@ -2359,7 +2788,11 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_mason_718_0.png",
     "rarity": "Common",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Brick Factory", "Brick Dry-House", "Clay Pit"],
+    "targets": [
+      "Brick Factory",
+      "Brick Dry-House",
+      "Clay Pit"
+    ],
     "productivityEffect": 10,
     "providesElectricity": false
   },
@@ -2368,7 +2801,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_worker_415_0.png",
     "rarity": "Common",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Concrete Factory"],
+    "targets": [
+      "Concrete Factory"
+    ],
     "productivityEffect": 0,
     "providesElectricity": false
   },
@@ -2377,7 +2812,10 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_worker_603_0.png",
     "rarity": "Uncommon",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Brick Factory", "Brick Dry-House"],
+    "targets": [
+      "Brick Factory",
+      "Brick Dry-House"
+    ],
     "productivityEffect": 0,
     "providesElectricity": false
   },
@@ -2386,7 +2824,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_worker_205_0.png",
     "rarity": "Uncommon",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Concrete Factory"],
+    "targets": [
+      "Concrete Factory"
+    ],
     "replacementGoods": [
       {
         "from": "Cement",
@@ -2401,7 +2841,11 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_worker_109_0.png",
     "rarity": "Rare",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Brick Factory", "Brick Dry-House", "Concrete Factory"],
+    "targets": [
+      "Brick Factory",
+      "Brick Dry-House",
+      "Concrete Factory"
+    ],
     "extraGoods": [
       {
         "good": "Steel Beams",
@@ -2417,7 +2861,11 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_normal_dressed_106_0.png",
     "rarity": "Epic",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Brick Factory", "Brick Dry-House", "Concrete Factory"],
+    "targets": [
+      "Brick Factory",
+      "Brick Dry-House",
+      "Concrete Factory"
+    ],
     "productivityEffect": 40,
     "providesElectricity": true
   },
@@ -2426,7 +2874,10 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_well_dressed_103_0.png",
     "rarity": "Legendary",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Brick Factory", "Concrete Factory"],
+    "targets": [
+      "Brick Factory",
+      "Concrete Factory"
+    ],
     "extraGoods": [
       {
         "good": "Wood Veneers",
@@ -2546,7 +2997,11 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_carpenter_721_0.png",
     "rarity": "Common",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Sand Mine", "Saltpetre Works", "Bauxite Mine"],
+    "targets": [
+      "Sand Mine",
+      "Saltpetre Works",
+      "Bauxite Mine"
+    ],
     "productivityEffect": 10,
     "providesElectricity": false
   },
@@ -2555,7 +3010,10 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_worker_413_0.png",
     "rarity": "Common",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Clay Pit", "Bauxite Mine"],
+    "targets": [
+      "Clay Pit",
+      "Bauxite Mine"
+    ],
     "productivityEffect": 10,
     "providesElectricity": false
   },
@@ -2564,7 +3022,11 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_farmer_401_0.png",
     "rarity": "Uncommon",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Sand Mine", "Saltpetre Works", "Clay Collector"],
+    "targets": [
+      "Sand Mine",
+      "Saltpetre Works",
+      "Clay Collector"
+    ],
     "productivityEffect": 0,
     "providesElectricity": false
   },
@@ -2573,7 +3035,10 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_worker_104_0.png",
     "rarity": "Uncommon",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Clay Pit", "Bauxite Mine"],
+    "targets": [
+      "Clay Pit",
+      "Bauxite Mine"
+    ],
     "productivityEffect": 0,
     "providesElectricity": false
   },
@@ -2582,7 +3047,13 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_grocer724_0.png",
     "rarity": "Rare",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Clay Pit", "Saltpetre Works", "Sand Mine", "Clay Collector", "Bauxite Mine"],
+    "targets": [
+      "Clay Pit",
+      "Saltpetre Works",
+      "Sand Mine",
+      "Clay Collector",
+      "Bauxite Mine"
+    ],
     "productivityEffect": 30,
     "providesElectricity": false
   },
@@ -2591,7 +3062,12 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_normal_dressed_106_0.png",
     "rarity": "Epic",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Clay Pit", "Saltpetre Works", "Sand Mine", "Bauxite Mine"],
+    "targets": [
+      "Clay Pit",
+      "Saltpetre Works",
+      "Sand Mine",
+      "Bauxite Mine"
+    ],
     "extraGoods": [
       {
         "good": "Pearls",
@@ -2607,7 +3083,13 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_well_dressed_204_0.png",
     "rarity": "Legendary",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Clay Pit", "Saltpetre Works", "Sand Mine", "Clay Collector", "Bauxite Mine"],
+    "targets": [
+      "Clay Pit",
+      "Saltpetre Works",
+      "Sand Mine",
+      "Clay Collector",
+      "Bauxite Mine"
+    ],
     "extraGoods": [
       {
         "good": "Pearls",
@@ -2628,7 +3110,10 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/influencer/icon_influencer_lewis_2_0.png",
     "rarity": "Epic",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Schnapps Distillery", "Mezcal Bar"],
+    "targets": [
+      "Schnapps Distillery",
+      "Mezcal Bar"
+    ],
     "extraGoods": [
       {
         "good": "Rum",
@@ -2772,7 +3257,13 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/influencer/icon_influencer_alex_hancock_0.png",
     "rarity": "Epic",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Grain Farm", "Hop Farm", "Potato Farm", "Vineyard", "Red Pepper Farm"],
+    "targets": [
+      "Grain Farm",
+      "Hop Farm",
+      "Potato Farm",
+      "Vineyard",
+      "Red Pepper Farm"
+    ],
     "extraGoods": [
       {
         "good": "Potatoes",
@@ -4346,7 +4837,12 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/machine_items/icon_millstone_1_0.png",
     "rarity": "Uncommon",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Cigar Factory", "Flour Mill", "Teff Mill", "Paper Mill"],
+    "targets": [
+      "Cigar Factory",
+      "Flour Mill",
+      "Teff Mill",
+      "Paper Mill"
+    ],
     "productivityEffect": 25,
     "providesElectricity": false
   },
@@ -4355,7 +4851,12 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/machine_items/icon_millstone_2_0.png",
     "rarity": "Rare",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Cigar Factory", "Flour Mill", "Teff Mill", "Paper Mill"],
+    "targets": [
+      "Cigar Factory",
+      "Flour Mill",
+      "Teff Mill",
+      "Paper Mill"
+    ],
     "productivityEffect": 35,
     "providesElectricity": false
   },
@@ -4364,7 +4865,12 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/machine_items/icon_millstone_3_0.png",
     "rarity": "Epic",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Cigar Factory", "Flour Mill", "Teff Mill", "Paper Mill"],
+    "targets": [
+      "Cigar Factory",
+      "Flour Mill",
+      "Teff Mill",
+      "Paper Mill"
+    ],
     "productivityEffect": 40,
     "providesElectricity": false
   },
@@ -4421,7 +4927,10 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/machine_items/icon_dragsaw__0.png",
     "rarity": "Uncommon",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Lumberjack's Hut", "Wanza Woodcutter"],
+    "targets": [
+      "Lumberjack's Hut",
+      "Wanza Woodcutter"
+    ],
     "productivityEffect": 25,
     "providesElectricity": false
   },
@@ -4430,7 +4939,10 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/machine_items/icon_dragsaw_2_0.png",
     "rarity": "Rare",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Lumberjack's Hut", "Wanza Woodcutter"],
+    "targets": [
+      "Lumberjack's Hut",
+      "Wanza Woodcutter"
+    ],
     "productivityEffect": 35,
     "providesElectricity": false
   },
@@ -4439,7 +4951,10 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/machine_items/icon_dragsaw_3_0.png",
     "rarity": "Epic",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Lumberjack's Hut", "Wanza Woodcutter"],
+    "targets": [
+      "Lumberjack's Hut",
+      "Wanza Woodcutter"
+    ],
     "productivityEffect": 50,
     "providesElectricity": false
   },
@@ -4448,7 +4963,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/machine_items/icon_trap_1_0.png",
     "rarity": "Uncommon",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Hunting Cabin"],
+    "targets": [
+      "Hunting Cabin"
+    ],
     "productivityEffect": 25,
     "providesElectricity": false
   },
@@ -4457,7 +4974,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/icon_bear_trap_0.png",
     "rarity": "Rare",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Hunting Cabin"],
+    "targets": [
+      "Hunting Cabin"
+    ],
     "productivityEffect": 35,
     "providesElectricity": false
   },
@@ -4466,7 +4985,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/machine_items/icon_trap_3_0.png",
     "rarity": "Epic",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Hunting Cabin"],
+    "targets": [
+      "Hunting Cabin"
+    ],
     "productivityEffect": 40,
     "providesElectricity": false
   },
@@ -4475,7 +4996,13 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/machine_items/icon_pruning_material_1_0.png",
     "rarity": "Uncommon",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Lumberjack's Hut", "Wanza Woodcutter", "Charcoal Kiln", "Hunting Cabin", "Industrial Oil Press"],
+    "targets": [
+      "Lumberjack's Hut",
+      "Wanza Woodcutter",
+      "Charcoal Kiln",
+      "Hunting Cabin",
+      "Industrial Oil Press"
+    ],
     "productivityEffect": 20,
     "providesElectricity": false
   },
@@ -4484,7 +5011,13 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/machine_items/icon_pruning_material_2_0.png",
     "rarity": "Rare",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Lumberjack's Hut", "Wanza Woodcutter", "Charcoal Kiln", "Hunting Cabin", "Industrial Oil Press"],
+    "targets": [
+      "Lumberjack's Hut",
+      "Wanza Woodcutter",
+      "Charcoal Kiln",
+      "Hunting Cabin",
+      "Industrial Oil Press"
+    ],
     "productivityEffect": 30,
     "providesElectricity": false
   },
@@ -4493,7 +5026,13 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/machine_items/icon_pruning_material_3_0.png",
     "rarity": "Epic",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Lumberjack's Hut", "Wanza Woodcutter", "Charcoal Kiln", "Hunting Cabin", "Industrial Oil Press"],
+    "targets": [
+      "Lumberjack's Hut",
+      "Wanza Woodcutter",
+      "Charcoal Kiln",
+      "Hunting Cabin",
+      "Industrial Oil Press"
+    ],
     "productivityEffect": 40,
     "providesElectricity": false
   },
@@ -4845,7 +5384,13 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/machine_items/icon_waste_management_1_0.png",
     "rarity": "Uncommon",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Pig Farm", "Rendering Works", "Soap Factory", "Slaughterhouse", "Hacienda Fertiliser Works"],
+    "targets": [
+      "Pig Farm",
+      "Rendering Works",
+      "Soap Factory",
+      "Slaughterhouse",
+      "Hacienda Fertiliser Works"
+    ],
     "productivityEffect": 0,
     "providesElectricity": false
   },
@@ -4854,7 +5399,13 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/machine_items/icon_waste_management_2_0.png",
     "rarity": "Rare",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Pig Farm", "Rendering Works", "Soap Factory", "Slaughterhouse", "Hacienda Fertiliser Works"],
+    "targets": [
+      "Pig Farm",
+      "Rendering Works",
+      "Soap Factory",
+      "Slaughterhouse",
+      "Hacienda Fertiliser Works"
+    ],
     "productivityEffect": 0,
     "providesElectricity": false
   },
@@ -4863,7 +5414,13 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/machine_items/icon_waste_management_3_0.png",
     "rarity": "Epic",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Pig Farm", "Rendering Works", "Soap Factory", "Slaughterhouse", "Hacienda Fertiliser Works"],
+    "targets": [
+      "Pig Farm",
+      "Rendering Works",
+      "Soap Factory",
+      "Slaughterhouse",
+      "Hacienda Fertiliser Works"
+    ],
     "productivityEffect": 0,
     "providesElectricity": false
   },
@@ -4923,7 +5480,14 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/machine_items/icon_drill_1_0.png",
     "rarity": "Uncommon",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Clay Pit", "Saltpetre Works", "Sand Mine", "Oil Refinery", "Bauxite Mine", "Helium Extractor"],
+    "targets": [
+      "Clay Pit",
+      "Saltpetre Works",
+      "Sand Mine",
+      "Oil Refinery",
+      "Bauxite Mine",
+      "Helium Extractor"
+    ],
     "productivityEffect": 25,
     "providesElectricity": false
   },
@@ -4932,7 +5496,14 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/machine_items/icon_drill_2_0.png",
     "rarity": "Rare",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Clay Pit", "Saltpetre Works", "Sand Mine", "Oil Refinery", "Bauxite Mine", "Helium Extractor"],
+    "targets": [
+      "Clay Pit",
+      "Saltpetre Works",
+      "Sand Mine",
+      "Oil Refinery",
+      "Bauxite Mine",
+      "Helium Extractor"
+    ],
     "productivityEffect": 35,
     "providesElectricity": false
   },
@@ -4941,7 +5512,14 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/machine_items/icon_drill_3_0.png",
     "rarity": "Epic",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Clay Pit", "Saltpetre Works", "Sand Mine", "Oil Refinery", "Bauxite Mine", "Helium Extractor"],
+    "targets": [
+      "Clay Pit",
+      "Saltpetre Works",
+      "Sand Mine",
+      "Oil Refinery",
+      "Bauxite Mine",
+      "Helium Extractor"
+    ],
     "productivityEffect": 40,
     "providesElectricity": false
   },
@@ -5042,7 +5620,10 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/machine_items/icon_conveyor_1_0.png",
     "rarity": "Uncommon",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Cab Assembly Line", "Scooter Factory"],
+    "targets": [
+      "Cab Assembly Line",
+      "Scooter Factory"
+    ],
     "productivityEffect": 40,
     "providesElectricity": false
   },
@@ -5051,7 +5632,10 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/machine_items/icon_conveyor_2_0.png",
     "rarity": "Rare",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Cab Assembly Line", "Scooter Factory"],
+    "targets": [
+      "Cab Assembly Line",
+      "Scooter Factory"
+    ],
     "productivityEffect": 50,
     "providesElectricity": false
   },
@@ -5060,7 +5644,10 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/machine_items/icon_conveyor_3_0.png",
     "rarity": "Epic",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Cab Assembly Line", "Scooter Factory"],
+    "targets": [
+      "Cab Assembly Line",
+      "Scooter Factory"
+    ],
     "productivityEffect": 60,
     "providesElectricity": false
   },
@@ -5198,7 +5785,12 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/machine_items/icon_precision_instruments_1_0.png",
     "rarity": "Uncommon",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Clockmakers", "Jewellers", "Spectacle Factory", "Bomb Factory"],
+    "targets": [
+      "Clockmakers",
+      "Jewellers",
+      "Spectacle Factory",
+      "Bomb Factory"
+    ],
     "productivityEffect": 25,
     "providesElectricity": false
   },
@@ -5207,7 +5799,12 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/machine_items/icon_precision_instruments_2_0.png",
     "rarity": "Rare",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Clockmakers", "Jewellers", "Spectacle Factory", "Bomb Factory"],
+    "targets": [
+      "Clockmakers",
+      "Jewellers",
+      "Spectacle Factory",
+      "Bomb Factory"
+    ],
     "productivityEffect": 35,
     "providesElectricity": false
   },
@@ -5216,7 +5813,12 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/machine_items/icon_precision_instruments_3_0.png",
     "rarity": "Epic",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Clockmakers", "Jewellers", "Spectacle Factory", "Bomb Factory"],
+    "targets": [
+      "Clockmakers",
+      "Jewellers",
+      "Spectacle Factory",
+      "Bomb Factory"
+    ],
     "productivityEffect": 40,
     "providesElectricity": false
   },
@@ -5225,7 +5827,11 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/machine_items/icon_glass_working_1_0.png",
     "rarity": "Uncommon",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Glassmakers", "Light Bulb Factory", "Lanternsmith"],
+    "targets": [
+      "Glassmakers",
+      "Light Bulb Factory",
+      "Lanternsmith"
+    ],
     "productivityEffect": 30,
     "providesElectricity": false
   },
@@ -5234,7 +5840,11 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/machine_items/icon_glass_working_2_0.png",
     "rarity": "Rare",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Glassmakers", "Light Bulb Factory", "Lanternsmith"],
+    "targets": [
+      "Glassmakers",
+      "Light Bulb Factory",
+      "Lanternsmith"
+    ],
     "productivityEffect": 35,
     "providesElectricity": false
   },
@@ -5243,7 +5853,11 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/machine_items/icon_glass_working_3_0.png",
     "rarity": "Epic",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Glassmakers", "Light Bulb Factory", "Lanternsmith"],
+    "targets": [
+      "Glassmakers",
+      "Light Bulb Factory",
+      "Lanternsmith"
+    ],
     "productivityEffect": 40,
     "providesElectricity": false
   },
@@ -5300,7 +5914,11 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/machine_items/icon_mould_1_0.png",
     "rarity": "Uncommon",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Brick Factory", "Brick Dry-House", "Concrete Factory"],
+    "targets": [
+      "Brick Factory",
+      "Brick Dry-House",
+      "Concrete Factory"
+    ],
     "productivityEffect": 25,
     "providesElectricity": false
   },
@@ -5309,7 +5927,11 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/machine_items/icon_mould_2_0.png",
     "rarity": "Rare",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Brick Factory", "Brick Dry-House", "Concrete Factory"],
+    "targets": [
+      "Brick Factory",
+      "Brick Dry-House",
+      "Concrete Factory"
+    ],
     "productivityEffect": 35,
     "providesElectricity": false
   },
@@ -5318,7 +5940,11 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/machine_items/icon_mould_3_0.png",
     "rarity": "Epic",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Brick Factory", "Brick Dry-House", "Concrete Factory"],
+    "targets": [
+      "Brick Factory",
+      "Brick Dry-House",
+      "Concrete Factory"
+    ],
     "productivityEffect": 40,
     "providesElectricity": false
   },
@@ -5327,7 +5953,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/fertilities/icon_seeds_grain_0.png",
     "rarity": "Uncommon",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Grain Farm"],
+    "targets": [
+      "Grain Farm"
+    ],
     "productivityEffect": -15,
     "providesElectricity": false
   },
@@ -5336,7 +5964,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/fertilities/icon_seeds_grain_0.png",
     "rarity": "Rare",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Grain Farm"],
+    "targets": [
+      "Grain Farm"
+    ],
     "productivityEffect": 0,
     "providesElectricity": false
   },
@@ -5345,7 +5975,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/fertilities/icon_seeds_grain_0.png",
     "rarity": "Epic",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Grain Farm"],
+    "targets": [
+      "Grain Farm"
+    ],
     "productivityEffect": 25,
     "providesElectricity": false
   },
@@ -5354,7 +5986,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/fertilities/icon_seeds_hops_0.png",
     "rarity": "Uncommon",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Hop Farm"],
+    "targets": [
+      "Hop Farm"
+    ],
     "productivityEffect": -15,
     "providesElectricity": false
   },
@@ -5363,7 +5997,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/fertilities/icon_seeds_hops_0.png",
     "rarity": "Rare",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Hop Farm"],
+    "targets": [
+      "Hop Farm"
+    ],
     "productivityEffect": 0,
     "providesElectricity": false
   },
@@ -5372,7 +6008,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/fertilities/icon_seeds_hops_0.png",
     "rarity": "Epic",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Hop Farm"],
+    "targets": [
+      "Hop Farm"
+    ],
     "productivityEffect": 25,
     "providesElectricity": false
   },
@@ -5381,7 +6019,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/fertilities/icon_seeds_potatoe_0.png",
     "rarity": "Uncommon",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Potato Farm"],
+    "targets": [
+      "Potato Farm"
+    ],
     "productivityEffect": -15,
     "providesElectricity": false
   },
@@ -5390,7 +6030,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/fertilities/icon_seeds_potatoe_0.png",
     "rarity": "Rare",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Potato Farm"],
+    "targets": [
+      "Potato Farm"
+    ],
     "productivityEffect": 0,
     "providesElectricity": false
   },
@@ -5399,7 +6041,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/fertilities/icon_seeds_potatoe_0.png",
     "rarity": "Epic",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Potato Farm"],
+    "targets": [
+      "Potato Farm"
+    ],
     "productivityEffect": 25,
     "providesElectricity": false
   },
@@ -5408,7 +6052,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/fertilities/icon_seeds_grapes_0.png",
     "rarity": "Uncommon",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Vineyard"],
+    "targets": [
+      "Vineyard"
+    ],
     "productivityEffect": -15,
     "providesElectricity": false
   },
@@ -5417,7 +6063,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/fertilities/icon_seeds_grapes_0.png",
     "rarity": "Rare",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Vineyard"],
+    "targets": [
+      "Vineyard"
+    ],
     "productivityEffect": 0,
     "providesElectricity": false
   },
@@ -5426,7 +6074,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/fertilities/icon_seeds_grapes_0.png",
     "rarity": "Epic",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Vineyard"],
+    "targets": [
+      "Vineyard"
+    ],
     "productivityEffect": 25,
     "providesElectricity": false
   },
@@ -5435,7 +6085,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/fertilities/icon_seeds_pepper_0.png",
     "rarity": "Uncommon",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Red Pepper Farm"],
+    "targets": [
+      "Red Pepper Farm"
+    ],
     "productivityEffect": -15,
     "providesElectricity": false
   },
@@ -5444,7 +6096,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/fertilities/icon_seeds_pepper_0.png",
     "rarity": "Rare",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Red Pepper Farm"],
+    "targets": [
+      "Red Pepper Farm"
+    ],
     "productivityEffect": 0,
     "providesElectricity": false
   },
@@ -5453,7 +6107,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/fertilities/icon_seeds_pepper_0.png",
     "rarity": "Epic",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Red Pepper Farm"],
+    "targets": [
+      "Red Pepper Farm"
+    ],
     "productivityEffect": 25,
     "providesElectricity": false
   },
@@ -5462,7 +6118,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/fertilities/icon_seeds_sugar_0.png",
     "rarity": "Uncommon",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Sugar Cane Plantation"],
+    "targets": [
+      "Sugar Cane Plantation"
+    ],
     "productivityEffect": -15,
     "providesElectricity": false
   },
@@ -5471,7 +6129,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/fertilities/icon_seeds_sugar_0.png",
     "rarity": "Rare",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Sugar Cane Plantation"],
+    "targets": [
+      "Sugar Cane Plantation"
+    ],
     "productivityEffect": 0,
     "providesElectricity": false
   },
@@ -5480,7 +6140,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/fertilities/icon_seeds_sugar_0.png",
     "rarity": "Epic",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Sugar Cane Plantation"],
+    "targets": [
+      "Sugar Cane Plantation"
+    ],
     "productivityEffect": 25,
     "providesElectricity": false
   },
@@ -5489,7 +6151,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/fertilities/icon_seeds_tobacco_0.png",
     "rarity": "Uncommon",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Tobacco Plantation"],
+    "targets": [
+      "Tobacco Plantation"
+    ],
     "productivityEffect": -15,
     "providesElectricity": false
   },
@@ -5498,7 +6162,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/fertilities/icon_seeds_tobacco_0.png",
     "rarity": "Rare",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Tobacco Plantation"],
+    "targets": [
+      "Tobacco Plantation"
+    ],
     "productivityEffect": 0,
     "providesElectricity": false
   },
@@ -5507,7 +6173,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/fertilities/icon_seeds_tobacco_0.png",
     "rarity": "Epic",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Tobacco Plantation"],
+    "targets": [
+      "Tobacco Plantation"
+    ],
     "productivityEffect": 25,
     "providesElectricity": false
   },
@@ -5516,7 +6184,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/fertilities/icon_seeds_cotton_0.png",
     "rarity": "Uncommon",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Cotton Plantation"],
+    "targets": [
+      "Cotton Plantation"
+    ],
     "productivityEffect": -15,
     "providesElectricity": false
   },
@@ -5525,7 +6195,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/fertilities/icon_seeds_cotton_0.png",
     "rarity": "Rare",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Cotton Plantation"],
+    "targets": [
+      "Cotton Plantation"
+    ],
     "productivityEffect": 0,
     "providesElectricity": false
   },
@@ -5534,7 +6206,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/fertilities/icon_seeds_cotton_0.png",
     "rarity": "Epic",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Cotton Plantation"],
+    "targets": [
+      "Cotton Plantation"
+    ],
     "productivityEffect": 25,
     "providesElectricity": false
   },
@@ -5543,7 +6217,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/fertilities/icon_seeds_cocoa_0.png",
     "rarity": "Uncommon",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Cocoa Plantation"],
+    "targets": [
+      "Cocoa Plantation"
+    ],
     "productivityEffect": -15,
     "providesElectricity": false
   },
@@ -5552,7 +6228,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/fertilities/icon_seeds_cocoa_0.png",
     "rarity": "Rare",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Cocoa Plantation"],
+    "targets": [
+      "Cocoa Plantation"
+    ],
     "productivityEffect": 0,
     "providesElectricity": false
   },
@@ -5561,7 +6239,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/fertilities/icon_seeds_cocoa_0.png",
     "rarity": "Epic",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Cocoa Plantation"],
+    "targets": [
+      "Cocoa Plantation"
+    ],
     "productivityEffect": 25,
     "providesElectricity": false
   },
@@ -5570,7 +6250,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/fertilities/icon_seeds_rubber_0.png",
     "rarity": "Uncommon",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Caoutchouc Plantation"],
+    "targets": [
+      "Caoutchouc Plantation"
+    ],
     "productivityEffect": -15,
     "providesElectricity": false
   },
@@ -5579,7 +6261,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/fertilities/icon_seeds_rubber_0.png",
     "rarity": "Rare",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Caoutchouc Plantation"],
+    "targets": [
+      "Caoutchouc Plantation"
+    ],
     "productivityEffect": 0,
     "providesElectricity": false
   },
@@ -5588,7 +6272,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/fertilities/icon_seeds_rubber_0.png",
     "rarity": "Epic",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Caoutchouc Plantation"],
+    "targets": [
+      "Caoutchouc Plantation"
+    ],
     "productivityEffect": 25,
     "providesElectricity": false
   },
@@ -5597,7 +6283,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/fertilities/icon_seeds_coffee_0.png",
     "rarity": "Uncommon",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Coffee Plantation"],
+    "targets": [
+      "Coffee Plantation"
+    ],
     "productivityEffect": -15,
     "providesElectricity": false
   },
@@ -5606,7 +6294,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/fertilities/icon_seeds_coffee_0.png",
     "rarity": "Rare",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Coffee Plantation"],
+    "targets": [
+      "Coffee Plantation"
+    ],
     "productivityEffect": 0,
     "providesElectricity": false
   },
@@ -5615,7 +6305,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/fertilities/icon_seeds_coffee_0.png",
     "rarity": "Epic",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Coffee Plantation"],
+    "targets": [
+      "Coffee Plantation"
+    ],
     "productivityEffect": 25,
     "providesElectricity": false
   },
@@ -5624,7 +6316,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/fertilities/icon_seeds_corn_0.png",
     "rarity": "Uncommon",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Corn Farm"],
+    "targets": [
+      "Corn Farm"
+    ],
     "productivityEffect": -15,
     "providesElectricity": false
   },
@@ -5633,7 +6327,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/fertilities/icon_seeds_corn_0.png",
     "rarity": "Rare",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Corn Farm"],
+    "targets": [
+      "Corn Farm"
+    ],
     "productivityEffect": 0,
     "providesElectricity": false
   },
@@ -5642,7 +6338,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/fertilities/icon_seeds_corn_0.png",
     "rarity": "Epic",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Corn Farm"],
+    "targets": [
+      "Corn Farm"
+    ],
     "productivityEffect": 25,
     "providesElectricity": false
   },
@@ -5651,7 +6349,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/fertilities/icon_fertility_banana_0.png",
     "rarity": "Uncommon",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Plantain Plantation"],
+    "targets": [
+      "Plantain Plantation"
+    ],
     "productivityEffect": -15,
     "providesElectricity": false
   },
@@ -5660,7 +6360,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/fertilities/icon_fertility_banana_0.png",
     "rarity": "Rare",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Plantain Plantation"],
+    "targets": [
+      "Plantain Plantation"
+    ],
     "productivityEffect": 0,
     "providesElectricity": false
   },
@@ -5669,7 +6371,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/fertilities/icon_fertility_banana_0.png",
     "rarity": "Epic",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Plantain Plantation"],
+    "targets": [
+      "Plantain Plantation"
+    ],
     "productivityEffect": 25,
     "providesElectricity": false
   },
@@ -8525,7 +9229,10 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/sunken_treasure_rewards/icon_coffee_specialist_800_0.png",
     "rarity": "Legendary",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Clockmakers", "Jewellers"],
+    "targets": [
+      "Clockmakers",
+      "Jewellers"
+    ],
     "extraGoods": [
       {
         "good": "Gold",
@@ -8583,7 +9290,12 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/machine_items/icon_cola_mola_machine_0.png",
     "rarity": "Legendary",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Champagne Cellar", "Rum Distillery", "Advanced Rum Distillery", "Mezcal Bar"],
+    "targets": [
+      "Champagne Cellar",
+      "Rum Distillery",
+      "Advanced Rum Distillery",
+      "Mezcal Bar"
+    ],
     "extraGoods": [
       {
         "good": "Coffee",
@@ -8699,7 +9411,10 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/africa/icon_herder_1_0.png",
     "rarity": "Uncommon",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Goat Farm", "Sanga Farm"],
+    "targets": [
+      "Goat Farm",
+      "Sanga Farm"
+    ],
     "extraGoods": [
       {
         "good": "Goat Milk",
@@ -8715,7 +9430,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/africa/icon_herder_2_0.png",
     "rarity": "Rare",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Sanga Farm"],
+    "targets": [
+      "Sanga Farm"
+    ],
     "productivityEffect": 20,
     "providesElectricity": false
   },
@@ -8724,7 +9441,12 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/africa/icon_horticulturist_2b_0.png",
     "rarity": "Uncommon",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Hibiscus Farm", "Indigo Farm", "Linseed Farm", "Orchid Farm"],
+    "targets": [
+      "Hibiscus Farm",
+      "Indigo Farm",
+      "Linseed Farm",
+      "Orchid Farm"
+    ],
     "productivityEffect": 0,
     "providesElectricity": false
   },
@@ -8733,7 +9455,15 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/africa/icon_horticulturist_2_0.png",
     "rarity": "Legendary",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Linseed Farm", "Hibiscus Farm", "Teff Farm", "Indigo Farm", "Spice Farm", "Apiary", "Orchid Farm"],
+    "targets": [
+      "Linseed Farm",
+      "Hibiscus Farm",
+      "Teff Farm",
+      "Indigo Farm",
+      "Spice Farm",
+      "Apiary",
+      "Orchid Farm"
+    ],
     "productivityEffect": 0,
     "providesElectricity": false
   },
@@ -8742,7 +9472,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/africa/icon_innkeeper_2_0.png",
     "rarity": "Rare",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Tea Spicer"],
+    "targets": [
+      "Tea Spicer"
+    ],
     "replacementGoods": [
       {
         "from": "Hibiscus Petals",
@@ -8757,7 +9489,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/africa/icon_enbesan_cook_3b_0.png",
     "rarity": "Legendary",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Wat Kitchen"],
+    "targets": [
+      "Wat Kitchen"
+    ],
     "extraGoods": [
       {
         "good": "Dried Meat",
@@ -8779,7 +9513,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/africa/icon_ewahedo_faith_2_0.png",
     "rarity": "Rare",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Lanternsmith"],
+    "targets": [
+      "Lanternsmith"
+    ],
     "replacementGoods": [
       {
         "from": "Ornate Candles",
@@ -8794,7 +9530,11 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/africa/icon_traditional_handicraft_1_0.png",
     "rarity": "Uncommon",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Tapestry Looms", "Ceramics Workshop", "Pipe Maker"],
+    "targets": [
+      "Tapestry Looms",
+      "Ceramics Workshop",
+      "Pipe Maker"
+    ],
     "productivityEffect": 0,
     "providesElectricity": false
   },
@@ -8803,7 +9543,10 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/africa/icon_traditional_handcraft_3b_0.png",
     "rarity": "Epic",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Tapestry Looms", "Ceramics Workshop"],
+    "targets": [
+      "Tapestry Looms",
+      "Ceramics Workshop"
+    ],
     "productivityEffect": 40,
     "providesElectricity": false
   },
@@ -8812,7 +9555,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/africa/icon_water_use_expert_1_0.png",
     "rarity": "Epic",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Paper Mill"],
+    "targets": [
+      "Paper Mill"
+    ],
     "replacementGoods": [
       {
         "from": "Wood",
@@ -8827,7 +9572,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/africa/icon_plants_adept_1_0.png",
     "rarity": "Rare",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Spice Farm"],
+    "targets": [
+      "Spice Farm"
+    ],
     "productivityEffect": 20,
     "providesElectricity": false
   },
@@ -8836,7 +9583,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/africa/icon_keeper_of_tradition_2_0.png",
     "rarity": "Legendary",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Luminer"],
+    "targets": [
+      "Luminer"
+    ],
     "extraGoods": [
       {
         "good": "Illuminated Script",
@@ -8857,7 +9606,10 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/africa/icon_tailor_1_0.png",
     "rarity": "Uncommon",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Bootmakers", "Ball Manufactory"],
+    "targets": [
+      "Bootmakers",
+      "Ball Manufactory"
+    ],
     "productivityEffect": 0,
     "providesElectricity": false
   },
@@ -8866,7 +9618,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/africa/icon_tailor_2_0.png",
     "rarity": "Epic",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Tailor's Shop"],
+    "targets": [
+      "Tailor's Shop"
+    ],
     "extraGoods": [
       {
         "rateNumerator": 1,
@@ -8881,7 +9635,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/africa/icon_tailor_3_0.png",
     "rarity": "Legendary",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Bootmakers"],
+    "targets": [
+      "Bootmakers"
+    ],
     "extraGoods": [
       {
         "good": "Tailored Suits",
@@ -8903,7 +9659,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/machine_items/africa/icon_enbesan_bookbinding_kit_0.png",
     "rarity": "Uncommon",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Luminer"],
+    "targets": [
+      "Luminer"
+    ],
     "productivityEffect": 25,
     "providesElectricity": false
   },
@@ -8912,7 +9670,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/machine_items/africa/icon_binding_sewing_frame_0.png",
     "rarity": "Rare",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Luminer"],
+    "targets": [
+      "Luminer"
+    ],
     "productivityEffect": 35,
     "providesElectricity": false
   },
@@ -8921,7 +9681,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/machine_items/africa/icon_industrial_binding_machine_0.png",
     "rarity": "Epic",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Luminer"],
+    "targets": [
+      "Luminer"
+    ],
     "productivityEffect": 40,
     "providesElectricity": false
   },
@@ -8930,7 +9692,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/machine_items/africa/item_bee_smoker_0.png",
     "rarity": "Rare",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Apiary"],
+    "targets": [
+      "Apiary"
+    ],
     "productivityEffect": 0,
     "providesElectricity": false
   },
@@ -8939,7 +9703,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/machine_items/africa/item_full_bee_suit_0.png",
     "rarity": "Epic",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Apiary"],
+    "targets": [
+      "Apiary"
+    ],
     "productivityEffect": 40,
     "providesElectricity": false
   },
@@ -8948,7 +9714,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/machine_items/africa/item_meat_slicing_guillotine_0.png",
     "rarity": "Uncommon",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Dry-House"],
+    "targets": [
+      "Dry-House"
+    ],
     "productivityEffect": 25,
     "providesElectricity": false
   },
@@ -8957,7 +9725,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/machine_items/africa/item_curing_chamber_0.png",
     "rarity": "Rare",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Dry-House"],
+    "targets": [
+      "Dry-House"
+    ],
     "productivityEffect": 35,
     "providesElectricity": false
   },
@@ -8966,7 +9736,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/machine_items/africa/item_meat_slicer_0.png",
     "rarity": "Epic",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Dry-House"],
+    "targets": [
+      "Dry-House"
+    ],
     "productivityEffect": 40,
     "providesElectricity": false
   },
@@ -9002,7 +9774,10 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/machine_items/africa/item_potters_wheel_0.png",
     "rarity": "Rare",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Ceramics Workshop", "Pipe Maker"],
+    "targets": [
+      "Ceramics Workshop",
+      "Pipe Maker"
+    ],
     "productivityEffect": 30,
     "providesElectricity": false
   },
@@ -9011,7 +9786,10 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/machine_items/africa/item_kilin_0.png",
     "rarity": "Epic",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Ceramics Workshop", "Pipe Maker"],
+    "targets": [
+      "Ceramics Workshop",
+      "Pipe Maker"
+    ],
     "productivityEffect": 40,
     "providesElectricity": false
   },
@@ -9020,7 +9798,13 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/machine_items/africa/item_birdhouse_0.png",
     "rarity": "Uncommon",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Linseed Farm", "Hibiscus Farm", "Teff Farm", "Indigo Farm", "Spice Farm"],
+    "targets": [
+      "Linseed Farm",
+      "Hibiscus Farm",
+      "Teff Farm",
+      "Indigo Farm",
+      "Spice Farm"
+    ],
     "productivityEffect": 20,
     "providesElectricity": false
   },
@@ -9029,7 +9813,13 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/machine_items/africa/item_insect_proof_net_0.png",
     "rarity": "Rare",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Linseed Farm", "Hibiscus Farm", "Teff Farm", "Indigo Farm", "Spice Farm"],
+    "targets": [
+      "Linseed Farm",
+      "Hibiscus Farm",
+      "Teff Farm",
+      "Indigo Farm",
+      "Spice Farm"
+    ],
     "productivityEffect": 25,
     "providesElectricity": false
   },
@@ -9038,7 +9828,13 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/machine_items/africa/item_sturdy_greenhouse_0.png",
     "rarity": "Epic",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Linseed Farm", "Hibiscus Farm", "Teff Farm", "Indigo Farm", "Spice Farm"],
+    "targets": [
+      "Linseed Farm",
+      "Hibiscus Farm",
+      "Teff Farm",
+      "Indigo Farm",
+      "Spice Farm"
+    ],
     "productivityEffect": 35,
     "providesElectricity": false
   },
@@ -9047,7 +9843,10 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/machine_items/africa/item_water_wheel_0.png",
     "rarity": "Uncommon",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Clay Collector", "Paper Mill"],
+    "targets": [
+      "Clay Collector",
+      "Paper Mill"
+    ],
     "productivityEffect": 30,
     "providesElectricity": false
   },
@@ -9056,7 +9855,10 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/machine_items/africa/item_pelton_wheel_0.png",
     "rarity": "Epic",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Clay Collector", "Paper Mill"],
+    "targets": [
+      "Clay Collector",
+      "Paper Mill"
+    ],
     "productivityEffect": 45,
     "providesElectricity": false
   },
@@ -9065,7 +9867,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/machine_items/africa/item_mannequin_0.png",
     "rarity": "Uncommon",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Tailor's Shop"],
+    "targets": [
+      "Tailor's Shop"
+    ],
     "productivityEffect": 20,
     "providesElectricity": false
   },
@@ -9074,7 +9878,11 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/machine_items/africa/item_fusing_machine_0.png",
     "rarity": "Epic",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Tailor's Shop", "Ball Manufactory", "Costume Shop"],
+    "targets": [
+      "Tailor's Shop",
+      "Ball Manufactory",
+      "Costume Shop"
+    ],
     "productivityEffect": 40,
     "providesElectricity": false
   },
@@ -9083,7 +9891,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/machine_items/africa/item_shoemaking_tools_0.png",
     "rarity": "Uncommon",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Bootmakers"],
+    "targets": [
+      "Bootmakers"
+    ],
     "productivityEffect": 25,
     "providesElectricity": false
   },
@@ -9092,7 +9902,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/machine_items/africa/item_eyeleting_machine_0.png",
     "rarity": "Rare",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Bootmakers"],
+    "targets": [
+      "Bootmakers"
+    ],
     "productivityEffect": 30,
     "providesElectricity": false
   },
@@ -9101,7 +9913,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/machine_items/africa/item_sole_stitching_machine_0.png",
     "rarity": "Epic",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Bootmakers"],
+    "targets": [
+      "Bootmakers"
+    ],
     "productivityEffect": 40,
     "providesElectricity": false
   },
@@ -9261,7 +10075,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/posters/icon_culture_advertisement_02_0.png",
     "rarity": "Epic",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Vineyard"],
+    "targets": [
+      "Vineyard"
+    ],
     "productivityEffect": -10,
     "providesElectricity": false
   },
@@ -9270,7 +10086,12 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/posters/icon_culture_advertisement_01_0.png",
     "rarity": "Epic",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Brewery", "Schnapps Distillery", "Champagne Cellar", "Advanced Rum Distillery"],
+    "targets": [
+      "Brewery",
+      "Schnapps Distillery",
+      "Champagne Cellar",
+      "Advanced Rum Distillery"
+    ],
     "productivityEffect": -10,
     "providesElectricity": false
   },
@@ -9279,7 +10100,13 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/posters/icon_cyclideon_agriculture_0.png",
     "rarity": "Epic",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Grain Farm", "Hop Farm", "Potato Farm", "Red Pepper Farm", "Orchard: Jam"],
+    "targets": [
+      "Grain Farm",
+      "Hop Farm",
+      "Potato Farm",
+      "Red Pepper Farm",
+      "Orchard: Jam"
+    ],
     "productivityEffect": -10,
     "providesElectricity": false
   },
@@ -9431,7 +10258,12 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/highlife/icon_plantation_item_2_sa_0.png",
     "rarity": "Rare",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Orchard: Jam", "Orchard: Citrus", "Orchard: Cherry Wood", "Vineyard"],
+    "targets": [
+      "Orchard: Jam",
+      "Orchard: Citrus",
+      "Orchard: Cherry Wood",
+      "Vineyard"
+    ],
     "extraGoods": [
       {
         "good": "Sugar",
@@ -9656,7 +10488,10 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/empireofskies/icon_combustion_chemist_0.png",
     "rarity": "Rare",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Furnace", "Aluminium Smelter"],
+    "targets": [
+      "Furnace",
+      "Aluminium Smelter"
+    ],
     "extraGoods": [
       {
         "rateNumerator": 1,
@@ -9677,7 +10512,12 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/empireofskies/icon_nw_dung_collector_0.png",
     "rarity": "Rare",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Cattle Farm (Old World)", "Cattle Farm (New World)", "Sheep Farm", "Pig Farm"],
+    "targets": [
+      "Cattle Farm (Old World)",
+      "Cattle Farm (New World)",
+      "Sheep Farm",
+      "Pig Farm"
+    ],
     "extraGoods": [
       {
         "good": "Dung",
@@ -9693,7 +10533,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/empireofskies/icon_synthesis_expert_0.png",
     "rarity": "Rare",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Hacienda Fertiliser Works"],
+    "targets": [
+      "Hacienda Fertiliser Works"
+    ],
     "extraGoods": [
       {
         "good": "Fertiliser",
@@ -9715,7 +10557,10 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/empireofskies/icon_enbesa_dung_collector_0.png",
     "rarity": "Rare",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Sanga Farm", "Goat Farm"],
+    "targets": [
+      "Sanga Farm",
+      "Goat Farm"
+    ],
     "extraGoods": [
       {
         "good": "Dung",
@@ -9731,7 +10576,12 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/empireofskies/icon_top_soil_scientist_sa_0.png",
     "rarity": "Rare",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Orchard: Coconut Oil", "Orchard: Cinnamon", "Orchard: Citrus", "Orchard: Camphor Wax"],
+    "targets": [
+      "Orchard: Coconut Oil",
+      "Orchard: Cinnamon",
+      "Orchard: Citrus",
+      "Orchard: Camphor Wax"
+    ],
     "extraGoods": [
       {
         "rateNumerator": 3,
@@ -9746,7 +10596,11 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/empireofskies/icon_top_soil_scientist_eu_0.png",
     "rarity": "Rare",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Orchard: Jam", "Orchard: Resin", "Orchard: Cherry Wood"],
+    "targets": [
+      "Orchard: Jam",
+      "Orchard: Resin",
+      "Orchard: Cherry Wood"
+    ],
     "extraGoods": [
       {
         "rateNumerator": 5,
@@ -9761,7 +10615,12 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/empireofskies/icon_explosive_expert_0.png",
     "rarity": "Rare",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Coal Mine", "Iron Mine", "Zinc Mine", "Copper Mine"],
+    "targets": [
+      "Coal Mine",
+      "Iron Mine",
+      "Zinc Mine",
+      "Copper Mine"
+    ],
     "extraGoods": [
       {
         "rateNumerator": 12,
@@ -9792,7 +10651,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/empireofskies/icon_scientist_mineralogist_0.png",
     "rarity": "Rare",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Clay Pit"],
+    "targets": [
+      "Clay Pit"
+    ],
     "extraGoods": [
       {
         "good": "Bauxite",
@@ -9808,7 +10669,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/empireofskies/icon_emergency_military_0.png",
     "rarity": "Uncommon",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Weapon Factory"],
+    "targets": [
+      "Weapon Factory"
+    ],
     "extraGoods": [
       {
         "good": "Aluminium Profiles",
@@ -9830,7 +10693,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/machine_items/icon_canning_machine_0.png",
     "rarity": "Legendary",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Calamari Fishery"],
+    "targets": [
+      "Calamari Fishery"
+    ],
     "extraGoods": [
       {
         "good": "Canned Food",
@@ -9846,7 +10711,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/machine_items/icon_water_dispenser_0.png",
     "rarity": "Legendary",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Rum Distillery"],
+    "targets": [
+      "Rum Distillery"
+    ],
     "extraGoods": [
       {
         "good": "Champagne",
@@ -9872,7 +10739,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/machine_items/icon_loom_3_0.png",
     "rarity": "Legendary",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Costume Shop"],
+    "targets": [
+      "Costume Shop"
+    ],
     "extraGoods": [
       {
         "good": "Fur Coats",
@@ -9894,7 +10763,10 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_shepherd_509_0.png",
     "rarity": "Uncommon",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Orchid Farm", "Herb Garden"],
+    "targets": [
+      "Orchid Farm",
+      "Herb Garden"
+    ],
     "extraGoods": [
       {
         "rateNumerator": 1,
@@ -9909,7 +10781,11 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_worker_328_0.png",
     "rarity": "Rare",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Cattle Farm (Old World)", "Cattle Farm (New World)", "Sanga Farm"],
+    "targets": [
+      "Cattle Farm (Old World)",
+      "Cattle Farm (New World)",
+      "Sanga Farm"
+    ],
     "extraGoods": [
       {
         "good": "Milk",
@@ -9930,7 +10806,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_forester_822_0.png",
     "rarity": "Rare",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Cab Assembly Line"],
+    "targets": [
+      "Cab Assembly Line"
+    ],
     "extraGoods": [
       {
         "good": "Steam Carriages",
@@ -10066,7 +10944,10 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_forester_814_0.png",
     "rarity": "Uncommon",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Lumberjack's Hut", "Wanza Woodcutter"],
+    "targets": [
+      "Lumberjack's Hut",
+      "Wanza Woodcutter"
+    ],
     "productivityEffect": 0,
     "providesElectricity": false
   },
@@ -10075,7 +10956,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_treasure_hunter_800_0.png",
     "rarity": "Uncommon",
     "administrativeBuilding": "Trade Union",
-    "targets": ["Hunting Cabin"],
+    "targets": [
+      "Hunting Cabin"
+    ],
     "productivityEffect": 0,
     "providesElectricity": false
   },
@@ -10084,7 +10967,12 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_fisher_401_0.png",
     "rarity": "Common",
     "administrativeBuilding": "Harbourmaster's Office",
-    "targets": ["Fishery", "Fish Oil Factory", "Lobster Fishery", "Calamari Fishery"],
+    "targets": [
+      "Fishery",
+      "Fish Oil Factory",
+      "Lobster Fishery",
+      "Calamari Fishery"
+    ],
     "productivityEffect": 10,
     "providesElectricity": false
   },
@@ -10093,7 +10981,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_pearl_diver_102_0.png",
     "rarity": "Common",
     "administrativeBuilding": "Harbourmaster's Office",
-    "targets": ["Pearl Farm"],
+    "targets": [
+      "Pearl Farm"
+    ],
     "productivityEffect": 10,
     "providesElectricity": false
   },
@@ -10102,7 +10992,12 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_fisherman_101_b_0.png",
     "rarity": "Uncommon",
     "administrativeBuilding": "Harbourmaster's Office",
-    "targets": ["Fishery", "Fish Oil Factory", "Lobster Fishery", "Calamari Fishery"],
+    "targets": [
+      "Fishery",
+      "Fish Oil Factory",
+      "Lobster Fishery",
+      "Calamari Fishery"
+    ],
     "productivityEffect": 0,
     "providesElectricity": false
   },
@@ -10111,7 +11006,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_pearl_diver_101_0.png",
     "rarity": "Uncommon",
     "administrativeBuilding": "Harbourmaster's Office",
-    "targets": ["Pearl Farm"],
+    "targets": [
+      "Pearl Farm"
+    ],
     "productivityEffect": 0,
     "providesElectricity": false
   },
@@ -10120,7 +11017,12 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_fisherman_102_0.png",
     "rarity": "Rare",
     "administrativeBuilding": "Harbourmaster's Office",
-    "targets": ["Fishery", "Fish Oil Factory", "Lobster Fishery", "Calamari Fishery"],
+    "targets": [
+      "Fishery",
+      "Fish Oil Factory",
+      "Lobster Fishery",
+      "Calamari Fishery"
+    ],
     "extraGoods": [
       {
         "good": "Tallow",
@@ -10136,7 +11038,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_pearl_diver_201_0.png",
     "rarity": "Rare",
     "administrativeBuilding": "Harbourmaster's Office",
-    "targets": ["Pearl Farm"],
+    "targets": [
+      "Pearl Farm"
+    ],
     "extraGoods": [
       {
         "good": "Fish Oil",
@@ -10152,7 +11056,13 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_worker_414_0.png",
     "rarity": "Epic",
     "administrativeBuilding": "Harbourmaster's Office",
-    "targets": ["Fishery", "Fish Oil Factory", "Lobster Fishery", "Calamari Fishery", "Pearl Farm"],
+    "targets": [
+      "Fishery",
+      "Fish Oil Factory",
+      "Lobster Fishery",
+      "Calamari Fishery",
+      "Pearl Farm"
+    ],
     "extraGoods": [
       {
         "good": "Tallow",
@@ -10168,7 +11078,13 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_navigator_102_0.png",
     "rarity": "Legendary",
     "administrativeBuilding": "Harbourmaster's Office",
-    "targets": ["Fishery", "Fish Oil Factory", "Lobster Fishery", "Calamari Fishery", "Pearl Farm"],
+    "targets": [
+      "Fishery",
+      "Fish Oil Factory",
+      "Lobster Fishery",
+      "Calamari Fishery",
+      "Pearl Farm"
+    ],
     "extraGoods": [
       {
         "good": "Tallow",
@@ -10459,7 +11375,13 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/machine_items/icon_fishernet_1_0.png",
     "rarity": "Uncommon",
     "administrativeBuilding": "Harbourmaster's Office",
-    "targets": ["Fishery", "Fish Oil Factory", "Lobster Fishery", "Calamari Fishery", "Pearl Farm"],
+    "targets": [
+      "Fishery",
+      "Fish Oil Factory",
+      "Lobster Fishery",
+      "Calamari Fishery",
+      "Pearl Farm"
+    ],
     "productivityEffect": 25,
     "providesElectricity": false
   },
@@ -10468,7 +11390,13 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/machine_items/icon_fishernet_2_0.png",
     "rarity": "Rare",
     "administrativeBuilding": "Harbourmaster's Office",
-    "targets": ["Fishery", "Fish Oil Factory", "Lobster Fishery", "Calamari Fishery", "Pearl Farm"],
+    "targets": [
+      "Fishery",
+      "Fish Oil Factory",
+      "Lobster Fishery",
+      "Calamari Fishery",
+      "Pearl Farm"
+    ],
     "productivityEffect": 35,
     "providesElectricity": false
   },
@@ -10477,7 +11405,13 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/machine_items/icon_fishernet_3_0.png",
     "rarity": "Epic",
     "administrativeBuilding": "Harbourmaster's Office",
-    "targets": ["Fishery", "Fish Oil Factory", "Lobster Fishery", "Calamari Fishery", "Pearl Farm"],
+    "targets": [
+      "Fishery",
+      "Fish Oil Factory",
+      "Lobster Fishery",
+      "Calamari Fishery",
+      "Pearl Farm"
+    ],
     "productivityEffect": 40,
     "providesElectricity": false
   },
@@ -10486,7 +11420,14 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/military_items/ico_repair_toolset_0.png",
     "rarity": "Uncommon",
     "administrativeBuilding": "Harbourmaster's Office",
-    "targets": ["Saltpetre Works", "Sand Mine", "Pearl Farm", "Fish Oil Factory", "Salt Works", "Calamari Fishery"],
+    "targets": [
+      "Saltpetre Works",
+      "Sand Mine",
+      "Pearl Farm",
+      "Fish Oil Factory",
+      "Salt Works",
+      "Calamari Fishery"
+    ],
     "productivityEffect": 0,
     "providesElectricity": false
   },
@@ -10495,7 +11436,14 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/military_items/ico_repair_toolset_0.png",
     "rarity": "Rare",
     "administrativeBuilding": "Harbourmaster's Office",
-    "targets": ["Saltpetre Works", "Sand Mine", "Pearl Farm", "Fish Oil Factory", "Salt Works", "Calamari Fishery"],
+    "targets": [
+      "Saltpetre Works",
+      "Sand Mine",
+      "Pearl Farm",
+      "Fish Oil Factory",
+      "Salt Works",
+      "Calamari Fishery"
+    ],
     "productivityEffect": 0,
     "providesElectricity": false
   },
@@ -10504,7 +11452,14 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/consumables/icon_building_repair_1_0.png",
     "rarity": "Epic",
     "administrativeBuilding": "Harbourmaster's Office",
-    "targets": ["Saltpetre Works", "Sand Mine", "Pearl Farm", "Fish Oil Factory", "Salt Works", "Calamari Fishery"],
+    "targets": [
+      "Saltpetre Works",
+      "Sand Mine",
+      "Pearl Farm",
+      "Fish Oil Factory",
+      "Salt Works",
+      "Calamari Fishery"
+    ],
     "productivityEffect": 0,
     "providesElectricity": false
   },
@@ -10513,7 +11468,14 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/consumables/icon_building_repair_2_0.png",
     "rarity": "Legendary",
     "administrativeBuilding": "Harbourmaster's Office",
-    "targets": ["Saltpetre Works", "Sand Mine", "Pearl Farm", "Fish Oil Factory", "Salt Works", "Calamari Fishery"],
+    "targets": [
+      "Saltpetre Works",
+      "Sand Mine",
+      "Pearl Farm",
+      "Fish Oil Factory",
+      "Salt Works",
+      "Calamari Fishery"
+    ],
     "productivityEffect": 0,
     "providesElectricity": false
   },
@@ -10594,7 +11556,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/fertilities/icon_fertility_pearl_0.png",
     "rarity": "Uncommon",
     "administrativeBuilding": "Harbourmaster's Office",
-    "targets": ["Pearl Farm"],
+    "targets": [
+      "Pearl Farm"
+    ],
     "productivityEffect": -15,
     "providesElectricity": false
   },
@@ -10603,7 +11567,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/fertilities/icon_fertility_pearl_0.png",
     "rarity": "Rare",
     "administrativeBuilding": "Harbourmaster's Office",
-    "targets": ["Pearl Farm"],
+    "targets": [
+      "Pearl Farm"
+    ],
     "productivityEffect": 0,
     "providesElectricity": false
   },
@@ -10612,7 +11578,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/fertilities/icon_fertility_pearl_0.png",
     "rarity": "Epic",
     "administrativeBuilding": "Harbourmaster's Office",
-    "targets": ["Pearl Farm"],
+    "targets": [
+      "Pearl Farm"
+    ],
     "productivityEffect": 25,
     "providesElectricity": false
   },
@@ -10792,7 +11760,10 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/africa/icon_sea_master_1_0.png",
     "rarity": "Rare",
     "administrativeBuilding": "Harbourmaster's Office",
-    "targets": ["Salt Works", "Lobster Fishery"],
+    "targets": [
+      "Salt Works",
+      "Lobster Fishery"
+    ],
     "productivityEffect": 30,
     "providesElectricity": false
   },
@@ -10801,7 +11772,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/africa/icon_sea_master_2_0.png",
     "rarity": "Epic",
     "administrativeBuilding": "Harbourmaster's Office",
-    "targets": ["Lobster Fishery"],
+    "targets": [
+      "Lobster Fishery"
+    ],
     "productivityEffect": 40,
     "providesElectricity": false
   },
@@ -10810,7 +11783,10 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/africa/icon_enbesan_cook_3a_0.png",
     "rarity": "Unknown",
     "administrativeBuilding": "Harbourmaster's Office",
-    "targets": ["Salt Works", "Lobster Fishery"],
+    "targets": [
+      "Salt Works",
+      "Lobster Fishery"
+    ],
     "productivityEffect": 10,
     "providesElectricity": false
   },
@@ -10837,7 +11813,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/machine_items/africa/item_net_lobster_trap_0.png",
     "rarity": "Uncommon",
     "administrativeBuilding": "Harbourmaster's Office",
-    "targets": ["Lobster Fishery"],
+    "targets": [
+      "Lobster Fishery"
+    ],
     "productivityEffect": 20,
     "providesElectricity": false
   },
@@ -10846,7 +11824,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/machine_items/africa/item_miraculous_lobster_trap_0.png",
     "rarity": "Epic",
     "administrativeBuilding": "Harbourmaster's Office",
-    "targets": ["Lobster Fishery"],
+    "targets": [
+      "Lobster Fishery"
+    ],
     "productivityEffect": 40,
     "providesElectricity": false
   },
@@ -10864,7 +11844,12 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_shepherd_510_0.png",
     "rarity": "Legendary",
     "administrativeBuilding": "Harbourmaster's Office",
-    "targets": ["Fishery", "Fish Oil Factory", "Lobster Fishery", "Calamari Fishery"],
+    "targets": [
+      "Fishery",
+      "Fish Oil Factory",
+      "Lobster Fishery",
+      "Calamari Fishery"
+    ],
     "extraGoods": [
       {
         "good": "Calamari",
@@ -10899,7 +11884,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/machine_items/icon_fishing_boat_1_0.png",
     "rarity": "Uncommon",
     "administrativeBuilding": "Arctic Lodge",
-    "targets": ["Whaling Station"],
+    "targets": [
+      "Whaling Station"
+    ],
     "productivityEffect": 25,
     "providesElectricity": false
   },
@@ -10908,7 +11895,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/machine_items/icon_fishing_boat_2_0.png",
     "rarity": "Rare",
     "administrativeBuilding": "Arctic Lodge",
-    "targets": ["Whaling Station"],
+    "targets": [
+      "Whaling Station"
+    ],
     "productivityEffect": 35,
     "providesElectricity": false
   },
@@ -10917,7 +11906,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/machine_items/icon_fishing_boat_3_0.png",
     "rarity": "Epic",
     "administrativeBuilding": "Arctic Lodge",
-    "targets": ["Whaling Station"],
+    "targets": [
+      "Whaling Station"
+    ],
     "productivityEffect": 40,
     "providesElectricity": false
   },
@@ -10926,7 +11917,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/machine_items/icon_fishing_tool_1_0.png",
     "rarity": "Uncommon",
     "administrativeBuilding": "Arctic Lodge",
-    "targets": ["Seal Hunting Docks"],
+    "targets": [
+      "Seal Hunting Docks"
+    ],
     "productivityEffect": 0,
     "providesElectricity": false
   },
@@ -10935,7 +11928,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/machine_items/icon_fishing_tool_2_0.png",
     "rarity": "Rare",
     "administrativeBuilding": "Arctic Lodge",
-    "targets": ["Seal Hunting Docks"],
+    "targets": [
+      "Seal Hunting Docks"
+    ],
     "productivityEffect": 35,
     "providesElectricity": false
   },
@@ -10944,7 +11939,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/machine_items/icon_fishing_tool_3_0.png",
     "rarity": "Epic",
     "administrativeBuilding": "Arctic Lodge",
-    "targets": ["Seal Hunting Docks"],
+    "targets": [
+      "Seal Hunting Docks"
+    ],
     "productivityEffect": 40,
     "providesElectricity": false
   },
@@ -10953,7 +11950,10 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/machine_items/icon_bow_1_0.png",
     "rarity": "Uncommon",
     "administrativeBuilding": "Arctic Lodge",
-    "targets": ["Caribou Hunting Cabin", "Bear Hunting Cabin"],
+    "targets": [
+      "Caribou Hunting Cabin",
+      "Bear Hunting Cabin"
+    ],
     "productivityEffect": 25,
     "providesElectricity": false
   },
@@ -10962,7 +11962,10 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/machine_items/icon_bow_2_0.png",
     "rarity": "Rare",
     "administrativeBuilding": "Arctic Lodge",
-    "targets": ["Caribou Hunting Cabin", "Bear Hunting Cabin"],
+    "targets": [
+      "Caribou Hunting Cabin",
+      "Bear Hunting Cabin"
+    ],
     "productivityEffect": 35,
     "providesElectricity": false
   },
@@ -10971,7 +11974,10 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/machine_items/icon_bow_3_0.png",
     "rarity": "Epic",
     "administrativeBuilding": "Arctic Lodge",
-    "targets": ["Caribou Hunting Cabin", "Bear Hunting Cabin"],
+    "targets": [
+      "Caribou Hunting Cabin",
+      "Bear Hunting Cabin"
+    ],
     "productivityEffect": 0,
     "providesElectricity": false
   },
@@ -10980,7 +11986,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/machine_items/icon_cooking_stove_1_0.png",
     "rarity": "Uncommon",
     "administrativeBuilding": "Arctic Lodge",
-    "targets": ["Pemmican Cookhouse"],
+    "targets": [
+      "Pemmican Cookhouse"
+    ],
     "productivityEffect": 0,
     "providesElectricity": false
   },
@@ -10989,7 +11997,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/machine_items/icon_cooking_stove_2_0.png",
     "rarity": "Rare",
     "administrativeBuilding": "Arctic Lodge",
-    "targets": ["Pemmican Cookhouse"],
+    "targets": [
+      "Pemmican Cookhouse"
+    ],
     "productivityEffect": 35,
     "providesElectricity": false
   },
@@ -10998,7 +12008,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/machine_items/icon_cookng_stove_3_0.png",
     "rarity": "Epic",
     "administrativeBuilding": "Arctic Lodge",
-    "targets": ["Pemmican Cookhouse"],
+    "targets": [
+      "Pemmican Cookhouse"
+    ],
     "productivityEffect": 40,
     "providesElectricity": false
   },
@@ -11007,7 +12019,10 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/machine_items/icon_leather_tool_1_0.png",
     "rarity": "Uncommon",
     "administrativeBuilding": "Arctic Lodge",
-    "targets": ["Parka Factory", "Sleeping Bag Factory"],
+    "targets": [
+      "Parka Factory",
+      "Sleeping Bag Factory"
+    ],
     "productivityEffect": 25,
     "providesElectricity": false
   },
@@ -11016,7 +12031,10 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/machine_items/icon_leather_tool_2_0.png",
     "rarity": "Rare",
     "administrativeBuilding": "Arctic Lodge",
-    "targets": ["Parka Factory", "Sleeping Bag Factory"],
+    "targets": [
+      "Parka Factory",
+      "Sleeping Bag Factory"
+    ],
     "productivityEffect": 0,
     "providesElectricity": false
   },
@@ -11025,7 +12043,10 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/machine_items/icon_leather_tool_3_0.png",
     "rarity": "Epic",
     "administrativeBuilding": "Arctic Lodge",
-    "targets": ["Parka Factory", "Sleeping Bag Factory"],
+    "targets": [
+      "Parka Factory",
+      "Sleeping Bag Factory"
+    ],
     "productivityEffect": 40,
     "providesElectricity": false
   },
@@ -11034,7 +12055,10 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/machine_items/icon_snow_goggle_1_0.png",
     "rarity": "Uncommon",
     "administrativeBuilding": "Arctic Lodge",
-    "targets": ["Goose Farm", "Husky Farm"],
+    "targets": [
+      "Goose Farm",
+      "Husky Farm"
+    ],
     "productivityEffect": 25,
     "providesElectricity": false
   },
@@ -11043,7 +12067,10 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/machine_items/icon_snow_goggle_2_0.png",
     "rarity": "Rare",
     "administrativeBuilding": "Arctic Lodge",
-    "targets": ["Goose Farm", "Husky Farm"],
+    "targets": [
+      "Goose Farm",
+      "Husky Farm"
+    ],
     "productivityEffect": 0,
     "providesElectricity": false
   },
@@ -11052,7 +12079,10 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/machine_items/icon_snow_goggle_3_0.png",
     "rarity": "Epic",
     "administrativeBuilding": "Arctic Lodge",
-    "targets": ["Goose Farm", "Husky Farm"],
+    "targets": [
+      "Goose Farm",
+      "Husky Farm"
+    ],
     "productivityEffect": 60,
     "providesElectricity": false
   },
@@ -11061,7 +12091,12 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/machine_items/icon_axe_1_0.png",
     "rarity": "Uncommon",
     "administrativeBuilding": "Arctic Lodge",
-    "targets": ["Lumberjack's Hut", "Sawmill", "Sled Frame Factory", "Husky Sled Factory"],
+    "targets": [
+      "Lumberjack's Hut",
+      "Sawmill",
+      "Sled Frame Factory",
+      "Husky Sled Factory"
+    ],
     "productivityEffect": 0,
     "providesElectricity": false
   },
@@ -11070,7 +12105,12 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/machine_items/icon_axe_2_0.png",
     "rarity": "Rare",
     "administrativeBuilding": "Arctic Lodge",
-    "targets": ["Lumberjack's Hut", "Sawmill", "Sled Frame Factory", "Husky Sled Factory"],
+    "targets": [
+      "Lumberjack's Hut",
+      "Sawmill",
+      "Sled Frame Factory",
+      "Husky Sled Factory"
+    ],
     "productivityEffect": 35,
     "providesElectricity": false
   },
@@ -11079,7 +12119,12 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/machine_items/icon_axe_3_0.png",
     "rarity": "Epic",
     "administrativeBuilding": "Arctic Lodge",
-    "targets": ["Lumberjack's Hut", "Sawmill", "Sled Frame Factory", "Husky Sled Factory"],
+    "targets": [
+      "Lumberjack's Hut",
+      "Sawmill",
+      "Sled Frame Factory",
+      "Husky Sled Factory"
+    ],
     "productivityEffect": 40,
     "providesElectricity": false
   },
@@ -11088,7 +12133,10 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_inuit_specialist_906_a_0.png",
     "rarity": "Uncommon",
     "administrativeBuilding": "Arctic Lodge",
-    "targets": ["Parka Factory", "Sleeping Bag Factory"],
+    "targets": [
+      "Parka Factory",
+      "Sleeping Bag Factory"
+    ],
     "productivityEffect": 0,
     "providesElectricity": false
   },
@@ -11097,7 +12145,10 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_inuit_specialist_1000_0.png",
     "rarity": "Rare",
     "administrativeBuilding": "Arctic Lodge",
-    "targets": ["Parka Factory", "Sleeping Bag Factory"],
+    "targets": [
+      "Parka Factory",
+      "Sleeping Bag Factory"
+    ],
     "extraGoods": [
       {
         "good": "Seal Skin",
@@ -11122,7 +12173,10 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_inuit_specialist_1006_b_0.png",
     "rarity": "Uncommon",
     "administrativeBuilding": "Arctic Lodge",
-    "targets": ["Goose Farm", "Husky Farm"],
+    "targets": [
+      "Goose Farm",
+      "Husky Farm"
+    ],
     "productivityEffect": 20,
     "providesElectricity": false
   },
@@ -11131,7 +12185,10 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_inuit_specialist_1006_c_0.png",
     "rarity": "Rare",
     "administrativeBuilding": "Arctic Lodge",
-    "targets": ["Goose Farm", "Husky Farm"],
+    "targets": [
+      "Goose Farm",
+      "Husky Farm"
+    ],
     "productivityEffect": 0,
     "providesElectricity": false
   },
@@ -11140,7 +12197,10 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_inuit_specialist_901b_0.png",
     "rarity": "Epic",
     "administrativeBuilding": "Arctic Lodge",
-    "targets": ["Goose Farm", "Husky Farm"],
+    "targets": [
+      "Goose Farm",
+      "Husky Farm"
+    ],
     "extraGoods": [
       {
         "good": "Caribou Meat",
@@ -11156,7 +12216,12 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_inuit_specialist_903_0.png",
     "rarity": "Uncommon",
     "administrativeBuilding": "Arctic Lodge",
-    "targets": ["Whaling Station", "Seal Hunting Docks", "Caribou Hunting Cabin", "Bear Hunting Cabin"],
+    "targets": [
+      "Whaling Station",
+      "Seal Hunting Docks",
+      "Caribou Hunting Cabin",
+      "Bear Hunting Cabin"
+    ],
     "productivityEffect": 0,
     "providesElectricity": false
   },
@@ -11165,7 +12230,12 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_inuit_specialist_902b_0.png",
     "rarity": "Rare",
     "administrativeBuilding": "Arctic Lodge",
-    "targets": ["Whaling Station", "Seal Hunting Docks", "Caribou Hunting Cabin", "Bear Hunting Cabin"],
+    "targets": [
+      "Whaling Station",
+      "Seal Hunting Docks",
+      "Caribou Hunting Cabin",
+      "Bear Hunting Cabin"
+    ],
     "productivityEffect": 30,
     "providesElectricity": false
   },
@@ -11174,7 +12244,12 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_inuit_specialist_1005_b_0.png",
     "rarity": "Epic",
     "administrativeBuilding": "Arctic Lodge",
-    "targets": ["Whaling Station", "Seal Hunting Docks", "Caribou Hunting Cabin", "Bear Hunting Cabin"],
+    "targets": [
+      "Whaling Station",
+      "Seal Hunting Docks",
+      "Caribou Hunting Cabin",
+      "Bear Hunting Cabin"
+    ],
     "extraGoods": [
       {
         "good": "Goose Feathers",
@@ -11190,7 +12265,11 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_inuit_specialist_1002_a_0.png",
     "rarity": "Uncommon",
     "administrativeBuilding": "Arctic Lodge",
-    "targets": ["Lumberjack's Hut", "Sled Frame Factory", "Husky Sled Factory"],
+    "targets": [
+      "Lumberjack's Hut",
+      "Sled Frame Factory",
+      "Husky Sled Factory"
+    ],
     "productivityEffect": 0,
     "providesElectricity": false
   },
@@ -11199,7 +12278,11 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_inuit_specialist_1001_a_0.png",
     "rarity": "Rare",
     "administrativeBuilding": "Arctic Lodge",
-    "targets": ["Lumberjack's Hut", "Sled Frame Factory", "Husky Sled Factory"],
+    "targets": [
+      "Lumberjack's Hut",
+      "Sled Frame Factory",
+      "Husky Sled Factory"
+    ],
     "productivityEffect": 25,
     "providesElectricity": false
   },
@@ -11208,7 +12291,11 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_inuit_specialist_904_0.png",
     "rarity": "Epic",
     "administrativeBuilding": "Arctic Lodge",
-    "targets": ["Lumberjack's Hut", "Sled Frame Factory", "Husky Sled Factory"],
+    "targets": [
+      "Lumberjack's Hut",
+      "Sled Frame Factory",
+      "Husky Sled Factory"
+    ],
     "extraGoods": [
       {
         "good": "Timber",
@@ -11224,7 +12311,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_inuit_specialist_1003_b_0.png",
     "rarity": "Uncommon",
     "administrativeBuilding": "Arctic Lodge",
-    "targets": ["Pemmican Cookhouse"],
+    "targets": [
+      "Pemmican Cookhouse"
+    ],
     "productivityEffect": 0,
     "providesElectricity": false
   },
@@ -11242,7 +12331,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_inuit_specialist_1004_0.png",
     "rarity": "Epic",
     "administrativeBuilding": "Arctic Lodge",
-    "targets": ["Pemmican Cookhouse"],
+    "targets": [
+      "Pemmican Cookhouse"
+    ],
     "extraGoods": [
       {
         "good": "Oil Lamps",
@@ -11313,7 +12404,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/machine_items/icon_lamp_maker_0.png",
     "rarity": "Epic",
     "administrativeBuilding": "Arctic Lodge",
-    "targets": ["Oil Lamp Factory"],
+    "targets": [
+      "Oil Lamp Factory"
+    ],
     "replacementGoods": [
       {
         "from": "Brass",
@@ -11343,7 +12436,10 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/machine_items/icon_berries_press_0.png",
     "rarity": "Legendary",
     "administrativeBuilding": "Arctic Lodge",
-    "targets": ["Lumberjack's Hut", "Charcoal Kiln"],
+    "targets": [
+      "Lumberjack's Hut",
+      "Charcoal Kiln"
+    ],
     "extraGoods": [
       {
         "good": "Schnapps",
@@ -11359,7 +12455,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/machine_items/icon_canning_machine_0.png",
     "rarity": "Legendary",
     "administrativeBuilding": "Arctic Lodge",
-    "targets": ["Pemmican Cookhouse"],
+    "targets": [
+      "Pemmican Cookhouse"
+    ],
     "extraGoods": [
       {
         "good": "Canned Food",
@@ -11384,7 +12482,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/machine_items/icon_gas_extractor_0.png",
     "rarity": "Legendary",
     "administrativeBuilding": "Arctic Lodge",
-    "targets": ["Arctic Gas Mine"],
+    "targets": [
+      "Arctic Gas Mine"
+    ],
     "extraGoods": [
       {
         "good": "Zinc",
@@ -11414,7 +12514,11 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/systemic/icon_inuit_specialist_1003_a_0.png",
     "rarity": "Epic",
     "administrativeBuilding": "Arctic Lodge",
-    "targets": ["Caribou Hunting Cabin", "Bear Hunting Cabin", "Prime Hunting Cabin"],
+    "targets": [
+      "Caribou Hunting Cabin",
+      "Bear Hunting Cabin",
+      "Prime Hunting Cabin"
+    ],
     "extraGoods": [
       {
         "good": "Bear Fur",
@@ -11430,7 +12534,9 @@
     "iconUrl": "https://anno-toolkit.jansepke.de/img/main/3dicons/specialists/empireofskies/icon_cold_fracking_expert_a_0.png",
     "rarity": "Epic",
     "administrativeBuilding": "Arctic Lodge",
-    "targets": ["Deep Gold Mine"],
+    "targets": [
+      "Deep Gold Mine"
+    ],
     "extraGoods": [
       {
         "good": "Arctic Gas",

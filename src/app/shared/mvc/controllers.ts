@@ -36,6 +36,16 @@ function generatePseudorandomInt(): number {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
+const resolveDuplicateReplacementGoods = (g1: Good, g2: Good): Good => {
+  // Prefer Susanna the Steam Engineer (switches input from Steam Motors to
+  // Filaments) over Maria Maravilla (switches input from Steam Motors to
+  // Motors) because Filaments are much much easier to produce.
+  if (g1 === Good.Filaments && g2 === Good.Motor) {
+    return Good.Filaments;
+  }
+  return g2;
+};
+
 export class ProductionLineController extends ProductionLineView {
   static override wrap(
     model: ProductionLine,
@@ -58,7 +68,13 @@ export class ProductionLineController extends ProductionLineView {
     for (const item of this.model.items ?? []) {
       const itemInfo = lookupItemInfo(item)!;
       for (const replacementGood of itemInfo.replacementGoods ?? []) {
-        inputGoodMappings.set(replacementGood.from, replacementGood.to);
+        inputGoodMappings.set(
+          replacementGood.from,
+          resolveDuplicateReplacementGoods(
+            inputGoodMappings.get(replacementGood.from)!,
+            replacementGood.to,
+          ),
+        );
       }
     }
     this.model.inputGoods = [...inputGoodMappings.values()].filter(

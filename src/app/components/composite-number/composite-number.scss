@@ -1,3 +1,20 @@
+.container {
+  display: flex;
+
+  formatted-number {
+    margin: auto 2px auto auto;
+  }
+
+  mat-icon {
+    margin: auto auto auto 0;
+    width: 14px;
+    height: 14px;
+    font-size: 14px;
+    // Soften slightly so it isn't too jarring.
+    opacity: 0.75;
+  }
+}
+
 .tooltip-container {
   display: flex;
   flex-direction: column;

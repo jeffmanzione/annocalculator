@@ -54,6 +54,8 @@ import {
   TooltipDirective,
 } from '../../../components/enum-tooltip/enum-tooltip';
 import { CompositeNumber } from '../../../components/composite-number/composite-number';
+import { ExtraGoodView } from '../../../shared/mvc/views';
+import { BoostTooltip } from './tooltips/boost/boost-tooltip';
 
 @Component({
   selector: 'island',
@@ -74,6 +76,7 @@ import { CompositeNumber } from '../../../components/composite-number/composite-
     SimpleTooltip,
     TextFieldModule,
     TooltipDirective,
+    BoostTooltip,
   ],
   templateUrl: './island.html',
   styleUrl: './island.scss',
@@ -112,7 +115,6 @@ export class Island
     columns.push(
       'efficiency',
       'buildingProcessTimeSeconds',
-      'goodProcessTimeSeconds',
       'goodsProducedPerMinute',
       'remove',
     );
@@ -125,7 +127,6 @@ export class Island
     'rateNumerator',
     'divideSymbol',
     'rateDenominator',
-    'processTimeSeconds',
     'producedPerMinute',
   ];
 
@@ -254,6 +255,13 @@ export class Island
 
   lookupPolicyIconUrl(policy: DepartmentOfLaborPolicy | null): string {
     return lookupPolicyIconUrl(policy ?? DepartmentOfLaborPolicy.None);
+  }
+
+  extraGoodLookupIconUrlFn(extraGood: ExtraGoodView): (_: any) => string {
+    if (extraGood.sourceType === 'Boost') {
+      return lookupBoostIconUrl;
+    }
+    return lookupItemIconUrl;
   }
 
   isHarborItem(item: Item): boolean {

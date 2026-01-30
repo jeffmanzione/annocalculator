@@ -15,6 +15,27 @@ function getEnumValue<T>(enumObj: T, value: string): T[keyof T] | undefined {
   return match ? (match[1] as T[keyof T]) : undefined;
 }
 
+function getProductionBuildings(
+  targets: { label: string }[],
+): ProductionBuilding[] {
+  const set = new Set<ProductionBuilding>();
+  for (const target of targets) {
+    if (target.label == 'Cattle Farm') {
+      // Handle special case where there are different cattle farms for old and new world.
+      set.add(ProductionBuilding.CattleFarmOldWorld);
+      set.add(ProductionBuilding.CattleFarmNewWorld);
+      continue;
+    }
+    const building = getEnumValue(ProductionBuilding, target.label);
+    if (building) {
+      set.add(building);
+    } else {
+      console.log(`Could not find match for building: '${target.label}'.`);
+    }
+  }
+  return Array.from(set);
+}
+
 const allocationToAdminBuilding = new Map<string, AdministrativeBuilding>([
   ['guildhouseitem', AdministrativeBuilding.TradeUnion],
   ['harborofficeitem', AdministrativeBuilding.HarbourmastersOffice],
@@ -44,20 +65,14 @@ export function transformTradeUnionItems(rawData: any[]): ItemInfo[] {
           `${raw.name} (${allocationToAdminBuildingName.get(raw.type)})`,
         )!,
 
-      iconUrl: `https://anno-toolkit.jansepke.de/${raw.icon}`,
+      iconUrl: `https://anno-toolkit.jansepke.de${raw.icon}`,
       // Map rarity: "common" (JSON) -> Rarity.Common (Enum)
       rarity: getEnumValue(Rarity, raw.rarityLabel) || Rarity.Unknown,
 
       administrativeBuilding: typeToAdminBuilding(raw.type),
 
       // Map effect targets to ProductionBuilding enum
-      targets: Array.from(
-        new Set<ProductionBuilding>(
-          raw.effectTargets
-            .map((t: any) => getEnumValue(ProductionBuilding, t.label))
-            .filter((t: any) => t !== undefined),
-        ),
-      ),
+      targets: getProductionBuildings(raw.effectTargets),
 
       extraGoods: [],
       replacementGoods: [],
@@ -85,14 +100,14 @@ export function transformTradeUnionItems(rawData: any[]): ItemInfo[] {
 
           case 'AdditionalOutput':
             upgrade.value.Item.forEach((output: any) => {
-              const good = getEnumValue(Good, output.Product_label);
-              if (good) {
-                item.extraGoods?.push({
-                  good: good,
-                  rateNumerator: output.Amount,
-                  rateDenominator: output.AdditionalOutputCycle,
-                });
-              }
+              item.extraGoods?.push({
+                good:
+                  'Product_label' in output
+                    ? getEnumValue(Good, output.Product_label)
+                    : undefined,
+                rateNumerator: output.Amount,
+                rateDenominator: output.AdditionalOutputCycle,
+              });
             });
             break;
 
