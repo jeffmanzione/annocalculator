@@ -66,9 +66,14 @@ table.production-lines-table {
       max-width: 50px;
     }
 
-    &.trade-bonus-field {
-      width: 70px;
-      max-width: 70px;
+    &.goods-field {
+      width: 100px;
+      max-width: 100px;
+    }
+
+    &.boosts-field {
+      width: 130px;
+      max-width: 130px;
     }
 
     &.production-line-row {
@@ -109,11 +114,6 @@ table.production-lines-table {
 
 .extra-good-table-row {
   height: 0;
-}
-
-.add-extra-good-button {
-  display: flex;
-  margin-bottom: 8px;
 }
 
 section {

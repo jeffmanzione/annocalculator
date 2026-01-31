@@ -31,6 +31,8 @@ import { ReadonlyTable, Table } from '../../../../tools/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSort, MatSortModule } from '@angular/material/sort';
+import { EnumRow } from '../../../components/enum-row/enum-row';
+import { lookupGoodIconUrl } from '../../../shared/game/icons';
 
 interface GoodSummaryCell {
   island: IslandView;
@@ -59,6 +61,7 @@ interface GoodSummaryRow {
     MatIconModule,
     MatTableModule,
     MatSortModule,
+    EnumRow,
   ],
   templateUrl: './summary-panel.html',
   styleUrl: './summary-panel.scss',
@@ -217,6 +220,10 @@ export class SummaryPanel implements OnInit, AfterViewInit {
       cell.importedPerMin -
       cell.exportedPerMin
     );
+  }
+
+  lookupGoodIconUrl(good: Good | null | undefined): string {
+    return lookupGoodIconUrl(good ?? Good.Unknown);
   }
 
   private buildBaseTableCells(): Table<IslandId, Good, GoodSummaryCell> {

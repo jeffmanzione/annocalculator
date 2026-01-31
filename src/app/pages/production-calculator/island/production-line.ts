@@ -41,7 +41,6 @@ export class ProductionLineControl extends FormGroupControl<ProductionLineContro
   efficiency: number = 0;
   efficiencyConstituents: NumberConstituent[] = [];
   buildingProcessTimeSeconds: number = 0;
-  // goodProcessTimeSeconds: number = 0;
   goodsProducedPerMinute: number = 0;
 
   constructor(controller: ProductionLineController) {
@@ -174,7 +173,8 @@ export class ProductionLineControl extends FormGroupControl<ProductionLineContro
 
     this.buildingProcessTimeSeconds =
       this.controller.buildingProcessTimeSeconds;
-    this.goodsProducedPerMinute = this.controller.goodsProducedPerMinute;
+    this.goodsProducedPerMinute =
+      this.controller.goodsProducedPerMinuteWithExtras;
 
     this.extraGoods!.data = this.controller.extraGoods;
     this.hasExtraGoods = this.extraGoods!.data.length > 0;

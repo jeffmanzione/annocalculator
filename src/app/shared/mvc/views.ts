@@ -60,11 +60,16 @@ export class ExtraGoodView extends View<ExtraGood> implements ExtraGood {
     return this.model.good || this.context.productionLine?.good!;
   }
 
-  get source(): Item | Boost {
+  get source(): Item | Boost | DepartmentOfLaborPolicy {
     return this.model.source ?? DEFAULT_EXTRA_GOOD_MODEL.source!;
   }
 
-  get sourceType(): 'Item' | 'Boost' | undefined {
+  get sourceType():
+    | 'Item'
+    | 'Boost'
+    | 'ElectrifiedFarm'
+    | 'DepartmentOfLaborPolicy'
+    | undefined {
     return this.model.sourceType ?? DEFAULT_EXTRA_GOOD_MODEL.sourceType;
   }
 
@@ -83,14 +88,14 @@ export class ExtraGoodView extends View<ExtraGood> implements ExtraGood {
   }
 
   get processTimeSeconds(): number {
-    if (this.sourceType === 'Boost') {
+    if (this.sourceType === 'ElectrifiedFarm') {
       return 60 / this.model.producedPerMinute!;
     }
     return this.context.productionLine!.buildingProcessTimeSeconds;
   }
 
   get producedPerMinutePerBuilding(): number {
-    return this.sourceType === 'Boost'
+    return this.sourceType === 'ElectrifiedFarm'
       ? this.model.producedPerMinute!
       : (60 / this.processTimeSeconds) * this.rate;
   }
@@ -277,45 +282,6 @@ export class ProductionLineView
     );
   }
 
-  private computeExtraGoodsModifier(): number {
-    const productionInfo = lookupProductionInfo(this.building);
-    if (productionInfo?.good != this.good) {
-      return 1;
-    }
-
-    let modifier = 1;
-
-    if (this.hasTradeUnion && this.inRangeOfLocalDepartment) {
-      if (
-        improvedByLandReformAct.has(this.building) &&
-        this.context.island?.dolPolicy == DepartmentOfLaborPolicy.LandReformAct
-      ) {
-        // 1 extra good for every 2 produced.
-        modifier *= 3 / 2;
-      } else if (
-        improvedBySkilledLaborAct.has(this.building) &&
-        this.context.island?.dolPolicy ==
-          DepartmentOfLaborPolicy.SkilledLaborAct
-      ) {
-        // 1 extra good for every 3 produced
-        modifier *= 4 / 3;
-      }
-    }
-    if (this.boosts.includes(Boost.TractorBarn)) {
-      // 1 extra good for every 3 produced
-      modifier *= 4 / 3;
-    }
-    if (this.boosts.includes(Boost.Silo)) {
-      // 1 extra good for every 3 produced
-      modifier *= 4 / 3;
-    }
-    if (this.boosts.includes(Boost.Fertiliser)) {
-      // 1 extra good for every 3 produced
-      modifier *= 4 / 3;
-    }
-    return modifier;
-  }
-
   get extraGoods(): ExtraGoodView[] {
     const extraGoods = [];
 
@@ -332,7 +298,99 @@ export class ProductionLineView
       );
     }
 
-    extraGoods.push(...this.electricityExtraGoods, ...this.itemExtraGoods);
+    extraGoods.push(
+      ...this.electricityExtraGoods,
+      ...this.bonusExtraGoods,
+      ...this.itemExtraGoods,
+    );
+    return extraGoods;
+  }
+
+  get bonusExtraGoods(): ExtraGoodView[] {
+    const extraGoods: ExtraGoodView[] = [];
+
+    if (this.hasTradeUnion && this.inRangeOfLocalDepartment) {
+      if (
+        improvedByLandReformAct.has(this.building) &&
+        this.context.island?.dolPolicy == DepartmentOfLaborPolicy.LandReformAct
+      ) {
+        // 1 extra good for every 2 produced.
+        extraGoods.push(
+          ExtraGoodView.wrap(
+            {
+              good: this.good,
+              source: DepartmentOfLaborPolicy.LandReformAct,
+              sourceType: 'DepartmentOfLaborPolicy',
+              rateNumerator: 1,
+              rateDenominator: 2,
+            },
+            { productionLine: this, ...this.context },
+          ),
+        );
+      } else if (
+        improvedBySkilledLaborAct.has(this.building) &&
+        this.context.island?.dolPolicy ==
+          DepartmentOfLaborPolicy.SkilledLaborAct
+      ) {
+        extraGoods.push(
+          ExtraGoodView.wrap(
+            {
+              good: this.good,
+              source: DepartmentOfLaborPolicy.SkilledLaborAct,
+              sourceType: 'DepartmentOfLaborPolicy',
+              rateNumerator: 1,
+              rateDenominator: 3,
+            },
+            { productionLine: this, ...this.context },
+          ),
+        );
+      }
+    }
+    if (this.boosts.includes(Boost.TractorBarn)) {
+      // 1 extra good for every 3 produced
+      extraGoods.push(
+        ExtraGoodView.wrap(
+          {
+            good: this.good,
+            source: Boost.TractorBarn,
+            sourceType: 'Boost',
+            rateNumerator: 1,
+            rateDenominator: 3,
+          },
+          { productionLine: this, ...this.context },
+        ),
+      );
+    }
+    if (this.boosts.includes(Boost.Silo)) {
+      // 1 extra good for every 3 produced
+      extraGoods.push(
+        ExtraGoodView.wrap(
+          {
+            good: this.good,
+            source: Boost.Silo,
+            sourceType: 'Boost',
+            rateNumerator: 1,
+            rateDenominator: 3,
+          },
+          { productionLine: this, ...this.context },
+        ),
+      );
+    }
+    if (this.boosts.includes(Boost.Fertiliser)) {
+      // 1 extra good for every 3 produced
+      extraGoods.push(
+        ExtraGoodView.wrap(
+          {
+            good: this.good,
+            source: Boost.Fertiliser,
+            sourceType: 'Boost',
+            rateNumerator: 1,
+            rateDenominator: 3,
+          },
+          { productionLine: this, ...this.context },
+        ),
+      );
+    }
     return extraGoods;
   }
 
@@ -348,7 +406,7 @@ export class ProductionLineView
           {
             good: eeg.good,
             source: Boost.Electricity,
-            sourceType: 'Boost',
+            sourceType: 'ElectrifiedFarm',
             producedPerMinute: 60 / eeg.processingTimeSeconds,
           },
           { productionLine: this, ...this.context },
@@ -389,10 +447,21 @@ export class ProductionLineView
   }
 
   get goodsProducedPerMinute(): number {
-    return (
-      (this.numBuildings * 60) /
-      (this.buildingProcessTimeSeconds / this.computeExtraGoodsModifier())
-    );
+    return (this.numBuildings * 60) / this.buildingProcessTimeSeconds;
+  }
+
+  get goodsProducedPerMinuteWithExtras(): number {
+    const extraGoods = this.extraGoods;
+    let rateModifier = 1;
+
+    for (const eg of extraGoods) {
+      if (eg.good !== this.good) {
+        continue;
+      }
+      rateModifier *=
+        (eg.rateNumerator + eg.rateDenominator) / eg.rateDenominator;
+    }
+    return this.goodsProducedPerMinute * rateModifier;
   }
 
   get islandHasDepartmentOfLabor(): boolean {

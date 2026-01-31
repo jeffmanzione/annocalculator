@@ -260,6 +260,8 @@ export class Island
   extraGoodLookupIconUrlFn(extraGood: ExtraGoodView): (_: any) => string {
     if (extraGood.sourceType === 'Boost') {
       return lookupBoostIconUrl;
+    } else if (extraGood.sourceType === 'DepartmentOfLaborPolicy') {
+      return lookupPolicyIconUrl;
     }
     return lookupItemIconUrl;
   }
