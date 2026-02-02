@@ -4,7 +4,7 @@
       <img [src]="iconGoodUrlLookupFn(boost)" [alt]="boost" class="item-icon-big" />
     }
     <div class="item-name">{{ boost }}</div>
-    @if (boostInfo!.productivityEffect ?? 0 > 0) {
+    @if ((boostInfo!.productivityEffect ?? 0) > 0) {
       <div class="item-text">{{ productivityText }}</div>
     }
     @if (boostInfo!.extraGood) {

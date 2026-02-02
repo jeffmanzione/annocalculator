@@ -14,6 +14,7 @@ import {
   lookupProductionInfo,
   regionSupportsElectricty,
   buildingSupportsElectricity,
+  lookupBoostInfo,
 } from '../game/facts';
 import {
   DEFAULT_ISLAND_MODEL,
@@ -60,7 +61,11 @@ export class ExtraGoodView extends View<ExtraGood> implements ExtraGood {
     return this.model.good || this.context.productionLine?.good!;
   }
 
-  get source(): Item | Boost | DepartmentOfLaborPolicy {
+  get source():
+    | Item
+    | Boost
+    | DepartmentOfLaborPolicy
+    | 'Hacienda Fertilizer Works' {
     return this.model.source ?? DEFAULT_EXTRA_GOOD_MODEL.source!;
   }
 
@@ -69,6 +74,7 @@ export class ExtraGoodView extends View<ExtraGood> implements ExtraGood {
     | 'Boost'
     | 'ElectrifiedFarm'
     | 'DepartmentOfLaborPolicy'
+    | 'HaciendaFertilizerWorks'
     | undefined {
     return this.model.sourceType ?? DEFAULT_EXTRA_GOOD_MODEL.sourceType;
   }
@@ -290,6 +296,8 @@ export class ProductionLineView
         ExtraGoodView.wrap(
           {
             good: Good.Dung,
+            source: 'Hacienda Fertilizer Works',
+            sourceType: 'HaciendaFertilizerWorks',
             rateNumerator: 1,
             rateDenominator: 3,
           },
@@ -346,46 +354,17 @@ export class ProductionLineView
         );
       }
     }
-    if (this.boosts.includes(Boost.TractorBarn)) {
-      // 1 extra good for every 3 produced
+
+    for (const boost of this.boosts) {
+      const boostInfo = lookupBoostInfo(boost)!;
       extraGoods.push(
         ExtraGoodView.wrap(
           {
             good: this.good,
-            source: Boost.TractorBarn,
+            source: boost,
             sourceType: 'Boost',
-            rateNumerator: 1,
-            rateDenominator: 3,
-          },
-          { productionLine: this, ...this.context },
-        ),
-      );
-    }
-    if (this.boosts.includes(Boost.Silo)) {
-      // 1 extra good for every 3 produced
-      extraGoods.push(
-        ExtraGoodView.wrap(
-          {
-            good: this.good,
-            source: Boost.Silo,
-            sourceType: 'Boost',
-            rateNumerator: 1,
-            rateDenominator: 3,
-          },
-          { productionLine: this, ...this.context },
-        ),
-      );
-    }
-    if (this.boosts.includes(Boost.Fertiliser)) {
-      // 1 extra good for every 3 produced
-      extraGoods.push(
-        ExtraGoodView.wrap(
-          {
-            good: this.good,
-            source: Boost.Fertiliser,
-            sourceType: 'Boost',
-            rateNumerator: 1,
-            rateDenominator: 3,
+            rateNumerator: boostInfo.extraGood?.rateNumerator,
+            rateDenominator: boostInfo.extraGood?.rateDenominator,
           },
           { productionLine: this, ...this.context },
         ),

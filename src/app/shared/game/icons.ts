@@ -782,3 +782,5 @@ export const lookupRegionIconUrl = lookupUrlFn(regionToImageUrl);
 export const lookupPolicyIconUrl = lookupUrlFn(policyToImageUrl);
 export const lookupItemIconUrl = (item: Item) =>
   lookupItemInfo(item)?.iconUrl ?? defaultIconUrl;
+export const lookupHaciendaFertilizerWorksIconUrl = (_: any) =>
+  'https://static.wikia.nocookie.net/anno1800/images/6/6e/Hacienda_Fertiliser_Works.png';

@@ -16,7 +16,6 @@ import { lookupGoodIconUrl } from '../../../../../shared/game/icons';
 export class ItemTooltip extends EnumTooltip<Item> {
   item: Item | null = null;
   itemInfo: ItemInfo | null = null;
-  $: any;
 
   protected override onValueChange(value: Item): void {
     this.item = value;

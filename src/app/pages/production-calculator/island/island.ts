@@ -2,6 +2,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   OnInit,
+  TemplateRef,
   ViewChild,
 } from '@angular/core';
 import { IslandController } from '../../../shared/mvc/controllers';
@@ -44,6 +45,7 @@ import {
   lookupRegionIconUrl,
   lookupPolicyIconUrl,
   lookupItemIconUrl,
+  lookupHaciendaFertilizerWorksIconUrl,
 } from '../../../shared/game/icons';
 import { TextFieldModule } from '@angular/cdk/text-field';
 import { AcButton } from '../../../components/button/button';
@@ -257,13 +259,22 @@ export class Island
     return lookupPolicyIconUrl(policy ?? DepartmentOfLaborPolicy.None);
   }
 
+  lookupHaciendaFertilizerWorksIconUrl(_: any): string {
+    return lookupHaciendaFertilizerWorksIconUrl(_);
+  }
+
   extraGoodLookupIconUrlFn(extraGood: ExtraGoodView): (_: any) => string {
-    if (extraGood.sourceType === 'Boost') {
-      return lookupBoostIconUrl;
-    } else if (extraGood.sourceType === 'DepartmentOfLaborPolicy') {
-      return lookupPolicyIconUrl;
+    switch (extraGood.sourceType) {
+      case 'Boost':
+      case 'ElectrifiedFarm':
+        return lookupBoostIconUrl;
+      case 'DepartmentOfLaborPolicy':
+        return lookupPolicyIconUrl;
+      case 'HaciendaFertilizerWorks':
+        return lookupHaciendaFertilizerWorksIconUrl;
+      default:
+        return lookupItemIconUrl;
     }
-    return lookupItemIconUrl;
   }
 
   isHarborItem(item: Item): boolean {
@@ -288,5 +299,25 @@ export class Island
       emitEvent: false,
     });
     this.formGroup.controls[controlName].disable({ emitEvent: false });
+  }
+
+  selectTooltip(
+    extraGood: ExtraGoodView,
+    boostTooltip: TemplateRef<any>,
+    policyTooltip: TemplateRef<any>,
+    haciendaTooltip: TemplateRef<any>,
+    itemTooltip: TemplateRef<any>,
+  ): TemplateRef<any> {
+    switch (extraGood.sourceType) {
+      case 'Boost':
+      case 'ElectrifiedFarm':
+        return boostTooltip;
+      case 'DepartmentOfLaborPolicy':
+        return policyTooltip;
+      case 'HaciendaFertilizerWorks':
+        return haciendaTooltip;
+      default:
+        return itemTooltip;
+    }
   }
 }

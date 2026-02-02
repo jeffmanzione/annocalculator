@@ -169,13 +169,7 @@
                         <enum-row
                           [values]="!!element2.source ? [element2.source] : []"
                           [iconUrlLookupFn]="extraGoodLookupIconUrlFn(element2)"
-                          [tooltip]="
-                            element2.sourceType === 'Boost' || element2.sourceType === 'ElectrifiedFarm'
-                              ? boostTooltip
-                              : element2.sourceType === 'DepartmentOfLaborPolicy'
-                                ? policyTooltip
-                                : itemTooltip
-                          "
+                          [tooltip]="selectTooltip(element2, boostTooltip, policyTooltip, haciendaTooltip, itemTooltip)"
                           placeholderText="-"></enum-row>
                       </td>
                     </ng-container>
@@ -224,6 +218,9 @@
 </ng-template>
 <ng-template #policyTooltip let-value="value">
   <simple-tooltip [value]="value" [iconUrlLookupFn]="lookupPolicyIconUrl"></simple-tooltip>
+</ng-template>
+<ng-template #haciendaTooltip let-value="value">
+  <simple-tooltip [value]="value" [iconUrlLookupFn]="lookupHaciendaFertilizerWorksIconUrl"></simple-tooltip>
 </ng-template>
 <ng-template #boostTooltip let-value="value">
   <boost-tooltip [value]="value"></boost-tooltip>

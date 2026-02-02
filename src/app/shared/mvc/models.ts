@@ -13,8 +13,13 @@ export interface Model {}
 export interface ExtraGood extends Model {
   good?: Good;
 
-  source?: Item | Boost | DepartmentOfLaborPolicy;
-  sourceType?: 'Item' | 'Boost' | 'ElectrifiedFarm' | 'DepartmentOfLaborPolicy';
+  source?: Item | Boost | DepartmentOfLaborPolicy | 'Hacienda Fertilizer Works';
+  sourceType?:
+    | 'Item'
+    | 'Boost'
+    | 'ElectrifiedFarm'
+    | 'DepartmentOfLaborPolicy'
+    | 'HaciendaFertilizerWorks';
 
   rateNumerator?: number;
   rateDenominator?: number;
