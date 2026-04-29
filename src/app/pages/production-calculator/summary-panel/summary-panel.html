@@ -5,7 +5,9 @@
       <table mat-table [dataSource]="tableData" multiTemplateDataRows class="summary-table" matSort>
         <ng-container matColumnDef="good">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>Good</th>
-          <td mat-cell *matCellDef="let element">{{ element.good }}</td>
+          <td mat-cell *matCellDef="let element">
+            <enum-row [values]="[element.good]" [iconUrlLookupFn]="lookupGoodIconUrl"></enum-row>
+          </td>
         </ng-container>
         <ng-container matColumnDef="show-islands">
           <th mat-header-cell *matHeaderCellDef></th>

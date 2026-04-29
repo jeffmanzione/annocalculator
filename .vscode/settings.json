@@ -1,5 +1,10 @@
 {
   "prettier.bracketSameLine": false,
   "prettier.enable": true,
-  "prettier.configPath": ".prettierrc"
+  "prettier.configPath": ".prettierrc",
+  "javascript.format.enable": false,
+  "typescript.format.enable": false,
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
 }

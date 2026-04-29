@@ -1,0 +1,6243 @@
+[
+  {
+    "id": 190615,
+    "type": "harborofficeitem",
+    "name": "Angler",
+    "icon": "/img/main/3dicons/specialists/systemic/icon_fisher_401_0.png",
+    "effectTargets": [
+      {
+        "label": "All Fisheries",
+        "visible": true
+      },
+      {
+        "label": "Fishery",
+        "visible": false
+      },
+      {
+        "label": "Fish Oil Factory",
+        "visible": false
+      },
+      {
+        "label": "Lobster Fishery",
+        "visible": false
+      },
+      {
+        "label": "Calamari Fishery",
+        "visible": false
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [
+      {
+        "key": "perkfemale",
+        "value": 1
+      },
+      {
+        "key": "hunting",
+        "value": 10
+      }
+    ],
+    "rarity": "common",
+    "rarityLabel": "Common",
+    "upgrades": [
+      {
+        "key": "ProductivityUpgrade",
+        "value": {
+          "Value": 10,
+          "Percental": 1
+        },
+        "label": "Productivity"
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 190616,
+    "type": "harborofficeitem",
+    "name": "Diver",
+    "icon": "/img/main/3dicons/specialists/systemic/icon_pearl_diver_102_0.png",
+    "effectTargets": [
+      {
+        "label": "Pearl Farm",
+        "visible": true
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [
+      {
+        "key": "perkmale",
+        "value": 1
+      },
+      {
+        "key": "hunting",
+        "value": 10
+      },
+      {
+        "key": "perkformerpirate",
+        "value": 1
+      }
+    ],
+    "rarity": "common",
+    "rarityLabel": "Common",
+    "upgrades": [
+      {
+        "key": "ProductivityUpgrade",
+        "value": {
+          "Value": 10,
+          "Percental": 1
+        },
+        "label": "Productivity"
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 190617,
+    "type": "harborofficeitem",
+    "name": "Line Fisherman",
+    "icon": "/img/main/3dicons/specialists/systemic/icon_fisherman_101_b_0.png",
+    "effectTargets": [
+      {
+        "label": "All Fisheries",
+        "visible": true
+      },
+      {
+        "label": "Fishery",
+        "visible": false
+      },
+      {
+        "label": "Fish Oil Factory",
+        "visible": false
+      },
+      {
+        "label": "Lobster Fishery",
+        "visible": false
+      },
+      {
+        "label": "Calamari Fishery",
+        "visible": false
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [
+      {
+        "key": "perkmale",
+        "value": 1
+      },
+      {
+        "key": "hunting",
+        "value": 20
+      }
+    ],
+    "rarity": "uncommon",
+    "rarityLabel": "Uncommon",
+    "upgrades": [
+      {
+        "key": "MaintenanceUpgrade",
+        "value": {
+          "Value": -75,
+          "Percental": 1
+        },
+        "label": "Maintenance Cost"
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 190618,
+    "type": "harborofficeitem",
+    "name": "Pearl Diver",
+    "icon": "/img/main/3dicons/specialists/systemic/icon_pearl_diver_101_0.png",
+    "effectTargets": [
+      {
+        "label": "Pearl Farm",
+        "visible": true
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [
+      {
+        "key": "perkmale",
+        "value": 1
+      },
+      {
+        "key": "hunting",
+        "value": 20
+      },
+      {
+        "key": "perkdiver",
+        "value": 1
+      }
+    ],
+    "rarity": "uncommon",
+    "rarityLabel": "Uncommon",
+    "upgrades": [
+      {
+        "key": "WorkforceAmountUpgrade",
+        "value": {
+          "Value": -50,
+          "Percental": 1
+        },
+        "label": "Workforce Needed"
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 190619,
+    "type": "harborofficeitem",
+    "name": "Veteran Whaler",
+    "icon": "/img/main/3dicons/specialists/systemic/icon_fisherman_102_0.png",
+    "effectTargets": [
+      {
+        "label": "All Fisheries",
+        "visible": true
+      },
+      {
+        "label": "Fishery",
+        "visible": false
+      },
+      {
+        "label": "Fish Oil Factory",
+        "visible": false
+      },
+      {
+        "label": "Lobster Fishery",
+        "visible": false
+      },
+      {
+        "label": "Calamari Fishery",
+        "visible": false
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [
+      {
+        "key": "perkmale",
+        "value": 1
+      },
+      {
+        "key": "hunting",
+        "value": 30
+      },
+      {
+        "key": "navigation",
+        "value": 10
+      },
+      {
+        "key": "perkdiver",
+        "value": 1
+      }
+    ],
+    "rarity": "rare",
+    "rarityLabel": "Rare",
+    "upgrades": [
+      {
+        "key": "AdditionalOutput",
+        "value": {
+          "Item": [
+            {
+              "Product": 1010234,
+              "AdditionalOutputCycle": 5,
+              "Amount": 1,
+              "Product_label": "Tallow"
+            }
+          ]
+        },
+        "label": "Extra Goods"
+      },
+      {
+        "key": "MaintenanceUpgrade",
+        "value": {
+          "Value": -25,
+          "Percental": 1
+        },
+        "label": "Maintenance Cost"
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 190620,
+    "type": "harborofficeitem",
+    "name": "Daring Scuba Diver",
+    "icon": "/img/main/3dicons/specialists/systemic/icon_pearl_diver_201_0.png",
+    "effectTargets": [
+      {
+        "label": "Pearl Farm",
+        "visible": true
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [
+      {
+        "key": "perkmale",
+        "value": 1
+      },
+      {
+        "key": "hunting",
+        "value": 30
+      },
+      {
+        "key": "navigation",
+        "value": 10
+      },
+      {
+        "key": "perkdiver",
+        "value": 1
+      }
+    ],
+    "rarity": "rare",
+    "rarityLabel": "Rare",
+    "upgrades": [
+      {
+        "key": "ProductivityUpgrade",
+        "value": {
+          "Value": 30,
+          "Percental": 1
+        },
+        "label": "Productivity"
+      },
+      {
+        "key": "AdditionalOutput",
+        "value": {
+          "Item": [
+            {
+              "Product": 120042,
+              "AdditionalOutputCycle": 5,
+              "Amount": 1,
+              "Product_label": "Fish Oil"
+            }
+          ]
+        },
+        "label": "Extra Goods"
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 190621,
+    "type": "harborofficeitem",
+    "name": "Mother of Pearls",
+    "icon": "/img/main/3dicons/specialists/systemic/icon_worker_414_0.png",
+    "effectTargets": [
+      {
+        "label": "All Fisheries",
+        "visible": true
+      },
+      {
+        "label": "Fishery",
+        "visible": false
+      },
+      {
+        "label": "Fish Oil Factory",
+        "visible": false
+      },
+      {
+        "label": "Lobster Fishery",
+        "visible": false
+      },
+      {
+        "label": "Calamari Fishery",
+        "visible": false
+      },
+      {
+        "label": "Pearl Farm",
+        "visible": true
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [
+      {
+        "key": "perkfemale",
+        "value": 1
+      },
+      {
+        "key": "hunting",
+        "value": 40
+      },
+      {
+        "key": "crafting",
+        "value": 20
+      },
+      {
+        "key": "perkdiver",
+        "value": 1
+      }
+    ],
+    "rarity": "epic",
+    "rarityLabel": "Epic",
+    "upgrades": [
+      {
+        "key": "ProductivityUpgrade",
+        "value": {
+          "Value": 40,
+          "Percental": 1
+        },
+        "label": "Productivity"
+      },
+      {
+        "key": "AdditionalOutput",
+        "value": {
+          "Item": [
+            {
+              "Product": 1010234,
+              "AdditionalOutputCycle": 4,
+              "Amount": 1,
+              "Product_label": "Tallow"
+            }
+          ]
+        },
+        "label": "Extra Goods"
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 190622,
+    "type": "harborofficeitem",
+    "name": "Captain Moby, Old Dog of the Sea",
+    "icon": "/img/main/3dicons/specialists/systemic/icon_navigator_102_0.png",
+    "effectTargets": [
+      {
+        "label": "All Fisheries",
+        "visible": true
+      },
+      {
+        "label": "Fishery",
+        "visible": false
+      },
+      {
+        "label": "Fish Oil Factory",
+        "visible": false
+      },
+      {
+        "label": "Lobster Fishery",
+        "visible": false
+      },
+      {
+        "label": "Calamari Fishery",
+        "visible": false
+      },
+      {
+        "label": "Pearl Farm",
+        "visible": true
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [
+      {
+        "key": "perkmale",
+        "value": 1
+      },
+      {
+        "key": "hunting",
+        "value": 50
+      },
+      {
+        "key": "navigation",
+        "value": 30
+      },
+      {
+        "key": "might",
+        "value": 10
+      },
+      {
+        "key": "perkzoologist",
+        "value": 1
+      }
+    ],
+    "rarity": "legendary",
+    "rarityLabel": "Legendary",
+    "upgrades": [
+      {
+        "key": "ProductivityUpgrade",
+        "value": {
+          "Value": 50,
+          "Percental": 1
+        },
+        "label": "Productivity"
+      },
+      {
+        "key": "AdditionalOutput",
+        "value": {
+          "Item": [
+            {
+              "Product": 1010234,
+              "AdditionalOutputCycle": 5,
+              "Amount": 1,
+              "Product_label": "Tallow"
+            },
+            {
+              "Product": 1010249,
+              "AdditionalOutputCycle": 7,
+              "Amount": 1,
+              "Product_label": "Gold"
+            }
+          ]
+        },
+        "label": "Extra Goods"
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 190664,
+    "type": "harborofficeitem",
+    "name": "Bruiser",
+    "icon": "/img/main/3dicons/specialists/systemic/icon_custom_officer_101_0.png",
+    "effectTargets": [
+      {
+        "label": "All Trading Posts and Piers",
+        "visible": true
+      },
+      {
+        "label": "All Trading Posts",
+        "visible": false
+      },
+      {
+        "label": "Pier",
+        "visible": false
+      },
+      {
+        "label": "Pier",
+        "visible": false
+      },
+      {
+        "label": "Pier",
+        "visible": false
+      },
+      {
+        "label": "Advanced Pier",
+        "visible": false
+      },
+      {
+        "label": "Advanced Pier",
+        "visible": false
+      },
+      {
+        "label": "Advanced Pier",
+        "visible": false
+      },
+      {
+        "label": "Docklands Main Wharf",
+        "visible": false
+      },
+      {
+        "label": "Pier",
+        "visible": false
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [
+      {
+        "key": "perkmale",
+        "value": 1
+      },
+      {
+        "key": "diplomacy",
+        "value": 10
+      }
+    ],
+    "rarity": "common",
+    "rarityLabel": "Common",
+    "upgrades": [
+      {
+        "key": "GenProbability",
+        "value": 10,
+        "label": "Harbour Activity"
+      },
+      {
+        "key": "GenPool",
+        "value": ["Grain", "Hops", "Potatoes", "Grapes", "Red Peppers"],
+        "label": "Bonus Supply"
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 190665,
+    "type": "harborofficeitem",
+    "name": "Scammer",
+    "icon": "/img/main/3dicons/specialists/systemic/icon_custom_officer_201_0.png",
+    "effectTargets": [
+      {
+        "label": "All Trading Posts and Piers",
+        "visible": true
+      },
+      {
+        "label": "All Trading Posts",
+        "visible": false
+      },
+      {
+        "label": "Pier",
+        "visible": false
+      },
+      {
+        "label": "Pier",
+        "visible": false
+      },
+      {
+        "label": "Pier",
+        "visible": false
+      },
+      {
+        "label": "Advanced Pier",
+        "visible": false
+      },
+      {
+        "label": "Advanced Pier",
+        "visible": false
+      },
+      {
+        "label": "Advanced Pier",
+        "visible": false
+      },
+      {
+        "label": "Docklands Main Wharf",
+        "visible": false
+      },
+      {
+        "label": "Pier",
+        "visible": false
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [
+      {
+        "key": "perkmale",
+        "value": 1
+      },
+      {
+        "key": "diplomacy",
+        "value": 20
+      }
+    ],
+    "rarity": "uncommon",
+    "rarityLabel": "Uncommon",
+    "upgrades": [
+      {
+        "key": "GenProbability",
+        "value": 10,
+        "label": "Harbour Activity"
+      },
+      {
+        "key": "GenPool",
+        "value": ["Coins"],
+        "label": "Bonus Supply"
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 190666,
+    "type": "harborofficeitem",
+    "name": "Savvy Customs Officer",
+    "icon": "/img/main/3dicons/specialists/systemic/icon_custom_officer_0.png",
+    "effectTargets": [
+      {
+        "label": "All Trading Posts and Piers",
+        "visible": true
+      },
+      {
+        "label": "All Trading Posts",
+        "visible": false
+      },
+      {
+        "label": "Pier",
+        "visible": false
+      },
+      {
+        "label": "Pier",
+        "visible": false
+      },
+      {
+        "label": "Pier",
+        "visible": false
+      },
+      {
+        "label": "Advanced Pier",
+        "visible": false
+      },
+      {
+        "label": "Advanced Pier",
+        "visible": false
+      },
+      {
+        "label": "Advanced Pier",
+        "visible": false
+      },
+      {
+        "label": "Docklands Main Wharf",
+        "visible": false
+      },
+      {
+        "label": "Pier",
+        "visible": false
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [
+      {
+        "key": "perkfemale",
+        "value": 1
+      },
+      {
+        "key": "diplomacy",
+        "value": 30
+      },
+      {
+        "key": "melee",
+        "value": 10
+      }
+    ],
+    "rarity": "rare",
+    "rarityLabel": "Rare",
+    "upgrades": [
+      {
+        "key": "GenProbability",
+        "value": 15,
+        "label": "Harbour Activity"
+      },
+      {
+        "key": "GenPool",
+        "value": ["Weapons", "Dynamite", "Advanced Weapons", "Sails"],
+        "label": "Bonus Supply"
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 190667,
+    "type": "harborofficeitem",
+    "name": "Taxman Tim",
+    "icon": "/img/main/3dicons/specialists/systemic/icon_custom_officer_103_0.png",
+    "effectTargets": [
+      {
+        "label": "All Trading Posts and Piers",
+        "visible": true
+      },
+      {
+        "label": "All Trading Posts",
+        "visible": false
+      },
+      {
+        "label": "Pier",
+        "visible": false
+      },
+      {
+        "label": "Pier",
+        "visible": false
+      },
+      {
+        "label": "Pier",
+        "visible": false
+      },
+      {
+        "label": "Advanced Pier",
+        "visible": false
+      },
+      {
+        "label": "Advanced Pier",
+        "visible": false
+      },
+      {
+        "label": "Advanced Pier",
+        "visible": false
+      },
+      {
+        "label": "Docklands Main Wharf",
+        "visible": false
+      },
+      {
+        "label": "Pier",
+        "visible": false
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [
+      {
+        "key": "perkmale",
+        "value": 1
+      },
+      {
+        "key": "diplomacy",
+        "value": 40
+      },
+      {
+        "key": "melee",
+        "value": 20
+      }
+    ],
+    "rarity": "epic",
+    "rarityLabel": "Epic",
+    "upgrades": [
+      {
+        "key": "GenProbability",
+        "value": 15,
+        "label": "Harbour Activity"
+      },
+      {
+        "key": "GenPool",
+        "value": ["Weapons", "Advanced Weapons"],
+        "label": "Bonus Supply"
+      },
+      {
+        "key": "BlockHostileTakeover",
+        "value": 1,
+        "label": "Takeover Lockdown"
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 190668,
+    "type": "harborofficeitem",
+    "name": "Lady Banes, Proponent of Protectionism.",
+    "icon": "/img/main/3dicons/specialists/systemic/icon_captain_401_b_0.png",
+    "effectTargets": [
+      {
+        "label": "All Trading Posts and Piers",
+        "visible": true
+      },
+      {
+        "label": "All Trading Posts",
+        "visible": false
+      },
+      {
+        "label": "Pier",
+        "visible": false
+      },
+      {
+        "label": "Pier",
+        "visible": false
+      },
+      {
+        "label": "Pier",
+        "visible": false
+      },
+      {
+        "label": "Advanced Pier",
+        "visible": false
+      },
+      {
+        "label": "Advanced Pier",
+        "visible": false
+      },
+      {
+        "label": "Advanced Pier",
+        "visible": false
+      },
+      {
+        "label": "Docklands Main Wharf",
+        "visible": false
+      },
+      {
+        "label": "Pier",
+        "visible": false
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [
+      {
+        "key": "perkfemale",
+        "value": 1
+      },
+      {
+        "key": "diplomacy",
+        "value": 55
+      },
+      {
+        "key": "melee",
+        "value": 25
+      }
+    ],
+    "rarity": "legendary",
+    "rarityLabel": "Legendary",
+    "upgrades": [
+      {
+        "key": "GenProbability",
+        "value": 17,
+        "label": "Harbour Activity"
+      },
+      {
+        "key": "GenPool",
+        "value": [
+          "Bread",
+          "Goulash",
+          "Canned Food",
+          "Sausages",
+          "Chocolate",
+          "Fried Plantains",
+          "Tortillas",
+          "Beer",
+          "Schnapps",
+          "Champagne",
+          "Rum",
+          "Coffee"
+        ],
+        "label": "Bonus Supply"
+      },
+      {
+        "key": "BlockBuyShare",
+        "value": 1,
+        "label": "Share Lockdown"
+      },
+      {
+        "key": "HappinessIgnoresMorale",
+        "value": 1,
+        "label": "Will of Steel"
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 190680,
+    "type": "harborofficeitem",
+    "name": "Guide",
+    "icon": "/img/main/3dicons/specialists/systemic/icon_normal_dressed_401_0.png",
+    "effectTargets": [
+      {
+        "label": "All Public Moorings",
+        "visible": true
+      },
+      {
+        "label": "Public Mooring",
+        "visible": false
+      },
+      {
+        "label": "Public Mooring",
+        "visible": false
+      },
+      {
+        "label": "Tourist Mooring",
+        "visible": false
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [
+      {
+        "key": "perkfemale",
+        "value": 1
+      },
+      {
+        "key": "navigation",
+        "value": 10
+      }
+    ],
+    "rarity": "common",
+    "rarityLabel": "Common",
+    "upgrades": [
+      {
+        "key": "AttractivenessUpgrade",
+        "value": {
+          "Value": 15
+        },
+        "label": "Attractiveness"
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 190681,
+    "type": "harborofficeitem",
+    "name": "Souvenir Seller",
+    "icon": "/img/main/3dicons/specialists/systemic/icon_normaldress_303_0.png",
+    "effectTargets": [
+      {
+        "label": "All Public Moorings",
+        "visible": true
+      },
+      {
+        "label": "Public Mooring",
+        "visible": false
+      },
+      {
+        "label": "Public Mooring",
+        "visible": false
+      },
+      {
+        "label": "Tourist Mooring",
+        "visible": false
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [
+      {
+        "key": "perkfemale",
+        "value": 1
+      },
+      {
+        "key": "diplomacy",
+        "value": 20
+      }
+    ],
+    "rarity": "uncommon",
+    "rarityLabel": "Uncommon",
+    "upgrades": [
+      {
+        "key": "AttractivenessUpgrade",
+        "value": {
+          "Value": 15
+        },
+        "label": "Attractiveness"
+      },
+      {
+        "key": "MaintenanceUpgrade",
+        "value": {
+          "Value": -25,
+          "Percental": 1
+        },
+        "label": "Maintenance Cost"
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 190682,
+    "type": "harborofficeitem",
+    "name": "Travel Agent",
+    "icon": "/img/main/3dicons/specialists/systemic/icon_travelagent_827_0.png",
+    "effectTargets": [
+      {
+        "label": "All Public Moorings",
+        "visible": true
+      },
+      {
+        "label": "Public Mooring",
+        "visible": false
+      },
+      {
+        "label": "Public Mooring",
+        "visible": false
+      },
+      {
+        "label": "Tourist Mooring",
+        "visible": false
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [
+      {
+        "key": "perkfemale",
+        "value": 1
+      },
+      {
+        "key": "navigation",
+        "value": 30
+      },
+      {
+        "key": "diplomacy",
+        "value": 10
+      }
+    ],
+    "rarity": "rare",
+    "rarityLabel": "Rare",
+    "upgrades": [
+      {
+        "key": "AttractivenessUpgrade",
+        "value": {
+          "Value": 20
+        },
+        "label": "Attractiveness"
+      },
+      {
+        "key": "SpawnProbabilityFactor",
+        "value": {
+          "Value": 7,
+          "Percental": 1
+        },
+        "label": "Special Guests"
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 190683,
+    "type": "harborofficeitem",
+    "name": "Jaafan the Cruise Impresario",
+    "icon": "/img/main/3dicons/specialists/systemic/icon_travelagent_712_0.png",
+    "effectTargets": [
+      {
+        "label": "All Public Moorings",
+        "visible": true
+      },
+      {
+        "label": "Public Mooring",
+        "visible": false
+      },
+      {
+        "label": "Public Mooring",
+        "visible": false
+      },
+      {
+        "label": "Tourist Mooring",
+        "visible": false
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [
+      {
+        "key": "perkmale",
+        "value": 1
+      },
+      {
+        "key": "navigation",
+        "value": 40
+      },
+      {
+        "key": "diplomacy",
+        "value": 20
+      }
+    ],
+    "rarity": "epic",
+    "rarityLabel": "Epic",
+    "upgrades": [
+      {
+        "key": "MaintenanceUpgrade",
+        "value": {
+          "Value": -50,
+          "Percental": 1
+        },
+        "label": "Maintenance Cost"
+      },
+      {
+        "key": "SpawnProbabilityFactor",
+        "value": {
+          "Value": 10,
+          "Percental": 1
+        },
+        "label": "Special Guests"
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 190684,
+    "type": "harborofficeitem",
+    "name": "Thomasina Langton, Promoter Extraordinaire!",
+    "icon": "/img/main/3dicons/specialists/systemic/icon_travelagent_829_0.png",
+    "effectTargets": [
+      {
+        "label": "All Public Moorings",
+        "visible": true
+      },
+      {
+        "label": "Public Mooring",
+        "visible": false
+      },
+      {
+        "label": "Public Mooring",
+        "visible": false
+      },
+      {
+        "label": "Tourist Mooring",
+        "visible": false
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [
+      {
+        "key": "perkfemale",
+        "value": 1
+      },
+      {
+        "key": "diplomacy",
+        "value": 50
+      },
+      {
+        "key": "navigation",
+        "value": 30
+      }
+    ],
+    "rarity": "legendary",
+    "rarityLabel": "Legendary",
+    "upgrades": [
+      {
+        "key": "AttractivenessUpgrade",
+        "value": {
+          "Value": 25
+        },
+        "label": "Attractiveness"
+      },
+      {
+        "key": "MaintenanceUpgrade",
+        "value": {
+          "Value": -100,
+          "Percental": 1
+        },
+        "label": "Maintenance Cost"
+      },
+      {
+        "key": "SpawnProbabilityFactor",
+        "value": {
+          "Value": 15,
+          "Percental": 1
+        },
+        "label": "Special Guests"
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 190694,
+    "type": "harborofficeitem",
+    "name": "Carpenter",
+    "icon": "/img/main/3dicons/specialists/systemic/icon_carpenter_722_0.png",
+    "effectTargets": [
+      {
+        "label": "All Shipyards",
+        "visible": true
+      },
+      {
+        "label": "Sailing Shipyard",
+        "visible": false
+      },
+      {
+        "label": "Steam Shipyard",
+        "visible": false
+      },
+      {
+        "label": "Sailing Shipyard",
+        "visible": false
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [
+      {
+        "key": "perkmale",
+        "value": 1
+      },
+      {
+        "key": "crafting",
+        "value": 10
+      }
+    ],
+    "rarity": "common",
+    "rarityLabel": "Common",
+    "upgrades": [
+      {
+        "key": "MaintenanceUpgrade",
+        "value": {
+          "Value": -25,
+          "Percental": 1
+        },
+        "label": "Maintenance Cost"
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 190695,
+    "type": "harborofficeitem",
+    "name": "Ship Builder",
+    "icon": "/img/main/3dicons/specialists/systemic/icon_worker_205_0.png",
+    "effectTargets": [
+      {
+        "label": "All Shipyards",
+        "visible": true
+      },
+      {
+        "label": "Sailing Shipyard",
+        "visible": false
+      },
+      {
+        "label": "Steam Shipyard",
+        "visible": false
+      },
+      {
+        "label": "Sailing Shipyard",
+        "visible": false
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [
+      {
+        "key": "perkmale",
+        "value": 1
+      },
+      {
+        "key": "crafting",
+        "value": 20
+      }
+    ],
+    "rarity": "uncommon",
+    "rarityLabel": "Uncommon",
+    "upgrades": [
+      {
+        "key": "WorkforceAmountUpgrade",
+        "value": {
+          "Value": -30,
+          "Percental": 1
+        },
+        "label": "Workforce Needed"
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 190696,
+    "type": "harborofficeitem",
+    "name": "Naval Architect",
+    "icon": "/img/main/3dicons/specialists/systemic/icon_worker_206_0.png",
+    "effectTargets": [
+      {
+        "label": "All Shipyards",
+        "visible": true
+      },
+      {
+        "label": "Sailing Shipyard",
+        "visible": false
+      },
+      {
+        "label": "Steam Shipyard",
+        "visible": false
+      },
+      {
+        "label": "Sailing Shipyard",
+        "visible": false
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [
+      {
+        "key": "perkmale",
+        "value": 1
+      },
+      {
+        "key": "crafting",
+        "value": 30
+      },
+      {
+        "key": "navigation",
+        "value": 10
+      }
+    ],
+    "rarity": "rare",
+    "rarityLabel": "Rare",
+    "upgrades": [
+      {
+        "key": "MaintenanceUpgrade",
+        "value": {
+          "Value": -50,
+          "Percental": 1
+        },
+        "label": "Maintenance Cost"
+      },
+      {
+        "key": "ConstructionCostInPercent",
+        "value": -10,
+        "label": "Construction cost"
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 190697,
+    "type": "harborofficeitem",
+    "name": "Mr. Swell, the Hydrodynamist",
+    "icon": "/img/main/3dicons/specialists/systemic/icon_normal_dressed_107_0.png",
+    "effectTargets": [
+      {
+        "label": "All Shipyards",
+        "visible": true
+      },
+      {
+        "label": "Sailing Shipyard",
+        "visible": false
+      },
+      {
+        "label": "Steam Shipyard",
+        "visible": false
+      },
+      {
+        "label": "Sailing Shipyard",
+        "visible": false
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [
+      {
+        "key": "perkmale",
+        "value": 1
+      },
+      {
+        "key": "crafting",
+        "value": 40
+      },
+      {
+        "key": "navigation",
+        "value": 20
+      }
+    ],
+    "rarity": "epic",
+    "rarityLabel": "Epic",
+    "upgrades": [
+      {
+        "key": "WorkforceAmountUpgrade",
+        "value": {
+          "Value": -40,
+          "Percental": 1
+        },
+        "label": "Workforce Needed"
+      },
+      {
+        "key": "ConstructionCostInPercent",
+        "value": -20,
+        "label": "Construction cost"
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 190698,
+    "type": "harborofficeitem",
+    "name": "Rohit Bhargava, the Naval Architect",
+    "icon": "/img/main/3dicons/specialists/systemic/icon_architect_501_0.png",
+    "effectTargets": [
+      {
+        "label": "All Shipyards",
+        "visible": true
+      },
+      {
+        "label": "Sailing Shipyard",
+        "visible": false
+      },
+      {
+        "label": "Steam Shipyard",
+        "visible": false
+      },
+      {
+        "label": "Sailing Shipyard",
+        "visible": false
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [
+      {
+        "key": "perkmale",
+        "value": 1
+      },
+      {
+        "key": "crafting",
+        "value": 50
+      },
+      {
+        "key": "navigation",
+        "value": 30
+      }
+    ],
+    "rarity": "legendary",
+    "rarityLabel": "Legendary",
+    "upgrades": [
+      {
+        "key": "MaintenanceUpgrade",
+        "value": {
+          "Value": -80,
+          "Percental": 1
+        },
+        "label": "Maintenance Cost"
+      },
+      {
+        "key": "WorkforceAmountUpgrade",
+        "value": {
+          "Value": -50,
+          "Percental": 1
+        },
+        "label": "Workforce Needed"
+      },
+      {
+        "key": "ConstructionCostInPercent",
+        "value": -35,
+        "label": "Construction cost"
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 192457,
+    "type": "harborofficeitem",
+    "name": "Gideon Small, Guru of Pirate Gunboats",
+    "icon": "/img/main/3dicons/specialists/pirates/icon_pirate_gunboat_151_0.png",
+    "effectTargets": [
+      {
+        "label": "All Sailing Shipyards",
+        "visible": true
+      },
+      {
+        "label": "Sailing Shipyard",
+        "visible": false
+      },
+      {
+        "label": "Sailing Shipyard",
+        "visible": false
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [
+      {
+        "key": "perkmale",
+        "value": 1
+      },
+      {
+        "key": "crafting",
+        "value": 50
+      },
+      {
+        "key": "navigation",
+        "value": 30
+      }
+    ],
+    "rarity": "legendary",
+    "rarityLabel": "Legendary",
+    "upgrades": [
+      {
+        "key": "AddAssemblyOptions",
+        "value": {
+          "Item": [
+            {
+              "NewOption": 102420,
+              "NewOption_label": "Pirate Gunboat"
+            }
+          ]
+        },
+        "label": "Adds the ability to construct ."
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 192458,
+    "type": "harborofficeitem",
+    "name": "Petra Piper, Fashioner of Pirate Frigates",
+    "icon": "/img/main/3dicons/specialists/pirates/icon_petra_651_0.png",
+    "effectTargets": [
+      {
+        "label": "All Sailing Shipyards",
+        "visible": true
+      },
+      {
+        "label": "Sailing Shipyard",
+        "visible": false
+      },
+      {
+        "label": "Sailing Shipyard",
+        "visible": false
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [
+      {
+        "key": "perkmale",
+        "value": 1
+      },
+      {
+        "key": "crafting",
+        "value": 50
+      },
+      {
+        "key": "navigation",
+        "value": 30
+      }
+    ],
+    "rarity": "legendary",
+    "rarityLabel": "Legendary",
+    "upgrades": [
+      {
+        "key": "AddAssemblyOptions",
+        "value": {
+          "Item": [
+            {
+              "NewOption": 102421,
+              "NewOption_label": "Pirate Frigate"
+            }
+          ]
+        },
+        "label": "Adds the ability to construct ."
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 192459,
+    "type": "harborofficeitem",
+    "name": "Shih Yang, Sirer of Pirate Ships-of-the-Line",
+    "icon": "/img/main/3dicons/specialists/pirates/icon_shih_yang_150_0.png",
+    "effectTargets": [
+      {
+        "label": "All Sailing Shipyards",
+        "visible": true
+      },
+      {
+        "label": "Sailing Shipyard",
+        "visible": false
+      },
+      {
+        "label": "Sailing Shipyard",
+        "visible": false
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [
+      {
+        "key": "perkmale",
+        "value": 1
+      },
+      {
+        "key": "crafting",
+        "value": 50
+      },
+      {
+        "key": "navigation",
+        "value": 30
+      }
+    ],
+    "rarity": "legendary",
+    "rarityLabel": "Legendary",
+    "upgrades": [
+      {
+        "key": "AddAssemblyOptions",
+        "value": {
+          "Item": [
+            {
+              "NewOption": 102419,
+              "NewOption_label": "Pirate Ship-of-the-Line"
+            }
+          ]
+        },
+        "label": "Adds the ability to construct ."
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 192460,
+    "type": "harborofficeitem",
+    "name": "Maria Pizarro, Maker of Pirate Monitors",
+    "icon": "/img/main/3dicons/specialists/pirates/icon_maria_351_0.png",
+    "effectTargets": [
+      {
+        "label": "Steam Shipyard",
+        "visible": true
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [
+      {
+        "key": "perkmale",
+        "value": 1
+      },
+      {
+        "key": "crafting",
+        "value": 50
+      },
+      {
+        "key": "navigation",
+        "value": 30
+      }
+    ],
+    "rarity": "legendary",
+    "rarityLabel": "Legendary",
+    "upgrades": [
+      {
+        "key": "AddAssemblyOptions",
+        "value": {
+          "Item": [
+            {
+              "NewOption": 102422,
+              "NewOption_label": "Pirate Monitor"
+            }
+          ]
+        },
+        "label": "Adds the ability to construct ."
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 192461,
+    "type": "harborofficeitem",
+    "name": "Stilton Snood, Purveyor of Pyrphorian Monitors",
+    "icon": "/img/main/3dicons/specialists/pirates/icon_stilton_252_0.png",
+    "effectTargets": [
+      {
+        "label": "Steam Shipyard",
+        "visible": true
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [
+      {
+        "key": "perkmale",
+        "value": 1
+      },
+      {
+        "key": "crafting",
+        "value": 50
+      },
+      {
+        "key": "navigation",
+        "value": 30
+      }
+    ],
+    "rarity": "legendary",
+    "rarityLabel": "Legendary",
+    "upgrades": [
+      {
+        "key": "AddAssemblyOptions",
+        "value": {
+          "Item": [
+            {
+              "NewOption": 102423,
+              "NewOption_label": "Pyrphorian Monitor"
+            }
+          ]
+        },
+        "label": "Adds the ability to construct ."
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 192462,
+    "type": "harborofficeitem",
+    "name": "Suspicia Slyhood, Begetter of Pyrphorian Battle Cruisers",
+    "icon": "/img/main/3dicons/specialists/pirates/icon_suspicia_650_0.png",
+    "effectTargets": [
+      {
+        "label": "Steam Shipyard",
+        "visible": true
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [
+      {
+        "key": "perkmale",
+        "value": 1
+      },
+      {
+        "key": "crafting",
+        "value": 50
+      },
+      {
+        "key": "navigation",
+        "value": 30
+      }
+    ],
+    "rarity": "legendary",
+    "rarityLabel": "Legendary",
+    "upgrades": [
+      {
+        "key": "AddAssemblyOptions",
+        "value": {
+          "Item": [
+            {
+              "NewOption": 102425,
+              "NewOption_label": "Pyrphorian Battle Cruiser"
+            }
+          ]
+        },
+        "label": "Adds the ability to construct ."
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 192463,
+    "type": "harborofficeitem",
+    "name": "Slinky Sinistra, Warlock of Pyrphorian Warships",
+    "icon": "/img/main/3dicons/specialists/pirates/icon_sinistra_250_0.png",
+    "effectTargets": [
+      {
+        "label": "Steam Shipyard",
+        "visible": true
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [
+      {
+        "key": "perkmale",
+        "value": 1
+      },
+      {
+        "key": "crafting",
+        "value": 50
+      },
+      {
+        "key": "navigation",
+        "value": 30
+      }
+    ],
+    "rarity": "legendary",
+    "rarityLabel": "Legendary",
+    "upgrades": [
+      {
+        "key": "AddAssemblyOptions",
+        "value": {
+          "Item": [
+            {
+              "NewOption": 102428,
+              "NewOption_label": "Pyrphorian Warship"
+            }
+          ]
+        },
+        "label": "Adds the ability to construct ."
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 192464,
+    "type": "harborofficeitem",
+    "name": "Sir Milfoy Credenza-Belfry-Guscott, HM Ship Architect",
+    "icon": "/img/main/3dicons/specialists/pirates/icon_guscott_251_0.png",
+    "effectTargets": [
+      {
+        "label": "All Sailing Shipyards",
+        "visible": true
+      },
+      {
+        "label": "Sailing Shipyard",
+        "visible": false
+      },
+      {
+        "label": "Sailing Shipyard",
+        "visible": false
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [
+      {
+        "key": "perkmale",
+        "value": 1
+      },
+      {
+        "key": "crafting",
+        "value": 50
+      },
+      {
+        "key": "navigation",
+        "value": 30
+      }
+    ],
+    "rarity": "legendary",
+    "rarityLabel": "Legendary",
+    "upgrades": [
+      {
+        "key": "AddAssemblyOptions",
+        "value": {
+          "Item": [
+            {
+              "NewOption": 102427,
+              "NewOption_label": "Royal Ship-of-the-Line"
+            }
+          ]
+        },
+        "label": "Adds the ability to construct ."
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 192465,
+    "type": "harborofficeitem",
+    "name": "Anna Union, Engineer of Extravagant Steamers",
+    "icon": "/img/main/3dicons/specialists/pirates/icon_anna_350_0.png",
+    "effectTargets": [
+      {
+        "label": "Steam Shipyard",
+        "visible": true
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [
+      {
+        "key": "perkmale",
+        "value": 1
+      },
+      {
+        "key": "crafting",
+        "value": 50
+      },
+      {
+        "key": "navigation",
+        "value": 30
+      }
+    ],
+    "rarity": "legendary",
+    "rarityLabel": "Legendary",
+    "upgrades": [
+      {
+        "key": "AddAssemblyOptions",
+        "value": {
+          "Item": [
+            {
+              "NewOption": 102455,
+              "NewOption_label": "Extravaganza Steamer"
+            }
+          ]
+        },
+        "label": "Adds the ability to construct ."
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 191432,
+    "type": "harborofficeitem",
+    "name": "Gunner",
+    "icon": "/img/main/3dicons/specialists/systemic/icon_uniform_707_0.png",
+    "effectTargets": [
+      {
+        "label": "All Defence Turrets",
+        "visible": true
+      },
+      {
+        "label": "Mounted Guns",
+        "visible": false
+      },
+      {
+        "label": "Cannon Tower",
+        "visible": false
+      },
+      {
+        "label": "Big Betty",
+        "visible": false
+      },
+      {
+        "label": "Mounted Guns",
+        "visible": false
+      },
+      {
+        "label": "Cannon Tower",
+        "visible": false
+      },
+      {
+        "label": "Big Betty",
+        "visible": false
+      },
+      {
+        "label": "Mounted Guns",
+        "visible": false
+      },
+      {
+        "label": "Cannon Tower",
+        "visible": false
+      },
+      {
+        "label": "Flame Tower",
+        "visible": false
+      },
+      {
+        "label": "Flame Tower",
+        "visible": false
+      },
+      {
+        "label": "Flame Tower",
+        "visible": false
+      },
+      {
+        "label": "Flame Tower",
+        "visible": false
+      },
+      {
+        "label": "Flak Emplacement",
+        "visible": false
+      },
+      {
+        "label": "Flak Emplacement",
+        "visible": false
+      },
+      {
+        "label": "Flak Emplacement",
+        "visible": false
+      },
+      {
+        "label": "Flak Emplacement",
+        "visible": false
+      },
+      {
+        "label": "Anti-Armour Gun",
+        "visible": false
+      },
+      {
+        "label": "Anti-Armour Gun",
+        "visible": false
+      },
+      {
+        "label": "Anti-Armour Gun",
+        "visible": false
+      },
+      {
+        "label": "Anti-Armour Gun",
+        "visible": false
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [
+      {
+        "key": "perkmale",
+        "value": 1
+      },
+      {
+        "key": "might",
+        "value": 15
+      },
+      {
+        "key": "melee",
+        "value": 5
+      }
+    ],
+    "rarity": "common",
+    "rarityLabel": "Common",
+    "upgrades": [
+      {
+        "key": "MaxHitpointsUpgrade",
+        "value": {
+          "Value": 200
+        },
+        "label": "Hitpoints"
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 191433,
+    "type": "harborofficeitem",
+    "name": "Artillerywoman",
+    "icon": "/img/main/3dicons/specialists/systemic/icon_artillerist_401_0.png",
+    "effectTargets": [
+      {
+        "label": "All Defence Turrets",
+        "visible": true
+      },
+      {
+        "label": "Mounted Guns",
+        "visible": false
+      },
+      {
+        "label": "Cannon Tower",
+        "visible": false
+      },
+      {
+        "label": "Big Betty",
+        "visible": false
+      },
+      {
+        "label": "Mounted Guns",
+        "visible": false
+      },
+      {
+        "label": "Cannon Tower",
+        "visible": false
+      },
+      {
+        "label": "Big Betty",
+        "visible": false
+      },
+      {
+        "label": "Mounted Guns",
+        "visible": false
+      },
+      {
+        "label": "Cannon Tower",
+        "visible": false
+      },
+      {
+        "label": "Flame Tower",
+        "visible": false
+      },
+      {
+        "label": "Flame Tower",
+        "visible": false
+      },
+      {
+        "label": "Flame Tower",
+        "visible": false
+      },
+      {
+        "label": "Flame Tower",
+        "visible": false
+      },
+      {
+        "label": "Flak Emplacement",
+        "visible": false
+      },
+      {
+        "label": "Flak Emplacement",
+        "visible": false
+      },
+      {
+        "label": "Flak Emplacement",
+        "visible": false
+      },
+      {
+        "label": "Flak Emplacement",
+        "visible": false
+      },
+      {
+        "label": "Anti-Armour Gun",
+        "visible": false
+      },
+      {
+        "label": "Anti-Armour Gun",
+        "visible": false
+      },
+      {
+        "label": "Anti-Armour Gun",
+        "visible": false
+      },
+      {
+        "label": "Anti-Armour Gun",
+        "visible": false
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [
+      {
+        "key": "perkfemale",
+        "value": 1
+      },
+      {
+        "key": "might",
+        "value": 25
+      },
+      {
+        "key": "melee",
+        "value": 10
+      }
+    ],
+    "rarity": "uncommon",
+    "rarityLabel": "Uncommon",
+    "upgrades": [
+      {
+        "key": "SelfHealUpgrade",
+        "value": {
+          "Value": 300,
+          "Percental": 1
+        },
+        "label": "Self-Repair"
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 191434,
+    "type": "harborofficeitem",
+    "name": "Cannoneer",
+    "icon": "/img/main/3dicons/specialists/systemic/icon_artillerist_201_0.png",
+    "effectTargets": [
+      {
+        "label": "All Defence Turrets",
+        "visible": true
+      },
+      {
+        "label": "Mounted Guns",
+        "visible": false
+      },
+      {
+        "label": "Cannon Tower",
+        "visible": false
+      },
+      {
+        "label": "Big Betty",
+        "visible": false
+      },
+      {
+        "label": "Mounted Guns",
+        "visible": false
+      },
+      {
+        "label": "Cannon Tower",
+        "visible": false
+      },
+      {
+        "label": "Big Betty",
+        "visible": false
+      },
+      {
+        "label": "Mounted Guns",
+        "visible": false
+      },
+      {
+        "label": "Cannon Tower",
+        "visible": false
+      },
+      {
+        "label": "Flame Tower",
+        "visible": false
+      },
+      {
+        "label": "Flame Tower",
+        "visible": false
+      },
+      {
+        "label": "Flame Tower",
+        "visible": false
+      },
+      {
+        "label": "Flame Tower",
+        "visible": false
+      },
+      {
+        "label": "Flak Emplacement",
+        "visible": false
+      },
+      {
+        "label": "Flak Emplacement",
+        "visible": false
+      },
+      {
+        "label": "Flak Emplacement",
+        "visible": false
+      },
+      {
+        "label": "Flak Emplacement",
+        "visible": false
+      },
+      {
+        "label": "Anti-Armour Gun",
+        "visible": false
+      },
+      {
+        "label": "Anti-Armour Gun",
+        "visible": false
+      },
+      {
+        "label": "Anti-Armour Gun",
+        "visible": false
+      },
+      {
+        "label": "Anti-Armour Gun",
+        "visible": false
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [
+      {
+        "key": "perkmale",
+        "value": 1
+      },
+      {
+        "key": "might",
+        "value": 35
+      },
+      {
+        "key": "melee",
+        "value": 15
+      }
+    ],
+    "rarity": "rare",
+    "rarityLabel": "Rare",
+    "upgrades": [
+      {
+        "key": "BaseDamageUpgrade",
+        "value": {
+          "Value": 15,
+          "Percental": 1
+        },
+        "label": "Damage per shot"
+      },
+      {
+        "key": "MaxHitpointsUpgrade",
+        "value": {
+          "Value": 600
+        },
+        "label": "Hitpoints"
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 191435,
+    "type": "harborofficeitem",
+    "name": "Colonel Barzagli",
+    "icon": "/img/main/3dicons/specialists/systemic/icon_artillerist_202_0.png",
+    "effectTargets": [
+      {
+        "label": "All Defence Turrets",
+        "visible": true
+      },
+      {
+        "label": "Mounted Guns",
+        "visible": false
+      },
+      {
+        "label": "Cannon Tower",
+        "visible": false
+      },
+      {
+        "label": "Big Betty",
+        "visible": false
+      },
+      {
+        "label": "Mounted Guns",
+        "visible": false
+      },
+      {
+        "label": "Cannon Tower",
+        "visible": false
+      },
+      {
+        "label": "Big Betty",
+        "visible": false
+      },
+      {
+        "label": "Mounted Guns",
+        "visible": false
+      },
+      {
+        "label": "Cannon Tower",
+        "visible": false
+      },
+      {
+        "label": "Flame Tower",
+        "visible": false
+      },
+      {
+        "label": "Flame Tower",
+        "visible": false
+      },
+      {
+        "label": "Flame Tower",
+        "visible": false
+      },
+      {
+        "label": "Flame Tower",
+        "visible": false
+      },
+      {
+        "label": "Flak Emplacement",
+        "visible": false
+      },
+      {
+        "label": "Flak Emplacement",
+        "visible": false
+      },
+      {
+        "label": "Flak Emplacement",
+        "visible": false
+      },
+      {
+        "label": "Flak Emplacement",
+        "visible": false
+      },
+      {
+        "label": "Anti-Armour Gun",
+        "visible": false
+      },
+      {
+        "label": "Anti-Armour Gun",
+        "visible": false
+      },
+      {
+        "label": "Anti-Armour Gun",
+        "visible": false
+      },
+      {
+        "label": "Anti-Armour Gun",
+        "visible": false
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [
+      {
+        "key": "perkmale",
+        "value": 1
+      },
+      {
+        "key": "might",
+        "value": 45
+      },
+      {
+        "key": "melee",
+        "value": 20
+      }
+    ],
+    "rarity": "epic",
+    "rarityLabel": "Epic",
+    "upgrades": [
+      {
+        "key": "MaintenanceUpgrade",
+        "value": {
+          "Value": -75,
+          "Percental": 1
+        },
+        "label": "Maintenance Cost"
+      },
+      {
+        "key": "ReloadTimeUpgrade",
+        "value": {
+          "Value": -17,
+          "Percental": 1
+        },
+        "label": "upgrades.ReloadTimeUpgrade"
+      },
+      {
+        "key": "AttackSpeedUpgrade",
+        "value": 20,
+        "label": "Attack Speed"
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 191436,
+    "type": "harborofficeitem",
+    "name": "Field Marshall Matravers, Conductor of Armies.",
+    "icon": "/img/main/3dicons/specialists/systemic/icon_captain_103_0.png",
+    "effectTargets": [
+      {
+        "label": "All Defence Turrets",
+        "visible": true
+      },
+      {
+        "label": "Mounted Guns",
+        "visible": false
+      },
+      {
+        "label": "Cannon Tower",
+        "visible": false
+      },
+      {
+        "label": "Big Betty",
+        "visible": false
+      },
+      {
+        "label": "Mounted Guns",
+        "visible": false
+      },
+      {
+        "label": "Cannon Tower",
+        "visible": false
+      },
+      {
+        "label": "Big Betty",
+        "visible": false
+      },
+      {
+        "label": "Mounted Guns",
+        "visible": false
+      },
+      {
+        "label": "Cannon Tower",
+        "visible": false
+      },
+      {
+        "label": "Flame Tower",
+        "visible": false
+      },
+      {
+        "label": "Flame Tower",
+        "visible": false
+      },
+      {
+        "label": "Flame Tower",
+        "visible": false
+      },
+      {
+        "label": "Flame Tower",
+        "visible": false
+      },
+      {
+        "label": "Flak Emplacement",
+        "visible": false
+      },
+      {
+        "label": "Flak Emplacement",
+        "visible": false
+      },
+      {
+        "label": "Flak Emplacement",
+        "visible": false
+      },
+      {
+        "label": "Flak Emplacement",
+        "visible": false
+      },
+      {
+        "label": "Anti-Armour Gun",
+        "visible": false
+      },
+      {
+        "label": "Anti-Armour Gun",
+        "visible": false
+      },
+      {
+        "label": "Anti-Armour Gun",
+        "visible": false
+      },
+      {
+        "label": "Anti-Armour Gun",
+        "visible": false
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [
+      {
+        "key": "perkmale",
+        "value": 1
+      },
+      {
+        "key": "might",
+        "value": 55
+      },
+      {
+        "key": "melee",
+        "value": 25
+      },
+      {
+        "key": "diplomacy",
+        "value": 25
+      }
+    ],
+    "rarity": "legendary",
+    "rarityLabel": "Legendary",
+    "upgrades": [
+      {
+        "key": "MoraleDamage",
+        "value": {
+          "Item": [
+            {
+              "MinDamageFactor": 1.6
+            }
+          ]
+        },
+        "label": "Morale Loss"
+      },
+      {
+        "key": "SelfHealUpgrade",
+        "value": {
+          "Value": 100,
+          "Percental": 1
+        },
+        "label": "Self-Repair"
+      },
+      {
+        "key": "SelfHealPausedTimeIfAttackedUpgrade",
+        "value": {
+          "Value": -100,
+          "Percental": 1
+        },
+        "label": "Active Healing"
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 191442,
+    "type": "harborofficeitem",
+    "name": "General Ewing Thomson, Planter of Flags.",
+    "icon": "/img/main/3dicons/specialists/systemic/icon_uniformed_101_0.png",
+    "effectTargets": [
+      {
+        "label": "All Defence Turrets",
+        "visible": true
+      },
+      {
+        "label": "Mounted Guns",
+        "visible": false
+      },
+      {
+        "label": "Cannon Tower",
+        "visible": false
+      },
+      {
+        "label": "Big Betty",
+        "visible": false
+      },
+      {
+        "label": "Mounted Guns",
+        "visible": false
+      },
+      {
+        "label": "Cannon Tower",
+        "visible": false
+      },
+      {
+        "label": "Big Betty",
+        "visible": false
+      },
+      {
+        "label": "Mounted Guns",
+        "visible": false
+      },
+      {
+        "label": "Cannon Tower",
+        "visible": false
+      },
+      {
+        "label": "Flame Tower",
+        "visible": false
+      },
+      {
+        "label": "Flame Tower",
+        "visible": false
+      },
+      {
+        "label": "Flame Tower",
+        "visible": false
+      },
+      {
+        "label": "Flame Tower",
+        "visible": false
+      },
+      {
+        "label": "Flak Emplacement",
+        "visible": false
+      },
+      {
+        "label": "Flak Emplacement",
+        "visible": false
+      },
+      {
+        "label": "Flak Emplacement",
+        "visible": false
+      },
+      {
+        "label": "Flak Emplacement",
+        "visible": false
+      },
+      {
+        "label": "Anti-Armour Gun",
+        "visible": false
+      },
+      {
+        "label": "Anti-Armour Gun",
+        "visible": false
+      },
+      {
+        "label": "Anti-Armour Gun",
+        "visible": false
+      },
+      {
+        "label": "Anti-Armour Gun",
+        "visible": false
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [
+      {
+        "key": "perkmale",
+        "value": 1
+      },
+      {
+        "key": "might",
+        "value": 55
+      },
+      {
+        "key": "melee",
+        "value": 25
+      },
+      {
+        "key": "diplomacy",
+        "value": 25
+      }
+    ],
+    "rarity": "legendary",
+    "rarityLabel": "Legendary",
+    "upgrades": [
+      {
+        "key": "AttackRangeUpgrade",
+        "value": {
+          "Value": 10,
+          "Percental": 1
+        },
+        "label": "Attack Range"
+      },
+      {
+        "key": "LineOfSightRangeUpgrade",
+        "value": {
+          "Value": 10,
+          "Percental": 1
+        },
+        "label": "Vision Range"
+      },
+      {
+        "key": "HitpointDamage",
+        "value": {
+          "Item": [
+            {
+              "MinDamageFactor": 1.6
+            }
+          ]
+        },
+        "label": "Damage per shot"
+      },
+      {
+        "key": "DamageReceiveFactor",
+        "value": {
+          "Normal": {
+            "Factor": 0.75
+          }
+        },
+        "label": "Damage from Ships"
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 190902,
+    "type": "harborofficeitem",
+    "name": "Fine Fishing Net",
+    "icon": "/img/main/3dicons/machine_items/icon_fishernet_1_0.png",
+    "effectTargets": [
+      {
+        "label": "All Fisheries",
+        "visible": true
+      },
+      {
+        "label": "Fishery",
+        "visible": false
+      },
+      {
+        "label": "Fish Oil Factory",
+        "visible": false
+      },
+      {
+        "label": "Lobster Fishery",
+        "visible": false
+      },
+      {
+        "label": "Calamari Fishery",
+        "visible": false
+      },
+      {
+        "label": "Pearl Farm",
+        "visible": true
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [
+      {
+        "key": "hunting",
+        "value": 15
+      }
+    ],
+    "rarity": "uncommon",
+    "rarityLabel": "Uncommon",
+    "upgrades": [
+      {
+        "key": "ProductivityUpgrade",
+        "value": {
+          "Value": 25,
+          "Percental": 1
+        },
+        "label": "Productivity"
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 190903,
+    "type": "harborofficeitem",
+    "name": "Drift Net",
+    "icon": "/img/main/3dicons/machine_items/icon_fishernet_2_0.png",
+    "effectTargets": [
+      {
+        "label": "All Fisheries",
+        "visible": true
+      },
+      {
+        "label": "Fishery",
+        "visible": false
+      },
+      {
+        "label": "Fish Oil Factory",
+        "visible": false
+      },
+      {
+        "label": "Lobster Fishery",
+        "visible": false
+      },
+      {
+        "label": "Calamari Fishery",
+        "visible": false
+      },
+      {
+        "label": "Pearl Farm",
+        "visible": true
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [
+      {
+        "key": "hunting",
+        "value": 25
+      }
+    ],
+    "rarity": "rare",
+    "rarityLabel": "Rare",
+    "upgrades": [
+      {
+        "key": "ProductivityUpgrade",
+        "value": {
+          "Value": 35,
+          "Percental": 1
+        },
+        "label": "Productivity"
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 190904,
+    "type": "harborofficeitem",
+    "name": "Long Range Bottom Trawl",
+    "icon": "/img/main/3dicons/machine_items/icon_fishernet_3_0.png",
+    "effectTargets": [
+      {
+        "label": "All Fisheries",
+        "visible": true
+      },
+      {
+        "label": "Fishery",
+        "visible": false
+      },
+      {
+        "label": "Fish Oil Factory",
+        "visible": false
+      },
+      {
+        "label": "Lobster Fishery",
+        "visible": false
+      },
+      {
+        "label": "Calamari Fishery",
+        "visible": false
+      },
+      {
+        "label": "Pearl Farm",
+        "visible": true
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [
+      {
+        "key": "hunting",
+        "value": 35
+      }
+    ],
+    "rarity": "epic",
+    "rarityLabel": "Epic",
+    "upgrades": [
+      {
+        "key": "ProductivityUpgrade",
+        "value": {
+          "Value": 40,
+          "Percental": 1
+        },
+        "label": "Productivity"
+      },
+      {
+        "key": "WorkforceAmountUpgrade",
+        "value": {
+          "Value": -50,
+          "Percental": 1
+        },
+        "label": "Workforce Needed"
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 191879,
+    "type": "harborofficeitem",
+    "name": "Dockyard Toolbox",
+    "icon": "/img/main/3dicons/military_items/ico_repair_toolset_0.png",
+    "effectTargets": [
+      {
+        "label": "All Harbour Buildings",
+        "visible": true
+      },
+      {
+        "label": "All Fisheries",
+        "visible": false
+      },
+      {
+        "label": "All Shipyards",
+        "visible": false
+      },
+      {
+        "label": "All Trading Posts",
+        "visible": false
+      },
+      {
+        "label": "All Defence Turrets",
+        "visible": false
+      },
+      {
+        "label": "Harbourmaster's Office",
+        "visible": false
+      },
+      {
+        "label": "Depot",
+        "visible": false
+      },
+      {
+        "label": "Repair Crane",
+        "visible": false
+      },
+      {
+        "label": "Pier",
+        "visible": false
+      },
+      {
+        "label": "Public Mooring",
+        "visible": false
+      },
+      {
+        "label": "Tourist Mooring",
+        "visible": false
+      },
+      {
+        "label": "Small Oil Harbour",
+        "visible": false
+      },
+      {
+        "label": "Medium Oil Harbour",
+        "visible": false
+      },
+      {
+        "label": "Large Oil Harbour",
+        "visible": false
+      },
+      {
+        "label": "Oil Store",
+        "visible": false
+      },
+      {
+        "label": "Commuter Pier",
+        "visible": false
+      },
+      {
+        "label": "Saltpetre Works",
+        "visible": false
+      },
+      {
+        "label": "Sand Mine",
+        "visible": false
+      },
+      {
+        "label": "Harbourmaster's Office",
+        "visible": false
+      },
+      {
+        "label": "Depot",
+        "visible": false
+      },
+      {
+        "label": "Repair Crane",
+        "visible": false
+      },
+      {
+        "label": "Pier",
+        "visible": false
+      },
+      {
+        "label": "Small Oil Harbour",
+        "visible": false
+      },
+      {
+        "label": "Medium Oil Harbour",
+        "visible": false
+      },
+      {
+        "label": "Large Oil Harbour",
+        "visible": false
+      },
+      {
+        "label": "Oil Store",
+        "visible": false
+      },
+      {
+        "label": "Pearl Farm",
+        "visible": false
+      },
+      {
+        "label": "Fish Oil Factory",
+        "visible": false
+      },
+      {
+        "label": "Saltpetre Works",
+        "visible": false
+      },
+      {
+        "label": "Public Mooring",
+        "visible": false
+      },
+      {
+        "label": "Grand Oil Harbour",
+        "visible": false
+      },
+      {
+        "label": "Grand Oil Harbour",
+        "visible": false
+      },
+      {
+        "label": "Small Trading Post",
+        "visible": false
+      },
+      {
+        "label": "Medium Trading Post",
+        "visible": false
+      },
+      {
+        "label": "Large Trading Post",
+        "visible": false
+      },
+      {
+        "label": "Small Trading Post",
+        "visible": false
+      },
+      {
+        "label": "Medium Trading Post",
+        "visible": false
+      },
+      {
+        "label": "Large Trading Post",
+        "visible": false
+      },
+      {
+        "label": "Depot",
+        "visible": false
+      },
+      {
+        "label": "Harbourmaster's Office",
+        "visible": false
+      },
+      {
+        "label": "Repair Crane",
+        "visible": false
+      },
+      {
+        "label": "Grand Oil Harbour",
+        "visible": false
+      },
+      {
+        "label": "Small Oil Harbour",
+        "visible": false
+      },
+      {
+        "label": "Medium Oil Harbour",
+        "visible": false
+      },
+      {
+        "label": "Large Oil Harbour",
+        "visible": false
+      },
+      {
+        "label": "Oil Store",
+        "visible": false
+      },
+      {
+        "label": "Pier",
+        "visible": false
+      },
+      {
+        "label": "Advanced Pier",
+        "visible": false
+      },
+      {
+        "label": "Advanced Pier",
+        "visible": false
+      },
+      {
+        "label": "Advanced Pier",
+        "visible": false
+      },
+      {
+        "label": "Salt Works",
+        "visible": false
+      },
+      {
+        "label": "Docklands Main Wharf",
+        "visible": false
+      },
+      {
+        "label": "Pier",
+        "visible": false
+      },
+      {
+        "label": "Harbourmaster",
+        "visible": false
+      },
+      {
+        "label": "Exports Office",
+        "visible": false
+      },
+      {
+        "label": "Depot",
+        "visible": false
+      },
+      {
+        "label": "Repair Crane",
+        "visible": false
+      },
+      {
+        "label": "Loading Wharf",
+        "visible": false
+      },
+      {
+        "label": "Flak Emplacement",
+        "visible": false
+      },
+      {
+        "label": "Calamari Fishery",
+        "visible": false
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [
+      {
+        "key": "crafting",
+        "value": 20
+      }
+    ],
+    "rarity": "uncommon",
+    "rarityLabel": "Uncommon",
+    "upgrades": [
+      {
+        "key": "MaintenanceUpgrade",
+        "value": {
+          "Value": 15,
+          "Percental": 1
+        },
+        "label": "Maintenance Cost"
+      },
+      {
+        "key": "SelfHealUpgrade",
+        "value": {
+          "Value": 50,
+          "Percental": 1
+        },
+        "label": "Self-Repair"
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 191880,
+    "type": "harborofficeitem",
+    "name": "Dockyard Toolchest",
+    "icon": "/img/main/3dicons/military_items/ico_repair_toolset_0.png",
+    "effectTargets": [
+      {
+        "label": "All Harbour Buildings",
+        "visible": true
+      },
+      {
+        "label": "All Fisheries",
+        "visible": false
+      },
+      {
+        "label": "All Shipyards",
+        "visible": false
+      },
+      {
+        "label": "All Trading Posts",
+        "visible": false
+      },
+      {
+        "label": "All Defence Turrets",
+        "visible": false
+      },
+      {
+        "label": "Harbourmaster's Office",
+        "visible": false
+      },
+      {
+        "label": "Depot",
+        "visible": false
+      },
+      {
+        "label": "Repair Crane",
+        "visible": false
+      },
+      {
+        "label": "Pier",
+        "visible": false
+      },
+      {
+        "label": "Public Mooring",
+        "visible": false
+      },
+      {
+        "label": "Tourist Mooring",
+        "visible": false
+      },
+      {
+        "label": "Small Oil Harbour",
+        "visible": false
+      },
+      {
+        "label": "Medium Oil Harbour",
+        "visible": false
+      },
+      {
+        "label": "Large Oil Harbour",
+        "visible": false
+      },
+      {
+        "label": "Oil Store",
+        "visible": false
+      },
+      {
+        "label": "Commuter Pier",
+        "visible": false
+      },
+      {
+        "label": "Saltpetre Works",
+        "visible": false
+      },
+      {
+        "label": "Sand Mine",
+        "visible": false
+      },
+      {
+        "label": "Harbourmaster's Office",
+        "visible": false
+      },
+      {
+        "label": "Depot",
+        "visible": false
+      },
+      {
+        "label": "Repair Crane",
+        "visible": false
+      },
+      {
+        "label": "Pier",
+        "visible": false
+      },
+      {
+        "label": "Small Oil Harbour",
+        "visible": false
+      },
+      {
+        "label": "Medium Oil Harbour",
+        "visible": false
+      },
+      {
+        "label": "Large Oil Harbour",
+        "visible": false
+      },
+      {
+        "label": "Oil Store",
+        "visible": false
+      },
+      {
+        "label": "Pearl Farm",
+        "visible": false
+      },
+      {
+        "label": "Fish Oil Factory",
+        "visible": false
+      },
+      {
+        "label": "Saltpetre Works",
+        "visible": false
+      },
+      {
+        "label": "Public Mooring",
+        "visible": false
+      },
+      {
+        "label": "Grand Oil Harbour",
+        "visible": false
+      },
+      {
+        "label": "Grand Oil Harbour",
+        "visible": false
+      },
+      {
+        "label": "Small Trading Post",
+        "visible": false
+      },
+      {
+        "label": "Medium Trading Post",
+        "visible": false
+      },
+      {
+        "label": "Large Trading Post",
+        "visible": false
+      },
+      {
+        "label": "Small Trading Post",
+        "visible": false
+      },
+      {
+        "label": "Medium Trading Post",
+        "visible": false
+      },
+      {
+        "label": "Large Trading Post",
+        "visible": false
+      },
+      {
+        "label": "Depot",
+        "visible": false
+      },
+      {
+        "label": "Harbourmaster's Office",
+        "visible": false
+      },
+      {
+        "label": "Repair Crane",
+        "visible": false
+      },
+      {
+        "label": "Grand Oil Harbour",
+        "visible": false
+      },
+      {
+        "label": "Small Oil Harbour",
+        "visible": false
+      },
+      {
+        "label": "Medium Oil Harbour",
+        "visible": false
+      },
+      {
+        "label": "Large Oil Harbour",
+        "visible": false
+      },
+      {
+        "label": "Oil Store",
+        "visible": false
+      },
+      {
+        "label": "Pier",
+        "visible": false
+      },
+      {
+        "label": "Advanced Pier",
+        "visible": false
+      },
+      {
+        "label": "Advanced Pier",
+        "visible": false
+      },
+      {
+        "label": "Advanced Pier",
+        "visible": false
+      },
+      {
+        "label": "Salt Works",
+        "visible": false
+      },
+      {
+        "label": "Docklands Main Wharf",
+        "visible": false
+      },
+      {
+        "label": "Pier",
+        "visible": false
+      },
+      {
+        "label": "Harbourmaster",
+        "visible": false
+      },
+      {
+        "label": "Exports Office",
+        "visible": false
+      },
+      {
+        "label": "Depot",
+        "visible": false
+      },
+      {
+        "label": "Repair Crane",
+        "visible": false
+      },
+      {
+        "label": "Loading Wharf",
+        "visible": false
+      },
+      {
+        "label": "Flak Emplacement",
+        "visible": false
+      },
+      {
+        "label": "Calamari Fishery",
+        "visible": false
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [
+      {
+        "key": "crafting",
+        "value": 30
+      }
+    ],
+    "rarity": "rare",
+    "rarityLabel": "Rare",
+    "upgrades": [
+      {
+        "key": "SelfHealUpgrade",
+        "value": {
+          "Value": 75,
+          "Percental": 1
+        },
+        "label": "Self-Repair"
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 191881,
+    "type": "harborofficeitem",
+    "name": "Dockyard Tool System",
+    "icon": "/img/main/3dicons/consumables/icon_building_repair_1_0.png",
+    "effectTargets": [
+      {
+        "label": "All Harbour Buildings",
+        "visible": true
+      },
+      {
+        "label": "All Fisheries",
+        "visible": false
+      },
+      {
+        "label": "All Shipyards",
+        "visible": false
+      },
+      {
+        "label": "All Trading Posts",
+        "visible": false
+      },
+      {
+        "label": "All Defence Turrets",
+        "visible": false
+      },
+      {
+        "label": "Harbourmaster's Office",
+        "visible": false
+      },
+      {
+        "label": "Depot",
+        "visible": false
+      },
+      {
+        "label": "Repair Crane",
+        "visible": false
+      },
+      {
+        "label": "Pier",
+        "visible": false
+      },
+      {
+        "label": "Public Mooring",
+        "visible": false
+      },
+      {
+        "label": "Tourist Mooring",
+        "visible": false
+      },
+      {
+        "label": "Small Oil Harbour",
+        "visible": false
+      },
+      {
+        "label": "Medium Oil Harbour",
+        "visible": false
+      },
+      {
+        "label": "Large Oil Harbour",
+        "visible": false
+      },
+      {
+        "label": "Oil Store",
+        "visible": false
+      },
+      {
+        "label": "Commuter Pier",
+        "visible": false
+      },
+      {
+        "label": "Saltpetre Works",
+        "visible": false
+      },
+      {
+        "label": "Sand Mine",
+        "visible": false
+      },
+      {
+        "label": "Harbourmaster's Office",
+        "visible": false
+      },
+      {
+        "label": "Depot",
+        "visible": false
+      },
+      {
+        "label": "Repair Crane",
+        "visible": false
+      },
+      {
+        "label": "Pier",
+        "visible": false
+      },
+      {
+        "label": "Small Oil Harbour",
+        "visible": false
+      },
+      {
+        "label": "Medium Oil Harbour",
+        "visible": false
+      },
+      {
+        "label": "Large Oil Harbour",
+        "visible": false
+      },
+      {
+        "label": "Oil Store",
+        "visible": false
+      },
+      {
+        "label": "Pearl Farm",
+        "visible": false
+      },
+      {
+        "label": "Fish Oil Factory",
+        "visible": false
+      },
+      {
+        "label": "Saltpetre Works",
+        "visible": false
+      },
+      {
+        "label": "Public Mooring",
+        "visible": false
+      },
+      {
+        "label": "Grand Oil Harbour",
+        "visible": false
+      },
+      {
+        "label": "Grand Oil Harbour",
+        "visible": false
+      },
+      {
+        "label": "Small Trading Post",
+        "visible": false
+      },
+      {
+        "label": "Medium Trading Post",
+        "visible": false
+      },
+      {
+        "label": "Large Trading Post",
+        "visible": false
+      },
+      {
+        "label": "Small Trading Post",
+        "visible": false
+      },
+      {
+        "label": "Medium Trading Post",
+        "visible": false
+      },
+      {
+        "label": "Large Trading Post",
+        "visible": false
+      },
+      {
+        "label": "Depot",
+        "visible": false
+      },
+      {
+        "label": "Harbourmaster's Office",
+        "visible": false
+      },
+      {
+        "label": "Repair Crane",
+        "visible": false
+      },
+      {
+        "label": "Grand Oil Harbour",
+        "visible": false
+      },
+      {
+        "label": "Small Oil Harbour",
+        "visible": false
+      },
+      {
+        "label": "Medium Oil Harbour",
+        "visible": false
+      },
+      {
+        "label": "Large Oil Harbour",
+        "visible": false
+      },
+      {
+        "label": "Oil Store",
+        "visible": false
+      },
+      {
+        "label": "Pier",
+        "visible": false
+      },
+      {
+        "label": "Advanced Pier",
+        "visible": false
+      },
+      {
+        "label": "Advanced Pier",
+        "visible": false
+      },
+      {
+        "label": "Advanced Pier",
+        "visible": false
+      },
+      {
+        "label": "Salt Works",
+        "visible": false
+      },
+      {
+        "label": "Docklands Main Wharf",
+        "visible": false
+      },
+      {
+        "label": "Pier",
+        "visible": false
+      },
+      {
+        "label": "Harbourmaster",
+        "visible": false
+      },
+      {
+        "label": "Exports Office",
+        "visible": false
+      },
+      {
+        "label": "Depot",
+        "visible": false
+      },
+      {
+        "label": "Repair Crane",
+        "visible": false
+      },
+      {
+        "label": "Loading Wharf",
+        "visible": false
+      },
+      {
+        "label": "Flak Emplacement",
+        "visible": false
+      },
+      {
+        "label": "Calamari Fishery",
+        "visible": false
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [
+      {
+        "key": "crafting",
+        "value": 40
+      }
+    ],
+    "rarity": "epic",
+    "rarityLabel": "Epic",
+    "upgrades": [
+      {
+        "key": "SelfHealUpgrade",
+        "value": {
+          "Value": 100,
+          "Percental": 1
+        },
+        "label": "Self-Repair"
+      },
+      {
+        "key": "SelfHealPausedTimeIfAttackedUpgrade",
+        "value": {
+          "Value": -100,
+          "Percental": 1
+        },
+        "label": "Active Healing"
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 191882,
+    "type": "harborofficeitem",
+    "name": "Deke's Indispensible Dockyard Crate",
+    "icon": "/img/main/3dicons/consumables/icon_building_repair_2_0.png",
+    "effectTargets": [
+      {
+        "label": "All Harbour Buildings",
+        "visible": true
+      },
+      {
+        "label": "All Fisheries",
+        "visible": false
+      },
+      {
+        "label": "All Shipyards",
+        "visible": false
+      },
+      {
+        "label": "All Trading Posts",
+        "visible": false
+      },
+      {
+        "label": "All Defence Turrets",
+        "visible": false
+      },
+      {
+        "label": "Harbourmaster's Office",
+        "visible": false
+      },
+      {
+        "label": "Depot",
+        "visible": false
+      },
+      {
+        "label": "Repair Crane",
+        "visible": false
+      },
+      {
+        "label": "Pier",
+        "visible": false
+      },
+      {
+        "label": "Public Mooring",
+        "visible": false
+      },
+      {
+        "label": "Tourist Mooring",
+        "visible": false
+      },
+      {
+        "label": "Small Oil Harbour",
+        "visible": false
+      },
+      {
+        "label": "Medium Oil Harbour",
+        "visible": false
+      },
+      {
+        "label": "Large Oil Harbour",
+        "visible": false
+      },
+      {
+        "label": "Oil Store",
+        "visible": false
+      },
+      {
+        "label": "Commuter Pier",
+        "visible": false
+      },
+      {
+        "label": "Saltpetre Works",
+        "visible": false
+      },
+      {
+        "label": "Sand Mine",
+        "visible": false
+      },
+      {
+        "label": "Harbourmaster's Office",
+        "visible": false
+      },
+      {
+        "label": "Depot",
+        "visible": false
+      },
+      {
+        "label": "Repair Crane",
+        "visible": false
+      },
+      {
+        "label": "Pier",
+        "visible": false
+      },
+      {
+        "label": "Small Oil Harbour",
+        "visible": false
+      },
+      {
+        "label": "Medium Oil Harbour",
+        "visible": false
+      },
+      {
+        "label": "Large Oil Harbour",
+        "visible": false
+      },
+      {
+        "label": "Oil Store",
+        "visible": false
+      },
+      {
+        "label": "Pearl Farm",
+        "visible": false
+      },
+      {
+        "label": "Fish Oil Factory",
+        "visible": false
+      },
+      {
+        "label": "Saltpetre Works",
+        "visible": false
+      },
+      {
+        "label": "Public Mooring",
+        "visible": false
+      },
+      {
+        "label": "Grand Oil Harbour",
+        "visible": false
+      },
+      {
+        "label": "Grand Oil Harbour",
+        "visible": false
+      },
+      {
+        "label": "Small Trading Post",
+        "visible": false
+      },
+      {
+        "label": "Medium Trading Post",
+        "visible": false
+      },
+      {
+        "label": "Large Trading Post",
+        "visible": false
+      },
+      {
+        "label": "Small Trading Post",
+        "visible": false
+      },
+      {
+        "label": "Medium Trading Post",
+        "visible": false
+      },
+      {
+        "label": "Large Trading Post",
+        "visible": false
+      },
+      {
+        "label": "Depot",
+        "visible": false
+      },
+      {
+        "label": "Harbourmaster's Office",
+        "visible": false
+      },
+      {
+        "label": "Repair Crane",
+        "visible": false
+      },
+      {
+        "label": "Grand Oil Harbour",
+        "visible": false
+      },
+      {
+        "label": "Small Oil Harbour",
+        "visible": false
+      },
+      {
+        "label": "Medium Oil Harbour",
+        "visible": false
+      },
+      {
+        "label": "Large Oil Harbour",
+        "visible": false
+      },
+      {
+        "label": "Oil Store",
+        "visible": false
+      },
+      {
+        "label": "Pier",
+        "visible": false
+      },
+      {
+        "label": "Advanced Pier",
+        "visible": false
+      },
+      {
+        "label": "Advanced Pier",
+        "visible": false
+      },
+      {
+        "label": "Advanced Pier",
+        "visible": false
+      },
+      {
+        "label": "Salt Works",
+        "visible": false
+      },
+      {
+        "label": "Docklands Main Wharf",
+        "visible": false
+      },
+      {
+        "label": "Pier",
+        "visible": false
+      },
+      {
+        "label": "Harbourmaster",
+        "visible": false
+      },
+      {
+        "label": "Exports Office",
+        "visible": false
+      },
+      {
+        "label": "Depot",
+        "visible": false
+      },
+      {
+        "label": "Repair Crane",
+        "visible": false
+      },
+      {
+        "label": "Loading Wharf",
+        "visible": false
+      },
+      {
+        "label": "Flak Emplacement",
+        "visible": false
+      },
+      {
+        "label": "Calamari Fishery",
+        "visible": false
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [
+      {
+        "key": "crafting",
+        "value": 50
+      }
+    ],
+    "rarity": "legendary",
+    "rarityLabel": "Legendary",
+    "upgrades": [
+      {
+        "key": "MaintenanceUpgrade",
+        "value": {
+          "Value": -25,
+          "Percental": 1
+        },
+        "label": "Maintenance Cost"
+      },
+      {
+        "key": "SelfHealUpgrade",
+        "value": {
+          "Value": 150,
+          "Percental": 1
+        },
+        "label": "Self-Repair"
+      },
+      {
+        "key": "SelfHealPausedTimeIfAttackedUpgrade",
+        "value": {
+          "Value": -100,
+          "Percental": 1
+        },
+        "label": "Active Healing"
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 191883,
+    "type": "harborofficeitem",
+    "name": "Wooden Repair Crane",
+    "icon": "/img/main/3dicons/consumables/icon_construction_crane_1_0.png",
+    "effectTargets": [
+      {
+        "label": "All Repair Cranes",
+        "visible": true
+      },
+      {
+        "label": "Repair Crane",
+        "visible": false
+      },
+      {
+        "label": "Repair Crane",
+        "visible": false
+      },
+      {
+        "label": "Repair Crane",
+        "visible": false
+      },
+      {
+        "label": "Repair Crane",
+        "visible": false
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [
+      {
+        "key": "crafting",
+        "value": 20
+      }
+    ],
+    "rarity": "uncommon",
+    "rarityLabel": "Uncommon",
+    "upgrades": [
+      {
+        "key": "HealRadiusUpgrade",
+        "value": {
+          "Value": 25,
+          "Percental": 1
+        },
+        "label": "Repair Radius"
+      },
+      {
+        "key": "HealPerMinuteUpgrade",
+        "value": {
+          "Value": -10,
+          "Percental": 1
+        },
+        "label": "Repair Speed"
+      },
+      {
+        "key": "HealBuildingsPerMinuteUpgrade",
+        "value": {
+          "Value": -10,
+          "Percental": 1
+        },
+        "label": "Repair Speed"
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 191884,
+    "type": "harborofficeitem",
+    "name": "Gantry Repair Crane",
+    "icon": "/img/main/3dicons/consumables/icon_construction_crane_2_0.png",
+    "effectTargets": [
+      {
+        "label": "All Repair Cranes",
+        "visible": true
+      },
+      {
+        "label": "Repair Crane",
+        "visible": false
+      },
+      {
+        "label": "Repair Crane",
+        "visible": false
+      },
+      {
+        "label": "Repair Crane",
+        "visible": false
+      },
+      {
+        "label": "Repair Crane",
+        "visible": false
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [
+      {
+        "key": "crafting",
+        "value": 30
+      }
+    ],
+    "rarity": "rare",
+    "rarityLabel": "Rare",
+    "upgrades": [
+      {
+        "key": "HealRadiusUpgrade",
+        "value": {
+          "Value": 30,
+          "Percental": 1
+        },
+        "label": "Repair Radius"
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 191885,
+    "type": "harborofficeitem",
+    "name": "Railway Repair Crane",
+    "icon": "/img/main/3dicons/consumables/icon_construction_crane_3_0.png",
+    "effectTargets": [
+      {
+        "label": "All Repair Cranes",
+        "visible": true
+      },
+      {
+        "label": "Repair Crane",
+        "visible": false
+      },
+      {
+        "label": "Repair Crane",
+        "visible": false
+      },
+      {
+        "label": "Repair Crane",
+        "visible": false
+      },
+      {
+        "label": "Repair Crane",
+        "visible": false
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [
+      {
+        "key": "crafting",
+        "value": 40
+      }
+    ],
+    "rarity": "epic",
+    "rarityLabel": "Epic",
+    "upgrades": [
+      {
+        "key": "HealRadiusUpgrade",
+        "value": {
+          "Value": 35,
+          "Percental": 1
+        },
+        "label": "Repair Radius"
+      },
+      {
+        "key": "HealPerMinuteUpgrade",
+        "value": {
+          "Value": 20,
+          "Percental": 1
+        },
+        "label": "Repair Speed"
+      },
+      {
+        "key": "HealBuildingsPerMinuteUpgrade",
+        "value": {
+          "Value": 20,
+          "Percental": 1
+        },
+        "label": "Repair Speed"
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 191886,
+    "type": "harborofficeitem",
+    "name": "Hydraulic Repair Crane",
+    "icon": "/img/main/3dicons/consumables/icon_construction_crane_4_0.png",
+    "effectTargets": [
+      {
+        "label": "All Repair Cranes",
+        "visible": true
+      },
+      {
+        "label": "Repair Crane",
+        "visible": false
+      },
+      {
+        "label": "Repair Crane",
+        "visible": false
+      },
+      {
+        "label": "Repair Crane",
+        "visible": false
+      },
+      {
+        "label": "Repair Crane",
+        "visible": false
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [
+      {
+        "key": "crafting",
+        "value": 50
+      }
+    ],
+    "rarity": "legendary",
+    "rarityLabel": "Legendary",
+    "upgrades": [
+      {
+        "key": "HealRadiusUpgrade",
+        "value": {
+          "Value": 40,
+          "Percental": 1
+        },
+        "label": "Repair Radius"
+      },
+      {
+        "key": "HealPerMinuteUpgrade",
+        "value": {
+          "Value": 40,
+          "Percental": 1
+        },
+        "label": "Repair Speed"
+      },
+      {
+        "key": "HealBuildingsPerMinuteUpgrade",
+        "value": {
+          "Value": 40,
+          "Percental": 1
+        },
+        "label": "Repair Speed"
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 191894,
+    "type": "harborofficeitem",
+    "name": "Wooden Crane",
+    "icon": "/img/main/3dicons/consumables/icon_repair_crane_1_0.png",
+    "effectTargets": [
+      {
+        "label": "All Shipyards",
+        "visible": true
+      },
+      {
+        "label": "Sailing Shipyard",
+        "visible": false
+      },
+      {
+        "label": "Steam Shipyard",
+        "visible": false
+      },
+      {
+        "label": "Sailing Shipyard",
+        "visible": false
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [
+      {
+        "key": "crafting",
+        "value": 20
+      }
+    ],
+    "rarity": "uncommon",
+    "rarityLabel": "Uncommon",
+    "upgrades": [
+      {
+        "key": "ConstructionCostInPercent",
+        "value": -15,
+        "label": "Construction cost"
+      },
+      {
+        "key": "IncidentFireIncreaseUpgrade",
+        "value": {
+          "Value": 4
+        },
+        "label": "Chance of Fire"
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 191895,
+    "type": "harborofficeitem",
+    "name": "Gantry Crane",
+    "icon": "/img/main/3dicons/consumables/icon_repair_crane_1_0.png",
+    "effectTargets": [
+      {
+        "label": "All Shipyards",
+        "visible": true
+      },
+      {
+        "label": "Sailing Shipyard",
+        "visible": false
+      },
+      {
+        "label": "Steam Shipyard",
+        "visible": false
+      },
+      {
+        "label": "Sailing Shipyard",
+        "visible": false
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [
+      {
+        "key": "crafting",
+        "value": 30
+      }
+    ],
+    "rarity": "rare",
+    "rarityLabel": "Rare",
+    "upgrades": [
+      {
+        "key": "ConstructionCostInPercent",
+        "value": -20,
+        "label": "Construction cost"
+      },
+      {
+        "key": "IncidentFireIncreaseUpgrade",
+        "value": {
+          "Value": 2
+        },
+        "label": "Chance of Fire"
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 191896,
+    "type": "harborofficeitem",
+    "name": "Railroad Crane",
+    "icon": "/img/main/3dicons/consumables/icon_repair_crane_2_0.png",
+    "effectTargets": [
+      {
+        "label": "All Shipyards",
+        "visible": true
+      },
+      {
+        "label": "Sailing Shipyard",
+        "visible": false
+      },
+      {
+        "label": "Steam Shipyard",
+        "visible": false
+      },
+      {
+        "label": "Sailing Shipyard",
+        "visible": false
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [
+      {
+        "key": "crafting",
+        "value": 40
+      }
+    ],
+    "rarity": "epic",
+    "rarityLabel": "Epic",
+    "upgrades": [
+      {
+        "key": "ConstructionCostInPercent",
+        "value": -25,
+        "label": "Construction cost"
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 192036,
+    "type": "harborofficeitem",
+    "name": "Hydraulic Crane",
+    "icon": "/img/main/3dicons/consumables/icon_repair_crane_3_0.png",
+    "effectTargets": [
+      {
+        "label": "All Shipyards",
+        "visible": true
+      },
+      {
+        "label": "Sailing Shipyard",
+        "visible": false
+      },
+      {
+        "label": "Steam Shipyard",
+        "visible": false
+      },
+      {
+        "label": "Sailing Shipyard",
+        "visible": false
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [
+      {
+        "key": "crafting",
+        "value": 50
+      }
+    ],
+    "rarity": "legendary",
+    "rarityLabel": "Legendary",
+    "upgrades": [
+      {
+        "key": "WorkforceAmountUpgrade",
+        "value": {
+          "Value": -50,
+          "Percental": 1
+        },
+        "label": "Workforce Needed"
+      },
+      {
+        "key": "ConstructionCostInPercent",
+        "value": -30,
+        "label": "Construction cost"
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 191900,
+    "type": "harborofficeitem",
+    "name": "Oyster Spawn",
+    "icon": "/img/main/3dicons/fertilities/icon_fertility_pearl_0.png",
+    "effectTargets": [
+      {
+        "label": "Pearl Farm",
+        "visible": true
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [],
+    "rarity": "uncommon",
+    "rarityLabel": "Uncommon",
+    "upgrades": [
+      {
+        "key": "ProductivityUpgrade",
+        "value": {
+          "Value": -15,
+          "Percental": 1
+        },
+        "label": "Productivity"
+      },
+      {
+        "key": "AddedFertility",
+        "value": "Pearl Abundance",
+        "label": "Fertility"
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 191901,
+    "type": "harborofficeitem",
+    "name": "Quality Oyster Spawn",
+    "icon": "/img/main/3dicons/fertilities/icon_fertility_pearl_0.png",
+    "effectTargets": [
+      {
+        "label": "Pearl Farm",
+        "visible": true
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [],
+    "rarity": "rare",
+    "rarityLabel": "Rare",
+    "upgrades": [
+      {
+        "key": "AddedFertility",
+        "value": "Pearl Abundance",
+        "label": "Fertility"
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 191902,
+    "type": "harborofficeitem",
+    "name": "Hybrid Oyster Spawn",
+    "icon": "/img/main/3dicons/fertilities/icon_fertility_pearl_0.png",
+    "effectTargets": [
+      {
+        "label": "Pearl Farm",
+        "visible": true
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [],
+    "rarity": "epic",
+    "rarityLabel": "Epic",
+    "upgrades": [
+      {
+        "key": "ProductivityUpgrade",
+        "value": {
+          "Value": 25,
+          "Percental": 1
+        },
+        "label": "Productivity"
+      },
+      {
+        "key": "AddedFertility",
+        "value": "Pearl Abundance",
+        "label": "Fertility"
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 191812,
+    "type": "harborofficeitem",
+    "name": "Minor Tourism Campaign",
+    "icon": "/img/main/3dicons/museum/icon_book_comon_0.png",
+    "effectTargets": [
+      {
+        "label": "All Public Moorings",
+        "visible": true
+      },
+      {
+        "label": "Public Mooring",
+        "visible": false
+      },
+      {
+        "label": "Public Mooring",
+        "visible": false
+      },
+      {
+        "label": "Tourist Mooring",
+        "visible": false
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [],
+    "rarity": "uncommon",
+    "rarityLabel": "Uncommon",
+    "upgrades": [
+      {
+        "key": "AttractivenessUpgrade",
+        "value": {
+          "Value": 20
+        },
+        "label": "Attractiveness"
+      },
+      {
+        "key": "MaintenanceUpgrade",
+        "value": {
+          "Value": 35,
+          "Percental": 1
+        },
+        "label": "Maintenance Cost"
+      },
+      {
+        "key": "SpawnProbabilityFactor",
+        "value": {
+          "Value": 10,
+          "Percental": 1
+        },
+        "label": "Special Guests"
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 191813,
+    "type": "harborofficeitem",
+    "name": "Major Tourism Campaign",
+    "icon": "/img/main/3dicons/museum/icon_book_uncommon_0.png",
+    "effectTargets": [
+      {
+        "label": "All Public Moorings",
+        "visible": true
+      },
+      {
+        "label": "Public Mooring",
+        "visible": false
+      },
+      {
+        "label": "Public Mooring",
+        "visible": false
+      },
+      {
+        "label": "Tourist Mooring",
+        "visible": false
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [],
+    "rarity": "rare",
+    "rarityLabel": "Rare",
+    "upgrades": [
+      {
+        "key": "AttractivenessUpgrade",
+        "value": {
+          "Value": 35
+        },
+        "label": "Attractiveness"
+      },
+      {
+        "key": "MaintenanceUpgrade",
+        "value": {
+          "Value": 70,
+          "Percental": 1
+        },
+        "label": "Maintenance Cost"
+      },
+      {
+        "key": "SpawnProbabilityFactor",
+        "value": {
+          "Value": 15,
+          "Percental": 1
+        },
+        "label": "Special Guests"
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 191814,
+    "type": "harborofficeitem",
+    "name": "Madame Kahina's Executive Tourism Drive",
+    "icon": "/img/main/3dicons/museum/icon_book_rare_0.png",
+    "effectTargets": [
+      {
+        "label": "All Public Moorings",
+        "visible": true
+      },
+      {
+        "label": "Public Mooring",
+        "visible": false
+      },
+      {
+        "label": "Public Mooring",
+        "visible": false
+      },
+      {
+        "label": "Tourist Mooring",
+        "visible": false
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [],
+    "rarity": "epic",
+    "rarityLabel": "Epic",
+    "upgrades": [
+      {
+        "key": "AttractivenessUpgrade",
+        "value": {
+          "Value": 50
+        },
+        "label": "Attractiveness"
+      },
+      {
+        "key": "MaintenanceUpgrade",
+        "value": {
+          "Value": 100,
+          "Percental": 1
+        },
+        "label": "Maintenance Cost"
+      },
+      {
+        "key": "SpawnProbabilityFactor",
+        "value": {
+          "Value": 20,
+          "Percental": 1
+        },
+        "label": "Special Guests"
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 112386,
+    "type": "harborofficeitem",
+    "name": "TrepanN8r",
+    "icon": "/img/main/3dicons/machine_items/icon_rotating_rifle_1_0.png",
+    "effectTargets": [
+      {
+        "label": "All Defence Turrets",
+        "visible": true
+      },
+      {
+        "label": "Mounted Guns",
+        "visible": false
+      },
+      {
+        "label": "Cannon Tower",
+        "visible": false
+      },
+      {
+        "label": "Big Betty",
+        "visible": false
+      },
+      {
+        "label": "Mounted Guns",
+        "visible": false
+      },
+      {
+        "label": "Cannon Tower",
+        "visible": false
+      },
+      {
+        "label": "Big Betty",
+        "visible": false
+      },
+      {
+        "label": "Mounted Guns",
+        "visible": false
+      },
+      {
+        "label": "Cannon Tower",
+        "visible": false
+      },
+      {
+        "label": "Flame Tower",
+        "visible": false
+      },
+      {
+        "label": "Flame Tower",
+        "visible": false
+      },
+      {
+        "label": "Flame Tower",
+        "visible": false
+      },
+      {
+        "label": "Flame Tower",
+        "visible": false
+      },
+      {
+        "label": "Flak Emplacement",
+        "visible": false
+      },
+      {
+        "label": "Flak Emplacement",
+        "visible": false
+      },
+      {
+        "label": "Flak Emplacement",
+        "visible": false
+      },
+      {
+        "label": "Flak Emplacement",
+        "visible": false
+      },
+      {
+        "label": "Anti-Armour Gun",
+        "visible": false
+      },
+      {
+        "label": "Anti-Armour Gun",
+        "visible": false
+      },
+      {
+        "label": "Anti-Armour Gun",
+        "visible": false
+      },
+      {
+        "label": "Anti-Armour Gun",
+        "visible": false
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [
+      {
+        "key": "might",
+        "value": 20
+      }
+    ],
+    "rarity": "rare",
+    "rarityLabel": "Rare",
+    "upgrades": [
+      {
+        "key": "BaseDamageUpgrade",
+        "value": {
+          "Value": 10,
+          "Percental": 1
+        },
+        "label": "Damage per shot"
+      },
+      {
+        "key": "AttackSpeedUpgrade",
+        "value": 20,
+        "label": "Attack Speed"
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 112387,
+    "type": "harborofficeitem",
+    "name": "AssassiN8r",
+    "icon": "/img/main/3dicons/machine_items/icon_rotating_rifle_2_0.png",
+    "effectTargets": [
+      {
+        "label": "All Defence Turrets",
+        "visible": true
+      },
+      {
+        "label": "Mounted Guns",
+        "visible": false
+      },
+      {
+        "label": "Cannon Tower",
+        "visible": false
+      },
+      {
+        "label": "Big Betty",
+        "visible": false
+      },
+      {
+        "label": "Mounted Guns",
+        "visible": false
+      },
+      {
+        "label": "Cannon Tower",
+        "visible": false
+      },
+      {
+        "label": "Big Betty",
+        "visible": false
+      },
+      {
+        "label": "Mounted Guns",
+        "visible": false
+      },
+      {
+        "label": "Cannon Tower",
+        "visible": false
+      },
+      {
+        "label": "Flame Tower",
+        "visible": false
+      },
+      {
+        "label": "Flame Tower",
+        "visible": false
+      },
+      {
+        "label": "Flame Tower",
+        "visible": false
+      },
+      {
+        "label": "Flame Tower",
+        "visible": false
+      },
+      {
+        "label": "Flak Emplacement",
+        "visible": false
+      },
+      {
+        "label": "Flak Emplacement",
+        "visible": false
+      },
+      {
+        "label": "Flak Emplacement",
+        "visible": false
+      },
+      {
+        "label": "Flak Emplacement",
+        "visible": false
+      },
+      {
+        "label": "Anti-Armour Gun",
+        "visible": false
+      },
+      {
+        "label": "Anti-Armour Gun",
+        "visible": false
+      },
+      {
+        "label": "Anti-Armour Gun",
+        "visible": false
+      },
+      {
+        "label": "Anti-Armour Gun",
+        "visible": false
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [
+      {
+        "key": "might",
+        "value": 30
+      }
+    ],
+    "rarity": "epic",
+    "rarityLabel": "Epic",
+    "upgrades": [
+      {
+        "key": "BaseDamageUpgrade",
+        "value": {
+          "Value": 15,
+          "Percental": 1
+        },
+        "label": "Damage per shot"
+      },
+      {
+        "key": "AttackSpeedUpgrade",
+        "value": 30,
+        "label": "Attack Speed"
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 112388,
+    "type": "harborofficeitem",
+    "name": "Evil ExsanguiN8r",
+    "icon": "/img/main/3dicons/machine_items/icon_rotating_rifle_3_0.png",
+    "effectTargets": [
+      {
+        "label": "All Defence Turrets",
+        "visible": true
+      },
+      {
+        "label": "Mounted Guns",
+        "visible": false
+      },
+      {
+        "label": "Cannon Tower",
+        "visible": false
+      },
+      {
+        "label": "Big Betty",
+        "visible": false
+      },
+      {
+        "label": "Mounted Guns",
+        "visible": false
+      },
+      {
+        "label": "Cannon Tower",
+        "visible": false
+      },
+      {
+        "label": "Big Betty",
+        "visible": false
+      },
+      {
+        "label": "Mounted Guns",
+        "visible": false
+      },
+      {
+        "label": "Cannon Tower",
+        "visible": false
+      },
+      {
+        "label": "Flame Tower",
+        "visible": false
+      },
+      {
+        "label": "Flame Tower",
+        "visible": false
+      },
+      {
+        "label": "Flame Tower",
+        "visible": false
+      },
+      {
+        "label": "Flame Tower",
+        "visible": false
+      },
+      {
+        "label": "Flak Emplacement",
+        "visible": false
+      },
+      {
+        "label": "Flak Emplacement",
+        "visible": false
+      },
+      {
+        "label": "Flak Emplacement",
+        "visible": false
+      },
+      {
+        "label": "Flak Emplacement",
+        "visible": false
+      },
+      {
+        "label": "Anti-Armour Gun",
+        "visible": false
+      },
+      {
+        "label": "Anti-Armour Gun",
+        "visible": false
+      },
+      {
+        "label": "Anti-Armour Gun",
+        "visible": false
+      },
+      {
+        "label": "Anti-Armour Gun",
+        "visible": false
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [
+      {
+        "key": "might",
+        "value": 40
+      }
+    ],
+    "rarity": "legendary",
+    "rarityLabel": "Legendary",
+    "upgrades": [
+      {
+        "key": "BaseDamageUpgrade",
+        "value": {
+          "Value": 25,
+          "Percental": 1
+        },
+        "label": "Damage per shot"
+      },
+      {
+        "key": "AttackSpeedUpgrade",
+        "value": 50,
+        "label": "Attack Speed"
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 112380,
+    "type": "harborofficeitem",
+    "name": "Grubby Hands",
+    "icon": "/img/main/3dicons/machine_items/icon_power_shovel_1_0.png",
+    "effectTargets": [
+      {
+        "label": "All Coastal Production Buildings",
+        "visible": true
+      },
+      {
+        "label": "Fishery",
+        "visible": false
+      },
+      {
+        "label": "Saltpetre Works",
+        "visible": false
+      },
+      {
+        "label": "Sand Mine",
+        "visible": false
+      },
+      {
+        "label": "Pearl Farm",
+        "visible": false
+      },
+      {
+        "label": "Fish Oil Factory",
+        "visible": false
+      },
+      {
+        "label": "Saltpetre Works",
+        "visible": false
+      },
+      {
+        "label": "Salt Works",
+        "visible": false
+      },
+      {
+        "label": "Lobster Fishery",
+        "visible": false
+      },
+      {
+        "label": "Calamari Fishery",
+        "visible": false
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [
+      {
+        "key": "melee",
+        "value": 10
+      }
+    ],
+    "rarity": "rare",
+    "rarityLabel": "Rare",
+    "upgrades": [
+      {
+        "key": "ProductivityUpgrade",
+        "value": {
+          "Value": 15,
+          "Percental": 1
+        },
+        "label": "Productivity"
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 112381,
+    "type": "harborofficeitem",
+    "name": "Greedy Mitts",
+    "icon": "/img/main/3dicons/machine_items/icon_power_shovel_2_0.png",
+    "effectTargets": [
+      {
+        "label": "All Coastal Production Buildings",
+        "visible": true
+      },
+      {
+        "label": "Fishery",
+        "visible": false
+      },
+      {
+        "label": "Saltpetre Works",
+        "visible": false
+      },
+      {
+        "label": "Sand Mine",
+        "visible": false
+      },
+      {
+        "label": "Pearl Farm",
+        "visible": false
+      },
+      {
+        "label": "Fish Oil Factory",
+        "visible": false
+      },
+      {
+        "label": "Saltpetre Works",
+        "visible": false
+      },
+      {
+        "label": "Salt Works",
+        "visible": false
+      },
+      {
+        "label": "Lobster Fishery",
+        "visible": false
+      },
+      {
+        "label": "Calamari Fishery",
+        "visible": false
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [
+      {
+        "key": "melee",
+        "value": 20
+      }
+    ],
+    "rarity": "epic",
+    "rarityLabel": "Epic",
+    "upgrades": [
+      {
+        "key": "ProductivityUpgrade",
+        "value": {
+          "Value": 25,
+          "Percental": 1
+        },
+        "label": "Productivity"
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 112382,
+    "type": "harborofficeitem",
+    "name": "Sticky Shiny Claws",
+    "icon": "/img/main/3dicons/machine_items/icon_power_shovel_3_0.png",
+    "effectTargets": [
+      {
+        "label": "All Coastal Production Buildings",
+        "visible": true
+      },
+      {
+        "label": "Fishery",
+        "visible": false
+      },
+      {
+        "label": "Saltpetre Works",
+        "visible": false
+      },
+      {
+        "label": "Sand Mine",
+        "visible": false
+      },
+      {
+        "label": "Pearl Farm",
+        "visible": false
+      },
+      {
+        "label": "Fish Oil Factory",
+        "visible": false
+      },
+      {
+        "label": "Saltpetre Works",
+        "visible": false
+      },
+      {
+        "label": "Salt Works",
+        "visible": false
+      },
+      {
+        "label": "Lobster Fishery",
+        "visible": false
+      },
+      {
+        "label": "Calamari Fishery",
+        "visible": false
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [
+      {
+        "key": "melee",
+        "value": 30
+      }
+    ],
+    "rarity": "legendary",
+    "rarityLabel": "Legendary",
+    "upgrades": [
+      {
+        "key": "ProductivityUpgrade",
+        "value": {
+          "Value": 35,
+          "Percental": 1
+        },
+        "label": "Productivity"
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 112383,
+    "type": "harborofficeitem",
+    "name": "Hydroelectric Wheel",
+    "icon": "/img/main/3dicons/machine_items/icon_hydraulic_network_1_0.png",
+    "effectTargets": [
+      {
+        "label": "All Coastal Production Buildings",
+        "visible": true
+      },
+      {
+        "label": "Fishery",
+        "visible": false
+      },
+      {
+        "label": "Saltpetre Works",
+        "visible": false
+      },
+      {
+        "label": "Sand Mine",
+        "visible": false
+      },
+      {
+        "label": "Pearl Farm",
+        "visible": false
+      },
+      {
+        "label": "Fish Oil Factory",
+        "visible": false
+      },
+      {
+        "label": "Saltpetre Works",
+        "visible": false
+      },
+      {
+        "label": "Salt Works",
+        "visible": false
+      },
+      {
+        "label": "Lobster Fishery",
+        "visible": false
+      },
+      {
+        "label": "Calamari Fishery",
+        "visible": false
+      },
+      {
+        "label": "All Shipyards",
+        "visible": true
+      },
+      {
+        "label": "Sailing Shipyard",
+        "visible": false
+      },
+      {
+        "label": "Steam Shipyard",
+        "visible": false
+      },
+      {
+        "label": "Sailing Shipyard",
+        "visible": false
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [],
+    "rarity": "rare",
+    "rarityLabel": "Rare",
+    "upgrades": [
+      {
+        "key": "IncidentFireIncreaseUpgrade",
+        "value": {
+          "Value": 15
+        },
+        "label": "Chance of Fire"
+      },
+      {
+        "key": "IncidentExplosionIncreaseUpgrade",
+        "value": {
+          "Value": 7
+        },
+        "label": "Explosion Chance"
+      },
+      {
+        "key": "ProvideIndustrialization",
+        "value": 1,
+        "label": "Provides Electricity"
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 112384,
+    "type": "harborofficeitem",
+    "name": "Stainless Hydroelectric Wheel",
+    "icon": "/img/main/3dicons/machine_items/icon_hydraulic_network_2_0.png",
+    "effectTargets": [
+      {
+        "label": "All Coastal Production Buildings",
+        "visible": true
+      },
+      {
+        "label": "Fishery",
+        "visible": false
+      },
+      {
+        "label": "Saltpetre Works",
+        "visible": false
+      },
+      {
+        "label": "Sand Mine",
+        "visible": false
+      },
+      {
+        "label": "Pearl Farm",
+        "visible": false
+      },
+      {
+        "label": "Fish Oil Factory",
+        "visible": false
+      },
+      {
+        "label": "Saltpetre Works",
+        "visible": false
+      },
+      {
+        "label": "Salt Works",
+        "visible": false
+      },
+      {
+        "label": "Lobster Fishery",
+        "visible": false
+      },
+      {
+        "label": "Calamari Fishery",
+        "visible": false
+      },
+      {
+        "label": "All Shipyards",
+        "visible": true
+      },
+      {
+        "label": "Sailing Shipyard",
+        "visible": false
+      },
+      {
+        "label": "Steam Shipyard",
+        "visible": false
+      },
+      {
+        "label": "Sailing Shipyard",
+        "visible": false
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [],
+    "rarity": "epic",
+    "rarityLabel": "Epic",
+    "upgrades": [
+      {
+        "key": "IncidentFireIncreaseUpgrade",
+        "value": {
+          "Value": 10
+        },
+        "label": "Chance of Fire"
+      },
+      {
+        "key": "IncidentExplosionIncreaseUpgrade",
+        "value": {
+          "Value": 5
+        },
+        "label": "Explosion Chance"
+      },
+      {
+        "key": "ProvideIndustrialization",
+        "value": 1,
+        "label": "Provides Electricity"
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 112385,
+    "type": "harborofficeitem",
+    "name": "RacioN8d Super Spinner",
+    "icon": "/img/main/3dicons/machine_items/icon_hydraulic_network_3_0.png",
+    "effectTargets": [
+      {
+        "label": "All Coastal Production Buildings",
+        "visible": true
+      },
+      {
+        "label": "Fishery",
+        "visible": false
+      },
+      {
+        "label": "Saltpetre Works",
+        "visible": false
+      },
+      {
+        "label": "Sand Mine",
+        "visible": false
+      },
+      {
+        "label": "Pearl Farm",
+        "visible": false
+      },
+      {
+        "label": "Fish Oil Factory",
+        "visible": false
+      },
+      {
+        "label": "Saltpetre Works",
+        "visible": false
+      },
+      {
+        "label": "Salt Works",
+        "visible": false
+      },
+      {
+        "label": "Lobster Fishery",
+        "visible": false
+      },
+      {
+        "label": "Calamari Fishery",
+        "visible": false
+      },
+      {
+        "label": "All Shipyards",
+        "visible": true
+      },
+      {
+        "label": "Sailing Shipyard",
+        "visible": false
+      },
+      {
+        "label": "Steam Shipyard",
+        "visible": false
+      },
+      {
+        "label": "Sailing Shipyard",
+        "visible": false
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [],
+    "rarity": "legendary",
+    "rarityLabel": "Legendary",
+    "upgrades": [
+      {
+        "key": "IncidentFireIncreaseUpgrade",
+        "value": {
+          "Value": 5
+        },
+        "label": "Chance of Fire"
+      },
+      {
+        "key": "IncidentExplosionIncreaseUpgrade",
+        "value": {
+          "Value": 3
+        },
+        "label": "Explosion Chance"
+      },
+      {
+        "key": "ProvideIndustrialization",
+        "value": 1,
+        "label": "Provides Electricity"
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 113792,
+    "type": "harborofficeitem",
+    "name": "Hogarth the Harbourmaster, Veteran Of Trelawney",
+    "icon": "/img/main/3dicons/specialists/systemic/sunken_treasure_rewards/icon_guildhouse_specialist_200_0.png",
+    "effectTargets": [
+      {
+        "label": "All Harbour Buildings",
+        "visible": true
+      },
+      {
+        "label": "All Trading Posts",
+        "visible": false
+      },
+      {
+        "label": "Pier",
+        "visible": false
+      },
+      {
+        "label": "Small Oil Harbour",
+        "visible": false
+      },
+      {
+        "label": "Medium Oil Harbour",
+        "visible": false
+      },
+      {
+        "label": "Large Oil Harbour",
+        "visible": false
+      },
+      {
+        "label": "Pier",
+        "visible": false
+      },
+      {
+        "label": "Small Oil Harbour",
+        "visible": false
+      },
+      {
+        "label": "Medium Oil Harbour",
+        "visible": false
+      },
+      {
+        "label": "Large Oil Harbour",
+        "visible": false
+      },
+      {
+        "label": "Grand Oil Harbour",
+        "visible": false
+      },
+      {
+        "label": "Grand Oil Harbour",
+        "visible": false
+      },
+      {
+        "label": "Pier",
+        "visible": false
+      },
+      {
+        "label": "Advanced Pier",
+        "visible": false
+      },
+      {
+        "label": "Advanced Pier",
+        "visible": false
+      },
+      {
+        "label": "Advanced Pier",
+        "visible": false
+      },
+      {
+        "label": "Grand Oil Harbour",
+        "visible": false
+      },
+      {
+        "label": "Small Oil Harbour",
+        "visible": false
+      },
+      {
+        "label": "Medium Oil Harbour",
+        "visible": false
+      },
+      {
+        "label": "Large Oil Harbour",
+        "visible": false
+      },
+      {
+        "label": "Docklands Main Wharf",
+        "visible": false
+      },
+      {
+        "label": "Pier",
+        "visible": false
+      },
+      {
+        "label": "Airship Platform",
+        "visible": false
+      },
+      {
+        "label": "Airship Platform",
+        "visible": false
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [
+      {
+        "key": "perkmale",
+        "value": 1
+      },
+      {
+        "key": "diplomacy",
+        "value": 50
+      }
+    ],
+    "rarity": "legendary",
+    "rarityLabel": "Legendary",
+    "upgrades": [
+      {
+        "key": "GenProbability",
+        "value": 30,
+        "label": "Harbour Activity"
+      },
+      {
+        "key": "GenPool",
+        "value": ["Coffee", "Gold", "Cotton Fabric", "Rum", "Chocolate"],
+        "label": "Bonus Supply"
+      },
+      {
+        "key": "PierSpeedUpgrade",
+        "value": {
+          "Value": 100,
+          "Percental": 1
+        },
+        "label": "Loading Speed"
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 125135,
+    "type": "harborofficeitem",
+    "name": "Seasoned Salter",
+    "icon": "/img/main/3dicons/specialists/africa/icon_sea_master_1_0.png",
+    "effectTargets": [
+      {
+        "label": "Salt Works",
+        "visible": true
+      },
+      {
+        "label": "Lobster Fishery",
+        "visible": true
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [
+      {
+        "key": "perkmale",
+        "value": 1
+      },
+      {
+        "key": "crafting",
+        "value": 10
+      }
+    ],
+    "rarity": "rare",
+    "rarityLabel": "Rare",
+    "upgrades": [
+      {
+        "key": "ProductivityUpgrade",
+        "value": {
+          "Value": 30,
+          "Percental": 1
+        },
+        "label": "Productivity"
+      },
+      {
+        "key": "MaintenanceUpgrade",
+        "value": {
+          "Value": -50,
+          "Percental": 1
+        },
+        "label": "Maintenance Cost"
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 125136,
+    "type": "harborofficeitem",
+    "name": "Lobsterman",
+    "icon": "/img/main/3dicons/specialists/africa/icon_sea_master_2_0.png",
+    "effectTargets": [
+      {
+        "label": "Lobster Fishery",
+        "visible": true
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [
+      {
+        "key": "perkmale",
+        "value": 1
+      },
+      {
+        "key": "hunting",
+        "value": 30
+      },
+      {
+        "key": "navigation",
+        "value": 10
+      }
+    ],
+    "rarity": "epic",
+    "rarityLabel": "Epic",
+    "upgrades": [
+      {
+        "key": "ProductivityUpgrade",
+        "value": {
+          "Value": 40,
+          "Percental": 1
+        },
+        "label": "Productivity"
+      },
+      {
+        "key": "AddedFertility",
+        "value": "Lobster Abundance",
+        "label": "Fertility"
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 131014,
+    "type": "harborofficeitem",
+    "name": "Ketema's Cousin",
+    "icon": "/img/main/3dicons/specialists/africa/icon_enbesan_cook_3a_0.png",
+    "effectTargets": [
+      {
+        "label": "Salt Works",
+        "visible": true
+      },
+      {
+        "label": "Lobster Fishery",
+        "visible": true
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [
+      {
+        "key": "perkmale",
+        "value": 1
+      },
+      {
+        "key": "crafting",
+        "value": 10
+      }
+    ],
+    "rarity": "narrative",
+    "rarityLabel": "Character Item",
+    "upgrades": [
+      {
+        "key": "ProductivityUpgrade",
+        "value": {
+          "Value": 10,
+          "Percental": 1
+        },
+        "label": "Productivity"
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 121020,
+    "type": "harborofficeitem",
+    "name": "Khadija Tsegaye, Angereb's Market Master",
+    "icon": "/img/main/3dicons/specialists/systemic/icon_archaeologist_801_0.png",
+    "effectTargets": [
+      {
+        "label": "All Trading Posts and Piers",
+        "visible": true
+      },
+      {
+        "label": "All Trading Posts",
+        "visible": false
+      },
+      {
+        "label": "Pier",
+        "visible": false
+      },
+      {
+        "label": "Pier",
+        "visible": false
+      },
+      {
+        "label": "Pier",
+        "visible": false
+      },
+      {
+        "label": "Advanced Pier",
+        "visible": false
+      },
+      {
+        "label": "Advanced Pier",
+        "visible": false
+      },
+      {
+        "label": "Advanced Pier",
+        "visible": false
+      },
+      {
+        "label": "Docklands Main Wharf",
+        "visible": false
+      },
+      {
+        "label": "Pier",
+        "visible": false
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [
+      {
+        "key": "diplomacy",
+        "value": 45
+      },
+      {
+        "key": "crafting",
+        "value": 20
+      }
+    ],
+    "rarity": "legendary",
+    "rarityLabel": "Legendary",
+    "upgrades": [
+      {
+        "key": "GenProbability",
+        "value": 30,
+        "label": "Harbour Activity"
+      },
+      {
+        "key": "GenPool",
+        "value": ["Ceramics", "Tapestries", "Clay Pipes", "Illuminated Script", "Lanterns"],
+        "label": "Bonus Supply"
+      },
+      {
+        "key": "PierSpeedUpgrade",
+        "value": {
+          "Value": 30,
+          "Percental": 1
+        },
+        "label": "Loading Speed"
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 121022,
+    "type": "harborofficeitem",
+    "name": "Rear Admiral Richard B. Sharpe, The Eagle-Eyed",
+    "icon": "/img/main/3dicons/specialists/icon_captain_epic_0.png",
+    "effectTargets": [
+      {
+        "label": "All Defence Turrets",
+        "visible": true
+      },
+      {
+        "label": "Mounted Guns",
+        "visible": false
+      },
+      {
+        "label": "Cannon Tower",
+        "visible": false
+      },
+      {
+        "label": "Big Betty",
+        "visible": false
+      },
+      {
+        "label": "Mounted Guns",
+        "visible": false
+      },
+      {
+        "label": "Cannon Tower",
+        "visible": false
+      },
+      {
+        "label": "Big Betty",
+        "visible": false
+      },
+      {
+        "label": "Mounted Guns",
+        "visible": false
+      },
+      {
+        "label": "Cannon Tower",
+        "visible": false
+      },
+      {
+        "label": "Flame Tower",
+        "visible": false
+      },
+      {
+        "label": "Flame Tower",
+        "visible": false
+      },
+      {
+        "label": "Flame Tower",
+        "visible": false
+      },
+      {
+        "label": "Flame Tower",
+        "visible": false
+      },
+      {
+        "label": "Flak Emplacement",
+        "visible": false
+      },
+      {
+        "label": "Flak Emplacement",
+        "visible": false
+      },
+      {
+        "label": "Flak Emplacement",
+        "visible": false
+      },
+      {
+        "label": "Flak Emplacement",
+        "visible": false
+      },
+      {
+        "label": "Anti-Armour Gun",
+        "visible": false
+      },
+      {
+        "label": "Anti-Armour Gun",
+        "visible": false
+      },
+      {
+        "label": "Anti-Armour Gun",
+        "visible": false
+      },
+      {
+        "label": "Anti-Armour Gun",
+        "visible": false
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [
+      {
+        "key": "might",
+        "value": 40
+      },
+      {
+        "key": "melee",
+        "value": 15
+      }
+    ],
+    "rarity": "epic",
+    "rarityLabel": "Epic",
+    "upgrades": [
+      {
+        "key": "AccuracyUpgrade",
+        "value": {
+          "Value": 50,
+          "Percental": 1
+        },
+        "label": "Accuracy"
+      },
+      {
+        "key": "MaxHitpointsUpgrade",
+        "value": {
+          "Value": 800
+        },
+        "label": "Hitpoints"
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 125056,
+    "type": "harborofficeitem",
+    "name": "Net Trap",
+    "icon": "/img/main/3dicons/machine_items/africa/item_net_lobster_trap_0.png",
+    "effectTargets": [
+      {
+        "label": "Lobster Fishery",
+        "visible": true
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [
+      {
+        "key": "hunting",
+        "value": 10
+      }
+    ],
+    "rarity": "uncommon",
+    "rarityLabel": "Uncommon",
+    "upgrades": [
+      {
+        "key": "ProductivityUpgrade",
+        "value": {
+          "Value": 20,
+          "Percental": 1
+        },
+        "label": "Productivity"
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 125057,
+    "type": "harborofficeitem",
+    "name": "Captain Nineveh's Miraculous Lobster Trap",
+    "icon": "/img/main/3dicons/machine_items/africa/item_miraculous_lobster_trap_0.png",
+    "effectTargets": [
+      {
+        "label": "Lobster Fishery",
+        "visible": true
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [],
+    "rarity": "epic",
+    "rarityLabel": "Epic",
+    "upgrades": [
+      {
+        "key": "ProductivityUpgrade",
+        "value": {
+          "Value": 40,
+          "Percental": 1
+        },
+        "label": "Productivity"
+      },
+      {
+        "key": "MaintenanceUpgrade",
+        "value": {
+          "Value": -50,
+          "Percental": 1
+        },
+        "label": "Maintenance Cost"
+      },
+      {
+        "key": "WorkforceAmountUpgrade",
+        "value": {
+          "Value": -50,
+          "Percental": 1
+        },
+        "label": "Workforce Needed"
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 132401,
+    "type": "harborofficeitem",
+    "name": "Deep Blue Ship Blueprints",
+    "icon": "/img/main/3dicons/narative_item/icon_blueprint_pump_0.png",
+    "effectTargets": [
+      {
+        "label": "Steam Shipyard",
+        "visible": true
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [],
+    "rarity": "common",
+    "rarityLabel": "Common",
+    "upgrades": [
+      {
+        "key": "AddAssemblyOptions",
+        "value": {
+          "Item": [
+            {
+              "NewOption": 132404,
+              "NewOption_label": "World-Class Reefer"
+            }
+          ]
+        },
+        "label": "Adds the ability to construct ."
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 8356,
+    "type": "harborofficeitem",
+    "name": "Pedro, Captain of the \"Panama\"",
+    "icon": "/img/main/3dicons/specialists/systemic/icon_shepherd_510_0.png",
+    "effectTargets": [
+      {
+        "label": "All Fisheries",
+        "visible": true
+      },
+      {
+        "label": "Fishery",
+        "visible": false
+      },
+      {
+        "label": "Fish Oil Factory",
+        "visible": false
+      },
+      {
+        "label": "Lobster Fishery",
+        "visible": false
+      },
+      {
+        "label": "Calamari Fishery",
+        "visible": false
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [
+      {
+        "key": "perkmale",
+        "value": 1
+      },
+      {
+        "key": "navigation",
+        "value": 20
+      }
+    ],
+    "rarity": "legendary",
+    "rarityLabel": "Legendary",
+    "upgrades": [
+      {
+        "key": "AdditionalOutput",
+        "value": {
+          "Item": [
+            {
+              "Product": 5380,
+              "AdditionalOutputCycle": 7,
+              "Amount": 1,
+              "Product_label": "Calamari"
+            },
+            {
+              "Product": 1010200,
+              "AdditionalOutputCycle": 5,
+              "Amount": 1,
+              "Product_label": "Fish"
+            },
+            {
+              "Product": 120042,
+              "AdditionalOutputCycle": 4,
+              "Amount": 1,
+              "Product_label": "Fish Oil"
+            }
+          ]
+        },
+        "label": "Extra Goods"
+      },
+      {
+        "key": "MaintenanceUpgrade",
+        "value": {
+          "Value": 75,
+          "Percental": 1
+        },
+        "label": "Maintenance Cost"
+      },
+      {
+        "key": "WorkforceAmountUpgrade",
+        "value": {
+          "Value": -20,
+          "Percental": 1
+        },
+        "label": "Workforce Needed"
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 13645,
+    "type": "harborofficeitem",
+    "name": "Vasco's Lieutnant",
+    "icon": "/img/main/3dicons/specialists/systemic/icon_uniform_807_0.png",
+    "effectTargets": [
+      {
+        "label": "All Defence Turrets",
+        "visible": true
+      },
+      {
+        "label": "Mounted Guns",
+        "visible": false
+      },
+      {
+        "label": "Cannon Tower",
+        "visible": false
+      },
+      {
+        "label": "Big Betty",
+        "visible": false
+      },
+      {
+        "label": "Mounted Guns",
+        "visible": false
+      },
+      {
+        "label": "Cannon Tower",
+        "visible": false
+      },
+      {
+        "label": "Big Betty",
+        "visible": false
+      },
+      {
+        "label": "Mounted Guns",
+        "visible": false
+      },
+      {
+        "label": "Cannon Tower",
+        "visible": false
+      },
+      {
+        "label": "Flame Tower",
+        "visible": false
+      },
+      {
+        "label": "Flame Tower",
+        "visible": false
+      },
+      {
+        "label": "Flame Tower",
+        "visible": false
+      },
+      {
+        "label": "Flame Tower",
+        "visible": false
+      },
+      {
+        "label": "Flak Emplacement",
+        "visible": false
+      },
+      {
+        "label": "Flak Emplacement",
+        "visible": false
+      },
+      {
+        "label": "Flak Emplacement",
+        "visible": false
+      },
+      {
+        "label": "Flak Emplacement",
+        "visible": false
+      },
+      {
+        "label": "Anti-Armour Gun",
+        "visible": false
+      },
+      {
+        "label": "Anti-Armour Gun",
+        "visible": false
+      },
+      {
+        "label": "Anti-Armour Gun",
+        "visible": false
+      },
+      {
+        "label": "Anti-Armour Gun",
+        "visible": false
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [
+      {
+        "key": "perkfemale",
+        "value": 1
+      },
+      {
+        "key": "might",
+        "value": 35
+      },
+      {
+        "key": "melee",
+        "value": 15
+      }
+    ],
+    "rarity": "rare",
+    "rarityLabel": "Rare",
+    "upgrades": [
+      {
+        "key": "BaseDamageUpgrade",
+        "value": {
+          "Value": 15,
+          "Percental": 1
+        },
+        "label": "Damage per shot"
+      },
+      {
+        "key": "MaxHitpointsUpgrade",
+        "value": {
+          "Value": 600
+        },
+        "label": "Hitpoints"
+      }
+    ],
+    "favourite": false
+  }
+]

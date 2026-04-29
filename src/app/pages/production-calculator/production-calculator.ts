@@ -60,15 +60,15 @@ const defaultWorld: World = {
           numBuildings: 10,
           boosts: [Boost.Electricity],
           hasTradeUnion: true,
-          tradeUnionItemsBonus: 0.5,
+          // tradeUnionItemsBonus: 0.5,
           inRangeOfLocalDepartment: true,
-          extraGoods: [
-            {
-              good: Good.Chocolate,
-              rateNumerator: 1,
-              rateDenominator: 3,
-            },
-          ],
+          // extraGoods: [
+          //   {
+          //     good: Good.Chocolate,
+          //     rateNumerator: 1,
+          //     rateDenominator: 3,
+          //   },
+          // ],
         },
         {
           building: ProductionBuilding.FlourMill,
@@ -77,7 +77,7 @@ const defaultWorld: World = {
           numBuildings: 5,
           boosts: [Boost.Electricity],
           hasTradeUnion: true,
-          tradeUnionItemsBonus: 0.5,
+          // tradeUnionItemsBonus: 0.5,
           inRangeOfLocalDepartment: true,
         },
         {
@@ -87,7 +87,7 @@ const defaultWorld: World = {
           numBuildings: 4,
           boosts: [Boost.Electricity],
           hasTradeUnion: true,
-          tradeUnionItemsBonus: 0.3,
+          // tradeUnionItemsBonus: 0.3,
           inRangeOfLocalDepartment: true,
         },
         {
@@ -97,7 +97,7 @@ const defaultWorld: World = {
           numBuildings: 3,
           boosts: [Boost.Electricity],
           hasTradeUnion: true,
-          tradeUnionItemsBonus: 0.3,
+          // tradeUnionItemsBonus: 0.3,
           inRangeOfLocalDepartment: true,
         },
         {
@@ -130,18 +130,18 @@ const defaultWorld: World = {
           building: ProductionBuilding.GrainFarm,
           good: Good.Grain,
           numBuildings: 8,
-          boosts: [Boost.TracktorBarn],
+          boosts: [Boost.TractorBarn],
           hasTradeUnion: true,
-          tradeUnionItemsBonus: 0.5,
+          // tradeUnionItemsBonus: 0.5,
           inRangeOfLocalDepartment: true,
         },
         {
           building: ProductionBuilding.HopFarm,
           good: Good.Hops,
           numBuildings: 3,
-          boosts: [Boost.TracktorBarn],
+          boosts: [Boost.TractorBarn],
           hasTradeUnion: true,
-          tradeUnionItemsBonus: 0.5,
+          // tradeUnionItemsBonus: 0.5,
           inRangeOfLocalDepartment: true,
         },
         {
@@ -294,7 +294,7 @@ export class ProductionCalculatorPage implements OnInit {
       this.formGroup!.value.tradeUnionBonusPercent / 100;
     if (this.islandComponents) {
       for (const i of this.islandComponents) {
-        i.afterPushChange();
+        i.forceAfterPushChange();
       }
     }
     this.tradeRoutesPanel?.afterPushChange();

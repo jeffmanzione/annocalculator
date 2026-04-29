@@ -24,10 +24,6 @@
   width: 24px;
 }
 
-.icon-right-padding {
-  padding-right: 8px;
-}
-
 .selected-text {
   padding-left: 6px;
   margin: auto 0;
@@ -55,6 +51,6 @@ mat-select {
   height: 24px;
 }
 
-mat-select-trigger {
-  display: flex;
+mat-option {
+  min-height: 36px;
 }

@@ -1,0 +1,31 @@
+@for (valueContainer of showValues; track valueContainer.value) {
+  <div
+    cdkOverlayOrigin
+    #trigger="cdkOverlayOrigin"
+    class="item-container"
+    (mouseenter)="showTooltipAt($index)"
+    (mouseleave)="hideTooltipAt($index)">
+    @if (iconUrlLookupFn(valueContainer.value)) {
+      <img
+        [src]="iconUrlLookupFn(valueContainer.value)"
+        [alt]="valueContainer"
+        class="item-icon-small"
+        [class.item-icon-right-padding]="showValues.length > 1" />
+    }
+    @if (showValues.length == 1) {
+      <div class="item-text item-text-left-padding">{{ valueContainer.value }}</div>
+    }
+  </div>
+  @if (hasTooltip) {
+    <ng-template
+      cdkConnectedOverlay
+      [cdkConnectedOverlayOrigin]="trigger"
+      [cdkConnectedOverlayOpen]="valueContainer.shouldShowOverlay"
+      (detach)="hideTooltipAt($index)">
+      <ng-container *ngTemplateOutlet="tooltip; context: { value: valueContainer.value }"></ng-container>
+    </ng-template>
+  }
+}
+@if (showValues.length == 0) {
+  <div class="item-text item-text-left-padding">{{ placeholderText }}</div>
+}

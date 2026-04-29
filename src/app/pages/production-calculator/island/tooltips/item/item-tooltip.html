@@ -1,0 +1,35 @@
+<div class="tooltip-container">
+  <div class="tooltip-inner-container" [ngClass]="backgroundClass">
+    @if (iconItemUrlLookupFn(item)) {
+      <img [src]="iconItemUrlLookupFn(item)" [alt]="item" class="item-icon-big" />
+    }
+    <div class="item-name">{{ item }}</div>
+    <div class="item-rarity">{{ itemInfo!.rarity }}</div>
+    <div class="item-text">Building: {{ itemInfo!.administrativeBuilding }}</div>
+    @if (itemInfo!.productivityEffect ?? 0 > 0) {
+      <div class="item-text">Productivity: {{ itemInfo!.productivityEffect }}%</div>
+    }
+    @if (itemInfo!.extraGoods?.length ?? 0 > 0) {
+      <div class="item-text extra-goods-container">
+        @for (eg of itemInfo!.extraGoods; track eg) {
+          <div class="extra-good">
+            @if (eg.good) {
+              <img [src]="iconGoodUrlLookupFn(eg.good)" [alt]="eg.good" class="good-icon-small" />
+            }
+            <div class="extra-good-name">
+              {{ eg.good ?? 'Extra Goods' }}: {{ eg.rateNumerator }} / {{ eg.rateDenominator }}
+            </div>
+          </div>
+        }
+      </div>
+    }
+    @if (itemInfo!.replacementGoods?.length ?? 0 > 0) {
+      <div class="item-text">
+        @for (rg of itemInfo!.replacementGoods; track rg) {
+          <div>{{ rg.from }} -> {{ rg.to }}</div>
+        }
+      </div>
+    }
+    <div class="item-text">Provides Electricity: {{ (itemInfo!.providesElectricity ?? false) ? 'Yes' : 'No' }}</div>
+  </div>
+</div>

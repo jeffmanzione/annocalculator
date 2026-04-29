@@ -1,35 +1,46 @@
+import { ProductionLineController } from '../../../shared/mvc/controllers';
+import { ExtraGoodView, ProductionLineView } from '../../../shared/mvc/views';
 import {
-  ExtraGoodController,
-  ProductionLineController,
-} from '../../../shared/mvc/controllers';
-import { ProductionLineView } from '../../../shared/mvc/views';
-import { MatTableDataSource } from '@angular/material/table';
-import { Boost, ProductionBuilding } from '../../../shared/game/enums';
+  Boost,
+  Good,
+  Item,
+  ProductionBuilding,
+  Region,
+} from '../../../shared/game/enums';
 import {
-  lookupProductionInfo,
   requiresElectricity,
   lookupAllowedBoosts,
+  lookupAllowedItems,
+  producesDung,
 } from '../../../shared/game/facts';
 import { FormGroupControl } from '../../../shared/control/control';
+import { NumberConstituent } from '../../../components/composite-number/composite-number';
+import { MatTableDataSource } from '@angular/material/table';
 
 export class ProductionLineControl extends FormGroupControl<ProductionLineController> {
-  extraGoods?: MatTableDataSource<ExtraGoodControl>;
+  extraGoods?: MatTableDataSource<ExtraGoodView>;
+  hasExtraGoods = false;
   showExtraGoods = false;
   get expandExtraGoodsIcon(): string {
     if (this.showExtraGoods) {
       return 'arrow_drop_up';
     }
     if (this.extraGoods?.data.length == 0) {
-      return 'add';
+      return 'check_indeterminate_small';
     }
     return 'arrow_drop_down';
   }
 
   allowedBoosts: Set<Boost> = new Set();
+  allowedItems: Set<Item> = new Set();
+
+  inputGoods: Good[] = [];
+  // Will always be a list of size 1 since production lines only output 1 good type.
+  outputGoods: Good[] = [];
 
   efficiency: number = 0;
+  efficiencyConstituents: NumberConstituent[] = [];
   buildingProcessTimeSeconds: number = 0;
-  goodProcessTimeSeconds: number = 0;
   goodsProducedPerMinute: number = 0;
 
   constructor(controller: ProductionLineController) {
@@ -39,27 +50,16 @@ export class ProductionLineControl extends FormGroupControl<ProductionLineContro
         controlName: 'numBuildings',
         updateObject: (v, o) => (o.numBuildings = Number.parseInt(v)),
       },
-      'inputGoods',
-      'good',
       'boosts',
       'hasTradeUnion',
-      {
-        controlName: 'tradeUnionItemsBonusPercent',
-        readObject: (o) => (o.tradeUnionItemsBonus ?? 0) * 100,
-        updateObject: (v, o) => (o.tradeUnionItemsBonus = (v ?? 0) / 100),
-      },
+      'items',
       'inRangeOfLocalDepartment',
+      'inRangeOfHaciendaFertiliserWorks',
     ]);
-    this.extraGoods = new MatTableDataSource(
-      this.controller.extraGoods.map((eg) => {
-        const control = new ExtraGoodControl(eg);
-        this.registerChildControl(control);
-        control.afterPushChange();
-        return control;
-      }),
-    );
+    this.extraGoods = new MatTableDataSource(this.controller.extraGoods);
     // Show by default
     if (this.extraGoods.data.length > 0) {
+      this.hasExtraGoods = true;
       this.showExtraGoods = true;
     }
     this.beforeBubbleChange();
@@ -73,20 +73,9 @@ export class ProductionLineControl extends FormGroupControl<ProductionLineContro
   // Update the form states (without updating the model/controller).
   private updateFormStates(): void {
     const building: ProductionBuilding = this.formGroup.value.building;
-    // For convenience, set production good to the default good when selecting a building.
-    if (this.controller.building != building) {
-      const productionInfo = lookupProductionInfo(building);
-      this.formGroup.controls['good'].setValue(productionInfo!.good, {
-        emitEvent: false,
-      });
-      this.formGroup.controls['inputGoods'].setValue(
-        productionInfo!.inputGoods ?? [],
-        { emitEvent: false },
-      );
-    }
     this.updateBoostOptions();
     // Some buildings require electricity, and if so, we automatically select it, otherwise, we
-    // narrow the field down to possinble options.
+    // narrow the field down to possible options.
     if (requiresElectricity(building)) {
       this.clearAndDisableControl('boosts', [Boost.Electricity]);
     } else if (this.allowedBoosts.size == 0) {
@@ -95,21 +84,34 @@ export class ProductionLineControl extends FormGroupControl<ProductionLineContro
       this.enableControl('boosts');
     }
 
+    // Items can only be slotted in trade unions.
+    if (this.formGroup.value.hasTradeUnion) {
+      this.updateItemOptions();
+      this.enableControl('items');
+    } else {
+      this.clearAndDisableControl('items', false);
+    }
+
     // Local department effects have no effect without a DoL on the island and a Trade Union in
     // range.
     if (
-      !this.controller.islandHasDepartmentOfLabor ||
+      (this.controller.region != Region.NewWorld &&
+        !this.controller.islandHasDepartmentOfLabor) ||
       !this.formGroup.value.hasTradeUnion
     ) {
       this.clearAndDisableControl('inRangeOfLocalDepartment', false);
     } else {
       this.enableControl('inRangeOfLocalDepartment');
     }
-    // There cannot be any Trade Union bonuses without a trade union.
-    if (this.formGroup.value.hasTradeUnion) {
-      this.enableControl('tradeUnionItemsBonusPercent');
+
+    // Only new-world buildings can produce dung.
+    if (
+      this.controller.region == Region.NewWorld &&
+      producesDung(this.controller.building)
+    ) {
+      this.enableControl('inRangeOfHaciendaFertiliserWorks');
     } else {
-      this.clearAndDisableControl('tradeUnionItemsBonusPercent', 0);
+      this.clearAndDisableControl('inRangeOfHaciendaFertiliserWorks', false);
     }
   }
 
@@ -122,6 +124,23 @@ export class ProductionLineControl extends FormGroupControl<ProductionLineContro
     if (!selectedBoosts.every((b) => !this.allowedBoosts.has(b))) {
       this.formGroup.controls['boosts'].setValue(
         selectedBoosts.filter((b) => this.allowedBoosts.has(b)),
+        { emitEvent: false },
+      );
+    }
+  }
+  private updateItemOptions(): void {
+    const newAllowedItems = new Set(
+      lookupAllowedItems(this.formGroup.value.building),
+    );
+    if (!setsAreEqual(newAllowedItems, this.allowedItems)) {
+      this.allowedItems = newAllowedItems;
+    }
+
+    const selectedItems = (this.formGroup.value.items || []) as Item[];
+
+    if (selectedItems.some((i) => !this.allowedItems.has(i))) {
+      this.formGroup.controls['items'].setValue(
+        selectedItems.filter((i) => this.allowedItems.has(i)),
         { emitEvent: false },
       );
     }
@@ -146,11 +165,20 @@ export class ProductionLineControl extends FormGroupControl<ProductionLineContro
   }
 
   private updateAndFormatDerivedFields(): void {
+    this.inputGoods = this.controller.inputGoods;
+    this.outputGoods = [this.controller.good];
+
     this.efficiency = this.controller.efficiency;
+    this.efficiencyConstituents = this.controller.efficiencyConstituents;
+
     this.buildingProcessTimeSeconds =
       this.controller.buildingProcessTimeSeconds;
-    this.goodProcessTimeSeconds = this.controller.goodProcessTimeSeconds;
-    this.goodsProducedPerMinute = this.controller.goodsProducedPerMinute;
+    this.goodsProducedPerMinute =
+      this.controller.goodsProducedPerMinuteWithExtras;
+
+    this.extraGoods!.data = this.controller.extraGoods;
+    this.hasExtraGoods = this.extraGoods!.data.length > 0;
+    this.showExtraGoods = this.showExtraGoods && this.hasExtraGoods;
   }
 
   override beforeModelUpdate(): void {
@@ -165,41 +193,11 @@ export class ProductionLineControl extends FormGroupControl<ProductionLineContro
     this.updateAndFormatDerivedFields();
   }
 
-  addExtraGood(): ExtraGoodControl {
-    const control = new ExtraGoodControl(this.controller.addExtraGood());
-    this.extraGoods!.data.push(control);
-    this.registerChildControl(control);
-    return control;
-  }
-
-  removeExtraGoodAt(index: number): void {
-    this.controller.removeExtraGoodAt(index);
-    const control = this.extraGoods?.data.splice(index, 1)[0]!;
-    if (this.extraGoods?.data.length == 0) {
-      this.showExtraGoods = false;
-    }
-    this.unregisterChildControl(control);
-  }
-
   toggleShowExtraGoods(): void {
-    if (this.extraGoods?.data.length == 0) {
-      this.addExtraGood();
-      this.pushUpChange();
-    }
-    this.showExtraGoods = !this.showExtraGoods;
+    this.showExtraGoods = !this.showExtraGoods && this.hasExtraGoods;
   }
 }
 
-export class ExtraGoodControl extends FormGroupControl<ExtraGoodController> {
-  processTimeSeconds: number = 0;
-  producedPerMinute: number = 0;
-
-  constructor(controller: ExtraGoodController) {
-    super(controller, ['good', 'rateNumerator', 'rateDenominator']);
-  }
-
-  override afterPushChange(): void {
-    this.processTimeSeconds = this.controller.processTimeSeconds;
-    this.producedPerMinute = this.controller.producedPerMinute;
-  }
-}
+const setsAreEqual = (s1: Set<any>, s2: Set<any>): boolean => {
+  return s1.size === s2.size && [...s1].every((x) => s2.has(x));
+};

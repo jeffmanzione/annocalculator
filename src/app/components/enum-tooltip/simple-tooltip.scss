@@ -1,0 +1,21 @@
+.tooltip-container {
+  display: flex;
+  flex-direction: column;
+  padding: 6px 12px;
+  background-color: white;
+  border: solid 0.5px rgba(0, 0, 0, 0.33);
+  -webkit-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.33);
+  box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.33);
+}
+
+.item-icon-big {
+  width: 36px;
+  margin: auto;
+}
+
+.tooltip-text {
+  font-size: 12px;
+  margin: 6px 6px 0 6px;
+  min-width: 0;
+  letter-spacing: -0.25px;
+}

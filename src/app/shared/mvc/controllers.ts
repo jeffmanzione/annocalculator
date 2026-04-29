@@ -4,7 +4,9 @@ import {
   ProductionBuilding,
   Region,
   DepartmentOfLaborPolicy,
+  Item,
 } from '../game/enums';
+import { lookupItemInfo, lookupProductionInfo } from '../game/facts';
 import {
   BASE_ISLAND_MODEL,
   BASE_PRODUCTION_LINE_MODEL,
@@ -14,15 +16,12 @@ import {
   Island,
   ProductionLine,
   World,
-  ExtraGood,
-  BASE_EXTRA_GOOD_MODEL,
   TradeRoute,
   IslandId,
   BASE_TRADE_ROUTE_MODEL,
   TradeRouteId,
 } from './models';
 import {
-  ExtraGoodView,
   IslandView,
   ProductionLineView,
   TradeRouteView,
@@ -37,35 +36,15 @@ function generatePseudorandomInt(): number {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-export class ExtraGoodController extends ExtraGoodView {
-  static override wrap(
-    model: ExtraGood,
-    context: ViewContext,
-  ): ExtraGoodController {
-    return new ExtraGoodController(model, context);
+const resolveDuplicateReplacementGoods = (g1: Good, g2: Good): Good => {
+  // Prefer Susanna the Steam Engineer (switches input from Steam Motors to
+  // Filaments) over Maria Maravilla (switches input from Steam Motors to
+  // Motors) because Filaments are much much easier to produce.
+  if (g1 === Good.Filaments && g2 === Good.Motor) {
+    return Good.Filaments;
   }
-
-  override set good(value: Good) {
-    this.model.good = value;
-  }
-  override get good(): Good {
-    return super.good;
-  }
-
-  override set rateNumerator(value: number) {
-    this.model.rateNumerator = value;
-  }
-  override get rateNumerator(): number {
-    return super.rateNumerator;
-  }
-
-  override set rateDenominator(value: number) {
-    this.model.rateDenominator = value;
-  }
-  override get rateDenominator(): number {
-    return super.rateDenominator;
-  }
-}
+  return g2;
+};
 
 export class ProductionLineController extends ProductionLineView {
   static override wrap(
@@ -75,29 +54,40 @@ export class ProductionLineController extends ProductionLineView {
     return new ProductionLineController(model, context);
   }
 
+  private updateGoods(): void {
+    const productionInfo = lookupProductionInfo(this.model.building)!;
+    if (!productionInfo) {
+      return;
+    }
+    this.model.good = productionInfo.good;
+
+    const inputGoodMappings = new Map<Good, Good>(
+      productionInfo.inputGoods?.map((ig) => [ig, ig]),
+    );
+
+    for (const item of this.model.items ?? []) {
+      const itemInfo = lookupItemInfo(item)!;
+      for (const replacementGood of itemInfo.replacementGoods ?? []) {
+        inputGoodMappings.set(
+          replacementGood.from,
+          resolveDuplicateReplacementGoods(
+            inputGoodMappings.get(replacementGood.from)!,
+            replacementGood.to,
+          ),
+        );
+      }
+    }
+    this.model.inputGoods = [...inputGoodMappings.values()].filter(
+      (g) => g != Good.Unknown,
+    );
+  }
+
   override set building(value: ProductionBuilding) {
     this.model.building = value;
+    this.updateGoods();
   }
   override get building(): ProductionBuilding {
     return super.building;
-  }
-
-  override set inputGoods(value: Good[]) {
-    if (value == null || value == DEFAULT_PRODUCTION_LINE_MODEL.inputGoods) {
-      delete this.model.inputGoods;
-      return;
-    }
-    this.model.inputGoods = value;
-  }
-  override get inputGoods(): Good[] {
-    return super.inputGoods;
-  }
-
-  override set good(value: Good) {
-    this.model.good = value;
-  }
-  override get good(): Good {
-    return super.good;
   }
 
   override set numBuildings(value: number) {
@@ -121,30 +111,28 @@ export class ProductionLineController extends ProductionLineView {
     return super.boosts;
   }
 
+  override set items(value: Item[]) {
+    if (value == null || value == DEFAULT_PRODUCTION_LINE_MODEL.items) {
+      delete this.model.items;
+      return;
+    }
+    this.model.items = value;
+    this.updateGoods();
+  }
+  override get items(): Item[] {
+    return super.items;
+  }
+
   override set hasTradeUnion(value: boolean) {
     if (value == null || value == DEFAULT_PRODUCTION_LINE_MODEL.hasTradeUnion) {
       delete this.model.hasTradeUnion;
-      delete this.model.tradeUnionItemsBonus;
+      delete this.model.items;
       return;
     }
     this.model.hasTradeUnion = value;
   }
   override get hasTradeUnion(): boolean {
     return super.hasTradeUnion;
-  }
-
-  override set tradeUnionItemsBonus(value: number) {
-    if (
-      value == null ||
-      value == DEFAULT_PRODUCTION_LINE_MODEL.tradeUnionItemsBonus
-    ) {
-      delete this.model.tradeUnionItemsBonus;
-      return;
-    }
-    this.model.tradeUnionItemsBonus = value;
-  }
-  override get tradeUnionItemsBonus(): number {
-    return super.tradeUnionItemsBonus;
   }
 
   override set inRangeOfLocalDepartment(value: boolean) {
@@ -161,51 +149,18 @@ export class ProductionLineController extends ProductionLineView {
     return super.inRangeOfLocalDepartment;
   }
 
-  private _extraGoods?: ExtraGoodController[];
-
-  override get extraGoods(): ExtraGoodController[] {
-    if (!this.model.extraGoods) {
-      return [];
-    }
-    this._extraGoods ??= this.model.extraGoods.map((eg) =>
-      ExtraGoodController.wrap(eg, { ...this.context, productionLine: this }),
-    );
-    return this._extraGoods;
-  }
-
-  addExtraGood(): ExtraGoodController {
-    this.model.extraGoods ??= [];
-    this._extraGoods ??= this.model.extraGoods.map((eg) =>
-      ExtraGoodController.wrap(eg, { ...this.context, productionLine: this }),
-    );
-    const extraGood = structuredClone(BASE_EXTRA_GOOD_MODEL);
-    this.model.extraGoods.push(extraGood);
-    const controller = ExtraGoodController.wrap(extraGood, {
-      ...this.context,
-      productionLine: this,
-    });
-    this._extraGoods.push(controller);
-    return controller;
-  }
-
-  removeExtraGoodAt(index: number): void {
+  override set inRangeOfHaciendaFertiliserWorks(value: boolean) {
     if (
-      !Number.isInteger(index) ||
-      index < 0 ||
-      index >= this.model.extraGoods!.length
+      value == null ||
+      value == DEFAULT_PRODUCTION_LINE_MODEL.inRangeOfHaciendaFertiliserWorks
     ) {
-      console.warn(
-        'Invalid productionLine index. ' +
-          `Was ${index} and length is ${this.model.extraGoods!.length}`,
-      );
+      delete this.model.inRangeOfHaciendaFertiliserWorks;
       return;
     }
-    this.model.extraGoods!.splice(index, 1);
-    this._extraGoods!.splice(index, 1);
-
-    if (this.model.extraGoods?.length == 0) {
-      delete this.model.extraGoods;
-    }
+    this.model.inRangeOfHaciendaFertiliserWorks = value;
+  }
+  override get inRangeOfHaciendaFertiliserWorks(): boolean {
+    return super.inRangeOfHaciendaFertiliserWorks;
   }
 }
 

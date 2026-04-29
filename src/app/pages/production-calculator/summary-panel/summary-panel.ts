@@ -20,13 +20,19 @@ import {
   FormattedNumber,
   GREEN_RED_FONT_SPEC,
 } from '../../../components/formatted-number/formatted-number';
-import { IslandView, WorldView } from '../../../shared/mvc/views';
-import { Good } from '../../../shared/game/enums';
+import {
+  ExtraGoodView,
+  IslandView,
+  WorldView,
+} from '../../../shared/mvc/views';
+import { Boost, Good, Region } from '../../../shared/game/enums';
 import { IslandId } from '../../../shared/mvc/models';
-import { ReadonlyTable, Table } from '../../../tools/table';
+import { ReadonlyTable, Table } from '../../../../tools/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSort, MatSortModule } from '@angular/material/sort';
+import { EnumRow } from '../../../components/enum-row/enum-row';
+import { lookupGoodIconUrl } from '../../../shared/game/icons';
 
 interface GoodSummaryCell {
   island: IslandView;
@@ -55,6 +61,7 @@ interface GoodSummaryRow {
     MatIconModule,
     MatTableModule,
     MatSortModule,
+    EnumRow,
   ],
   templateUrl: './summary-panel.html',
   styleUrl: './summary-panel.scss',
@@ -215,6 +222,10 @@ export class SummaryPanel implements OnInit, AfterViewInit {
     );
   }
 
+  lookupGoodIconUrl(good: Good | null | undefined): string {
+    return lookupGoodIconUrl(good ?? Good.Unknown);
+  }
+
   private buildBaseTableCells(): Table<IslandId, Good, GoodSummaryCell> {
     let cells = new Table<IslandId, Good, GoodSummaryCell>();
 
@@ -237,10 +248,21 @@ export class SummaryPanel implements OnInit, AfterViewInit {
       for (const pl of island.productionLines) {
         updateStats(island, pl.good, pl.goodsProducedPerMinute);
         for (const eg of pl.extraGoods) {
-          updateStats(island, eg.good, eg.producedPerMinute);
+          const egView = ExtraGoodView.wrap(eg, { productionLine: pl });
+          updateStats(island, egView.good, egView.producedPerMinute);
         }
         for (const ig of pl.inputGoods) {
           updateStats(island, ig, -pl.goodsConsumedPerMinute);
+        }
+        if (pl.boosts.includes(Boost.Silo)) {
+          updateStats(
+            island,
+            island.region == Region.NewWorld ? Good.Corn : Good.Grain,
+            -0.2 * pl.numBuildings,
+          );
+        }
+        if (pl.boosts.includes(Boost.Fertiliser)) {
+          updateStats(island, Good.Fertiliser, -0.2 * pl.numBuildings);
         }
       }
     }

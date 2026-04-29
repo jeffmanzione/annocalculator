@@ -1,11 +1,21 @@
+import { NumberConstituent } from '../../components/composite-number/composite-number';
 import {
   Boost,
   Good,
   ProductionBuilding,
   DepartmentOfLaborPolicy,
   Region,
+  Item,
 } from '../game/enums';
-import { computeExtraGoodsModifier, lookupProductionInfo } from '../game/facts';
+import {
+  improvedByLandReformAct,
+  improvedBySkilledLaborAct,
+  lookupItemInfo,
+  lookupProductionInfo,
+  regionSupportsElectricty,
+  buildingSupportsElectricity,
+  lookupBoostInfo,
+} from '../game/facts';
 import {
   DEFAULT_ISLAND_MODEL,
   DEFAULT_PRODUCTION_LINE_MODEL,
@@ -14,11 +24,11 @@ import {
   Model,
   ProductionLine,
   World,
-  ExtraGood,
-  DEFAULT_EXTRA_GOOD_MODEL,
   TradeRoute,
   IslandId,
   TradeRouteId,
+  ExtraGood,
+  DEFAULT_EXTRA_GOOD_MODEL,
 } from './models';
 
 export interface ViewContext {
@@ -31,7 +41,7 @@ export abstract class View<M extends Model> {
   protected constructor(
     protected model: M,
     protected context: ViewContext,
-  ) { }
+  ) {}
 
   asView(): this {
     return this;
@@ -48,7 +58,25 @@ export class ExtraGoodView extends View<ExtraGood> implements ExtraGood {
   }
 
   get good(): Good {
-    return this.model.good;
+    return this.model.good || this.context.productionLine?.good!;
+  }
+
+  get source():
+    | Item
+    | Boost
+    | DepartmentOfLaborPolicy
+    | 'Hacienda Fertilizer Works' {
+    return this.model.source ?? DEFAULT_EXTRA_GOOD_MODEL.source!;
+  }
+
+  get sourceType():
+    | 'Item'
+    | 'Boost'
+    | 'ElectrifiedFarm'
+    | 'DepartmentOfLaborPolicy'
+    | 'HaciendaFertilizerWorks'
+    | undefined {
+    return this.model.sourceType ?? DEFAULT_EXTRA_GOOD_MODEL.sourceType;
   }
 
   get rateNumerator(): number {
@@ -66,19 +94,30 @@ export class ExtraGoodView extends View<ExtraGood> implements ExtraGood {
   }
 
   get processTimeSeconds(): number {
-    return this.context.productionLine!.buildingProcessTimeSeconds / this.rate;
+    if (this.sourceType === 'ElectrifiedFarm') {
+      return 60 / this.model.producedPerMinute!;
+    }
+    return this.context.productionLine!.buildingProcessTimeSeconds;
+  }
+
+  get producedPerMinutePerBuilding(): number {
+    return this.sourceType === 'ElectrifiedFarm'
+      ? this.model.producedPerMinute!
+      : (60 / this.processTimeSeconds) * this.rate;
   }
 
   get producedPerMinute(): number {
     return (
-      (this.context.productionLine!.numBuildings * 60) / this.processTimeSeconds
+      this.context.productionLine!.numBuildings *
+      this.producedPerMinutePerBuilding
     );
   }
 }
 
 export class ProductionLineView
   extends View<ProductionLine>
-  implements ProductionLine {
+  implements ProductionLine
+{
   static wrap(model: ProductionLine, context: ViewContext): ProductionLineView {
     return new ProductionLineView(model, context);
   }
@@ -111,16 +150,15 @@ export class ProductionLineView
     );
   }
 
-  get tradeUnionItemsBonus(): number {
-    return (
-      this.model.tradeUnionItemsBonus ??
-      DEFAULT_PRODUCTION_LINE_MODEL.tradeUnionItemsBonus!
-    );
+  get items(): Item[] {
+    return this.model.items ?? DEFAULT_PRODUCTION_LINE_MODEL.items!;
   }
 
-  get extraGoods(): ExtraGoodView[] {
-    return (this.model.extraGoods ?? []).map((eg) =>
-      ExtraGoodView.wrap(eg, { ...this.context, productionLine: this }),
+  get itemProductivityBonus(): number {
+    return (
+      this.model.items
+        ?.map((item) => (lookupItemInfo(item)?.productivityEffect ?? 0) / 100)
+        ?.reduce((a, v) => a + v, 0) ?? 0
     );
   }
 
@@ -131,31 +169,43 @@ export class ProductionLineView
     );
   }
 
+  get inRangeOfHaciendaFertiliserWorks(): boolean {
+    return (
+      this.context.island?.region == Region.NewWorld &&
+      (this.model.inRangeOfHaciendaFertiliserWorks ?? false)
+    );
+  }
+
   get efficiency(): number {
     let efficiency = 1;
-    for (const boost of this.boosts) {
-      switch (boost) {
-        case Boost.Electricity:
-          efficiency += 1;
-          if (
-            this.inRangeOfLocalDepartment &&
-            this.context.island!.dolPolicy ==
-            DepartmentOfLaborPolicy.GalvanicGrantsAct
-          ) {
-            efficiency += 0.5;
-          }
-          break;
-        case Boost.TracktorBarn:
-          efficiency += 2;
-          break;
-        case Boost.Fertilizer:
-          efficiency += 1;
-          break;
-        case Boost.Silo:
-          efficiency += 1;
-          break;
+    const boostSet = new Set<Boost>(this.boosts);
+    if (
+      regionSupportsElectricty(this.context.island?.region ?? Region.Unknown) &&
+      buildingSupportsElectricity(this.building) &&
+      (boostSet.has(Boost.Electricity) ||
+        this.items.some(
+          (item) => lookupItemInfo(item)?.providesElectricity ?? false,
+        ))
+    ) {
+      efficiency += 1;
+      if (
+        this.inRangeOfLocalDepartment &&
+        this.context.island!.dolPolicy ==
+          DepartmentOfLaborPolicy.GalvanicGrantsAct
+      ) {
+        efficiency += 0.5;
       }
     }
+    if (boostSet.has(Boost.TractorBarn)) {
+      efficiency += 2;
+    }
+    if (boostSet.has(Boost.Fertiliser)) {
+      efficiency += 1;
+    }
+    if (boostSet.has(Boost.Silo)) {
+      efficiency += 1;
+    }
+
     if (this.hasTradeUnion) {
       if (
         this.inRangeOfLocalDepartment &&
@@ -163,9 +213,72 @@ export class ProductionLineView
       ) {
         efficiency += this.context.world!.tradeUnionBonus;
       }
-      efficiency += this.tradeUnionItemsBonus;
+      efficiency += this.itemProductivityBonus;
     }
     return efficiency;
+  }
+
+  get affectedByGalvanicGrants(): boolean {
+    return (
+      this.inRangeOfLocalDepartment &&
+      this.context.island!.dolPolicy ==
+        DepartmentOfLaborPolicy.GalvanicGrantsAct
+    );
+  }
+
+  get efficiencyConstituents(): NumberConstituent[] {
+    const constituents: NumberConstituent[] = [
+      { value: 1, description: 'Base Productivity' },
+    ];
+
+    const boostSet = new Set<Boost>(this.boosts);
+    if (
+      regionSupportsElectricty(this.context.island?.region ?? Region.Unknown) &&
+      buildingSupportsElectricity(this.building) &&
+      (boostSet.has(Boost.Electricity) ||
+        this.items.some(
+          (item) => lookupItemInfo(item)?.providesElectricity ?? false,
+        ))
+    ) {
+      constituents.push({ value: 1, description: 'Electricity' });
+      if (this.affectedByGalvanicGrants) {
+        constituents.push({
+          value: 0.5,
+          description: DepartmentOfLaborPolicy.GalvanicGrantsAct,
+        });
+      }
+    }
+    if (boostSet.has(Boost.TractorBarn)) {
+      constituents.push({ value: 2, description: Boost.TractorBarn });
+    }
+    if (boostSet.has(Boost.Fertiliser)) {
+      constituents.push({ value: 1, description: Boost.Fertiliser });
+    }
+    if (boostSet.has(Boost.Silo)) {
+      constituents.push({ value: 1, description: Boost.Silo });
+    }
+
+    if (this.hasTradeUnion) {
+      if (
+        this.inRangeOfLocalDepartment &&
+        this.context.island!.dolPolicy != DepartmentOfLaborPolicy.None
+      ) {
+        constituents.push({
+          value: this.context.world!.tradeUnionBonus,
+          description: 'Palace Trade Union Bonus',
+        });
+      }
+      for (const item of this.items) {
+        const itemInfo = lookupItemInfo(item)!;
+        if ((itemInfo.productivityEffect ?? 0) > 0) {
+          constituents.push({
+            value: itemInfo.productivityEffect! / 100,
+            description: item,
+          });
+        }
+      }
+    }
+    return constituents;
   }
 
   get buildingProcessTimeSeconds(): number {
@@ -175,17 +288,137 @@ export class ProductionLineView
     );
   }
 
-  get goodProcessTimeSeconds(): number {
-    return (
-      this.buildingProcessTimeSeconds /
-      (this.hasTradeUnion && this.inRangeOfLocalDepartment
-        ? computeExtraGoodsModifier(
-          this.building,
-          this.good,
-          this.context.island!,
-        )
-        : 1)
+  get extraGoods(): ExtraGoodView[] {
+    const extraGoods = [];
+
+    if (this.inRangeOfHaciendaFertiliserWorks) {
+      extraGoods.push(
+        ExtraGoodView.wrap(
+          {
+            good: Good.Dung,
+            source: 'Hacienda Fertilizer Works',
+            sourceType: 'HaciendaFertilizerWorks',
+            rateNumerator: 1,
+            rateDenominator: 3,
+          },
+          { productionLine: this, ...this.context },
+        ),
+      );
+    }
+
+    extraGoods.push(
+      ...this.electricityExtraGoods,
+      ...this.bonusExtraGoods,
+      ...this.itemExtraGoods,
     );
+    return extraGoods;
+  }
+
+  get bonusExtraGoods(): ExtraGoodView[] {
+    const extraGoods: ExtraGoodView[] = [];
+
+    if (this.hasTradeUnion && this.inRangeOfLocalDepartment) {
+      if (
+        improvedByLandReformAct.has(this.building) &&
+        this.context.island?.dolPolicy == DepartmentOfLaborPolicy.LandReformAct
+      ) {
+        // 1 extra good for every 2 produced.
+        extraGoods.push(
+          ExtraGoodView.wrap(
+            {
+              good: this.good,
+              source: DepartmentOfLaborPolicy.LandReformAct,
+              sourceType: 'DepartmentOfLaborPolicy',
+              rateNumerator: 1,
+              rateDenominator: 2,
+            },
+            { productionLine: this, ...this.context },
+          ),
+        );
+      } else if (
+        improvedBySkilledLaborAct.has(this.building) &&
+        this.context.island?.dolPolicy ==
+          DepartmentOfLaborPolicy.SkilledLaborAct
+      ) {
+        extraGoods.push(
+          ExtraGoodView.wrap(
+            {
+              good: this.good,
+              source: DepartmentOfLaborPolicy.SkilledLaborAct,
+              sourceType: 'DepartmentOfLaborPolicy',
+              rateNumerator: 1,
+              rateDenominator: 3,
+            },
+            { productionLine: this, ...this.context },
+          ),
+        );
+      }
+    }
+
+    for (const boost of this.boosts) {
+      const boostInfo = lookupBoostInfo(boost)!;
+      extraGoods.push(
+        ExtraGoodView.wrap(
+          {
+            good: this.good,
+            source: boost,
+            sourceType: 'Boost',
+            rateNumerator: boostInfo.extraGood?.rateNumerator,
+            rateDenominator: boostInfo.extraGood?.rateDenominator,
+          },
+          { productionLine: this, ...this.context },
+        ),
+      );
+    }
+    return extraGoods;
+  }
+
+  get electricityExtraGoods(): ExtraGoodView[] {
+    if (!this.boosts.includes(Boost.Electricity)) {
+      return [];
+    }
+    const productionInfo = lookupProductionInfo(this.building);
+    const extraGoods: ExtraGoodView[] = [];
+    for (const eeg of productionInfo?.electricityExtraGoods ?? []) {
+      extraGoods.push(
+        ExtraGoodView.wrap(
+          {
+            good: eeg.good,
+            source: Boost.Electricity,
+            sourceType: 'ElectrifiedFarm',
+            producedPerMinute: 60 / eeg.processingTimeSeconds,
+          },
+          { productionLine: this, ...this.context },
+        ),
+      );
+    }
+    return extraGoods;
+  }
+
+  get itemExtraGoods(): ExtraGoodView[] {
+    const extraGoods: ExtraGoodView[] = [];
+    for (const item of this.items) {
+      const itemInfo = lookupItemInfo(item);
+      for (const eg of itemInfo?.extraGoods ?? []) {
+        extraGoods.push(
+          ExtraGoodView.wrap(
+            { ...eg, source: item },
+            { productionLine: this, ...this.context },
+          ),
+        );
+      }
+    }
+    extraGoods.sort((eg1, eg2) => {
+      const goodNameCmp = eg1.good.localeCompare(eg2.good);
+      if (goodNameCmp != 0) {
+        return goodNameCmp;
+      }
+      return (
+        eg2.rateNumerator / eg2.rateDenominator -
+        eg1.rateNumerator / eg1.rateDenominator
+      );
+    });
+    return extraGoods;
   }
 
   get goodsConsumedPerMinute(): number {
@@ -193,11 +426,29 @@ export class ProductionLineView
   }
 
   get goodsProducedPerMinute(): number {
-    return (this.numBuildings * 60) / this.goodProcessTimeSeconds;
+    return (this.numBuildings * 60) / this.buildingProcessTimeSeconds;
+  }
+
+  get goodsProducedPerMinuteWithExtras(): number {
+    const extraGoods = this.extraGoods;
+    let rateModifier = 1;
+
+    for (const eg of extraGoods) {
+      if (eg.good !== this.good) {
+        continue;
+      }
+      rateModifier *=
+        (eg.rateNumerator + eg.rateDenominator) / eg.rateDenominator;
+    }
+    return this.goodsProducedPerMinute * rateModifier;
   }
 
   get islandHasDepartmentOfLabor(): boolean {
     return this.context.island?.dolPolicy != DepartmentOfLaborPolicy.None;
+  }
+
+  get region(): Region {
+    return this.context.island?.region ?? Region.Unknown;
   }
 }
 
@@ -275,7 +526,11 @@ export class IslandView extends View<Island> implements Island {
       new Set<Good>(
         this.model.productionLines.flatMap((pl) => {
           const goods = [pl.good];
-          pl.extraGoods?.forEach((eg) => goods.push(eg.good));
+          pl.items
+            ?.flatMap((item) => lookupItemInfo(item)?.extraGoods ?? [])
+            ?.forEach((eg) =>
+              goods.push(eg.good ?? this.context.productionLine?.good!),
+            );
           return goods;
         }),
       ),

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { getOrDefault } from '../../tools/table';
+import { getOrDefault } from '../../../tools/table';
 
 @Injectable({
   providedIn: 'root',
@@ -64,7 +64,7 @@ class StorageItemImpl<T> implements StorageItem<T> {
   constructor(
     private readonly key: string,
     private readonly converter: StorageItemConverter<T>,
-  ) {}
+  ) { }
 
   clear(): void {
     localStorage.removeItem(this.key);

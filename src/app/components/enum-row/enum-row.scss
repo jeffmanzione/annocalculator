@@ -1,0 +1,28 @@
+:host {
+  display: inline-flex;
+}
+
+.item-container {
+  display: inline-flex;
+}
+
+.item-icon-small {
+  width: 24px;
+  height: 24px;
+  margin: auto;
+}
+
+.item-icon-right-padding {
+  padding-right: 6px;
+}
+
+.item-text {
+  margin: auto 0;
+  min-width: 0;
+  letter-spacing: -0.25px;
+  text-align: left;
+}
+
+.item-text-left-padding {
+  padding-left: 6px;
+}

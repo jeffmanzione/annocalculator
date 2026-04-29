@@ -1,0 +1,2455 @@
+[
+  {
+    "id": 116041,
+    "type": "lodgeitem",
+    "name": "Driftwood Baleen Boat",
+    "icon": "/img/main/3dicons/machine_items/icon_fishing_boat_1_0.png",
+    "effectTargets": [
+      {
+        "label": "Whaling Station",
+        "visible": true
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [
+      {
+        "key": "hunting",
+        "value": 15
+      }
+    ],
+    "rarity": "uncommon",
+    "rarityLabel": "Uncommon",
+    "upgrades": [
+      {
+        "key": "ProductivityUpgrade",
+        "value": {
+          "Value": 25,
+          "Percental": 1
+        },
+        "label": "Productivity"
+      },
+      {
+        "key": "MaintenanceUpgrade",
+        "value": {
+          "Value": 25,
+          "Percental": 1
+        },
+        "label": "Maintenance Cost"
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 116042,
+    "type": "lodgeitem",
+    "name": "Qajak",
+    "icon": "/img/main/3dicons/machine_items/icon_fishing_boat_2_0.png",
+    "effectTargets": [
+      {
+        "label": "Whaling Station",
+        "visible": true
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [
+      {
+        "key": "hunting",
+        "value": 25
+      }
+    ],
+    "rarity": "rare",
+    "rarityLabel": "Rare",
+    "upgrades": [
+      {
+        "key": "ProductivityUpgrade",
+        "value": {
+          "Value": 35,
+          "Percental": 1
+        },
+        "label": "Productivity"
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 116043,
+    "type": "lodgeitem",
+    "name": "Umiak",
+    "icon": "/img/main/3dicons/machine_items/icon_fishing_boat_3_0.png",
+    "effectTargets": [
+      {
+        "label": "Whaling Station",
+        "visible": true
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [
+      {
+        "key": "hunting",
+        "value": 35
+      }
+    ],
+    "rarity": "epic",
+    "rarityLabel": "Epic",
+    "upgrades": [
+      {
+        "key": "ProductivityUpgrade",
+        "value": {
+          "Value": 40,
+          "Percental": 1
+        },
+        "label": "Productivity"
+      },
+      {
+        "key": "WorkforceAmountUpgrade",
+        "value": {
+          "Value": -50,
+          "Percental": 1
+        },
+        "label": "Workforce Needed"
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 116069,
+    "type": "lodgeitem",
+    "name": "Nuyakpak",
+    "icon": "/img/main/3dicons/machine_items/icon_fishing_tool_1_0.png",
+    "effectTargets": [
+      {
+        "label": "Seal Hunting Docks",
+        "visible": true
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [
+      {
+        "key": "hunting",
+        "value": 15
+      }
+    ],
+    "rarity": "uncommon",
+    "rarityLabel": "Uncommon",
+    "upgrades": [
+      {
+        "key": "MaintenanceUpgrade",
+        "value": {
+          "Value": -50,
+          "Percental": 1
+        },
+        "label": "Maintenance Cost"
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 116070,
+    "type": "lodgeitem",
+    "name": "Unaaq",
+    "icon": "/img/main/3dicons/machine_items/icon_fishing_tool_2_0.png",
+    "effectTargets": [
+      {
+        "label": "Seal Hunting Docks",
+        "visible": true
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [
+      {
+        "key": "hunting",
+        "value": 25
+      }
+    ],
+    "rarity": "rare",
+    "rarityLabel": "Rare",
+    "upgrades": [
+      {
+        "key": "ProductivityUpgrade",
+        "value": {
+          "Value": 35,
+          "Percental": 1
+        },
+        "label": "Productivity"
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 116071,
+    "type": "lodgeitem",
+    "name": "Sakku",
+    "icon": "/img/main/3dicons/machine_items/icon_fishing_tool_3_0.png",
+    "effectTargets": [
+      {
+        "label": "Seal Hunting Docks",
+        "visible": true
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [
+      {
+        "key": "hunting",
+        "value": 35
+      }
+    ],
+    "rarity": "epic",
+    "rarityLabel": "Epic",
+    "upgrades": [
+      {
+        "key": "ProductivityUpgrade",
+        "value": {
+          "Value": 40,
+          "Percental": 1
+        },
+        "label": "Productivity"
+      },
+      {
+        "key": "WorkforceAmountUpgrade",
+        "value": {
+          "Value": -50,
+          "Percental": 1
+        },
+        "label": "Workforce Needed"
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 116078,
+    "type": "lodgeitem",
+    "name": "Pititsi",
+    "icon": "/img/main/3dicons/machine_items/icon_bow_1_0.png",
+    "effectTargets": [
+      {
+        "label": "Caribou Hunting Cabin",
+        "visible": true
+      },
+      {
+        "label": "Bear Hunting Cabin",
+        "visible": true
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [
+      {
+        "key": "hunting",
+        "value": 15
+      }
+    ],
+    "rarity": "uncommon",
+    "rarityLabel": "Uncommon",
+    "upgrades": [
+      {
+        "key": "ProductivityUpgrade",
+        "value": {
+          "Value": 25,
+          "Percental": 1
+        },
+        "label": "Productivity"
+      },
+      {
+        "key": "MaintenanceUpgrade",
+        "value": {
+          "Value": 25,
+          "Percental": 1
+        },
+        "label": "Maintenance Cost"
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 116079,
+    "type": "lodgeitem",
+    "name": "Cable-Backed Bow",
+    "icon": "/img/main/3dicons/machine_items/icon_bow_2_0.png",
+    "effectTargets": [
+      {
+        "label": "Caribou Hunting Cabin",
+        "visible": true
+      },
+      {
+        "label": "Bear Hunting Cabin",
+        "visible": true
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [
+      {
+        "key": "hunting",
+        "value": 25
+      }
+    ],
+    "rarity": "rare",
+    "rarityLabel": "Rare",
+    "upgrades": [
+      {
+        "key": "ProductivityUpgrade",
+        "value": {
+          "Value": 35,
+          "Percental": 1
+        },
+        "label": "Productivity"
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 116080,
+    "type": "lodgeitem",
+    "name": "Bow Of The Lnu",
+    "icon": "/img/main/3dicons/machine_items/icon_bow_3_0.png",
+    "effectTargets": [
+      {
+        "label": "Caribou Hunting Cabin",
+        "visible": true
+      },
+      {
+        "label": "Bear Hunting Cabin",
+        "visible": true
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [
+      {
+        "key": "hunting",
+        "value": 35
+      }
+    ],
+    "rarity": "epic",
+    "rarityLabel": "Epic",
+    "upgrades": [
+      {
+        "key": "NeededAreaPercentUpgrade",
+        "value": {
+          "Value": -15
+        },
+        "label": "Forest Density"
+      },
+      {
+        "key": "MaintenanceUpgrade",
+        "value": {
+          "Value": -100,
+          "Percental": 1
+        },
+        "label": "Maintenance Cost"
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 116081,
+    "type": "lodgeitem",
+    "name": "Clay Kudlik",
+    "icon": "/img/main/3dicons/machine_items/icon_cooking_stove_1_0.png",
+    "effectTargets": [
+      {
+        "label": "Pemmican Cookhouse",
+        "visible": true
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [
+      {
+        "key": "crafting",
+        "value": 15
+      }
+    ],
+    "rarity": "uncommon",
+    "rarityLabel": "Uncommon",
+    "upgrades": [
+      {
+        "key": "MaintenanceUpgrade",
+        "value": {
+          "Value": 25,
+          "Percental": 1
+        },
+        "label": "Maintenance Cost"
+      },
+      {
+        "key": "WorkforceAmountUpgrade",
+        "value": {
+          "Value": -30,
+          "Percental": 1
+        },
+        "label": "Workforce Needed"
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 116082,
+    "type": "lodgeitem",
+    "name": "Soapstone Kudlik",
+    "icon": "/img/main/3dicons/machine_items/icon_cooking_stove_2_0.png",
+    "effectTargets": [
+      {
+        "label": "Pemmican Cookhouse",
+        "visible": true
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [
+      {
+        "key": "crafting",
+        "value": 25
+      }
+    ],
+    "rarity": "rare",
+    "rarityLabel": "Rare",
+    "upgrades": [
+      {
+        "key": "ProductivityUpgrade",
+        "value": {
+          "Value": 35,
+          "Percental": 1
+        },
+        "label": "Productivity"
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 116083,
+    "type": "lodgeitem",
+    "name": "Ivory Kudlik",
+    "icon": "/img/main/3dicons/machine_items/icon_cookng_stove_3_0.png",
+    "effectTargets": [
+      {
+        "label": "Pemmican Cookhouse",
+        "visible": true
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [
+      {
+        "key": "crafting",
+        "value": 35
+      }
+    ],
+    "rarity": "epic",
+    "rarityLabel": "Epic",
+    "upgrades": [
+      {
+        "key": "ProductivityUpgrade",
+        "value": {
+          "Value": 40,
+          "Percental": 1
+        },
+        "label": "Productivity"
+      },
+      {
+        "key": "MaintenanceUpgrade",
+        "value": {
+          "Value": -35,
+          "Percental": 1
+        },
+        "label": "Maintenance Cost"
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 116087,
+    "type": "lodgeitem",
+    "name": "Hide Scraper",
+    "icon": "/img/main/3dicons/machine_items/icon_leather_tool_1_0.png",
+    "effectTargets": [
+      {
+        "label": "Parka Factory",
+        "visible": true
+      },
+      {
+        "label": "Sleeping Bag Factory",
+        "visible": true
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [
+      {
+        "key": "crafting",
+        "value": 15
+      }
+    ],
+    "rarity": "uncommon",
+    "rarityLabel": "Uncommon",
+    "upgrades": [
+      {
+        "key": "ProductivityUpgrade",
+        "value": {
+          "Value": 25,
+          "Percental": 1
+        },
+        "label": "Productivity"
+      },
+      {
+        "key": "MaintenanceUpgrade",
+        "value": {
+          "Value": 25,
+          "Percental": 1
+        },
+        "label": "Maintenance Cost"
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 116088,
+    "type": "lodgeitem",
+    "name": "Kaputaq Awl",
+    "icon": "/img/main/3dicons/machine_items/icon_leather_tool_2_0.png",
+    "effectTargets": [
+      {
+        "label": "Parka Factory",
+        "visible": true
+      },
+      {
+        "label": "Sleeping Bag Factory",
+        "visible": true
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [
+      {
+        "key": "crafting",
+        "value": 25
+      }
+    ],
+    "rarity": "rare",
+    "rarityLabel": "Rare",
+    "upgrades": [
+      {
+        "key": "WorkforceAmountUpgrade",
+        "value": {
+          "Value": -40,
+          "Percental": 1
+        },
+        "label": "Workforce Needed"
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 116089,
+    "type": "lodgeitem",
+    "name": "Inuinnaq Case",
+    "icon": "/img/main/3dicons/machine_items/icon_leather_tool_3_0.png",
+    "effectTargets": [
+      {
+        "label": "Parka Factory",
+        "visible": true
+      },
+      {
+        "label": "Sleeping Bag Factory",
+        "visible": true
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [
+      {
+        "key": "crafting",
+        "value": 35
+      }
+    ],
+    "rarity": "epic",
+    "rarityLabel": "Epic",
+    "upgrades": [
+      {
+        "key": "ProductivityUpgrade",
+        "value": {
+          "Value": 40,
+          "Percental": 1
+        },
+        "label": "Productivity"
+      },
+      {
+        "key": "MaintenanceUpgrade",
+        "value": {
+          "Value": -35,
+          "Percental": 1
+        },
+        "label": "Maintenance Cost"
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 116096,
+    "type": "lodgeitem",
+    "name": "Driftwood Iggaak",
+    "icon": "/img/main/3dicons/machine_items/icon_snow_goggle_1_0.png",
+    "effectTargets": [
+      {
+        "label": "Goose Farm",
+        "visible": true
+      },
+      {
+        "label": "Husky Farm",
+        "visible": true
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [
+      {
+        "key": "hunting",
+        "value": 15
+      }
+    ],
+    "rarity": "uncommon",
+    "rarityLabel": "Uncommon",
+    "upgrades": [
+      {
+        "key": "ProductivityUpgrade",
+        "value": {
+          "Value": 25,
+          "Percental": 1
+        },
+        "label": "Productivity"
+      },
+      {
+        "key": "MaintenanceUpgrade",
+        "value": {
+          "Value": 25,
+          "Percental": 1
+        },
+        "label": "Maintenance Cost"
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 116097,
+    "type": "lodgeitem",
+    "name": "Antler Iggaak",
+    "icon": "/img/main/3dicons/machine_items/icon_snow_goggle_2_0.png",
+    "effectTargets": [
+      {
+        "label": "Goose Farm",
+        "visible": true
+      },
+      {
+        "label": "Husky Farm",
+        "visible": true
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [
+      {
+        "key": "hunting",
+        "value": 25
+      }
+    ],
+    "rarity": "rare",
+    "rarityLabel": "Rare",
+    "upgrades": [
+      {
+        "key": "MaintenanceUpgrade",
+        "value": {
+          "Value": -25,
+          "Percental": 1
+        },
+        "label": "Maintenance Cost"
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 116098,
+    "type": "lodgeitem",
+    "name": "Ivory Iggaak",
+    "icon": "/img/main/3dicons/machine_items/icon_snow_goggle_3_0.png",
+    "effectTargets": [
+      {
+        "label": "Goose Farm",
+        "visible": true
+      },
+      {
+        "label": "Husky Farm",
+        "visible": true
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [
+      {
+        "key": "hunting",
+        "value": 35
+      }
+    ],
+    "rarity": "epic",
+    "rarityLabel": "Epic",
+    "upgrades": [
+      {
+        "key": "ProductivityUpgrade",
+        "value": {
+          "Value": 60,
+          "Percental": 1
+        },
+        "label": "Productivity"
+      },
+      {
+        "key": "ModuleLimitPercent",
+        "value": 35,
+        "label": "No. of Modules"
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 116099,
+    "type": "lodgeitem",
+    "name": "Ulu",
+    "icon": "/img/main/3dicons/machine_items/icon_axe_1_0.png",
+    "effectTargets": [
+      {
+        "label": "Lumberjack's Hut",
+        "visible": true
+      },
+      {
+        "label": "Sawmill",
+        "visible": true
+      },
+      {
+        "label": "Sled Frame Factory",
+        "visible": true
+      },
+      {
+        "label": "Husky Sled Factory",
+        "visible": true
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [
+      {
+        "key": "melee",
+        "value": 15
+      }
+    ],
+    "rarity": "uncommon",
+    "rarityLabel": "Uncommon",
+    "upgrades": [
+      {
+        "key": "MaintenanceUpgrade",
+        "value": {
+          "Value": -15,
+          "Percental": 1
+        },
+        "label": "Maintenance Cost"
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 116100,
+    "type": "lodgeitem",
+    "name": "Wooden Adze",
+    "icon": "/img/main/3dicons/machine_items/icon_axe_2_0.png",
+    "effectTargets": [
+      {
+        "label": "Lumberjack's Hut",
+        "visible": true
+      },
+      {
+        "label": "Sawmill",
+        "visible": true
+      },
+      {
+        "label": "Sled Frame Factory",
+        "visible": true
+      },
+      {
+        "label": "Husky Sled Factory",
+        "visible": true
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [
+      {
+        "key": "melee",
+        "value": 25
+      }
+    ],
+    "rarity": "rare",
+    "rarityLabel": "Rare",
+    "upgrades": [
+      {
+        "key": "ProductivityUpgrade",
+        "value": {
+          "Value": 35,
+          "Percental": 1
+        },
+        "label": "Productivity"
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 116101,
+    "type": "lodgeitem",
+    "name": "Bone Adze",
+    "icon": "/img/main/3dicons/machine_items/icon_axe_3_0.png",
+    "effectTargets": [
+      {
+        "label": "Lumberjack's Hut",
+        "visible": true
+      },
+      {
+        "label": "Sawmill",
+        "visible": true
+      },
+      {
+        "label": "Sled Frame Factory",
+        "visible": true
+      },
+      {
+        "label": "Husky Sled Factory",
+        "visible": true
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [
+      {
+        "key": "melee",
+        "value": 35
+      }
+    ],
+    "rarity": "epic",
+    "rarityLabel": "Epic",
+    "upgrades": [
+      {
+        "key": "ProductivityUpgrade",
+        "value": {
+          "Value": 40,
+          "Percental": 1
+        },
+        "label": "Productivity"
+      },
+      {
+        "key": "WorkforceAmountUpgrade",
+        "value": {
+          "Value": -50,
+          "Percental": 1
+        },
+        "label": "Workforce Needed"
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 116130,
+    "type": "lodgeitem",
+    "name": "Inuit Seamster",
+    "icon": "/img/main/3dicons/specialists/systemic/icon_inuit_specialist_906_a_0.png",
+    "effectTargets": [
+      {
+        "label": "Parka Factory",
+        "visible": true
+      },
+      {
+        "label": "Sleeping Bag Factory",
+        "visible": true
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [
+      {
+        "key": "perkfemale",
+        "value": 1
+      },
+      {
+        "key": "crafting",
+        "value": 20
+      }
+    ],
+    "rarity": "uncommon",
+    "rarityLabel": "Uncommon",
+    "upgrades": [
+      {
+        "key": "MaintenanceUpgrade",
+        "value": {
+          "Value": -20,
+          "Percental": 1
+        },
+        "label": "Maintenance Cost"
+      },
+      {
+        "key": "WorkforceAmountUpgrade",
+        "value": {
+          "Value": -30,
+          "Percental": 1
+        },
+        "label": "Workforce Needed"
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 116132,
+    "type": "lodgeitem",
+    "name": "Practised Inuit Seamster",
+    "icon": "/img/main/3dicons/specialists/systemic/icon_inuit_specialist_1000_0.png",
+    "effectTargets": [
+      {
+        "label": "Parka Factory",
+        "visible": true
+      },
+      {
+        "label": "Sleeping Bag Factory",
+        "visible": true
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [
+      {
+        "key": "perkfemale",
+        "value": 1
+      },
+      {
+        "key": "medicine",
+        "value": 30
+      },
+      {
+        "key": "diplomacy",
+        "value": 10
+      }
+    ],
+    "rarity": "rare",
+    "rarityLabel": "Rare",
+    "upgrades": [
+      {
+        "key": "ProductivityUpgrade",
+        "value": {
+          "Value": 20,
+          "Percental": 1
+        },
+        "label": "Productivity"
+      },
+      {
+        "key": "AdditionalOutput",
+        "value": {
+          "Item": [
+            {
+              "Product": 112696,
+              "AdditionalOutputCycle": 4,
+              "Amount": 1,
+              "Product_label": "Seal Skin"
+            }
+          ]
+        },
+        "label": "Extra Goods"
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 116133,
+    "type": "lodgeitem",
+    "name": "Arnarunn the Seamless",
+    "icon": "/img/main/3dicons/specialists/systemic/icon_inuit_specialist_905_0.png",
+    "effectTargets": [
+      {
+        "label": "Explorer Shelter",
+        "visible": true
+      },
+      {
+        "label": "Technician Shelter",
+        "visible": true
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [
+      {
+        "key": "perkfemale",
+        "value": 1
+      },
+      {
+        "key": "crafting",
+        "value": 40
+      },
+      {
+        "key": "faith",
+        "value": 20
+      }
+    ],
+    "rarity": "epic",
+    "rarityLabel": "Epic",
+    "upgrades": [
+      {
+        "key": "IncidentArcticIllnessIncreaseUpgrade",
+        "value": {
+          "Value": -4
+        },
+        "label": "Arctic Flu Chance"
+      },
+      {
+        "key": "GoodConsumptionUpgrade",
+        "value": {
+          "Item": [
+            {
+              "ProvidedNeed": 112701,
+              "AmountInPercent": -30,
+              "ProvidedNeed_label": "Sleeping Bags"
+            }
+          ]
+        },
+        "label": "Provided Needs"
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 116142,
+    "type": "lodgeitem",
+    "name": "Dog-Breeder",
+    "icon": "/img/main/3dicons/specialists/systemic/icon_inuit_specialist_1006_b_0.png",
+    "effectTargets": [
+      {
+        "label": "Goose Farm",
+        "visible": true
+      },
+      {
+        "label": "Husky Farm",
+        "visible": true
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [
+      {
+        "key": "perkfemale",
+        "value": 1
+      },
+      {
+        "key": "crafting",
+        "value": 20
+      }
+    ],
+    "rarity": "uncommon",
+    "rarityLabel": "Uncommon",
+    "upgrades": [
+      {
+        "key": "ProductivityUpgrade",
+        "value": {
+          "Value": 20,
+          "Percental": 1
+        },
+        "label": "Productivity"
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 116143,
+    "type": "lodgeitem",
+    "name": "Astute Dog-Breeder",
+    "icon": "/img/main/3dicons/specialists/systemic/icon_inuit_specialist_1006_c_0.png",
+    "effectTargets": [
+      {
+        "label": "Goose Farm",
+        "visible": true
+      },
+      {
+        "label": "Husky Farm",
+        "visible": true
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [
+      {
+        "key": "perkfemale",
+        "value": 1
+      },
+      {
+        "key": "medicine",
+        "value": 30
+      },
+      {
+        "key": "diplomacy",
+        "value": 10
+      }
+    ],
+    "rarity": "rare",
+    "rarityLabel": "Rare",
+    "upgrades": [
+      {
+        "key": "MaintenanceUpgrade",
+        "value": {
+          "Value": -15,
+          "Percental": 1
+        },
+        "label": "Maintenance Cost"
+      },
+      {
+        "key": "WorkforceAmountUpgrade",
+        "value": {
+          "Value": -50,
+          "Percental": 1
+        },
+        "label": "Workforce Needed"
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 116144,
+    "type": "lodgeitem",
+    "name": "Taliriktug The Husky-Voiced",
+    "icon": "/img/main/3dicons/specialists/systemic/icon_inuit_specialist_901b_0.png",
+    "effectTargets": [
+      {
+        "label": "Goose Farm",
+        "visible": true
+      },
+      {
+        "label": "Husky Farm",
+        "visible": true
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [
+      {
+        "key": "perkfemale",
+        "value": 1
+      },
+      {
+        "key": "crafting",
+        "value": 40
+      },
+      {
+        "key": "faith",
+        "value": 20
+      }
+    ],
+    "rarity": "epic",
+    "rarityLabel": "Epic",
+    "upgrades": [
+      {
+        "key": "ProductivityUpgrade",
+        "value": {
+          "Value": 40,
+          "Percental": 1
+        },
+        "label": "Productivity"
+      },
+      {
+        "key": "AdditionalOutput",
+        "value": {
+          "Item": [
+            {
+              "Product": 112694,
+              "AdditionalOutputCycle": 6,
+              "Amount": 1,
+              "Product_label": "Caribou Meat"
+            }
+          ]
+        },
+        "label": "Extra Goods"
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 116146,
+    "type": "lodgeitem",
+    "name": "Inuit Hunter",
+    "icon": "/img/main/3dicons/specialists/systemic/icon_inuit_specialist_903_0.png",
+    "effectTargets": [
+      {
+        "label": "Whaling Station",
+        "visible": true
+      },
+      {
+        "label": "Seal Hunting Docks",
+        "visible": true
+      },
+      {
+        "label": "Caribou Hunting Cabin",
+        "visible": true
+      },
+      {
+        "label": "Bear Hunting Cabin",
+        "visible": true
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [
+      {
+        "key": "perkfemale",
+        "value": 1
+      },
+      {
+        "key": "crafting",
+        "value": 20
+      }
+    ],
+    "rarity": "uncommon",
+    "rarityLabel": "Uncommon",
+    "upgrades": [
+      {
+        "key": "WorkforceAmountUpgrade",
+        "value": {
+          "Value": -25,
+          "Percental": 1
+        },
+        "label": "Workforce Needed"
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 116149,
+    "type": "lodgeitem",
+    "name": "Artful Inuit Hunter",
+    "icon": "/img/main/3dicons/specialists/systemic/icon_inuit_specialist_902b_0.png",
+    "effectTargets": [
+      {
+        "label": "Whaling Station",
+        "visible": true
+      },
+      {
+        "label": "Seal Hunting Docks",
+        "visible": true
+      },
+      {
+        "label": "Caribou Hunting Cabin",
+        "visible": true
+      },
+      {
+        "label": "Bear Hunting Cabin",
+        "visible": true
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [
+      {
+        "key": "perkfemale",
+        "value": 1
+      },
+      {
+        "key": "medicine",
+        "value": 30
+      },
+      {
+        "key": "diplomacy",
+        "value": 10
+      }
+    ],
+    "rarity": "rare",
+    "rarityLabel": "Rare",
+    "upgrades": [
+      {
+        "key": "ProductivityUpgrade",
+        "value": {
+          "Value": 30,
+          "Percental": 1
+        },
+        "label": "Productivity"
+      },
+      {
+        "key": "MaintenanceUpgrade",
+        "value": {
+          "Value": -40,
+          "Percental": 1
+        },
+        "label": "Maintenance Cost"
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 116152,
+    "type": "lodgeitem",
+    "name": "Toklo the Trapper",
+    "icon": "/img/main/3dicons/specialists/systemic/icon_inuit_specialist_1005_b_0.png",
+    "effectTargets": [
+      {
+        "label": "Whaling Station",
+        "visible": true
+      },
+      {
+        "label": "Seal Hunting Docks",
+        "visible": true
+      },
+      {
+        "label": "Caribou Hunting Cabin",
+        "visible": true
+      },
+      {
+        "label": "Bear Hunting Cabin",
+        "visible": true
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [
+      {
+        "key": "perkfemale",
+        "value": 1
+      },
+      {
+        "key": "crafting",
+        "value": 40
+      },
+      {
+        "key": "faith",
+        "value": 20
+      }
+    ],
+    "rarity": "epic",
+    "rarityLabel": "Epic",
+    "upgrades": [
+      {
+        "key": "ProductivityUpgrade",
+        "value": {
+          "Value": 40,
+          "Percental": 1
+        },
+        "label": "Productivity"
+      },
+      {
+        "key": "AdditionalOutput",
+        "value": {
+          "Item": [
+            {
+              "Product": 112697,
+              "AdditionalOutputCycle": 7,
+              "Amount": 1,
+              "Product_label": "Goose Feathers"
+            }
+          ]
+        },
+        "label": "Extra Goods"
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 116147,
+    "type": "lodgeitem",
+    "name": "Sled Builder",
+    "icon": "/img/main/3dicons/specialists/systemic/icon_inuit_specialist_1002_a_0.png",
+    "effectTargets": [
+      {
+        "label": "Lumberjack's Hut",
+        "visible": true
+      },
+      {
+        "label": "Sled Frame Factory",
+        "visible": true
+      },
+      {
+        "label": "Husky Sled Factory",
+        "visible": true
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [
+      {
+        "key": "perkfemale",
+        "value": 1
+      },
+      {
+        "key": "crafting",
+        "value": 20
+      }
+    ],
+    "rarity": "uncommon",
+    "rarityLabel": "Uncommon",
+    "upgrades": [
+      {
+        "key": "MaintenanceUpgrade",
+        "value": {
+          "Value": -30,
+          "Percental": 1
+        },
+        "label": "Maintenance Cost"
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 116150,
+    "type": "lodgeitem",
+    "name": "Sharp Sled Builder",
+    "icon": "/img/main/3dicons/specialists/systemic/icon_inuit_specialist_1001_a_0.png",
+    "effectTargets": [
+      {
+        "label": "Lumberjack's Hut",
+        "visible": true
+      },
+      {
+        "label": "Sled Frame Factory",
+        "visible": true
+      },
+      {
+        "label": "Husky Sled Factory",
+        "visible": true
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [
+      {
+        "key": "perkfemale",
+        "value": 1
+      },
+      {
+        "key": "medicine",
+        "value": 30
+      },
+      {
+        "key": "diplomacy",
+        "value": 10
+      }
+    ],
+    "rarity": "rare",
+    "rarityLabel": "Rare",
+    "upgrades": [
+      {
+        "key": "ProductivityUpgrade",
+        "value": {
+          "Value": 25,
+          "Percental": 1
+        },
+        "label": "Productivity"
+      },
+      {
+        "key": "WorkforceAmountUpgrade",
+        "value": {
+          "Value": -30,
+          "Percental": 1
+        },
+        "label": "Workforce Needed"
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 116153,
+    "type": "lodgeitem",
+    "name": "Naaqtuuq the Sled-Builder",
+    "icon": "/img/main/3dicons/specialists/systemic/icon_inuit_specialist_904_0.png",
+    "effectTargets": [
+      {
+        "label": "Lumberjack's Hut",
+        "visible": true
+      },
+      {
+        "label": "Sled Frame Factory",
+        "visible": true
+      },
+      {
+        "label": "Husky Sled Factory",
+        "visible": true
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [
+      {
+        "key": "perkfemale",
+        "value": 1
+      },
+      {
+        "key": "crafting",
+        "value": 40
+      },
+      {
+        "key": "faith",
+        "value": 20
+      }
+    ],
+    "rarity": "epic",
+    "rarityLabel": "Epic",
+    "upgrades": [
+      {
+        "key": "ProductivityUpgrade",
+        "value": {
+          "Value": 40,
+          "Percental": 1
+        },
+        "label": "Productivity"
+      },
+      {
+        "key": "AdditionalOutput",
+        "value": {
+          "Item": [
+            {
+              "Product": 1010196,
+              "AdditionalOutputCycle": 2,
+              "Amount": 1,
+              "Product_label": "Timber"
+            }
+          ]
+        },
+        "label": "Extra Goods"
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 116148,
+    "type": "lodgeitem",
+    "name": "Outdoor Cook",
+    "icon": "/img/main/3dicons/specialists/systemic/icon_inuit_specialist_1003_b_0.png",
+    "effectTargets": [
+      {
+        "label": "Pemmican Cookhouse",
+        "visible": true
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [
+      {
+        "key": "perkfemale",
+        "value": 1
+      },
+      {
+        "key": "crafting",
+        "value": 20
+      }
+    ],
+    "rarity": "uncommon",
+    "rarityLabel": "Uncommon",
+    "upgrades": [
+      {
+        "key": "WorkforceAmountUpgrade",
+        "value": {
+          "Value": -40,
+          "Percental": 1
+        },
+        "label": "Workforce Needed"
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 116151,
+    "type": "lodgeitem",
+    "name": "Rugged Outdoor Cook",
+    "icon": "/img/main/3dicons/specialists/systemic/icon_inuit_specialist_1007_0.png",
+    "effectTargets": [
+      {
+        "label": "Explorer Shelter",
+        "visible": true
+      },
+      {
+        "label": "Technician Shelter",
+        "visible": true
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [
+      {
+        "key": "perkfemale",
+        "value": 1
+      },
+      {
+        "key": "medicine",
+        "value": 30
+      },
+      {
+        "key": "diplomacy",
+        "value": 10
+      }
+    ],
+    "rarity": "rare",
+    "rarityLabel": "Rare",
+    "upgrades": [
+      {
+        "key": "GoodConsumptionUpgrade",
+        "value": {
+          "Item": [
+            {
+              "ProvidedNeed": 112705,
+              "AmountInPercent": -30,
+              "ProvidedNeed_label": "Pemmican"
+            }
+          ]
+        },
+        "label": "Provided Needs"
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 116154,
+    "type": "lodgeitem",
+    "name": "Sandro the Nature Chef",
+    "icon": "/img/main/3dicons/specialists/systemic/icon_inuit_specialist_1004_0.png",
+    "effectTargets": [
+      {
+        "label": "Pemmican Cookhouse",
+        "visible": true
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [
+      {
+        "key": "perkfemale",
+        "value": 1
+      },
+      {
+        "key": "crafting",
+        "value": 40
+      },
+      {
+        "key": "faith",
+        "value": 20
+      }
+    ],
+    "rarity": "epic",
+    "rarityLabel": "Epic",
+    "upgrades": [
+      {
+        "key": "AdditionalOutput",
+        "value": {
+          "Item": [
+            {
+              "Product": 112702,
+              "AdditionalOutputCycle": 7,
+              "Amount": 1,
+              "Product_label": "Oil Lamps"
+            }
+          ]
+        },
+        "label": "Extra Goods"
+      },
+      {
+        "key": "WorkforceAmountUpgrade",
+        "value": {
+          "Value": -50,
+          "Percental": 1
+        },
+        "label": "Workforce Needed"
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 116158,
+    "type": "lodgeitem",
+    "name": "Radiator",
+    "icon": "/img/main/3dicons/machine_items/icon_radiator_0.png",
+    "effectTargets": [
+      {
+        "label": "Explorer Shelter",
+        "visible": true
+      },
+      {
+        "label": "Technician Shelter",
+        "visible": true
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [
+      {
+        "key": "medicine",
+        "value": 15
+      }
+    ],
+    "rarity": "rare",
+    "rarityLabel": "Rare",
+    "upgrades": [
+      {
+        "key": "IncidentArcticIllnessIncreaseUpgrade",
+        "value": {
+          "Value": -3
+        },
+        "label": "Arctic Flu Chance"
+      },
+      {
+        "key": "WorkforceModifierInPercent",
+        "value": 15,
+        "label": "Workforce"
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 116159,
+    "type": "lodgeitem",
+    "name": "Aspirin Machine",
+    "icon": "/img/main/3dicons/machine_items/icon_aspirin_machine_0.png",
+    "effectTargets": [
+      {
+        "label": "Ranger Station",
+        "visible": true
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [
+      {
+        "key": "medicine",
+        "value": 35
+      }
+    ],
+    "rarity": "rare",
+    "rarityLabel": "Rare",
+    "upgrades": [
+      {
+        "key": "ResolverUnitCountUpgrade",
+        "value": {
+          "Value": 1
+        },
+        "label": "Additional Units"
+      },
+      {
+        "key": "ResolverUnitDecreaseUpgrade",
+        "value": {
+          "Value": 50,
+          "Percental": 1
+        },
+        "label": "Extinguish Speed"
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 116160,
+    "type": "lodgeitem",
+    "name": "Music Box",
+    "icon": "/img/main/3dicons/machine_items/icon_music_box_0.png",
+    "effectTargets": [
+      {
+        "label": "All Arctic Production Buildings",
+        "visible": true
+      },
+      {
+        "label": "Lumberjack's Hut",
+        "visible": false
+      },
+      {
+        "label": "Caribou Hunting Cabin",
+        "visible": false
+      },
+      {
+        "label": "Goose Farm",
+        "visible": false
+      },
+      {
+        "label": "Bear Hunting Cabin",
+        "visible": false
+      },
+      {
+        "label": "Husky Farm",
+        "visible": false
+      },
+      {
+        "label": "Prime Hunting Cabin",
+        "visible": false
+      },
+      {
+        "label": "Charcoal Kiln",
+        "visible": false
+      },
+      {
+        "label": "Whaling Station",
+        "visible": false
+      },
+      {
+        "label": "Seal Hunting Docks",
+        "visible": false
+      },
+      {
+        "label": "Sawmill",
+        "visible": false
+      },
+      {
+        "label": "Sleeping Bag Factory",
+        "visible": false
+      },
+      {
+        "label": "Oil Lamp Factory",
+        "visible": false
+      },
+      {
+        "label": "Parka Factory",
+        "visible": false
+      },
+      {
+        "label": "Sled Frame Factory",
+        "visible": false
+      },
+      {
+        "label": "Husky Sled Factory",
+        "visible": false
+      },
+      {
+        "label": "Pemmican Cookhouse",
+        "visible": false
+      },
+      {
+        "label": "Arctic Gas Mine",
+        "visible": false
+      },
+      {
+        "label": "Deep Gold Mine",
+        "visible": false
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [
+      {
+        "key": "diplomacy",
+        "value": 25
+      }
+    ],
+    "rarity": "rare",
+    "rarityLabel": "Rare",
+    "upgrades": [
+      {
+        "key": "ProductivityUpgrade",
+        "value": {
+          "Value": 20,
+          "Percental": 1
+        },
+        "label": "Productivity"
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 116161,
+    "type": "lodgeitem",
+    "name": "Outdoorsy Grill",
+    "icon": "/img/main/3dicons/machine_items/icon_grill_0.png",
+    "effectTargets": [
+      {
+        "label": "Explorer Shelter",
+        "visible": true
+      },
+      {
+        "label": "Technician Shelter",
+        "visible": true
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [
+      {
+        "key": "crafting",
+        "value": 10
+      }
+    ],
+    "rarity": "epic",
+    "rarityLabel": "Epic",
+    "upgrades": [
+      {
+        "key": "IncidentArcticIllnessIncreaseUpgrade",
+        "value": {
+          "Value": -4
+        },
+        "label": "Arctic Flu Chance"
+      },
+      {
+        "key": "GoodConsumptionUpgrade",
+        "value": {
+          "Item": [
+            {
+              "ProvidedNeed": 112705,
+              "AmountInPercent": -30,
+              "ProvidedNeed_label": "Pemmican"
+            }
+          ]
+        },
+        "label": "Provided Needs"
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 116162,
+    "type": "lodgeitem",
+    "name": "Fat Chunk Candle Maker",
+    "icon": "/img/main/3dicons/machine_items/icon_lamp_maker_0.png",
+    "effectTargets": [
+      {
+        "label": "Oil Lamp Factory",
+        "visible": true
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [
+      {
+        "key": "crafting",
+        "value": 35
+      }
+    ],
+    "rarity": "epic",
+    "rarityLabel": "Epic",
+    "upgrades": [
+      {
+        "key": "ProductivityUpgrade",
+        "value": {
+          "Value": 35,
+          "Percental": 1
+        },
+        "label": "Productivity"
+      },
+      {
+        "key": "ReplaceInputs",
+        "value": {
+          "Item": [
+            {
+              "OldInput": 1010204,
+              "NewInput": 1010230,
+              "OldInput_label": "Brass",
+              "NewInput_label": "Copper"
+            }
+          ]
+        },
+        "label": "New Input"
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 116163,
+    "type": "lodgeitem",
+    "name": "Zappy Battery #2205",
+    "icon": "/img/main/3dicons/machine_items/icon_electric_battery_0.png",
+    "effectTargets": [
+      {
+        "label": "Heater",
+        "visible": true
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [
+      {
+        "key": "crafting",
+        "value": 35
+      }
+    ],
+    "rarity": "epic",
+    "rarityLabel": "Epic",
+    "upgrades": [
+      {
+        "key": "ReplaceInputs",
+        "value": {
+          "Item": [
+            {
+              "OldInput": 1010226,
+              "NewInput": 120008,
+              "OldInput_label": "Coal",
+              "NewInput_label": "Wood"
+            }
+          ]
+        },
+        "label": "New Input"
+      },
+      {
+        "key": "HeatRangeUpgrade",
+        "value": {
+          "Value": 20,
+          "Percental": 1
+        },
+        "label": "Range"
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 116164,
+    "type": "lodgeitem",
+    "name": "Gløgg Splurger",
+    "icon": "/img/main/3dicons/machine_items/icon_berries_press_0.png",
+    "effectTargets": [
+      {
+        "label": "Lumberjack's Hut",
+        "visible": true
+      },
+      {
+        "label": "Charcoal Kiln",
+        "visible": true
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [
+      {
+        "key": "melee",
+        "value": 25
+      }
+    ],
+    "rarity": "legendary",
+    "rarityLabel": "Legendary",
+    "upgrades": [
+      {
+        "key": "ProductivityUpgrade",
+        "value": {
+          "Value": 50,
+          "Percental": 1
+        },
+        "label": "Productivity"
+      },
+      {
+        "key": "AdditionalOutput",
+        "value": {
+          "Item": [
+            {
+              "Product": 1010216,
+              "AdditionalOutputCycle": 5,
+              "Amount": 1,
+              "Product_label": "Schnapps"
+            }
+          ]
+        },
+        "label": "Extra Goods"
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 116165,
+    "type": "lodgeitem",
+    "name": "The Uncanny Pocket Cannery",
+    "icon": "/img/main/3dicons/machine_items/icon_canning_machine_0.png",
+    "effectTargets": [
+      {
+        "label": "Pemmican Cookhouse",
+        "visible": true
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [
+      {
+        "key": "crafting",
+        "value": 25
+      }
+    ],
+    "rarity": "legendary",
+    "rarityLabel": "Legendary",
+    "upgrades": [
+      {
+        "key": "AdditionalOutput",
+        "value": {
+          "Item": [
+            {
+              "Product": 1010217,
+              "AdditionalOutputCycle": 5,
+              "Amount": 1,
+              "Product_label": "Canned Food"
+            }
+          ]
+        },
+        "label": "Extra Goods"
+      },
+      {
+        "key": "WorkforceAmountUpgrade",
+        "value": {
+          "Value": -50,
+          "Percental": 1
+        },
+        "label": "Workforce Needed"
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 116166,
+    "type": "lodgeitem",
+    "name": "Heated Jacket Of Pouchiness",
+    "icon": "/img/main/3dicons/machine_items/icon_heated_jacket_0.png",
+    "effectTargets": [
+      {
+        "label": "Technician Shelter",
+        "visible": true
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [
+      {
+        "key": "medicine",
+        "value": 25
+      }
+    ],
+    "rarity": "legendary",
+    "rarityLabel": "Legendary",
+    "upgrades": [
+      {
+        "key": "IncidentArcticIllnessIncreaseUpgrade",
+        "value": {
+          "Value": -5
+        },
+        "label": "Arctic Flu Chance"
+      },
+      {
+        "key": "GoodConsumptionUpgrade",
+        "value": {
+          "Item": [
+            {
+              "ProvidedNeed": 112700,
+              "AmountInPercent": -30,
+              "ProvidedNeed_label": "Parkas"
+            }
+          ]
+        },
+        "label": "Provided Needs"
+      },
+      {
+        "key": "InputBenefitModifier",
+        "value": {
+          "Item": [
+            {
+              "Product": 112700,
+              "AdditionalMoney": 8,
+              "Product_label": "Parkas"
+            }
+          ]
+        },
+        "label": "Bonus Income"
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 116167,
+    "type": "lodgeitem",
+    "name": "Gritty Gas Extractor",
+    "icon": "/img/main/3dicons/machine_items/icon_gas_extractor_0.png",
+    "effectTargets": [
+      {
+        "label": "Arctic Gas Mine",
+        "visible": true
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [
+      {
+        "key": "crafting",
+        "value": 25
+      }
+    ],
+    "rarity": "legendary",
+    "rarityLabel": "Legendary",
+    "upgrades": [
+      {
+        "key": "ProductivityUpgrade",
+        "value": {
+          "Value": 40,
+          "Percental": 1
+        },
+        "label": "Productivity"
+      },
+      {
+        "key": "AdditionalOutput",
+        "value": {
+          "Item": [
+            {
+              "Product": 1010229,
+              "AdditionalOutputCycle": 2,
+              "Amount": 1,
+              "Product_label": "Zinc"
+            },
+            {
+              "Product": 1010230,
+              "AdditionalOutputCycle": 2,
+              "Amount": 1,
+              "Product_label": "Copper"
+            }
+          ]
+        },
+        "label": "Extra Goods"
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 116169,
+    "type": "lodgeitem",
+    "name": "Nate's Darling Kettle",
+    "icon": "/img/main/3dicons/machine_items/icon_kettle_0.png",
+    "effectTargets": [
+      {
+        "label": "Technician Shelter",
+        "visible": true
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [
+      {
+        "key": "crafting",
+        "value": 15
+      }
+    ],
+    "rarity": "legendary",
+    "rarityLabel": "Legendary",
+    "upgrades": [
+      {
+        "key": "IncidentArcticIllnessIncreaseUpgrade",
+        "value": {
+          "Value": -5
+        },
+        "label": "Arctic Flu Chance"
+      },
+      {
+        "key": "GoodConsumptionUpgrade",
+        "value": {
+          "Item": [
+            {
+              "ProvidedNeed": 120032,
+              "AmountInPercent": -30,
+              "ProvidedNeed_label": "Coffee"
+            }
+          ]
+        },
+        "label": "Provided Needs"
+      },
+      {
+        "key": "InputBenefitModifier",
+        "value": {
+          "Item": [
+            {
+              "Product": 120032,
+              "AdditionalMoney": 8,
+              "Product_label": "Coffee"
+            }
+          ]
+        },
+        "label": "Bonus Income"
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 7225,
+    "type": "lodgeitem",
+    "name": "Bait Specialist",
+    "icon": "/img/main/3dicons/specialists/systemic/icon_inuit_specialist_1003_a_0.png",
+    "effectTargets": [
+      {
+        "label": "Caribou Hunting Cabin",
+        "visible": true
+      },
+      {
+        "label": "Bear Hunting Cabin",
+        "visible": true
+      },
+      {
+        "label": "Prime Hunting Cabin",
+        "visible": true
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [
+      {
+        "key": "perkmale",
+        "value": 1
+      },
+      {
+        "key": "crafting",
+        "value": 30
+      },
+      {
+        "key": "faith",
+        "value": 5
+      },
+      {
+        "key": "hunting",
+        "value": 15
+      }
+    ],
+    "rarity": "epic",
+    "rarityLabel": "Epic",
+    "upgrades": [
+      {
+        "key": "ProductivityUpgrade",
+        "value": {
+          "Value": 25,
+          "Percental": 1
+        },
+        "label": "Productivity"
+      },
+      {
+        "key": "AddedFertility",
+        "value": "Bear Abundance",
+        "label": "Fertility"
+      },
+      {
+        "key": "AdditionalOutput",
+        "value": {
+          "Item": [
+            {
+              "Product": 112695,
+              "AdditionalOutputCycle": 3,
+              "Amount": 1,
+              "Product_label": "Bear Fur"
+            }
+          ]
+        },
+        "label": "Extra Goods"
+      },
+      {
+        "key": "InputAmountUpgrade",
+        "value": {
+          "Item": [
+            {
+              "Product": 1010193,
+              "Amount": 1,
+              "Product_label": "Beef"
+            }
+          ]
+        },
+        "label": "Removed Input"
+      },
+      {
+        "key": "ReplaceInputs",
+        "value": {
+          "Item": [
+            {
+              "OldInput": 1955,
+              "NewInput": 1010193,
+              "OldInput_label": "Cultivation Area",
+              "NewInput_label": "Beef"
+            }
+          ]
+        },
+        "label": "New Input"
+      },
+      {
+        "key": "MaintenanceUpgrade",
+        "value": {
+          "Value": 150,
+          "Percental": 1
+        },
+        "label": "Maintenance Cost"
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 1772,
+    "type": "lodgeitem",
+    "name": "Arctic Gas Expert",
+    "icon": "/img/main/3dicons/specialists/empireofskies/icon_cold_fracking_expert_a_0.png",
+    "effectTargets": [
+      {
+        "label": "Deep Gold Mine",
+        "visible": true
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [
+      {
+        "key": "perkfemale",
+        "value": 1
+      },
+      {
+        "key": "crafting",
+        "value": 5
+      },
+      {
+        "key": "melee",
+        "value": 1
+      }
+    ],
+    "rarity": "epic",
+    "rarityLabel": "Epic",
+    "upgrades": [
+      {
+        "key": "ProductivityUpgrade",
+        "value": {
+          "Value": -25,
+          "Percental": 1
+        },
+        "label": "Productivity"
+      },
+      {
+        "key": "AdditionalOutput",
+        "value": {
+          "Item": [
+            {
+              "Product": 112706,
+              "AdditionalOutputCycle": 1,
+              "Amount": 1,
+              "Product_label": "Arctic Gas"
+            }
+          ]
+        },
+        "label": "Extra Goods"
+      },
+      {
+        "key": "InputAmountUpgrade",
+        "value": {
+          "Item": [
+            {
+              "Product": 1414,
+              "Amount": 1,
+              "Product_label": "Industrial Lubricant"
+            }
+          ]
+        },
+        "label": "Removed Input"
+      },
+      {
+        "key": "ReplaceInputs",
+        "value": {
+          "Item": [
+            {
+              "OldInput": 1591,
+              "NewInput": 1414,
+              "OldInput_label": "Mineral Resource",
+              "NewInput_label": "Industrial Lubricant"
+            }
+          ]
+        },
+        "label": "New Input"
+      },
+      {
+        "key": "MaintenanceUpgrade",
+        "value": {
+          "Value": 75,
+          "Percental": 1
+        },
+        "label": "Maintenance Cost"
+      },
+      {
+        "key": "WorkforceAmountUpgrade",
+        "value": {
+          "Value": 100,
+          "Percental": 1
+        },
+        "label": "Workforce Needed"
+      }
+    ],
+    "favourite": false
+  },
+  {
+    "id": 4272,
+    "type": "lodgeitem",
+    "name": "Arctic Science Reporter",
+    "icon": "/img/main/3dicons/specialists/systemic/icon_inuit_specialist_900_0.png",
+    "effectTargets": [
+      {
+        "label": "Post Office",
+        "visible": true
+      }
+    ],
+    "activeItem": false,
+    "expeditionAttributes": [
+      {
+        "key": "perkfemale",
+        "value": 1
+      },
+      {
+        "key": "diplomacy",
+        "value": 17
+      }
+    ],
+    "rarity": "epic",
+    "rarityLabel": "Epic",
+    "upgrades": [
+      {
+        "key": "AdditionalOutput",
+        "value": {
+          "Item": [
+            {
+              "Product": 4268,
+              "AdditionalOutputCycle": 3,
+              "Amount": 1,
+              "Product_label": "Arctic Reports"
+            }
+          ]
+        },
+        "label": "Extra Goods"
+      }
+    ],
+    "favourite": false
+  }
+]

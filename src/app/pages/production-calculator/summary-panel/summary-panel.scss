@@ -61,6 +61,15 @@ table.summary-table {
     max-width: 0px;
     text-align: center;
     word-wrap: break-word;
+
+    // Good column is left-aligned.
+    &:first-of-type {
+      text-align: left;
+    }
+  }
+
+  enum-row {
+    padding-left: 12px;
   }
 
   th {
