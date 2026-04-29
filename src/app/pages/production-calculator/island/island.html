@@ -210,9 +210,7 @@
     </section>
   </ng-container>
 }
-<ng-template #buildingTooltip let-value="value">
-  <simple-tooltip [value]="value" [iconUrlLookupFn]="lookupBuildingIconUrl"></simple-tooltip>
-</ng-template>
+
 <ng-template #goodTooltip let-value="value">
   <simple-tooltip [value]="value" [iconUrlLookupFn]="lookupGoodIconUrl"></simple-tooltip>
 </ng-template>
@@ -222,7 +220,12 @@
 <ng-template #haciendaTooltip let-value="value">
   <simple-tooltip [value]="value" [iconUrlLookupFn]="lookupHaciendaFertilizerWorksIconUrl"></simple-tooltip>
 </ng-template>
+<ng-template #buildingTooltip let-value="value">
+  <building-tooltip [value]="value"></building-tooltip>
+</ng-template>
 <ng-template #boostTooltip let-value="value">
   <boost-tooltip [value]="value"></boost-tooltip>
 </ng-template>
-<ng-template #itemTooltip let-value="value"><item-tooltip [value]="value"></item-tooltip></ng-template>
+<ng-template #itemTooltip let-value="value">
+  <item-tooltip [value]="value"></item-tooltip>
+</ng-template>

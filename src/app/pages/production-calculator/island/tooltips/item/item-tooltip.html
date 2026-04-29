@@ -26,10 +26,16 @@
     @if (itemInfo!.replacementGoods?.length ?? 0 > 0) {
       <div class="item-text">
         @for (rg of itemInfo!.replacementGoods; track rg) {
-          <div>{{ rg.from }} -> {{ rg.to }}</div>
+          <div class="replacement-goods">
+            <img [src]="iconGoodUrlLookupFn(rg.from)" [alt]="rg.from" class="good-icon-small" />
+            <div class="replacement-symbol">→</div>
+            <img [src]="iconGoodUrlLookupFn(rg.to)" [alt]="rg.to" class="good-icon-small" />
+          </div>
         }
       </div>
     }
-    <div class="item-text">Provides Electricity: {{ (itemInfo!.providesElectricity ?? false) ? 'Yes' : 'No' }}</div>
+    @if (itemInfo!.providesElectricity) {
+      <div class="item-text">Provides Electricity: Yes</div>
+    }
   </div>
 </div>

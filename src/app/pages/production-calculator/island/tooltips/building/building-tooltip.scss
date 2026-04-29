@@ -1,0 +1,46 @@
+.tooltip-container {
+  width: 300px;
+  padding: 12px;
+  background-color: white;
+  border: solid 0.5px rgba(0, 0, 0, 0.33);
+  -webkit-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.33);
+  box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.33);
+}
+
+.tooltip-inner-container {
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  border: solid 1px;
+}
+
+.icon-big {
+  width: 48px;
+  margin: auto;
+}
+
+.good-icon-small {
+  margin: 0 2px;
+  width: 24px;
+  height: 24px;
+}
+
+.name {
+  font-size: 16px;
+  font-weight: 500;
+  margin: 8px auto 6px auto;
+  min-width: 0;
+  text-align: center;
+  letter-spacing: -0.25px;
+}
+
+.text {
+  font-size: 12px;
+  margin: 8px auto 0 auto;
+  min-width: 0;
+  letter-spacing: -0.25px;
+  display: flex;
+}
+
+.input-goods-container {
+}

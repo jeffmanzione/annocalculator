@@ -22,7 +22,7 @@ export class BoostTooltip extends EnumTooltip<Boost> {
     this.boostInfo = lookupBoostInfo(value)!;
   }
 
-  iconGoodUrlLookupFn(boost: Boost | null | undefined): string {
+  boostIconUrlLookupFn(boost: Boost | null | undefined): string {
     return lookupBoostIconUrl(boost ?? Boost.None) || Boost.None;
   }
 
