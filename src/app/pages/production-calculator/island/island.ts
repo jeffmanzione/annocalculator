@@ -58,6 +58,7 @@ import {
 import { CompositeNumber } from '../../../components/composite-number/composite-number';
 import { ExtraGoodView } from '../../../shared/mvc/views';
 import { BoostTooltip } from './tooltips/boost/boost-tooltip';
+import { ProductionBuildingTooltip } from './tooltips/building/building-tooltip';
 
 @Component({
   selector: 'island',
@@ -79,6 +80,7 @@ import { BoostTooltip } from './tooltips/boost/boost-tooltip';
     TextFieldModule,
     TooltipDirective,
     BoostTooltip,
+    ProductionBuildingTooltip,
   ],
   templateUrl: './island.html',
   styleUrl: './island.scss',

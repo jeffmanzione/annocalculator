@@ -75,6 +75,15 @@
   margin: auto auto auto 4px;
 }
 
+.replacement-goods {
+  display: flex;
+  flex-direction: row;
+}
+
+.replacement-symbol {
+  margin: auto auto auto 4px;
+}
+
 .item-rarity {
   font-style: italic;
   font-weight: 500;

@@ -1,7 +1,7 @@
 <div class="tooltip-container">
   <div class="tooltip-inner-container">
-    @if (iconGoodUrlLookupFn(boost)) {
-      <img [src]="iconGoodUrlLookupFn(boost)" [alt]="boost" class="item-icon-big" />
+    @if (boostIconUrlLookupFn(boost)) {
+      <img [src]="boostIconUrlLookupFn(boost)" [alt]="boost" class="item-icon-big" />
     }
     <div class="item-name">{{ boost }}</div>
     @if ((boostInfo!.productivityEffect ?? 0) > 0) {

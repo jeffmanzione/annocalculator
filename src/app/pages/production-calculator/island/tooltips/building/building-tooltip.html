@@ -1,0 +1,18 @@
+<div class="tooltip-container">
+  <div class="tooltip-inner-container">
+    @if (buildingIconUrlLookupFn(building)) {
+      <img [src]="buildingIconUrlLookupFn(building)" [alt]="building" class="icon-big" />
+    }
+    <div class="name">{{ building }}</div>
+    <div class="text">Process Time: {{ processTimeSeconds }}s</div>
+    <div class="text input-goods-container">
+      <div class="text">Input Goods:</div>
+      @for (inputGood of inputGoods; track good) {
+        <img [src]="goodIconUrlLookupFn(inputGood)" [alt]="building" class="good-icon-small" />
+      }
+    </div>
+    @if (requiresElectricity) {
+      <div class="text">Requires Electricity: Yes</div>
+    }
+  </div>
+</div>
