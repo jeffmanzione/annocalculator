@@ -3,12 +3,12 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { EnumRow } from '../enum-row/enum-row';
-import { CommonModule } from '@angular/common';
+
 import { EnumTooltip } from '../enum-tooltip/enum-tooltip';
 
 @Component({
   selector: 'enum-select',
-  imports: [CommonModule, EnumRow, MatSelectModule, MatFormFieldModule],
+  imports: [EnumRow, MatSelectModule, MatFormFieldModule],
   templateUrl: './enum-select.html',
   styleUrl: './enum-select.scss',
   providers: [

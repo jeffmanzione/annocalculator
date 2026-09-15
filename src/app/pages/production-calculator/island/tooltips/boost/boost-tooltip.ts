@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { EnumTooltip } from '../../../../../components/enum-tooltip/enum-tooltip';
 import { Boost } from '../../../../../shared/game/enums';
 import { BoostInfo, lookupBoostInfo } from '../../../../../shared/game/facts';
-import { CommonModule } from '@angular/common';
+
 import { lookupBoostIconUrl } from '../../../../../shared/game/icons';
 
 @Component({
@@ -11,7 +11,7 @@ import { lookupBoostIconUrl } from '../../../../../shared/game/icons';
   styleUrl: './boost-tooltip.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [{ provide: EnumTooltip, useExisting: BoostTooltip }],
-  imports: [CommonModule],
+  imports: [],
 })
 export class BoostTooltip extends EnumTooltip<Boost> {
   boostInfo: BoostInfo | null = null;

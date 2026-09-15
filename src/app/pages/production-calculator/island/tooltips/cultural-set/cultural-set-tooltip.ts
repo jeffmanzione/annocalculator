@@ -5,7 +5,7 @@ import {
   CulturalSetInfo,
   lookupCulturalSetInfo,
 } from '../../../../../shared/game/facts';
-import { CommonModule } from '@angular/common';
+
 import { lookupGoodIconUrl } from '../../../../../shared/game/icons';
 
 @Component({
@@ -14,7 +14,7 @@ import { lookupGoodIconUrl } from '../../../../../shared/game/icons';
   styleUrl: './cultural-set-tooltip.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [{ provide: EnumTooltip, useExisting: CulturalSetTooltip }],
-  imports: [CommonModule],
+  imports: [],
 })
 export class CulturalSetTooltip extends EnumTooltip<CulturalSet> {
   setInfo: CulturalSetInfo | null = null;

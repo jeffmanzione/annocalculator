@@ -5,7 +5,7 @@ import {
   ProductionInfo,
   lookupProductionInfo,
 } from '../../../../../shared/game/facts';
-import { CommonModule } from '@angular/common';
+
 import {
   lookupBuildingIconUrl,
   lookupGoodIconUrl,
@@ -17,7 +17,7 @@ import {
   styleUrl: './building-tooltip.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [{ provide: EnumTooltip, useExisting: ProductionBuildingTooltip }],
-  imports: [CommonModule],
+  imports: [],
 })
 export class ProductionBuildingTooltip extends EnumTooltip<ProductionBuilding> {
   productionInfo: ProductionInfo | null = null;
