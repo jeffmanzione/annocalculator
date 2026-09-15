@@ -14,11 +14,9 @@ import { lookupGoodIconUrl } from '../../../../../shared/game/icons';
   imports: [CommonModule],
 })
 export class ItemTooltip extends EnumTooltip<Item> {
-  item: Item | null = null;
   itemInfo: ItemInfo | null = null;
 
   protected override onValueChange(value: Item): void {
-    this.item = value;
     this.itemInfo = lookupItemInfo(value)!;
   }
 
@@ -31,6 +29,6 @@ export class ItemTooltip extends EnumTooltip<Item> {
   }
 
   iconGoodUrlLookupFn(good: Good | null | undefined): string {
-    return lookupGoodIconUrl((good ?? Good.Unknown) || Good.Unknown);
+    return lookupGoodIconUrl(good ?? Good.Unknown);
   }
 }

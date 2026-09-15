@@ -1,9 +1,9 @@
 <div class="tooltip-container">
   <div class="tooltip-inner-container" [ngClass]="backgroundClass">
-    @if (iconItemUrlLookupFn(item)) {
-      <img [src]="iconItemUrlLookupFn(item)" [alt]="item" class="item-icon-big" />
+    @if (iconItemUrlLookupFn(value)) {
+      <img [src]="iconItemUrlLookupFn(value)" [alt]="value" class="item-icon-big" />
     }
-    <div class="item-name">{{ item }}</div>
+    <div class="item-name">{{ value }}</div>
     <div class="item-rarity">{{ itemInfo!.rarity }}</div>
     <div class="item-text">Building: {{ itemInfo!.administrativeBuilding }}</div>
     @if (itemInfo!.productivityEffect ?? 0 > 0) {

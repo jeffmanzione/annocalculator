@@ -133,6 +133,7 @@ export class ProductionLineControl extends FormGroupControl<ProductionLineContro
 
     const selectedCulturalSets = (this.formGroup.value.culturalSets ??
       []) as CulturalSet[];
+
     if (!selectedCulturalSets.every((s) => !this.allowedCulturalSets.has(s))) {
       this.formGroup.controls['culturalSets'].setValue(
         selectedCulturalSets.filter((s) => this.allowedCulturalSets.has(s)),

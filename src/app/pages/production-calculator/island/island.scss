@@ -54,6 +54,7 @@ table.production-lines-table {
   }
 
   th {
+    letter-spacing: -0.5px;
     background-color: color.scale(theme-colors.$table-bg-color, $lightness: -6%);
   }
 

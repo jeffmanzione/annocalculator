@@ -13,7 +13,9 @@
         [class.item-icon-right-padding]="showValues.length > 1" />
     }
     @if (showValues.length == 1) {
-      <div class="item-text item-text-left-padding">{{ valueContainer.value }}</div>
+      <div class="item-text-container">
+        <div class="item-text item-text-left-padding">{{ transformValue(valueContainer.value) }}</div>
+      </div>
     }
   </div>
   @if (hasTooltip) {

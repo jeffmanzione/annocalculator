@@ -12,7 +12,11 @@
       placeholder="None"
       [class.placeholder]="valueAsArray.length == 0">
       <mat-select-trigger>
-        <enum-row [values]="valueAsArray" [iconUrlLookupFn]="iconUrlLookupFn" [tooltip]="tooltip"></enum-row>
+        <enum-row
+          [values]="valueAsArray"
+          [iconUrlLookupFn]="iconUrlLookupFn"
+          [tooltip]="tooltip"
+          [valueTransformer]="valueTransformer"></enum-row>
       </mat-select-trigger>
       @for (option of options; track option) {
         <mat-option
@@ -23,7 +27,11 @@
             !valueAsArray.includes(option) &&
             !valueIsExemptFromLimit(option)
           ">
-          <enum-row [values]="[option]" [iconUrlLookupFn]="iconUrlLookupFn" [tooltip]="tooltip"></enum-row>
+          <enum-row
+            [values]="[option]"
+            [iconUrlLookupFn]="iconUrlLookupFn"
+            [tooltip]="tooltip"
+            [valueTransformer]="valueTransformer"></enum-row>
         </mat-option>
       }
     </mat-select>
@@ -37,7 +45,11 @@
     [multiple]="multiple"
     placeholder="None">
     <mat-select-trigger>
-      <enum-row [values]="valueAsArray" [iconUrlLookupFn]="iconUrlLookupFn" [tooltip]="tooltip"></enum-row>
+      <enum-row
+        [values]="valueAsArray"
+        [iconUrlLookupFn]="iconUrlLookupFn"
+        [tooltip]="tooltip"
+        [valueTransformer]="valueTransformer"></enum-row>
     </mat-select-trigger>
     @for (option of options; track option) {
       <mat-option
@@ -48,7 +60,11 @@
           !valueAsArray.includes(option) &&
           !valueIsExemptFromLimit(option)
         ">
-        <enum-row [values]="[option]" [iconUrlLookupFn]="iconUrlLookupFn" [tooltip]="tooltip"></enum-row>
+        <enum-row
+          [values]="[option]"
+          [iconUrlLookupFn]="iconUrlLookupFn"
+          [tooltip]="tooltip"
+          [valueTransformer]="valueTransformer"></enum-row>
       </mat-option>
     }
   </mat-select>

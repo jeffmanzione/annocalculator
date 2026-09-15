@@ -14,11 +14,9 @@ import { lookupBoostIconUrl } from '../../../../../shared/game/icons';
   imports: [CommonModule],
 })
 export class BoostTooltip extends EnumTooltip<Boost> {
-  boost: Boost | null = null;
   boostInfo: BoostInfo | null = null;
 
   protected override onValueChange(value: Boost): void {
-    this.boost = value;
     this.boostInfo = lookupBoostInfo(value)!;
   }
 

@@ -59,6 +59,9 @@ export class EnumSelect<T> implements ControlValueAccessor {
     return Array.isArray(this.value) ? this.value : [this.value];
   }
 
+  @Input()
+  valueTransformer?: (value: T | null) => string;
+
   valuesNotExemptFromLimit = 0;
 
   isDisabled = false;

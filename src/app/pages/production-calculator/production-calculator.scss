@@ -102,8 +102,14 @@ island {
 }
 
 .delete-island-button {
+  display: flex;
   margin-left: auto;
   order: 2;
+  ::ng-deep {
+    button {
+      margin: auto;
+    }
+  }
 }
 
 .add-island-button-section {

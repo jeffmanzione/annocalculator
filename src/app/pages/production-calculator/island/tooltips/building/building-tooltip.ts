@@ -20,11 +20,9 @@ import {
   imports: [CommonModule],
 })
 export class ProductionBuildingTooltip extends EnumTooltip<ProductionBuilding> {
-  building: ProductionBuilding | null = null;
   productionInfo: ProductionInfo | null = null;
 
   protected override onValueChange(value: ProductionBuilding): void {
-    this.building = value;
     this.productionInfo = lookupProductionInfo(value)!;
   }
 

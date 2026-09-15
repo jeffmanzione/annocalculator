@@ -336,4 +336,11 @@ export class Island
         return itemTooltip;
     }
   }
+
+  transformCulturalSetName(value: CulturalSet | null): string {
+    if (!value) {
+      return 'NULL';
+    }
+    return (value as string).toUpperCase();
+  }
 }

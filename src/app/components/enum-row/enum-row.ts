@@ -41,6 +41,16 @@ export class EnumRow<T> implements AfterViewChecked {
   @Input()
   iconUrlLookupFn = (_: T | null) => '';
 
+  @Input()
+  valueTransformer?: (value: T | null) => string;
+
+  transformValue(value: T | null): string {
+    if (!this.valueTransformer) {
+      return value as string;
+    }
+    return this.valueTransformer(value);
+  }
+
   hasTooltip = false;
 
   hideTooltipAt(index: number): void {

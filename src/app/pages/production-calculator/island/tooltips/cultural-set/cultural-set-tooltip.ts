@@ -17,11 +17,9 @@ import { lookupGoodIconUrl } from '../../../../../shared/game/icons';
   imports: [CommonModule],
 })
 export class CulturalSetTooltip extends EnumTooltip<CulturalSet> {
-  set: CulturalSet | null = null;
   setInfo: CulturalSetInfo | null = null;
 
   protected override onValueChange(value: CulturalSet): void {
-    this.set = value;
     this.setInfo = lookupCulturalSetInfo(value)!;
   }
 
@@ -30,6 +28,6 @@ export class CulturalSetTooltip extends EnumTooltip<CulturalSet> {
   }
 
   iconGoodUrlLookupFn(good: Good | null | undefined): string {
-    return lookupGoodIconUrl((good ?? Good.Unknown) || Good.Unknown);
+    return lookupGoodIconUrl(good ?? Good.Unknown);
   }
 }

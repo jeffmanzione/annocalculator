@@ -13,13 +13,13 @@ $web-primary: mat.m2-define-palette(mat.$m2-indigo-palette);
 $web-accent: mat.m2-define-palette(mat.$m2-pink-palette, A200, A100, A400);
 $web-warn: mat.m2-define-palette(mat.$m2-red-palette);
 
-$web-font-family: 'Roboto', sans-serif;
+$web-font-family: 'Rubik', arial, sans-serif;
 
 $web-typography-level: mat.m2-define-typography-level(
   $font-family: $web-font-family,
   $font-weight: 400,
-  $font-size: 9.5px,
-  $line-height: 1,
+  $font-size: 11px,
+  $line-height: 9px,
 );
 
 $web-fonts: mat.m2-define-typography-config(

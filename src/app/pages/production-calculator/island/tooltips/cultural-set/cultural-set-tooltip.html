@@ -1,9 +1,9 @@
 <div class="tooltip-container">
   <div class="tooltip-inner-container">
-    @if (iconCulturalSetUrlLookupFn(set)) {
-      <img [src]="iconCulturalSetUrlLookupFn(set)" [alt]="set" class="set-icon-big" />
+    @if (iconCulturalSetUrlLookupFn(value)) {
+      <img [src]="iconCulturalSetUrlLookupFn(value)" [alt]="value" class="set-icon-big" />
     }
-    <div class="set-name">{{ set }}</div>
+    <div class="set-name">{{ displayValue }}</div>
     @if (setInfo!.productivityEffect ?? 0 > 0) {
       <div class="set-text">Productivity: {{ setInfo!.productivityEffect }}%</div>
     }

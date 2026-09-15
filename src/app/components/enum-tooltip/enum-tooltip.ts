@@ -24,9 +24,12 @@ export abstract class EnumTooltip<T> implements OnDestroy {
   private readonly valueSubject = new Subject<T | null>();
   private valueSubscription: Subscription | null = null;
 
+  private value_: T | null = null;
+
   @Input()
   set value(value: T | null) {
     this.valueSubscription ??= this.valueSubject.subscribe((value) => {
+      this.value_ = value;
       if (value == null) {
         this.valueSubscription?.unsubscribe();
         this.valueSubscription = null;
@@ -38,7 +41,21 @@ export abstract class EnumTooltip<T> implements OnDestroy {
     this.valueSubject.next(value);
   }
 
+  get value(): T | null {
+    return this.value_;
+  }
+
   protected abstract onValueChange(value: T): void;
+
+  @Input()
+  displayValueTransform?: (value: T | null) => string;
+
+  get displayValue(): string {
+    if (!this.displayValueTransform) {
+      return this.value as string;
+    }
+    return this.displayValueTransform(this.value);
+  }
 
   ngOnDestroy(): void {
     this.valueSubject.next(null);
