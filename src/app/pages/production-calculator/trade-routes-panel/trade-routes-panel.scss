@@ -2,6 +2,16 @@
 @use '@angular/material' as mat;
 @use '../../../../theme-colors';
 
+// Don't cut off text.
+:host ::ng-deep {
+  div.mat-mdc-select-value {
+    overflow: visible;
+    div.mat-mdc-select-value-text {
+      overflow: visible;
+    }
+  }
+}
+
 card-content {
   display: flex;
   flex-direction: column;

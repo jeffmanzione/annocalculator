@@ -4,6 +4,7 @@
   ::ng-deep {
     div.mat-mdc-select-value {
       display: grid;
+      overflow: visible;
     }
   }
 }
