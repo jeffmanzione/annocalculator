@@ -5,6 +5,7 @@ import {
   Region,
   DepartmentOfLaborPolicy,
   Item,
+  CulturalSet,
 } from '../game/enums';
 
 // Marker interface for all models.
@@ -13,13 +14,19 @@ export interface Model {}
 export interface ExtraGood extends Model {
   good?: Good;
 
-  source?: Item | Boost | DepartmentOfLaborPolicy | 'Hacienda Fertilizer Works';
+  source?:
+    | Item
+    | Boost
+    | DepartmentOfLaborPolicy
+    | 'Hacienda Fertilizer Works'
+    | CulturalSet;
   sourceType?:
     | 'Item'
     | 'Boost'
     | 'ElectrifiedFarm'
     | 'DepartmentOfLaborPolicy'
-    | 'HaciendaFertilizerWorks';
+    | 'HaciendaFertilizerWorks'
+    | 'CulturalSet';
 
   rateNumerator?: number;
   rateDenominator?: number;
@@ -37,6 +44,7 @@ export interface ProductionLine extends Model {
   items?: Item[];
   inRangeOfLocalDepartment?: boolean;
   inRangeOfHaciendaFertiliserWorks?: boolean;
+  culturalSets?: CulturalSet[];
 }
 
 export type IslandId = number;
@@ -91,6 +99,7 @@ export const DEFAULT_PRODUCTION_LINE_MODEL: ProductionLine = {
   items: [],
   inRangeOfLocalDepartment: false,
   inRangeOfHaciendaFertiliserWorks: false,
+  culturalSets: [],
 };
 
 export const BASE_TRADE_ROUTE_MODEL: TradeRoute = {

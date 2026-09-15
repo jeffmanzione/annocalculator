@@ -6,6 +6,7 @@ import {
   DepartmentOfLaborPolicy,
   Region,
   Item,
+  CulturalSet,
 } from '../game/enums';
 import {
   improvedByLandReformAct,
@@ -15,6 +16,7 @@ import {
   regionSupportsElectricty,
   buildingSupportsElectricity,
   lookupBoostInfo,
+  lookupCulturalSetInfo,
 } from '../game/facts';
 import {
   DEFAULT_ISLAND_MODEL,
@@ -65,7 +67,8 @@ export class ExtraGoodView extends View<ExtraGood> implements ExtraGood {
     | Item
     | Boost
     | DepartmentOfLaborPolicy
-    | 'Hacienda Fertilizer Works' {
+    | 'Hacienda Fertilizer Works'
+    | CulturalSet {
     return this.model.source ?? DEFAULT_EXTRA_GOOD_MODEL.source!;
   }
 
@@ -75,6 +78,7 @@ export class ExtraGoodView extends View<ExtraGood> implements ExtraGood {
     | 'ElectrifiedFarm'
     | 'DepartmentOfLaborPolicy'
     | 'HaciendaFertilizerWorks'
+    | 'CulturalSet'
     | undefined {
     return this.model.sourceType ?? DEFAULT_EXTRA_GOOD_MODEL.sourceType;
   }
@@ -162,6 +166,16 @@ export class ProductionLineView
     );
   }
 
+  get culturalSetProductivityBonus(): number {
+    return (
+      this.model.culturalSets
+        ?.map(
+          (set) => (lookupCulturalSetInfo(set)?.productivityEffect ?? 0) / 100,
+        )
+        ?.reduce((a, v) => a + v, 0) ?? 0
+    );
+  }
+
   get inRangeOfLocalDepartment(): boolean {
     return (
       this.model.inRangeOfLocalDepartment ??
@@ -173,6 +187,12 @@ export class ProductionLineView
     return (
       this.context.island?.region == Region.NewWorld &&
       (this.model.inRangeOfHaciendaFertiliserWorks ?? false)
+    );
+  }
+
+  get culturalSets(): CulturalSet[] {
+    return (
+      this.model.culturalSets ?? DEFAULT_PRODUCTION_LINE_MODEL.culturalSets!
     );
   }
 
@@ -215,6 +235,9 @@ export class ProductionLineView
       }
       efficiency += this.itemProductivityBonus;
     }
+
+    efficiency += this.culturalSetProductivityBonus;
+
     return efficiency;
   }
 
@@ -278,6 +301,17 @@ export class ProductionLineView
         }
       }
     }
+
+    for (const set of this.culturalSets) {
+      const setInfo = lookupCulturalSetInfo(set)!;
+      if ((setInfo.productivityEffect ?? 0) > 0) {
+        constituents.push({
+          value: setInfo.productivityEffect! / 100,
+          description: set,
+        });
+      }
+    }
+
     return constituents;
   }
 
@@ -310,6 +344,7 @@ export class ProductionLineView
       ...this.electricityExtraGoods,
       ...this.bonusExtraGoods,
       ...this.itemExtraGoods,
+      ...this.culturalSetExtraGoods,
     );
     return extraGoods;
   }
@@ -403,6 +438,33 @@ export class ProductionLineView
         extraGoods.push(
           ExtraGoodView.wrap(
             { ...eg, source: item },
+            { productionLine: this, ...this.context },
+          ),
+        );
+      }
+    }
+    extraGoods.sort((eg1, eg2) => {
+      const goodNameCmp = eg1.good.localeCompare(eg2.good);
+      if (goodNameCmp != 0) {
+        return goodNameCmp;
+      }
+      return (
+        eg2.rateNumerator / eg2.rateDenominator -
+        eg1.rateNumerator / eg1.rateDenominator
+      );
+    });
+    return extraGoods;
+  }
+
+  get culturalSetExtraGoods(): ExtraGoodView[] {
+    const extraGoods: ExtraGoodView[] = [];
+    for (const set of this.culturalSets) {
+      const setInfo = lookupCulturalSetInfo(set);
+      // console.log(setInfo);
+      for (const eg of setInfo?.extraGoods ?? []) {
+        extraGoods.push(
+          ExtraGoodView.wrap(
+            { ...eg, sourceType: 'CulturalSet', source: set },
             { productionLine: this, ...this.context },
           ),
         );

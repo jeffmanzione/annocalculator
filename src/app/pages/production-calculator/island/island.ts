@@ -33,6 +33,7 @@ import {
   ProductionBuilding,
   Item,
   AdministrativeBuilding,
+  CulturalSet,
 } from '../../../shared/game/enums';
 import {
   lookupItemInfo,
@@ -46,6 +47,7 @@ import {
   lookupPolicyIconUrl,
   lookupItemIconUrl,
   lookupHaciendaFertilizerWorksIconUrl,
+  lookupCulturalSetIconUrl,
 } from '../../../shared/game/icons';
 import { TextFieldModule } from '@angular/cdk/text-field';
 import { AcButton } from '../../../components/button/button';
@@ -59,6 +61,7 @@ import { CompositeNumber } from '../../../components/composite-number/composite-
 import { ExtraGoodView } from '../../../shared/mvc/views';
 import { BoostTooltip } from './tooltips/boost/boost-tooltip';
 import { ProductionBuildingTooltip } from './tooltips/building/building-tooltip';
+import { CulturalSetTooltip } from './tooltips/cultural-set/cultural-set-tooltip';
 
 @Component({
   selector: 'island',
@@ -81,6 +84,7 @@ import { ProductionBuildingTooltip } from './tooltips/building/building-tooltip'
     TooltipDirective,
     BoostTooltip,
     ProductionBuildingTooltip,
+    CulturalSetTooltip,
   ],
   templateUrl: './island.html',
   styleUrl: './island.scss',
@@ -107,6 +111,7 @@ export class Island
       'boosts',
       'hasTradeUnion',
       'items',
+      'culturalSets',
     ];
     if (
       this.controller.region == Region.OldWorld ||
@@ -265,6 +270,10 @@ export class Island
     return lookupHaciendaFertilizerWorksIconUrl(_);
   }
 
+  lookupCulturalSetIconUrl(set: CulturalSet | null): string {
+    return lookupCulturalSetIconUrl(set ?? CulturalSet.Unknown);
+  }
+
   extraGoodLookupIconUrlFn(extraGood: ExtraGoodView): (_: any) => string {
     switch (extraGood.sourceType) {
       case 'Boost':
@@ -274,6 +283,8 @@ export class Island
         return lookupPolicyIconUrl;
       case 'HaciendaFertilizerWorks':
         return lookupHaciendaFertilizerWorksIconUrl;
+      case 'CulturalSet':
+        return lookupCulturalSetIconUrl;
       default:
         return lookupItemIconUrl;
     }
@@ -309,6 +320,7 @@ export class Island
     policyTooltip: TemplateRef<any>,
     haciendaTooltip: TemplateRef<any>,
     itemTooltip: TemplateRef<any>,
+    culturalSetTooltip: TemplateRef<any>,
   ): TemplateRef<any> {
     switch (extraGood.sourceType) {
       case 'Boost':
@@ -318,6 +330,8 @@ export class Island
         return policyTooltip;
       case 'HaciendaFertilizerWorks':
         return haciendaTooltip;
+      case 'CulturalSet':
+        return culturalSetTooltip;
       default:
         return itemTooltip;
     }

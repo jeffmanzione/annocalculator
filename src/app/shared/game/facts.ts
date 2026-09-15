@@ -8,8 +8,10 @@ import {
   Boost,
   AdministrativeBuilding,
   Item,
+  CulturalSet,
 } from './enums';
 import * as itemsJson from '../data/items.json';
+import * as cultureJson from '../data/culture.json';
 
 export interface ElectrictyExtraGood {
   good: Good;
@@ -1589,3 +1591,31 @@ const builingsToInfo = new Map<ProductionBuilding, ProductionInfo>(
 );
 
 const itemToInfo = new Map<Item, ItemInfo>(items.map((i) => [i.item, i]));
+
+export interface CulturalSetInfo {
+  set: CulturalSet;
+  iconUrl: string;
+  targets: ProductionBuilding[];
+  extraGoods?: ExtraGood[];
+  productivityEffect?: number;
+}
+
+export const cultures: CulturalSetInfo[] = (cultureJson as any)
+  .default as CulturalSetInfo[];
+
+const cultureToInfo = new Map<CulturalSet, CulturalSetInfo>(
+  cultures.map((i) => [i.set, i]),
+);
+
+export function lookupCulturalSetInfo(
+  set: CulturalSet,
+): CulturalSetInfo | undefined {
+  return cultureToInfo.get(set);
+}
+export function lookupAllowedCulturalSets(
+  building: ProductionBuilding,
+): CulturalSet[] {
+  return cultures
+    .filter((set) => set.targets.includes(building))
+    .map((set) => set.set);
+}

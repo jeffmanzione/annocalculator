@@ -5,8 +5,9 @@ import {
   Region,
   DepartmentOfLaborPolicy,
   Item,
+  CulturalSet,
 } from './enums';
-import { buildingInfo, lookupItemInfo } from './facts';
+import { buildingInfo, lookupCulturalSetInfo, lookupItemInfo } from './facts';
 
 import * as boostsJson from '../data/boosts.json' with { type: 'json' };
 import * as goodsJson from '../data/goods.json' with { type: 'json' };
@@ -49,5 +50,7 @@ export const lookupRegionIconUrl = lookupUrlFn(regionToImageUrl);
 export const lookupPolicyIconUrl = lookupUrlFn(policyToImageUrl);
 export const lookupItemIconUrl = (item: Item) =>
   lookupItemInfo(item)?.iconUrl ?? defaultIconUrl;
+export const lookupCulturalSetIconUrl = (set: CulturalSet) =>
+  lookupCulturalSetInfo(set)?.iconUrl ?? defaultIconUrl;
 export const lookupHaciendaFertilizerWorksIconUrl = (_: any) =>
   '/icons/others/Hacienda_Fertiliser_Works.png';

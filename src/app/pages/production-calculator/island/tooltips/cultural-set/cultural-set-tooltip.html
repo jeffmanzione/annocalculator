@@ -1,0 +1,25 @@
+<div class="tooltip-container">
+  <div class="tooltip-inner-container">
+    @if (iconCulturalSetUrlLookupFn(set)) {
+      <img [src]="iconCulturalSetUrlLookupFn(set)" [alt]="set" class="set-icon-big" />
+    }
+    <div class="set-name">{{ set }}</div>
+    @if (setInfo!.productivityEffect ?? 0 > 0) {
+      <div class="set-text">Productivity: {{ setInfo!.productivityEffect }}%</div>
+    }
+    @if (setInfo!.extraGoods?.length ?? 0 > 0) {
+      <div class="set-text extra-goods-container">
+        @for (eg of setInfo!.extraGoods; track eg) {
+          <div class="extra-good">
+            @if (eg.good) {
+              <img [src]="iconGoodUrlLookupFn(eg.good)" [alt]="eg.good" class="good-icon-small" />
+            }
+            <div class="extra-good-name">
+              {{ eg.good ?? 'Extra Goods' }}: {{ eg.rateNumerator }} / {{ eg.rateDenominator }}
+            </div>
+          </div>
+        }
+      </div>
+    }
+  </div>
+</div>

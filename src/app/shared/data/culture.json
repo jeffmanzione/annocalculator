@@ -1,0 +1,119 @@
+[
+  {
+    "set": "Bronze Age",
+    "iconUrl": "/icons/culture/bronze_age.png",
+    "targets": [
+      "Lumberjack's Hut",
+      "Hunting Cabin",
+      "Saltpetre Works",
+      "SandMine",
+      "ClayPit",
+      "LimestoneQuarry",
+      "Orchard: Jam",
+      "Orchard: Citrus",
+      "Orchard: Cinnamon",
+      "Orchard: Coconut Oil",
+      "Orchard: Resin",
+      "Orchard: Cherry Wood",
+      "Orchard: Camphor Wax"
+    ],
+    "extraGoods": [
+      {
+        "rateNumerator": 1,
+        "rateDenominator": 10
+      }
+    ],
+    "productivityEffect": 5
+  },
+  {
+    "set": "Origins of Mankind",
+    "iconUrl": "/icons/culture/origins_of_mankind.png",
+    "targets": ["Fishery", "Fish Oil Factory", "Calamari Fishery", "Pearl Farm"],
+    "productivityEffect": 10
+  },
+  {
+    "set": "Domestic Animals",
+    "iconUrl": "/icons/culture/domestic_animals.png",
+    "targets": [
+      "Cattle Farm (Old World)",
+      "Cattle Farm (New World)",
+      "Sheep Farm",
+      "Pig Farm",
+      "Alpaca Farm",
+      "Goat Farm",
+      "Sanga Farm",
+      "Nandu Farm"
+    ],
+    "productivityEffect": 5
+  },
+  {
+    "set": "Ocean Predators",
+    "iconUrl": "/icons/culture/ocean_predators.png",
+    "targets": [
+      "Fishery",
+      "Saltpetre Works",
+      "Sand Mine",
+      "Pearl Farm",
+      "Fish Oil Factory",
+      "Salt Works",
+      "Calamari Fishery"
+    ],
+    "productivityEffect": 10
+  },
+  {
+    "set": "Polar Circle",
+    "iconUrl": "/icons/culture/polar_circle.png",
+    "targets": ["Frame Knitters", "Fur Dealer", "Poncho Darner", "Bombin Weaver", "Tailor's Shop"],
+    "productivityEffect": 25
+  },
+  {
+    "set": "Proud Savannah",
+    "iconUrl": "/icons/culture/proud_savannah.png",
+    "targets": ["Cattle Farm (Old World)", "Cattle Farm (New World)", "Alpaca Farm", "Nandu Farm"],
+    "productivityEffect": 25
+  },
+  {
+    "set": "Teeming Lakes",
+    "iconUrl": "/icons/culture/teeming_lakes.png",
+    "targets": [
+      "Fishery",
+      "Saltpetre Works",
+      "Sand Mine",
+      "Pearl Farm",
+      "Fish Oil Factory",
+      "Salt Works",
+      "Calamari Fishery"
+    ],
+    "productivityEffect": 20
+  },
+  {
+    "set": "Amazons",
+    "iconUrl": "/icons/culture/amazons.png",
+    "targets": ["Vineyard", "Plantain Plantation"],
+    "productivityEffect": 25
+  },
+  {
+    "set": "Andean",
+    "iconUrl": "/icons/culture/andean.png",
+    "targets": ["Grain Farm", "Coffee Plantation"],
+    "productivityEffect": 25
+  },
+  {
+    "set": "Enchanted",
+    "iconUrl": "/icons/culture/enchanted.png",
+    "targets": ["Hop Farm", "Tobacco Plantation"],
+    "productivityEffect": 25
+  },
+  {
+    "set": "Near East",
+    "iconUrl": "/icons/culture/near_east.png",
+    "targets": ["Red Pepper Farm", "Sugar Cane Plantation"],
+    "productivityEffect": 25
+  },
+  {
+    "set": "Subalpine",
+    "iconUrl": "/icons/culture/subalpine.png",
+    "targets": ["Hunting Cabin", "Caoutchouc Plantation"],
+    "productivityEffect": 25
+  }
+]

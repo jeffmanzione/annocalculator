@@ -975,3 +975,19 @@ export enum Item {
   ArcticGasExpert = 'Arctic Gas Expert',
   ArcticScienceReporter = 'Arctic Science Reporter',
 }
+
+export enum CulturalSet {
+  Unknown = 'Unknown',
+  BronzeAge = 'Bronze Age',
+  OriginsOfMankind = 'Origins of Mankind',
+  DomesticAnimals = 'Domestic Animals',
+  OceanPredators = 'Ocean Predators',
+  PolarCircle = 'Polar Circle',
+  ProudSavannah = 'Proud Savannah',
+  TeemingLakes = 'Teeming Lakes',
+  Amazons = 'Amazons',
+  Andean = 'Andean',
+  Enchanted = 'Enchanted',
+  NearEast = 'Near East',
+  Subalpine = 'Subalpine',
+}

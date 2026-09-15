@@ -5,6 +5,7 @@ import {
   Region,
   DepartmentOfLaborPolicy,
   Item,
+  CulturalSet,
 } from '../game/enums';
 import { lookupItemInfo, lookupProductionInfo } from '../game/facts';
 import {
@@ -161,6 +162,17 @@ export class ProductionLineController extends ProductionLineView {
   }
   override get inRangeOfHaciendaFertiliserWorks(): boolean {
     return super.inRangeOfHaciendaFertiliserWorks;
+  }
+
+  override set culturalSets(value: CulturalSet[]) {
+    if (value == null || value == DEFAULT_PRODUCTION_LINE_MODEL.culturalSets) {
+      delete this.model.culturalSets;
+      return;
+    }
+    this.model.culturalSets = value;
+  }
+  override get culturalSets(): CulturalSet[] {
+    return super.culturalSets;
   }
 }
 

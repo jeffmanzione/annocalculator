@@ -2,6 +2,7 @@ import { ProductionLineController } from '../../../shared/mvc/controllers';
 import { ExtraGoodView, ProductionLineView } from '../../../shared/mvc/views';
 import {
   Boost,
+  CulturalSet,
   Good,
   Item,
   ProductionBuilding,
@@ -12,6 +13,7 @@ import {
   lookupAllowedBoosts,
   lookupAllowedItems,
   producesDung,
+  lookupAllowedCulturalSets,
 } from '../../../shared/game/facts';
 import { FormGroupControl } from '../../../shared/control/control';
 import { NumberConstituent } from '../../../components/composite-number/composite-number';
@@ -33,6 +35,7 @@ export class ProductionLineControl extends FormGroupControl<ProductionLineContro
 
   allowedBoosts: Set<Boost> = new Set();
   allowedItems: Set<Item> = new Set();
+  allowedCulturalSets: Set<CulturalSet> = new Set();
 
   inputGoods: Good[] = [];
   // Will always be a list of size 1 since production lines only output 1 good type.
@@ -55,6 +58,7 @@ export class ProductionLineControl extends FormGroupControl<ProductionLineContro
       'items',
       'inRangeOfLocalDepartment',
       'inRangeOfHaciendaFertiliserWorks',
+      'culturalSets',
     ]);
     this.extraGoods = new MatTableDataSource(this.controller.extraGoods);
     // Show by default
@@ -112,6 +116,28 @@ export class ProductionLineControl extends FormGroupControl<ProductionLineContro
       this.enableControl('inRangeOfHaciendaFertiliserWorks');
     } else {
       this.clearAndDisableControl('inRangeOfHaciendaFertiliserWorks', false);
+    }
+
+    this.updateCulturalSetOptions();
+  }
+
+  private updateCulturalSetOptions() {
+    this.allowedCulturalSets = new Set(
+      lookupAllowedCulturalSets(this.formGroup.value.building),
+    );
+
+    if (this.allowedCulturalSets.size == 0) {
+      this.clearAndDisableControl('culturalSets', false);
+      return;
+    }
+
+    const selectedCulturalSets = (this.formGroup.value.culturalSets ??
+      []) as CulturalSet[];
+    if (!selectedCulturalSets.every((s) => !this.allowedCulturalSets.has(s))) {
+      this.formGroup.controls['culturalSets'].setValue(
+        selectedCulturalSets.filter((s) => this.allowedCulturalSets.has(s)),
+        { emitEvent: false },
+      );
     }
   }
 
