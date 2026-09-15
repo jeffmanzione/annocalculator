@@ -1,4 +1,10 @@
-import { Component, forwardRef, Input, TemplateRef } from '@angular/core';
+import {
+  Component,
+  forwardRef,
+  Input,
+  TemplateRef,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -11,6 +17,7 @@ import { EnumTooltip } from '../enum-tooltip/enum-tooltip';
   imports: [EnumRow, MatSelectModule, MatFormFieldModule],
   templateUrl: './enum-select.html',
   styleUrl: './enum-select.scss',
+  changeDetection: ChangeDetectionStrategy.Eager,
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,

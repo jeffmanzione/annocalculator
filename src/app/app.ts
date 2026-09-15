@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { AppBar } from './components/app-bar/app-bar';
 
@@ -8,6 +8,7 @@ const WWW_PREFIX = 'www.';
   selector: 'app-root',
   imports: [RouterOutlet, AppBar],
   templateUrl: './app.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './app.scss',
 })
 export class App implements OnInit {

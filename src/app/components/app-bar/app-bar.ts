@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { Router } from '@angular/router';
@@ -9,6 +9,7 @@ import { AppInfo, apps, isNotRedirect, WEBSITE_NAME } from '../../app.routes';
   selector: 'app-bar',
   imports: [CommonModule, MatButtonModule, MatToolbarModule],
   templateUrl: './app-bar.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './app-bar.scss',
 })
 export class AppBar {

@@ -6,6 +6,7 @@ import {
   OnInit,
   Output,
   ViewChild,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { MatInputModule } from '@angular/material/input';
 
@@ -13,6 +14,7 @@ import { MatInputModule } from '@angular/material/input';
   selector: 'json-input',
   imports: [MatInputModule],
   templateUrl: './json-input.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './json-input.scss',
 })
 export class JsonInput<T> implements OnInit {

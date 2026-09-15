@@ -1,4 +1,9 @@
-import { Component, Input, NgModule } from '@angular/core';
+import {
+  Component,
+  Input,
+  NgModule,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import {
   MatCardModule,
   MatCard,
@@ -11,6 +16,7 @@ import {
   selector: 'card',
   templateUrl: './card.html',
   styleUrl: './card.scss',
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [MatCard, MatCardHeader, MatCardTitle, MatCardContent],
 })
 export class Card {
@@ -21,6 +27,7 @@ export class Card {
 @Component({
   selector: 'card-title',
   template: '<ng-content/>',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styles: ':host { width: 100%; }',
 })
 export class CardTitle {}
@@ -28,6 +35,7 @@ export class CardTitle {}
 @Component({
   selector: 'card-content',
   template: '<ng-content/>',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styles: ':host { width: 100%; }',
 })
 export class CardContent {}
