@@ -4,8 +4,9 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  computed,
   inject,
-  Input,
+  input,
   TemplateRef,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -20,35 +21,24 @@ import { CommonModule } from '@angular/common';
 export class EnumRow<T> implements AfterViewChecked {
   changeDetectorRef = inject(ChangeDetectorRef);
 
-  @Input()
-  tooltip: TemplateRef<any> | null | undefined = null;
+  tooltip = input<TemplateRef<any> | null | undefined>(null);
+  values = input<(T | null)[]>([]);
+  placeholderText = input('None');
+  iconUrlLookupFn = input<(_: T | null) => string>((_: T | null) => '');
+  displayTextTransformer = input<(value: T | null) => string>();
 
-  @Input()
-  set values(value: (T | null)[]) {
-    this.showValues = value.map((v) => {
-      return { value: v, shouldShowOverlay: false };
-    });
-  }
-
-  showValues: ShowValue<T>[] = [];
+  showValues = computed(() =>
+    this.values().map((v) => ({ value: v, shouldShowOverlay: false })),
+  );
 
   /** The timeout ID of any current timer set to show the tooltip */
   private showTimeoutId: ReturnType<typeof setTimeout> | undefined;
 
-  @Input()
-  placeholderText = 'None';
-
-  @Input()
-  iconUrlLookupFn = (_: T | null) => '';
-
-  @Input()
-  displayTextTransformer?: (value: T | null) => string;
-
   displayTextForValue(value: T | null): string {
-    if (!this.displayTextTransformer) {
+    if (!this.displayTextTransformer()) {
       return value as string;
     }
-    return this.displayTextTransformer(value);
+    return this.displayTextTransformer()!(value);
   }
 
   hasTooltip = false;
@@ -59,23 +49,23 @@ export class EnumRow<T> implements AfterViewChecked {
       this.showTimeoutId = undefined;
     }
 
-    if (!this.showValues[index].shouldShowOverlay) {
+    if (!this.showValues()[index].shouldShowOverlay) {
       return;
     }
-    this.showValues[index].shouldShowOverlay = false;
+    this.showValues()[index].shouldShowOverlay = false;
     this.changeDetectorRef.detectChanges();
   }
 
   showTooltipAt(index: number): void {
     this.showTimeoutId = setTimeout(() => {
-      this.showValues[index].shouldShowOverlay = true;
+      this.showValues()[index].shouldShowOverlay = true;
       this.showTimeoutId = undefined;
       this.changeDetectorRef.detectChanges();
     }, 500);
   }
 
   ngAfterViewChecked(): void {
-    this.hasTooltip = !!this.tooltip;
+    this.hasTooltip = !!this.tooltip();
   }
 }
 

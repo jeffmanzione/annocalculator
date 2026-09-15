@@ -1,8 +1,10 @@
 import {
   Component,
   forwardRef,
-  Input,
   TemplateRef,
+  input,
+  computed,
+  signal,
   ChangeDetectionStrategy,
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
@@ -27,60 +29,40 @@ import { EnumTooltip } from '../enum-tooltip/enum-tooltip';
   ],
 })
 export class EnumSelect<T> implements ControlValueAccessor {
-  @Input()
-  tooltip: TemplateRef<EnumTooltip<T>> | null = null;
+  tooltip = input<TemplateRef<EnumTooltip<T>> | null>(null);
+  label = input<string>();
+  options = input.required<T[]>();
+  iconUrlLookupFn = input<(_: T | null) => string>((_: T | null) => '');
+  wrapInMatFormField = input(true);
+  multiple = input(false);
+  multipleSelectLimit = input(Number.MAX_SAFE_INTEGER);
+  valueIsExemptFromLimit = input<(_: T) => boolean>((_: T) => false);
+  displayTextTransformer = input<(value: T | null) => string>();
 
-  @Input()
-  label?: string;
+  value = signal<T[] | T | null>(null);
 
-  @Input()
-  options!: T[];
+  valueAsArray = computed<(T | null)[]>(() => {
+    return (
+      Array.isArray(this.value()) ? this.value() : [this.value()]
+    ) as (T | null)[];
+  });
 
-  @Input()
-  iconUrlLookupFn = (_: T | null) => '';
-
-  @Input()
-  wrapInMatFormField = true;
-
-  @Input()
-  multiple = false;
-
-  @Input()
-  multipleSelectLimit = Number.MAX_SAFE_INTEGER;
-
-  @Input()
-  valueIsExemptFromLimit = (_: T) => false;
-
-  value_: T[] | T | null = null;
-  set value(value: T[] | T | null) {
-    this.value_ = value;
-    this.valuesNotExemptFromLimit = this.valueAsArray.filter(
-      (v) => !this.valueIsExemptFromLimit(v!),
-    ).length;
-  }
-  get value(): T[] | T | null {
-    return this.value_;
-  }
-
-  get valueAsArray(): (T | null)[] {
-    return Array.isArray(this.value) ? this.value : [this.value];
-  }
-
-  @Input()
-  displayTextTransformer?: (value: T | null) => string;
-
-  valuesNotExemptFromLimit = 0;
+  valuesNotExemptFromLimit = computed(
+    () =>
+      this.valueAsArray().filter((v) => !this.valueIsExemptFromLimit()(v as T))
+        .length,
+  );
 
   isDisabled = false;
   onChange: any = (_: T) => {};
   onTouched: any = () => {};
 
   writeValue(value: any): void {
-    this.value = value;
+    this.value.set(value);
   }
 
   registerOnChange(fn: any): void {
-    this.onChange = fn;
+    this.onChange = (s: any) => fn(s());
   }
 
   registerOnTouched(fn: any): void {
@@ -93,9 +75,9 @@ export class EnumSelect<T> implements ControlValueAccessor {
 
   shouldDisableOption(option: T): boolean {
     return (
-      this.multiple &&
-      this.valueAsArray.length >= this.multipleSelectLimit &&
-      !this.valueAsArray.includes(option)
+      this.multiple() &&
+      this.valueAsArray().length >= this.multipleSelectLimit() &&
+      !this.valueAsArray().includes(option)
     );
   }
 }

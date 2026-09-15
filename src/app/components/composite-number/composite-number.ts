@@ -2,8 +2,9 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  computed,
   inject,
-  Input,
+  input,
 } from '@angular/core';
 import {
   FormatFontSpec,
@@ -28,37 +29,17 @@ export interface NumberConstituent {
 export class CompositeNumber {
   changeDetectorRef = inject(ChangeDetectorRef);
 
-  @Input()
-  set constituentValues(nums: NumberConstituent[]) {
-    this.constituentValues_ = nums;
-    this.value = nums.reduce((a, v) => a + v.value, 0);
-    this.changeDetectorRef.markForCheck();
-  }
-  get constituentValues(): NumberConstituent[] {
-    return this.constituentValues_;
-  }
+  constituentValues = input<NumberConstituent[]>([]);
+  value = computed(() =>
+    this.constituentValues().reduce((a, v) => a + v.value, 0),
+  );
 
-  value = 0;
-
-  constituentValues_: NumberConstituent[] = [];
-
-  @Input()
-  isPercent: boolean = false;
-
-  @Input()
-  format?: string;
-
-  @Input()
-  formatFontSpec?: FormatFontSpec;
-
-  @Input()
-  suffix: string = '';
-
-  @Input()
-  zeroOverride?: string;
-
-  @Input()
-  showPlusIfPositive: boolean = false;
+  isPercent = input(false);
+  format = input<string>();
+  formatFontSpec = input<FormatFontSpec>();
+  suffix = input('');
+  zeroOverride = input<string>();
+  showPlusIfPositive = input(false);
 
   /** The timeout ID of any current timer set to show the tooltip */
   private showTimeoutId: ReturnType<typeof setTimeout> | undefined;

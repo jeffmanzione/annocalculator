@@ -1,14 +1,14 @@
 <div class="tooltip-container">
   <div class="tooltip-inner-container">
-    @if (buildingIconUrlLookupFn(value)) {
-      <img [src]="buildingIconUrlLookupFn(value)" [alt]="value" class="icon-big" />
+    @if (buildingIconUrlLookupFn(value())) {
+      <img [src]="buildingIconUrlLookupFn(value())" [alt]="value()" class="icon-big" />
     }
-    <div class="name">{{ value }}</div>
+    <div class="name">{{ value() }}</div>
     <div class="text">Process Time: {{ processTimeSeconds }}s</div>
     <div class="text input-goods-container">
       <div class="text">Input Goods:</div>
       @for (inputGood of inputGoods; track good) {
-        <img [src]="goodIconUrlLookupFn(inputGood)" [alt]="value" class="good-icon-small" />
+        <img [src]="goodIconUrlLookupFn(inputGood)" [alt]="value()" class="good-icon-small" />
       }
     </div>
     @if (requiresElectricity) {

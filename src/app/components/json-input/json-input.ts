@@ -1,12 +1,10 @@
 import {
   Component,
   ElementRef,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output,
-  ViewChild,
   ChangeDetectionStrategy,
+  effect,
+  model,
+  viewChild,
 } from '@angular/core';
 import { MatInputModule } from '@angular/material/input';
 
@@ -17,32 +15,24 @@ import { MatInputModule } from '@angular/material/input';
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './json-input.scss',
 })
-export class JsonInput<T> implements OnInit {
-  private _value!: T;
+export class JsonInput<T> {
+  value = model<T>();
 
-  @Input()
-  set value(value: T) {
-    this._value = value;
-    if (this.textArea) {
-      this.convertObjectToJsonString();
-    }
-  }
-
-  @Output()
-  valueChange = new EventEmitter<T>();
-
-  @ViewChild('input', { static: true, read: ElementRef })
-  textArea!: ElementRef<HTMLTextAreaElement>;
+  textArea = viewChild<ElementRef<HTMLTextAreaElement>>('input');
 
   errorMessage: string = '';
 
-  ngOnInit(): void {
-    this.convertObjectToJsonString();
+  constructor() {
+    effect(() => {
+      if (this.textArea()) {
+        this.convertObjectToJsonString();
+      }
+    });
   }
 
   private convertObjectToJsonString(): void {
-    this.textArea.nativeElement.value = JSON.stringify(
-      this._value,
+    this.textArea()!.nativeElement.value = JSON.stringify(
+      this.value(),
       /*replacer=*/ null,
       /*spaces=*/ 2,
     );
@@ -50,9 +40,8 @@ export class JsonInput<T> implements OnInit {
 
   updateModel(): void {
     try {
-      const jsonText = this.textArea.nativeElement.value;
-      this._value = JSON.parse(jsonText) as T;
-      this.valueChange.emit(this._value);
+      const jsonText = this.textArea()!.nativeElement.value;
+      this.value.set(JSON.parse(jsonText) as T);
       this.errorMessage = '';
     } catch (e) {
       if (e instanceof SyntaxError) {

@@ -1,9 +1,9 @@
 <div class="tooltip-container">
   <div class="tooltip-inner-container">
-    @if (boostIconUrlLookupFn(value)) {
-      <img [src]="boostIconUrlLookupFn(value)" [alt]="value" class="item-icon-big" />
+    @if (boostIconUrlLookupFn(value())) {
+      <img [src]="boostIconUrlLookupFn(value())" [alt]="value()" class="item-icon-big" />
     }
-    <div class="item-name">{{ value }}</div>
+    <div class="item-name">{{ value() }}</div>
     @if ((boostInfo!.productivityEffect ?? 0) > 0) {
       <div class="item-text">{{ productivityText }}</div>
     }

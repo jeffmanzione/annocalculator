@@ -2,10 +2,10 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  effect,
   EventEmitter,
   inject,
-  Input,
-  Output,
+  input,
 } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 
@@ -65,19 +65,16 @@ export abstract class Control {
 export abstract class ControlComponent<T> extends Control {
   private readonly changeDetector = inject(ChangeDetectorRef);
 
-  private _controller!: T;
-
-  @Input()
-  set controller(value: T) {
-    this._controller = value;
-    this.onSetController(value);
-  }
-  get controller(): T {
-    return this._controller;
+  constructor() {
+    super();
+    effect(() => {
+      this.onSetController(this.controller());
+    });
   }
 
-  @Output()
-  override get update(): EventEmitter<Control> {
+  controller = input.required<T>();
+
+  override get update() {
     return super.update;
   }
 

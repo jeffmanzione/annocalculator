@@ -1,7 +1,7 @@
-<mat-card [class.accent]="presentation == 'accent'">
+<mat-card [class.accent]="presentation() == 'accent'">
   <div class="underlay"></div>
   <mat-card-header>
-    <mat-card-title [class.accent]="presentation == 'accent'">
+    <mat-card-title [class.accent]="presentation() == 'accent'">
       <ng-content select="card-title"></ng-content>
     </mat-card-title>
   </mat-card-header>

@@ -2,10 +2,10 @@ import { CommonModule, formatNumber, formatPercent } from '@angular/common';
 import {
   Component,
   Inject,
-  Input,
+  input,
   LOCALE_ID,
-  OnInit,
   ChangeDetectionStrategy,
+  computed,
 } from '@angular/core';
 
 export interface FontSpec {
@@ -32,89 +32,76 @@ export const GREEN_RED_FONT_SPEC: FormatFontSpec = {
   changeDetection: ChangeDetectionStrategy.Eager,
   imports: [CommonModule],
 })
-export class FormattedNumber implements OnInit {
-  @Input()
-  value!: number;
-
-  @Input()
-  isPercent: boolean = false;
-
-  @Input()
-  format?: string;
-
-  @Input()
-  formatFontSpec?: FormatFontSpec;
-
-  @Input()
-  suffix: string = '';
-
-  @Input()
-  zeroOverride?: string;
-
-  @Input()
-  showPlusIfPositive: boolean = false;
+export class FormattedNumber {
+  value = input.required<number>();
+  isPercent = input<boolean>(false);
+  format = input<string>();
+  formatFontSpec = input<FormatFontSpec>();
+  suffix = input<string>('');
+  zeroOverride = input<string>();
+  showPlusIfPositive = input<boolean>(false);
 
   constructor(@Inject(LOCALE_ID) private readonly locale: string) {}
 
-  ngOnInit(): void {
-    this.format ??= this.isPercent ? '1.0-0' : '1.0-1';
-  }
+  computedFormat = computed(
+    () => this.format() ?? (this.isPercent() ? '1.0-0' : '1.0-1'),
+  );
 
-  get color(): string | undefined {
-    if (!this.formatFontSpec) {
+  color = computed(() => {
+    if (!this.formatFontSpec()) {
       return undefined;
     }
     const fontSpec = this.deriveFontSpec();
     return fontSpec?.color;
-  }
+  });
 
-  get style(): string | undefined {
-    if (!this.formatFontSpec) {
+  style = computed(() => {
+    if (!this.formatFontSpec()) {
       return undefined;
     }
     const fontSpec = this.deriveFontSpec();
     return fontSpec?.style;
-  }
+  });
 
-  get weight(): string | undefined {
-    if (!this.formatFontSpec) {
+  weight = computed(() => {
+    if (!this.formatFontSpec()) {
       return undefined;
     }
     const fontSpec = this.deriveFontSpec();
     return fontSpec?.weight;
-  }
+  });
 
-  private deriveFontSpec(): FontSpec | undefined {
-    if (!this.formatFontSpec) {
+  deriveFontSpec = computed(() => {
+    if (!this.formatFontSpec()) {
       return undefined;
     }
-    if (this.value < 0 && this.formatFontSpec.negative) {
-      return this.formatFontSpec.negative;
-    } else if (this.value > 0 && this.formatFontSpec.positive) {
-      return this.formatFontSpec.positive;
+    if (this.value() < 0 && this.formatFontSpec()!.negative) {
+      return this.formatFontSpec()!.negative;
+    } else if (this.value() > 0 && this.formatFontSpec()!.positive) {
+      return this.formatFontSpec()!.positive;
     }
-    return this.formatFontSpec.default;
-  }
+    return this.formatFontSpec()!.default;
+  });
+
+  formattedValue = computed(() => {
+    if (this.zeroOverride() && this.value() == 0) {
+      return this.zeroOverride()!;
+    }
+    const strValue = this.isPercent()
+      ? this.formatAsPercent()
+      : this.formatAsNumber();
+    return `${this.numberPrefix()}${strValue}${this.suffix()}`;
+  });
 
   private formatAsPercent(): string {
-    return formatPercent(this.value, this.locale, this.format);
+    return formatPercent(this.value(), this.locale, this.computedFormat());
   }
 
   private formatAsNumber(): string {
-    return formatNumber(this.value, this.locale, this.format);
+    return formatNumber(this.value(), this.locale, this.computedFormat());
   }
 
-  private get numberPrefix(): string {
-    return this.showPlusIfPositive && this.value > 0 ? '+' : '';
-  }
-
-  get formattedValue(): string {
-    if (this.zeroOverride && this.value == 0) {
-      return this.zeroOverride;
-    }
-    const strValue = this.isPercent
-      ? this.formatAsPercent()
-      : this.formatAsNumber();
-    return `${this.numberPrefix}${strValue}${this.suffix}`;
+  private numberPrefix(): string {
+    return this.showPlusIfPositive() && this.value() > 0 ? '+' : '';
   }
 }

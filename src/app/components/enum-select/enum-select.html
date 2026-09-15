@@ -1,37 +1,37 @@
-@if (wrapInMatFormField) {
+@if (wrapInMatFormField()) {
   <mat-form-field class="field">
-    @if (label != null) {
-      <mat-label>{{ label }}</mat-label>
+    @if (label()) {
+      <mat-label>{{ label() }}</mat-label>
     }
     <mat-select
       [(value)]="value"
       [disabled]="isDisabled"
       (valueChange)="onChange(value)"
       (closed)="onTouched()"
-      [multiple]="multiple"
+      [multiple]="multiple()"
       placeholder="None"
-      [class.placeholder]="valueAsArray.length == 0">
+      [class.placeholder]="valueAsArray().length == 0">
       <mat-select-trigger>
         <enum-row
-          [values]="valueAsArray"
-          [iconUrlLookupFn]="iconUrlLookupFn"
-          [tooltip]="tooltip"
-          [displayTextTransformer]="displayTextTransformer"></enum-row>
+          [values]="valueAsArray()"
+          [iconUrlLookupFn]="iconUrlLookupFn()"
+          [tooltip]="tooltip()"
+          [displayTextTransformer]="displayTextTransformer()"></enum-row>
       </mat-select-trigger>
-      @for (option of options; track option) {
+      @for (option of options(); track option) {
         <mat-option
           [value]="option"
           [disabled]="
-            multiple &&
-            valuesNotExemptFromLimit >= multipleSelectLimit &&
-            !valueAsArray.includes(option) &&
-            !valueIsExemptFromLimit(option)
+            multiple() &&
+            valuesNotExemptFromLimit() >= multipleSelectLimit() &&
+            !valueAsArray().includes(option) &&
+            !valueIsExemptFromLimit()(option)
           ">
           <enum-row
             [values]="[option]"
-            [iconUrlLookupFn]="iconUrlLookupFn"
-            [tooltip]="tooltip"
-            [displayTextTransformer]="displayTextTransformer"></enum-row>
+            [iconUrlLookupFn]="iconUrlLookupFn()"
+            [tooltip]="tooltip()"
+            [displayTextTransformer]="displayTextTransformer()"></enum-row>
         </mat-option>
       }
     </mat-select>
@@ -42,29 +42,29 @@
     [disabled]="isDisabled"
     (valueChange)="onChange(value)"
     (closed)="onTouched()"
-    [multiple]="multiple"
+    [multiple]="multiple()"
     placeholder="None">
     <mat-select-trigger>
       <enum-row
-        [values]="valueAsArray"
-        [iconUrlLookupFn]="iconUrlLookupFn"
-        [tooltip]="tooltip"
-        [displayTextTransformer]="displayTextTransformer"></enum-row>
+        [values]="valueAsArray()"
+        [iconUrlLookupFn]="iconUrlLookupFn()"
+        [tooltip]="tooltip()"
+        [displayTextTransformer]="displayTextTransformer()"></enum-row>
     </mat-select-trigger>
-    @for (option of options; track option) {
+    @for (option of options(); track option) {
       <mat-option
         [value]="option"
         [disabled]="
-          multiple &&
-          valueAsArray.length >= multipleSelectLimit &&
-          !valueAsArray.includes(option) &&
-          !valueIsExemptFromLimit(option)
+          multiple() &&
+          valueAsArray().length >= multipleSelectLimit() &&
+          !valueAsArray().includes(option) &&
+          !valueIsExemptFromLimit()(option)
         ">
         <enum-row
           [values]="[option]"
-          [iconUrlLookupFn]="iconUrlLookupFn"
-          [tooltip]="tooltip"
-          [displayTextTransformer]="displayTextTransformer"></enum-row>
+          [iconUrlLookupFn]="iconUrlLookupFn()"
+          [tooltip]="tooltip()"
+          [displayTextTransformer]="displayTextTransformer()"></enum-row>
       </mat-option>
     }
   </mat-select>

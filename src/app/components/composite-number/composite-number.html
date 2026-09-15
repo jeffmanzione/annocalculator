@@ -5,12 +5,12 @@
   (mouseleave)="hideTooltipAt()"
   class="container">
   <formatted-number
-    [value]="value"
-    [isPercent]="isPercent"
-    [format]="format"
-    [formatFontSpec]="formatFontSpec"
-    [suffix]="suffix"
-    [zeroOverride]="zeroOverride"></formatted-number>
+    [value]="value()"
+    [isPercent]="isPercent()"
+    [format]="format()"
+    [formatFontSpec]="formatFontSpec()"
+    [suffix]="suffix()"
+    [zeroOverride]="zeroOverride()"></formatted-number>
   <mat-icon>info_outlined</mat-icon>
 </div>
 <ng-template
@@ -21,23 +21,23 @@
   <div class="tooltip-container">
     <div class="total">
       <formatted-number
-        [value]="value"
-        [isPercent]="isPercent"
-        [format]="format"
-        [formatFontSpec]="formatFontSpec"
-        [suffix]="suffix"
-        [zeroOverride]="zeroOverride"></formatted-number>
+        [value]="value()"
+        [isPercent]="isPercent()"
+        [format]="format()"
+        [formatFontSpec]="formatFontSpec()"
+        [suffix]="suffix()"
+        [zeroOverride]="zeroOverride()"></formatted-number>
     </div>
-    @for (num of constituentValues; track num) {
+    @for (num of constituentValues(); track num) {
       <div class="constituent">
         <formatted-number
           [value]="num.value"
-          [isPercent]="isPercent"
-          [format]="format"
-          [formatFontSpec]="formatFontSpec"
-          [suffix]="suffix"
-          [zeroOverride]="zeroOverride"
-          [showPlusIfPositive]="showPlusIfPositive"></formatted-number>
+          [isPercent]="isPercent()"
+          [format]="format()"
+          [formatFontSpec]="formatFontSpec()"
+          [suffix]="suffix()"
+          [zeroOverride]="zeroOverride()"
+          [showPlusIfPositive]="showPlusIfPositive()"></formatted-number>
         <div>&nbsp;-&nbsp;</div>
         <div>{{ num.description }}</div>
       </div>

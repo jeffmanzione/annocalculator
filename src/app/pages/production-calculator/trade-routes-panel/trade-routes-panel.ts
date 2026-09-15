@@ -2,7 +2,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   OnInit,
-  ViewChild,
+  viewChild,
 } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
@@ -55,8 +55,7 @@ export class TradeRoutesPanel
 
   dataSource!: MatTableDataSource<TradeRouteControl>;
 
-  @ViewChild('tradeRouteTable')
-  table!: MatTable<TradeRouteControl>;
+  table = viewChild.required<MatTable<TradeRouteControl>>('tradeRouteTable');
 
   tradeRoutes!: TradeRouteControl[];
 
@@ -84,7 +83,7 @@ export class TradeRoutesPanel
   }
 
   override afterPushChange(): void {
-    this.table.renderRows();
+    this.table().renderRows();
   }
 
   lookupGoodIconUrl(good: Good | null): string {

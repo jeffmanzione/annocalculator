@@ -3,7 +3,7 @@ import {
   Component,
   OnInit,
   TemplateRef,
-  ViewChild,
+  viewChild,
 } from '@angular/core';
 import { IslandController } from '../../../shared/mvc/controllers';
 import {
@@ -153,8 +153,7 @@ export class Island
 
   productionLinesDataSource!: MatTableDataSource<ProductionLineControl>;
 
-  @ViewChild('productionLinesTable')
-  table!: MatTable<ProductionLineControl>;
+  table = viewChild<MatTable<ProductionLineControl>>('productionLinesTable');
 
   get multipleSelectLimit(): number {
     return this.controller.dolPolicy ==
@@ -203,7 +202,7 @@ export class Island
 
   override afterPushChange(): void {
     this.updateRegionSpecificSelectOptions();
-    this.table?.renderRows();
+    this.table()?.renderRows();
   }
 
   private updateRegionSpecificSelectOptions(): void {

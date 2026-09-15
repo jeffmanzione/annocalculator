@@ -1,9 +1,4 @@
-import {
-  Component,
-  Input,
-  NgModule,
-  ChangeDetectionStrategy,
-} from '@angular/core';
+import { Component, NgModule, input } from '@angular/core';
 import {
   MatCardModule,
   MatCard,
@@ -16,18 +11,15 @@ import {
   selector: 'card',
   templateUrl: './card.html',
   styleUrl: './card.scss',
-  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [MatCard, MatCardHeader, MatCardTitle, MatCardContent],
 })
 export class Card {
-  @Input()
-  presentation: 'default' | 'accent' = 'default';
+  presentation = input<'default' | 'accent'>('default');
 }
 
 @Component({
   selector: 'card-title',
   template: '<ng-content/>',
-  changeDetection: ChangeDetectionStrategy.Eager,
   styles: ':host { width: 100%; }',
 })
 export class CardTitle {}
@@ -35,7 +27,6 @@ export class CardTitle {}
 @Component({
   selector: 'card-content',
   template: '<ng-content/>',
-  changeDetection: ChangeDetectionStrategy.Eager,
   styles: ':host { width: 100%; }',
 })
 export class CardContent {}

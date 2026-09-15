@@ -3,12 +3,12 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  effect,
   inject,
-  Input,
+  input,
   OnInit,
-  QueryList,
-  ViewChild,
-  ViewChildren,
+  viewChild,
+  viewChildren,
 } from '@angular/core';
 import { CardModule } from '../../../components/card/card';
 import {
@@ -91,25 +91,16 @@ export class SummaryPanel implements OnInit, AfterViewInit {
   readonly tableData = new MatTableDataSource<GoodSummaryRow>();
   private readonly rows = new Map<Good, GoodSummaryRow>();
 
-  @Input()
-  set world(value: WorldView) {
-    this._world = value;
-    this.update();
+  world = input<WorldView>();
+  table = viewChild.required(MatTable<GoodSummaryRow>);
+  sort = viewChild.required(MatSort);
+  islandTables = viewChildren(MatTable<GoodSummaryCell>);
+
+  constructor() {
+    effect(() => {
+      this.update();
+    });
   }
-  get world(): WorldView {
-    return this._world;
-  }
-
-  _world!: WorldView;
-
-  @ViewChild(MatTable<GoodSummaryRow>)
-  table!: MatTable<GoodSummaryRow>;
-
-  @ViewChild(MatSort)
-  sort!: MatSort;
-
-  @ViewChildren(MatTable<GoodSummaryCell>)
-  islandTables!: QueryList<MatTable<GoodSummaryCell>>;
 
   ngOnInit(): void {
     for (const good of Object.values(Good)) {
@@ -127,7 +118,7 @@ export class SummaryPanel implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.tableData.sort = this.sort;
+    this.tableData.sort = this.sort();
     this.tableData.sortingDataAccessor = (
       data: GoodSummaryRow,
       sortHeaderId: string,
@@ -145,7 +136,7 @@ export class SummaryPanel implements OnInit, AfterViewInit {
   }
 
   update(): void {
-    if (!this._world || this.rows.size == 0) {
+    if (!this.world() || this.rows.size == 0) {
       return;
     }
 
@@ -199,7 +190,7 @@ export class SummaryPanel implements OnInit, AfterViewInit {
     // Re-applies the filter. No idea why this is needed...
     this.tableData.filter = '-';
 
-    this.table?.renderRows();
+    this.table()?.renderRows();
 
     this.changeDetector.markForCheck();
   }
@@ -209,7 +200,7 @@ export class SummaryPanel implements OnInit, AfterViewInit {
     row.showIslandSummaryIcon = row.showIslandSummary
       ? 'arrow_drop_up'
       : 'arrow_drop_down';
-    this.islandTables.get(this.tableData.data.indexOf(row))?.renderRows();
+    this.islandTables()[this.tableData.data.indexOf(row)]?.renderRows();
   }
 
   availableProduction(cell?: GoodSummaryCell): number {
@@ -244,7 +235,7 @@ export class SummaryPanel implements OnInit, AfterViewInit {
       }
     };
 
-    for (const island of this._world.islands) {
+    for (const island of this.world()!.islands) {
       for (const pl of island.productionLines) {
         updateStats(island, pl.good, pl.goodsProducedPerMinute);
         for (const eg of pl.extraGoods) {
@@ -271,7 +262,7 @@ export class SummaryPanel implements OnInit, AfterViewInit {
 
   private buildTradesTable(): ReadonlyTable<IslandId, Good, IslandId[]> {
     const trades = new Table<IslandId, Good, IslandId[]>();
-    for (const tr of this._world.tradeRoutes) {
+    for (const tr of this.world()!.tradeRoutes) {
       trades
         .getOrDefault(tr.sourceIslandId, tr.good, () => [])
         .push(tr.targetIslandId);

@@ -2,12 +2,12 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  computed,
   Directive,
+  effect,
   inject,
-  Input,
-  OnDestroy,
+  input,
 } from '@angular/core';
-import { Subject, Subscription } from 'rxjs';
 
 @Directive({ selector: '[tooltip]' })
 export class TooltipDirective {}
@@ -16,53 +16,31 @@ export class TooltipDirective {}
   selector: 'enum-tooltip',
   template: '',
   styles: [''],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export abstract class EnumTooltip<T> implements OnDestroy {
+export abstract class EnumTooltip<T> {
   private readonly changeDetectorRef = inject(ChangeDetectorRef);
 
-  private readonly valueSubject = new Subject<T | null>();
-  private valueSubscription: Subscription | null = null;
+  value = input<T | null>(null);
 
-  private value_: T | null = null;
-
-  @Input()
-  set value(value: T | null) {
-    this.valueSubscription ??= this.valueSubject.subscribe((value) => {
-      this.value_ = value;
-      if (value == null) {
-        this.valueSubscription?.unsubscribe();
-        this.valueSubscription = null;
-      } else {
-        this.onValueChange(value);
+  constructor() {
+    effect(() => {
+      if (this.value()) {
+        this.onValueChange(this.value()!);
         this.changeDetectorRef.markForCheck();
       }
     });
-    this.valueSubject.next(value);
-  }
-
-  get value(): T | null {
-    return this.value_;
   }
 
   protected abstract onValueChange(value: T): void;
 
-  @Input()
-  displayValueTransform?: (value: T | null) => string;
+  displayValueTransform = input<(value: T | null) => string>();
 
-  get displayValue(): string {
-    if (!this.displayValueTransform) {
-      return this.value as string;
+  displayValue = computed(() => {
+    if (!this.displayValueTransform()) {
+      return this.value() as string;
     }
-    return this.displayValueTransform(this.value);
-  }
-
-  ngOnDestroy(): void {
-    this.valueSubject.next(null);
-    this.valueSubject.complete();
-    this.valueSubscription?.unsubscribe();
-    this.valueSubscription = null;
-  }
+    return this.displayValueTransform()!(this.value()!);
+  });
 }
 
 @Component({
@@ -75,8 +53,7 @@ export abstract class EnumTooltip<T> implements OnDestroy {
 export class SimpleTooltip<T> extends EnumTooltip<T> {
   enumValue: T | null = null;
 
-  @Input()
-  iconUrlLookupFn: (value: T | null) => string = (_) => '';
+  iconUrlLookupFn = input<(value: T | null) => string>((_) => '');
 
   protected override onValueChange(value: T): void {
     this.enumValue = value;

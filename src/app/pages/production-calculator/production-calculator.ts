@@ -4,9 +4,8 @@ import {
   Component,
   inject,
   OnInit,
-  QueryList,
-  ViewChild,
-  ViewChildren,
+  viewChild,
+  viewChildren,
 } from '@angular/core';
 import { WorldController } from '../../shared/mvc/controllers';
 import { Island } from './island/island';
@@ -256,14 +255,9 @@ export class ProductionCalculatorPage implements OnInit {
   private readonly clipboard = inject(Clipboard);
   private readonly worldStorage: StorageItem<World>;
 
-  @ViewChildren(Island)
-  islandComponents!: QueryList<Island>;
-
-  @ViewChild(SummaryPanel)
-  summaryPanel!: SummaryPanel;
-
-  @ViewChild(TradeRoutesPanel)
-  tradeRoutesPanel!: TradeRoutesPanel;
+  islandComponents = viewChildren(Island);
+  summaryPanel = viewChild.required(SummaryPanel);
+  tradeRoutesPanel = viewChild(TradeRoutesPanel);
 
   constructor(storageManager: LocalStorageManager) {
     this.worldStorage = storageManager.lookupObjectItem(WORLD_KEY);
@@ -293,12 +287,12 @@ export class ProductionCalculatorPage implements OnInit {
     this.world.tradeUnionBonus =
       this.formGroup!.value.tradeUnionBonusPercent / 100;
     if (this.islandComponents) {
-      for (const i of this.islandComponents) {
+      for (const i of this.islandComponents()) {
         i.forceAfterPushChange();
       }
     }
-    this.tradeRoutesPanel?.afterPushChange();
-    this.summaryPanel?.update();
+    this.tradeRoutesPanel()?.afterPushChange();
+    this.summaryPanel()?.update();
     this.worldStorage.set(this.world.copyModel());
     // Convert this into a debug-only print.
     // console.log(this.world.toJsonString());
