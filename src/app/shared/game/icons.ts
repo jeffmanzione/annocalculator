@@ -47,7 +47,9 @@ const productionBuildingToIconUrl = new Map<ProductionBuilding, string>(
 export const lookupBuildingIconUrl = lookupUrlFn(productionBuildingToIconUrl);
 export const lookupBoostIconUrl = lookupUrlFn(boostTypeToImageUrl);
 export const lookupRegionIconUrl = lookupUrlFn(regionToImageUrl);
-export const lookupPolicyIconUrl = lookupUrlFn(policyToImageUrl);
+export const lookupPolicyIconUrl = (policy: DepartmentOfLaborPolicy) =>
+  policyToImageUrl.get(policy) ?? '';
+
 export const lookupItemIconUrl = (item: Item) =>
   lookupItemInfo(item)?.iconUrl ?? defaultIconUrl;
 export const lookupCulturalSetIconUrl = (set: CulturalSet) =>

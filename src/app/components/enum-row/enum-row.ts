@@ -42,13 +42,13 @@ export class EnumRow<T> implements AfterViewChecked {
   iconUrlLookupFn = (_: T | null) => '';
 
   @Input()
-  valueTransformer?: (value: T | null) => string;
+  displayTextTransformer?: (value: T | null) => string;
 
-  transformValue(value: T | null): string {
-    if (!this.valueTransformer) {
+  displayTextForValue(value: T | null): string {
+    if (!this.displayTextTransformer) {
       return value as string;
     }
-    return this.valueTransformer(value);
+    return this.displayTextTransformer(value);
   }
 
   hasTooltip = false;

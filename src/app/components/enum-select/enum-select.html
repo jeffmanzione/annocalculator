@@ -16,7 +16,7 @@
           [values]="valueAsArray"
           [iconUrlLookupFn]="iconUrlLookupFn"
           [tooltip]="tooltip"
-          [valueTransformer]="valueTransformer"></enum-row>
+          [displayTextTransformer]="displayTextTransformer"></enum-row>
       </mat-select-trigger>
       @for (option of options; track option) {
         <mat-option
@@ -31,7 +31,7 @@
             [values]="[option]"
             [iconUrlLookupFn]="iconUrlLookupFn"
             [tooltip]="tooltip"
-            [valueTransformer]="valueTransformer"></enum-row>
+            [displayTextTransformer]="displayTextTransformer"></enum-row>
         </mat-option>
       }
     </mat-select>
@@ -49,7 +49,7 @@
         [values]="valueAsArray"
         [iconUrlLookupFn]="iconUrlLookupFn"
         [tooltip]="tooltip"
-        [valueTransformer]="valueTransformer"></enum-row>
+        [displayTextTransformer]="displayTextTransformer"></enum-row>
     </mat-select-trigger>
     @for (option of options; track option) {
       <mat-option
@@ -64,7 +64,7 @@
           [values]="[option]"
           [iconUrlLookupFn]="iconUrlLookupFn"
           [tooltip]="tooltip"
-          [valueTransformer]="valueTransformer"></enum-row>
+          [displayTextTransformer]="displayTextTransformer"></enum-row>
       </mat-option>
     }
   </mat-select>

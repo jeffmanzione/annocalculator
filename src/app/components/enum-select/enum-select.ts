@@ -60,7 +60,7 @@ export class EnumSelect<T> implements ControlValueAccessor {
   }
 
   @Input()
-  valueTransformer?: (value: T | null) => string;
+  displayTextTransformer?: (value: T | null) => string;
 
   valuesNotExemptFromLimit = 0;
 
