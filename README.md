@@ -18,9 +18,9 @@ Visit the tool here: [https://AnnoCalculator.com](https://AnnoCalculator.com)
 
 ## 🖼️ Screenshots
 
-![Whole app screenshot](https://github.com/jeffmanzione/annocalculator/blob/main/screenshots/whole_app.png "Whole app screenshot")
-![Summary screenshot](https://github.com/jeffmanzione/annocalculator/blob/main/screenshots/summary.png "Summary screenshot")
-![Island editor screenshot](https://github.com/jeffmanzione/annocalculator/blob/main/screenshots/island_editor.png "Island editor screenshot")
+![Whole app screenshot](https://github.com/jeffmanzione/annocalculator/blob/main/screenshots/whole_app.png 'Whole app screenshot')
+![Summary screenshot](https://github.com/jeffmanzione/annocalculator/blob/main/screenshots/summary.png 'Summary screenshot')
+![Island editor screenshot](https://github.com/jeffmanzione/annocalculator/blob/main/screenshots/island_editor.png 'Island editor screenshot')
 
 ## 🧑‍💻 Tech Stack
 
@@ -32,7 +32,7 @@ Visit the tool here: [https://AnnoCalculator.com](https://AnnoCalculator.com)
 
 ### Prerequisites
 
-- [Node.js](https://nodejs.org/) (22.x or later recommended)
+- [Node.js](https://nodejs.org/) (26.x or later recommended)
 - [Angular CLI](https://angular.io/cli)
 
 ### Setup
@@ -46,7 +46,7 @@ npm install
 ### Running Locally
 
 ```bash
-ng serve
+npm run start
 ```
 
 Navigate to http://localhost:4200/ in your browser.
@@ -54,7 +54,7 @@ Navigate to http://localhost:4200/ in your browser.
 ### Building for Production
 
 ```bash
-ng build --configuration production
+npm run build
 ```
 
 Output will be in the dist/ directory.
