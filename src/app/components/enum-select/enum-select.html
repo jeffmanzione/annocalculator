@@ -1,7 +1,7 @@
 @if (wrapInMatFormField()) {
   <mat-form-field class="field">
     @if (label()) {
-      <mat-label>{{ label() }}</mat-label>
+      <mat-label><span [textLoc]="label()!"></span></mat-label>
     }
     <mat-select
       [(value)]="value"

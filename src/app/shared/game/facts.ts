@@ -9,6 +9,7 @@ import {
   AdministrativeBuilding,
   Item,
   CulturalSet,
+  DepartmentOfLaborPolicy,
 } from './enums';
 import * as itemsJson from '../data/items.json';
 import * as cultureJson from '../data/culture.json';
@@ -1618,4 +1619,39 @@ export function lookupAllowedCulturalSets(
   return cultures
     .filter((set) => set.targets.includes(building))
     .map((set) => set.set);
+}
+
+export interface PolicyInfo {
+  productivityEffect?: number;
+  extraGood?: ExtraGood;
+}
+
+const policyInfoMap = new Map<DepartmentOfLaborPolicy, PolicyInfo>([
+  [DepartmentOfLaborPolicy.None, {}],
+  [DepartmentOfLaborPolicy.FactoryInspectionsAct, {}],
+  [
+    DepartmentOfLaborPolicy.GalvanicGrantsAct,
+    {
+      productivityEffect: 0.5,
+    },
+  ],
+  [
+    DepartmentOfLaborPolicy.LandReformAct,
+    {
+      extraGood: { rateNumerator: 1, rateDenominator: 2 },
+    },
+  ],
+  [
+    DepartmentOfLaborPolicy.SkilledLaborAct,
+    {
+      extraGood: { rateNumerator: 1, rateDenominator: 3 },
+    },
+  ],
+  [DepartmentOfLaborPolicy.UnionSubsidiesAct, {}],
+]);
+
+export function lookupPolicyInfo(
+  policy: DepartmentOfLaborPolicy,
+): PolicyInfo | undefined {
+  return policyInfoMap.get(policy);
 }

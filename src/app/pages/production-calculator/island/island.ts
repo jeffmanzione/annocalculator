@@ -62,6 +62,9 @@ import { ExtraGoodView } from '../../../shared/mvc/views';
 import { BoostTooltip } from './tooltips/boost/boost-tooltip';
 import { ProductionBuildingTooltip } from './tooltips/building/building-tooltip';
 import { CulturalSetTooltip } from './tooltips/cultural-set/cultural-set-tooltip';
+import { L10nText } from '../../../components/text/text';
+import { PolicyTooltip } from './tooltips/policy/policy-tooltip';
+import { HaciendaTooltip } from './tooltips/hacienda/hacienda-tooltip';
 
 @Component({
   selector: 'island',
@@ -85,6 +88,9 @@ import { CulturalSetTooltip } from './tooltips/cultural-set/cultural-set-tooltip
     BoostTooltip,
     ProductionBuildingTooltip,
     CulturalSetTooltip,
+    L10nText,
+    PolicyTooltip,
+    HaciendaTooltip,
   ],
   templateUrl: './island.html',
   styleUrl: './island.scss',
@@ -264,10 +270,6 @@ export class Island
 
   lookupPolicyIconUrl(policy: DepartmentOfLaborPolicy | null): string {
     return lookupPolicyIconUrl(policy ?? DepartmentOfLaborPolicy.None);
-  }
-
-  lookupHaciendaFertilizerWorksIconUrl(_: any): string {
-    return lookupHaciendaFertilizerWorksIconUrl(_);
   }
 
   lookupCulturalSetIconUrl(set: CulturalSet | null): string {

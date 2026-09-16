@@ -13,10 +13,12 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { EnumRow } from '../enum-row/enum-row';
 
 import { EnumTooltip } from '../enum-tooltip/enum-tooltip';
+import { L10nText } from '../text/text';
+import { L10nKey } from '../../shared/l10n/l10n';
 
 @Component({
   selector: 'enum-select',
-  imports: [EnumRow, MatSelectModule, MatFormFieldModule],
+  imports: [EnumRow, MatSelectModule, MatFormFieldModule, L10nText],
   templateUrl: './enum-select.html',
   styleUrl: './enum-select.scss',
   changeDetection: ChangeDetectionStrategy.Eager,
@@ -30,7 +32,7 @@ import { EnumTooltip } from '../enum-tooltip/enum-tooltip';
 })
 export class EnumSelect<T> implements ControlValueAccessor {
   tooltip = input<TemplateRef<EnumTooltip<T>> | null>(null);
-  label = input<string>();
+  label = input<L10nKey>();
   options = input.required<T[]>();
   iconUrlLookupFn = input<(_: T | null) => string>((_: T | null) => '');
   wrapInMatFormField = input(true);

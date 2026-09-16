@@ -26,6 +26,7 @@ import { IslandView } from '../../../shared/mvc/views';
 import { CardModule } from '../../../components/card/card';
 import { TradeRouteId } from '../../../shared/mvc/models';
 import { AcButton } from '../../../components/button/button';
+import { L10nText } from '../../../components/text/text';
 
 @Component({
   selector: 'trade-routes-panel',
@@ -37,6 +38,7 @@ import { AcButton } from '../../../components/button/button';
     MatTableModule,
     MatSelectModule,
     ReactiveFormsModule,
+    L10nText,
   ],
   templateUrl: './trade-routes-panel.html',
   styleUrl: './trade-routes-panel.scss',

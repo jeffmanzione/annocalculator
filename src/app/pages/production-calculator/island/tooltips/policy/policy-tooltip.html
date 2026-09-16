@@ -1,0 +1,20 @@
+<div class="tooltip-container">
+  <div class="tooltip-inner-container">
+    @if (policyIconUrlLookupFn(value())) {
+      <img [src]="policyIconUrlLookupFn(value())" [alt]="value()" class="item-icon-big" />
+    }
+    <div class="item-name">{{ value() }}</div>
+    @if ((policyInfo!.productivityEffect ?? 0) > 0) {
+      <div class="item-text">{{ productivityText }}</div>
+    }
+    @if (policyInfo!.extraGood) {
+      <div class="item-text extra-goods-container">
+        <div class="extra-good">
+          <div class="extra-good-name">
+            {{ extraGoodText }}
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+</div>

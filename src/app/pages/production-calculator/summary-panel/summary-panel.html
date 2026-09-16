@@ -1,10 +1,12 @@
 <card>
-  <card-title>Summary</card-title>
+  <card-title><span textLoc="Summary"></span></card-title>
   <card-content>
     <section class="table-container">
       <table mat-table [dataSource]="tableData" multiTemplateDataRows class="summary-table" matSort>
         <ng-container matColumnDef="good">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Good</th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            <span textLoc="Good"></span>
+          </th>
           <td mat-cell *matCellDef="let element">
             <enum-row [values]="[element.good]" [iconUrlLookupFn]="lookupGoodIconUrl"></enum-row>
           </td>
@@ -18,7 +20,9 @@
           </td>
         </ng-container>
         <ng-container matColumnDef="total-production-per-min">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Production (Total)</th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            <span textLoc="Production (Total)"></span>
+          </th>
           <td mat-cell *matCellDef="let element">
             <formatted-number
               [value]="element.totalProductionPerMin"
@@ -28,7 +32,9 @@
           </td>
         </ng-container>
         <ng-container matColumnDef="net-production-per-min">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Production (Net)</th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            <span textLoc="Production (Net)"></span>
+          </th>
           <td mat-cell *matCellDef="let element">
             <formatted-number
               [value]="element.netProductionPerMin"
@@ -42,11 +48,15 @@
               <div class="island-summary-row">
                 <table mat-table [dataSource]="element.islandSummaries" class="island-summary-table">
                   <ng-container matColumnDef="island">
-                    <th mat-header-cell *matHeaderCellDef>Island</th>
+                    <th mat-header-cell *matHeaderCellDef>
+                      <span textLoc="Island"></span>
+                    </th>
                     <td mat-cell *matCellDef="let element2">{{ element2.island.name }}</td>
                   </ng-container>
                   <ng-container matColumnDef="local-production-per-min">
-                    <th mat-header-cell *matHeaderCellDef>Local Production</th>
+                    <th mat-header-cell *matHeaderCellDef>
+                      <span textLoc="Local Production"></span>
+                    </th>
                     <td mat-cell *matCellDef="let element2">
                       <formatted-number
                         [value]="element2.localProductionPerMin"
@@ -56,7 +66,9 @@
                     </td>
                   </ng-container>
                   <ng-container matColumnDef="local-consumption-per-min">
-                    <th mat-header-cell *matHeaderCellDef>Local Consumption</th>
+                    <th mat-header-cell *matHeaderCellDef>
+                      <span textLoc="Local Consumption"></span>
+                    </th>
                     <td mat-cell *matCellDef="let element2">
                       <formatted-number
                         [value]="element2.localConsumptionPerMin"
@@ -66,7 +78,9 @@
                     </td>
                   </ng-container>
                   <ng-container matColumnDef="imported-per-min">
-                    <th mat-header-cell *matHeaderCellDef>Imported</th>
+                    <th mat-header-cell *matHeaderCellDef>
+                      <span textLoc="Imported"></span>
+                    </th>
                     <td mat-cell *matCellDef="let element2">
                       <formatted-number
                         [value]="element2.importedPerMin"
@@ -76,7 +90,9 @@
                     </td>
                   </ng-container>
                   <ng-container matColumnDef="exported-per-min">
-                    <th mat-header-cell *matHeaderCellDef>Exported</th>
+                    <th mat-header-cell *matHeaderCellDef>
+                      <span textLoc="Exported"></span>
+                    </th>
                     <td mat-cell *matCellDef="let element2">
                       <formatted-number
                         [value]="element2.exportedPerMin"
@@ -86,7 +102,9 @@
                     </td>
                   </ng-container>
                   <ng-container matColumnDef="net-per-min">
-                    <th mat-header-cell *matHeaderCellDef>Production (Net)</th>
+                    <th mat-header-cell *matHeaderCellDef>
+                      <span textLoc="Production (Net)"></span>
+                    </th>
                     <td mat-cell *matCellDef="let element2">
                       <formatted-number
                         [value]="availableProduction(element2)"

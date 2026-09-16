@@ -1,6 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { AppBar } from './components/app-bar/app-bar';
+import { localizations } from './shared/l10n/l10n';
 
 const WWW_PREFIX = 'www.';
 

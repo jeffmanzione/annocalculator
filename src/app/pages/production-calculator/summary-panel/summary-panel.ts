@@ -33,6 +33,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { EnumRow } from '../../../components/enum-row/enum-row';
 import { lookupGoodIconUrl } from '../../../shared/game/icons';
+import { L10nText } from '../../../components/text/text';
 
 interface GoodSummaryCell {
   island: IslandView;
@@ -68,6 +69,7 @@ type UpdateStatFn = (
     MatTableModule,
     MatSortModule,
     EnumRow,
+    L10nText,
   ],
   templateUrl: './summary-panel.html',
   styleUrl: './summary-panel.scss',

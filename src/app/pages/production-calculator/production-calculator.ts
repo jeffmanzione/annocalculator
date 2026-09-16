@@ -40,6 +40,7 @@ import {
 } from '../../services/local-storage/local-storage';
 import { Clipboard } from '@angular/cdk/clipboard';
 import { AcButton } from '../../components/button/button';
+import { L10nText } from '../../components/text/text';
 
 const WORLD_KEY = 'anno-1800-production-calculator-world';
 
@@ -198,6 +199,7 @@ const defaultWorld: World = {
     ReactiveFormsModule,
     SummaryPanel,
     TradeRoutesPanel,
+    L10nText,
   ],
   templateUrl: './production-calculator.html',
   styleUrl: './production-calculator.scss',

@@ -55,3 +55,32 @@ button {
 .toolbar-item-selected {
   border-bottom: 4px solid lightgray;
 }
+
+.lang-option {
+  text-transform: uppercase;
+  color: rgba(0, 0, 0, 0.75);
+  font-weight: 500;
+  font-size: 13px;
+}
+
+:host ::ng-deep {
+  mat-form-field {
+    width: 80px;
+    margin: auto 0 auto auto;
+  }
+
+  mat-select {
+    height: 24px;
+  }
+
+  mat-option {
+    min-height: 36px;
+  }
+
+  .mdc-text-field {
+    border: -1px solid rgba(1, 1, 1, 0.15);
+    border-radius: 8px;
+    box-sizing: border-box;
+    font-size: 18px;
+  }
+}

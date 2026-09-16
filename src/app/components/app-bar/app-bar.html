@@ -7,9 +7,23 @@
     @for (app of apps; track app) {
       <div class="toolbar-item toolbar-text-shadow" [ngClass]="isCurrentApp(app) ? 'toolbar-item-selected' : ''">
         <button mat-button [disabled]="isCurrentApp(app)" (click)="navigateTo(app)">
-          {{ app.name }}
+          <span [textLoc]="app.name!"></span>
         </button>
       </div>
     }
+    <mat-form-field>
+      <mat-select [value]="language()" (valueChange)="updateLanguage($event)">
+        <mat-select-trigger>
+          <div class="lang-option">{{ language() }}</div>
+        </mat-select-trigger>
+        @for (option of langauges; track option) {
+          <mat-option [value]="option">
+            <div class="lang-option">
+              {{ option }}
+            </div>
+          </mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
   </div>
 </mat-toolbar>

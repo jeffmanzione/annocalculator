@@ -2,17 +2,22 @@ import { Route, Routes } from '@angular/router';
 import { Type } from '@angular/core';
 import { AboutPage } from './pages/about/about';
 import { ProductionCalculatorPage } from './pages/production-calculator/production-calculator';
+import { L10nKey } from './shared/l10n/l10n';
 
 export const WEBSITE_NAME = 'AnnoCalculator.com';
 
 export interface AppInfo {
   path: string;
   target: Type<any> | string;
-  name?: string;
+  name?: L10nKey;
 }
 
 export const apps: AppInfo[] = [
-  { path: 'calculator', target: ProductionCalculatorPage, name: 'Calculator' },
+  {
+    path: 'calculator',
+    target: ProductionCalculatorPage,
+    name: 'Calculator',
+  },
   { path: 'about', target: AboutPage, name: 'About' },
   { path: '**', target: 'calculator' },
 ];
