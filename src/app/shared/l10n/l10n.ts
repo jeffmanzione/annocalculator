@@ -39,7 +39,10 @@ export type L10nKey =
   | 'Extra Good'
   | 'Source'
   | 'Numerator'
-  | 'Denominator';
+  | 'Denominator'
+  | 'Cancel'
+  | 'Apply Changes'
+  | 'Manual JSON Input';
 
 export enum Language {
   En = 'En',
@@ -304,5 +307,23 @@ export const localizations: Localizations = {
     De: 'Nenner',
     Nl: 'Noemer',
     Zh: '分母',
+  },
+  Cancel: {
+    En: 'Cancel',
+    De: 'Abbrechen',
+    Nl: 'Annuleren',
+    Zh: '取消',
+  },
+  'Apply Changes': {
+    En: 'Apply Changes',
+    De: 'Änderungen übernehmen',
+    Nl: 'Wijzigingen toepassen',
+    Zh: '应用更改',
+  },
+  'Manual JSON Input': {
+    En: 'Manual JSON Input',
+    De: 'Manuelle JSON-Eingabe',
+    Nl: 'Handmatige JSON-invoer',
+    Zh: '手动输入 JSON',
   },
 };

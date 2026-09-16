@@ -3,7 +3,7 @@
     @if (text()) {
       <button [matButton]="appearance()" [color]="color()" [matTooltip]="tooltip()!" (click)="onClick($event)">
         <mat-icon [fontIcon]="icon()!"></mat-icon>
-        <span [textLoc]="text()"></span>
+        <span [textLoc]="text()!"></span>
       </button>
     } @else {
       <button matIconButton [color]="color()" [matTooltip]="tooltip()!" (click)="onClick($event)">
@@ -13,7 +13,7 @@
   } @else {
     @if (icon()) {
       <button [matButton]="appearance()" [color]="color()" [matTooltip]="tooltip()!" (click)="onClick($event)">
-        <span [textLoc]="text()"></span>
+        <span [textLoc]="text()!"></span>
       </button>
     } @else {
       Invalid button parameters (tooltip without button or text)
@@ -24,7 +24,7 @@
     @if (text()) {
       <button [color]="color()" [matButton]="appearance()" (click)="onClick($event)">
         <mat-icon [fontIcon]="icon()!"></mat-icon>
-        <span [textLoc]="text()"></span>
+        <span [textLoc]="text()!"></span>
       </button>
     } @else if (!text()) {
       <button matIconButton [color]="color()" (click)="onClick($event)">
@@ -34,7 +34,7 @@
   } @else {
     @if (text()) {
       <button [matButton]="appearance()" [color]="color()" (click)="onClick($event)">
-        <span [textLoc]="text()"></span>
+        <span [textLoc]="text()!"></span>
       </button>
     } @else {
       Invalid button parameters (No text or icon)
