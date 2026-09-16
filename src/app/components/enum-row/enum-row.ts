@@ -32,7 +32,7 @@ export class EnumRow<T> implements AfterViewChecked {
   );
 
   /** The timeout ID of any current timer set to show the tooltip */
-  private showTimeoutId: ReturnType<typeof setTimeout> | undefined;
+  private showTimeoutId_: ReturnType<typeof setTimeout> | undefined;
 
   displayTextForValue(value: T | null): string {
     if (!this.displayTextTransformer()) {
@@ -44,9 +44,9 @@ export class EnumRow<T> implements AfterViewChecked {
   hasTooltip = false;
 
   hideTooltipAt(index: number): void {
-    if (this.showTimeoutId != null) {
-      clearTimeout(this.showTimeoutId);
-      this.showTimeoutId = undefined;
+    if (this.showTimeoutId_ != null) {
+      clearTimeout(this.showTimeoutId_);
+      this.showTimeoutId_ = undefined;
     }
 
     if (!this.showValues()[index].shouldShowOverlay) {
@@ -57,9 +57,9 @@ export class EnumRow<T> implements AfterViewChecked {
   }
 
   showTooltipAt(index: number): void {
-    this.showTimeoutId = setTimeout(() => {
+    this.showTimeoutId_ = setTimeout(() => {
       this.showValues()[index].shouldShowOverlay = true;
-      this.showTimeoutId = undefined;
+      this.showTimeoutId_ = undefined;
       this.changeDetectorRef.detectChanges();
     }, 500);
   }

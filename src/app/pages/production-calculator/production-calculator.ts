@@ -59,15 +59,7 @@ const defaultWorld: World = {
           numBuildings: 10,
           boosts: [Boost.Electricity],
           hasTradeUnion: true,
-          // tradeUnionItemsBonus: 0.5,
           inRangeOfLocalDepartment: true,
-          // extraGoods: [
-          //   {
-          //     good: Good.Chocolate,
-          //     rateNumerator: 1,
-          //     rateDenominator: 3,
-          //   },
-          // ],
         },
         {
           building: ProductionBuilding.FlourMill,
@@ -76,7 +68,6 @@ const defaultWorld: World = {
           numBuildings: 5,
           boosts: [Boost.Electricity],
           hasTradeUnion: true,
-          // tradeUnionItemsBonus: 0.5,
           inRangeOfLocalDepartment: true,
         },
         {
@@ -86,7 +77,6 @@ const defaultWorld: World = {
           numBuildings: 4,
           boosts: [Boost.Electricity],
           hasTradeUnion: true,
-          // tradeUnionItemsBonus: 0.3,
           inRangeOfLocalDepartment: true,
         },
         {
@@ -96,7 +86,6 @@ const defaultWorld: World = {
           numBuildings: 3,
           boosts: [Boost.Electricity],
           hasTradeUnion: true,
-          // tradeUnionItemsBonus: 0.3,
           inRangeOfLocalDepartment: true,
         },
         {
@@ -131,7 +120,6 @@ const defaultWorld: World = {
           numBuildings: 8,
           boosts: [Boost.TractorBarn],
           hasTradeUnion: true,
-          // tradeUnionItemsBonus: 0.5,
           inRangeOfLocalDepartment: true,
         },
         {
@@ -140,7 +128,6 @@ const defaultWorld: World = {
           numBuildings: 3,
           boosts: [Boost.TractorBarn],
           hasTradeUnion: true,
-          // tradeUnionItemsBonus: 0.5,
           inRangeOfLocalDepartment: true,
         },
         {
@@ -226,22 +213,22 @@ export class ProductionCalculatorPage implements OnInit {
   readonly defaultActions = [
     {
       icon: 'content_copy',
-      fn: () => this.copyJsonToClipboard(),
+      fn: () => this.copyJsonToClipboard_(),
       tooltip: 'Copy the JSON representation of your inputs to your clipboard.',
     },
     {
       icon: 'edit_square',
-      fn: () => this.openSaveDialog(),
+      fn: () => this.openSaveDialog_(),
       tooltip: 'Manually edit the JSON inputs.',
     },
     {
       icon: 'refresh',
-      fn: () => this.resetInputToDefault(),
+      fn: () => this.resetInputToDefault_(),
       tooltip: 'Reset the inputs to a default example.',
     },
     {
       icon: 'delete',
-      fn: () => this.clearInput(),
+      fn: () => this.clearInput_(),
       tooltip: 'Completely clear the inputs.',
     },
   ];
@@ -250,17 +237,17 @@ export class ProductionCalculatorPage implements OnInit {
 
   formGroup?: FormGroup;
 
-  private readonly changeDectorRef = inject(ChangeDetectorRef);
-  private readonly matDialog = inject(MatDialog);
-  private readonly clipboard = inject(Clipboard);
-  private readonly worldStorage: StorageItem<World>;
+  private readonly changeDectorRef_ = inject(ChangeDetectorRef);
+  private readonly matDialog_ = inject(MatDialog);
+  private readonly clipboard_ = inject(Clipboard);
+  private readonly worldStorage_: StorageItem<World>;
 
   islandComponents = viewChildren(Island);
   summaryPanel = viewChild.required(SummaryPanel);
   tradeRoutesPanel = viewChild(TradeRoutesPanel);
 
   constructor(storageManager: LocalStorageManager) {
-    this.worldStorage = storageManager.lookupObjectItem(WORLD_KEY);
+    this.worldStorage_ = storageManager.lookupObjectItem(WORLD_KEY);
   }
 
   ngOnInit(): void {
@@ -268,7 +255,7 @@ export class ProductionCalculatorPage implements OnInit {
       tradeUnionBonusPercent: new FormControl(0),
     });
     this.formGroup.valueChanges.subscribe(() => this.update());
-    this.setWorld(this.worldStorage.get() ?? defaultWorld);
+    this.setWorld(this.worldStorage_.get() ?? defaultWorld);
   }
 
   setWorld(worldModel?: World): void {
@@ -283,7 +270,7 @@ export class ProductionCalculatorPage implements OnInit {
   }
 
   update(): void {
-    this.changeDectorRef.detectChanges();
+    this.changeDectorRef_.detectChanges();
     this.world.tradeUnionBonus =
       this.formGroup!.value.tradeUnionBonusPercent / 100;
     if (this.islandComponents) {
@@ -293,7 +280,7 @@ export class ProductionCalculatorPage implements OnInit {
     }
     this.tradeRoutesPanel()?.afterPushChange();
     this.summaryPanel()?.update();
-    this.worldStorage.set(this.world.copyModel());
+    this.worldStorage_.set(this.world.copyModel());
     // Convert this into a debug-only print.
     // console.log(this.world.toJsonString());
   }
@@ -310,30 +297,30 @@ export class ProductionCalculatorPage implements OnInit {
 
   setWorldAndReload(worldModel: World): void {
     if (!worldModel) return;
-    this.worldStorage.set(worldModel);
+    this.worldStorage_.set(worldModel);
     globalThis.location.reload();
   }
 
-  private openSaveDialog(): void {
-    this.matDialog
-      .open(SaveDialog, this.dialogConfig)
+  private openSaveDialog_(): void {
+    this.matDialog_
+      .open(SaveDialog, this.dialogConfig_)
       .afterClosed()
       .subscribe((result) => this.setWorldAndReload(result));
   }
 
-  private copyJsonToClipboard(): void {
-    this.clipboard.copy(this.world.toJsonString());
+  private copyJsonToClipboard_(): void {
+    this.clipboard_.copy(this.world.toJsonString());
   }
 
-  private resetInputToDefault(): void {
+  private resetInputToDefault_(): void {
     this.setWorldAndReload(defaultWorld);
   }
 
-  private clearInput(): void {
+  private clearInput_(): void {
     this.setWorldAndReload({ islands: [], tradeRoutes: [] });
   }
 
-  private get dialogConfig(): MatDialogConfig<SaveData<World>> {
+  private get dialogConfig_(): MatDialogConfig<SaveData<World>> {
     return {
       data: { obj: this.world.copyModel() } as SaveData<World>,
       width: '600px',

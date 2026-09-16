@@ -75,25 +75,25 @@ export class ProductionLineControl extends FormGroupControl<ProductionLineContro
   }
 
   // Update the form states (without updating the model/controller).
-  private updateFormStates(): void {
+  private updateFormStates_(): void {
     const building: ProductionBuilding = this.formGroup.value.building;
-    this.updateBoostOptions();
+    this.updateBoostOptions_();
     // Some buildings require electricity, and if so, we automatically select it, otherwise, we
     // narrow the field down to possible options.
     if (requiresElectricity(building)) {
-      this.clearAndDisableControl('boosts', [Boost.Electricity]);
+      this.clearAndDisableControl_('boosts', [Boost.Electricity]);
     } else if (this.allowedBoosts.size == 0) {
-      this.clearAndDisableControl('boosts', []);
+      this.clearAndDisableControl_('boosts', []);
     } else {
-      this.enableControl('boosts');
+      this.enableControl_('boosts');
     }
 
     // Items can only be slotted in trade unions.
     if (this.formGroup.value.hasTradeUnion) {
-      this.updateItemOptions();
-      this.enableControl('items');
+      this.updateItemOptions_();
+      this.enableControl_('items');
     } else {
-      this.clearAndDisableControl('items', false);
+      this.clearAndDisableControl_('items', false);
     }
 
     // Local department effects have no effect without a DoL on the island and a Trade Union in
@@ -103,9 +103,9 @@ export class ProductionLineControl extends FormGroupControl<ProductionLineContro
         !this.controller.islandHasDepartmentOfLabor) ||
       !this.formGroup.value.hasTradeUnion
     ) {
-      this.clearAndDisableControl('inRangeOfLocalDepartment', false);
+      this.clearAndDisableControl_('inRangeOfLocalDepartment', false);
     } else {
-      this.enableControl('inRangeOfLocalDepartment');
+      this.enableControl_('inRangeOfLocalDepartment');
     }
 
     // Only new-world buildings can produce dung.
@@ -113,21 +113,21 @@ export class ProductionLineControl extends FormGroupControl<ProductionLineContro
       this.controller.region == Region.NewWorld &&
       producesDung(this.controller.building)
     ) {
-      this.enableControl('inRangeOfHaciendaFertiliserWorks');
+      this.enableControl_('inRangeOfHaciendaFertiliserWorks');
     } else {
-      this.clearAndDisableControl('inRangeOfHaciendaFertiliserWorks', false);
+      this.clearAndDisableControl_('inRangeOfHaciendaFertiliserWorks', false);
     }
 
-    this.updateCulturalSetOptions();
+    this.updateCulturalSetOptions_();
   }
 
-  private updateCulturalSetOptions() {
+  private updateCulturalSetOptions_() {
     this.allowedCulturalSets = new Set(
       lookupAllowedCulturalSets(this.formGroup.value.building),
     );
 
     if (this.allowedCulturalSets.size == 0) {
-      this.clearAndDisableControl('culturalSets', false);
+      this.clearAndDisableControl_('culturalSets', false);
       return;
     }
 
@@ -144,7 +144,7 @@ export class ProductionLineControl extends FormGroupControl<ProductionLineContro
     }
   }
 
-  private updateBoostOptions(): void {
+  private updateBoostOptions_(): void {
     this.allowedBoosts = new Set(
       lookupAllowedBoosts(this.formGroup.value.building),
     );
@@ -157,7 +157,7 @@ export class ProductionLineControl extends FormGroupControl<ProductionLineContro
       );
     }
   }
-  private updateItemOptions(): void {
+  private updateItemOptions_(): void {
     const newAllowedItems = new Set(
       lookupAllowedItems(this.formGroup.value.building),
     );
@@ -175,11 +175,11 @@ export class ProductionLineControl extends FormGroupControl<ProductionLineContro
     }
   }
 
-  private enableControl(controlName: string): void {
+  private enableControl_(controlName: string): void {
     this.formGroup.controls[controlName].enable({ emitEvent: false });
   }
 
-  private clearAndDisableControl(
+  private clearAndDisableControl_(
     controlName: string,
     clearedValue: any = 0,
   ): void {
@@ -193,7 +193,7 @@ export class ProductionLineControl extends FormGroupControl<ProductionLineContro
     });
   }
 
-  private updateAndFormatDerivedFields(): void {
+  private updateAndFormatDerivedFields_(): void {
     this.inputGoods = this.controller.inputGoods;
     this.outputGoods = [this.controller.good];
 
@@ -213,13 +213,13 @@ export class ProductionLineControl extends FormGroupControl<ProductionLineContro
   override beforeModelUpdate(): void {
     // Form states must be adjusted separately and before model changes to prevent potential infinite
     // loops caused by interdependent component forms in the hierarchy.
-    this.updateFormStates();
+    this.updateFormStates_();
   }
 
   override afterPushChange(): void {
-    this.updateFormStates();
+    this.updateFormStates_();
     // Derived view fields must be after the model update so that they are fresh after the model update.
-    this.updateAndFormatDerivedFields();
+    this.updateAndFormatDerivedFields_();
   }
 
   toggleShowExtraGoods(): void {

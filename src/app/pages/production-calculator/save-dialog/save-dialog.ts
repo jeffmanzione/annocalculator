@@ -16,11 +16,11 @@ import { JsonInput } from '../../../components/json-input/json-input';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SaveDialog<T> {
-  private readonly data = inject<SaveData<T>>(MAT_DIALOG_DATA);
-  readonly obj = model(this.data.obj);
+  private readonly data_ = inject<SaveData<T>>(MAT_DIALOG_DATA);
+  readonly obj = model(this.data_.obj);
 
   updateObject(newObj: T): void {
-    this.data.obj = newObj;
+    this.data_.obj = newObj;
   }
 }
 

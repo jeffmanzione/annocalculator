@@ -18,7 +18,7 @@ export class TooltipDirective {}
   styles: [''],
 })
 export abstract class EnumTooltip<T> {
-  private readonly changeDetectorRef = inject(ChangeDetectorRef);
+  private readonly changeDetectorRef_ = inject(ChangeDetectorRef);
 
   value = input<T | null>(null);
 
@@ -26,7 +26,7 @@ export abstract class EnumTooltip<T> {
     effect(() => {
       if (this.value()) {
         this.onValueChange(this.value()!);
-        this.changeDetectorRef.markForCheck();
+        this.changeDetectorRef_.markForCheck();
       }
     });
   }

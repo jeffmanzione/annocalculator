@@ -42,13 +42,13 @@ export class CompositeNumber {
   showPlusIfPositive = input(false);
 
   /** The timeout ID of any current timer set to show the tooltip */
-  private showTimeoutId: ReturnType<typeof setTimeout> | undefined;
+  private showTimeoutId_: ReturnType<typeof setTimeout> | undefined;
   showTooltip: boolean = false;
 
   hideTooltipAt(): void {
-    if (this.showTimeoutId != null) {
-      clearTimeout(this.showTimeoutId);
-      this.showTimeoutId = undefined;
+    if (this.showTimeoutId_ != null) {
+      clearTimeout(this.showTimeoutId_);
+      this.showTimeoutId_ = undefined;
     }
 
     if (!this.showTooltip) {
@@ -59,9 +59,9 @@ export class CompositeNumber {
   }
 
   showTooltipAt(): void {
-    this.showTimeoutId = setTimeout(() => {
+    this.showTimeoutId_ = setTimeout(() => {
       this.showTooltip = true;
-      this.showTimeoutId = undefined;
+      this.showTimeoutId_ = undefined;
       this.changeDetectorRef.detectChanges();
     }, 500);
   }

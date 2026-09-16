@@ -52,6 +52,12 @@ interface GoodSummaryRow {
   showIslandSummaryIcon: string;
 }
 
+type UpdateStatFn = (
+  island: IslandView,
+  good: Good,
+  netProductionPerMin: number,
+) => void;
+
 @Component({
   selector: 'summary-panel',
   imports: [
@@ -86,10 +92,10 @@ export class SummaryPanel implements OnInit, AfterViewInit {
     'net-per-min',
   ];
 
-  private readonly changeDetector = inject(ChangeDetectorRef);
+  private readonly changeDetector_ = inject(ChangeDetectorRef);
 
   readonly tableData = new MatTableDataSource<GoodSummaryRow>();
-  private readonly rows = new Map<Good, GoodSummaryRow>();
+  private readonly rows_ = new Map<Good, GoodSummaryRow>();
 
   world = input<WorldView>();
   table = viewChild.required(MatTable<GoodSummaryRow>);
@@ -105,7 +111,7 @@ export class SummaryPanel implements OnInit, AfterViewInit {
   ngOnInit(): void {
     for (const good of Object.values(Good)) {
       if (good == Good.Unknown) continue;
-      this.rows.set(good, this.createBaseGoodSummaryRow(good));
+      this.rows_.set(good, this.createBaseGoodSummaryRow_(good));
     }
     this.update();
     this.tableData.filterPredicate = (
@@ -114,7 +120,7 @@ export class SummaryPanel implements OnInit, AfterViewInit {
     ): boolean => {
       return data.islandSummaries.length > 0;
     };
-    this.tableData.data = Array.from(this.rows.values());
+    this.tableData.data = Array.from(this.rows_.values());
   }
 
   ngAfterViewInit(): void {
@@ -136,12 +142,12 @@ export class SummaryPanel implements OnInit, AfterViewInit {
   }
 
   update(): void {
-    if (!this.world() || this.rows.size == 0) {
+    if (!this.world() || this.rows_.size == 0) {
       return;
     }
 
-    const baseTableCells = this.buildBaseTableCells();
-    const tradesTable = this.buildTradesTable();
+    const baseTableCells = this.buildBaseTableCells_();
+    const tradesTable = this.buildTradesTable_();
 
     for (const [sourceIsland, good, targetIslands] of tradesTable) {
       const cell = baseTableCells.get(sourceIsland, good);
@@ -186,13 +192,13 @@ export class SummaryPanel implements OnInit, AfterViewInit {
         totalAvailable -= distribution;
       }
     }
-    this.updateTableCells(baseTableCells);
+    this.updateTableCells_(baseTableCells);
     // Re-applies the filter. No idea why this is needed...
     this.tableData.filter = '-';
 
     this.table()?.renderRows();
 
-    this.changeDetector.markForCheck();
+    this.changeDetector_.markForCheck();
   }
 
   toggleIslandSummary(row: GoodSummaryRow): void {
@@ -217,16 +223,16 @@ export class SummaryPanel implements OnInit, AfterViewInit {
     return lookupGoodIconUrl(good ?? Good.Unknown);
   }
 
-  private buildBaseTableCells(): Table<IslandId, Good, GoodSummaryCell> {
-    let cells = new Table<IslandId, Good, GoodSummaryCell>();
-
-    const updateStats = (
+  private createUpdateStatsFn_(
+    cells: Table<IslandId, Good, GoodSummaryCell>,
+  ): UpdateStatFn {
+    return (
       island: IslandView,
       good: Good,
       netProductionPerMin: number,
     ): void => {
       const tableCell = cells.getOrDefault(island.id, good, () =>
-        this.createGoodSummaryCell(island, good),
+        this.createGoodSummaryCell_(island, good),
       );
       if (netProductionPerMin > 0) {
         tableCell.localProductionPerMin += netProductionPerMin;
@@ -234,33 +240,45 @@ export class SummaryPanel implements OnInit, AfterViewInit {
         tableCell.localConsumptionPerMin -= netProductionPerMin;
       }
     };
+  }
+
+  private updateIslandStats_(
+    island: IslandView,
+    updateStats: UpdateStatFn,
+  ): void {
+    for (const pl of island.productionLines) {
+      updateStats(island, pl.good, pl.goodsProducedPerMinute);
+      for (const eg of pl.extraGoods) {
+        const egView = ExtraGoodView.wrap(eg, { productionLine: pl });
+        updateStats(island, egView.good, egView.producedPerMinute);
+      }
+      for (const ig of pl.inputGoods) {
+        updateStats(island, ig, -pl.goodsConsumedPerMinute);
+      }
+      if (pl.boosts.includes(Boost.Silo)) {
+        updateStats(
+          island,
+          island.region == Region.NewWorld ? Good.Corn : Good.Grain,
+          -0.2 * pl.numBuildings,
+        );
+      }
+      if (pl.boosts.includes(Boost.Fertiliser)) {
+        updateStats(island, Good.Fertiliser, -0.2 * pl.numBuildings);
+      }
+    }
+  }
+
+  private buildBaseTableCells_(): Table<IslandId, Good, GoodSummaryCell> {
+    let cells = new Table<IslandId, Good, GoodSummaryCell>();
+    const updateStats = this.createUpdateStatsFn_(cells);
 
     for (const island of this.world()!.islands) {
-      for (const pl of island.productionLines) {
-        updateStats(island, pl.good, pl.goodsProducedPerMinute);
-        for (const eg of pl.extraGoods) {
-          const egView = ExtraGoodView.wrap(eg, { productionLine: pl });
-          updateStats(island, egView.good, egView.producedPerMinute);
-        }
-        for (const ig of pl.inputGoods) {
-          updateStats(island, ig, -pl.goodsConsumedPerMinute);
-        }
-        if (pl.boosts.includes(Boost.Silo)) {
-          updateStats(
-            island,
-            island.region == Region.NewWorld ? Good.Corn : Good.Grain,
-            -0.2 * pl.numBuildings,
-          );
-        }
-        if (pl.boosts.includes(Boost.Fertiliser)) {
-          updateStats(island, Good.Fertiliser, -0.2 * pl.numBuildings);
-        }
-      }
+      this.updateIslandStats_(island, updateStats);
     }
     return cells;
   }
 
-  private buildTradesTable(): ReadonlyTable<IslandId, Good, IslandId[]> {
+  private buildTradesTable_(): ReadonlyTable<IslandId, Good, IslandId[]> {
     const trades = new Table<IslandId, Good, IslandId[]>();
     for (const tr of this.world()!.tradeRoutes) {
       trades
@@ -270,15 +288,15 @@ export class SummaryPanel implements OnInit, AfterViewInit {
     return trades;
   }
 
-  private updateTableCells(
+  private updateTableCells_(
     cellTable: ReadonlyTable<IslandId, Good, GoodSummaryCell>,
   ): void {
-    for (const row of this.rows.values()) {
+    for (const row of this.rows_.values()) {
       clearRow(row);
     }
     cellTable.reduceLeft((good, cells) => {
       if (good == Good.Unknown) return;
-      const row = this.rows.get(good)!;
+      const row = this.rows_.get(good)!;
       row.islandSummaries = Array.from(cells);
       for (const cell of cells) {
         row.totalProductionPerMin += cell.localProductionPerMin;
@@ -287,7 +305,7 @@ export class SummaryPanel implements OnInit, AfterViewInit {
     });
   }
 
-  private createBaseGoodSummaryRow(good: Good): GoodSummaryRow {
+  private createBaseGoodSummaryRow_(good: Good): GoodSummaryRow {
     return {
       good: good,
       islandSummaries: [],
@@ -298,7 +316,7 @@ export class SummaryPanel implements OnInit, AfterViewInit {
     };
   }
 
-  private createGoodSummaryCell(
+  private createGoodSummaryCell_(
     island: IslandView,
     good: Good,
   ): GoodSummaryCell {

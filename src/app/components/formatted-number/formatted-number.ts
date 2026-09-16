@@ -88,20 +88,20 @@ export class FormattedNumber {
       return this.zeroOverride()!;
     }
     const strValue = this.isPercent()
-      ? this.formatAsPercent()
-      : this.formatAsNumber();
-    return `${this.numberPrefix()}${strValue}${this.suffix()}`;
+      ? this.formatAsPercent_()
+      : this.formatAsNumber_();
+    return `${this.numberPrefix_()}${strValue}${this.suffix()}`;
   });
 
-  private formatAsPercent(): string {
+  private formatAsPercent_(): string {
     return formatPercent(this.value(), this.locale, this.computedFormat());
   }
 
-  private formatAsNumber(): string {
+  private formatAsNumber_(): string {
     return formatNumber(this.value(), this.locale, this.computedFormat());
   }
 
-  private numberPrefix(): string {
+  private numberPrefix_(): string {
     return this.showPlusIfPositive() && this.value() > 0 ? '+' : '';
   }
 }

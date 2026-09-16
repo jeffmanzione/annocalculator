@@ -114,11 +114,11 @@ export class Island
       'culturalSets',
     ];
     if (
-      this.controller.region == Region.OldWorld ||
-      this.controller.region == Region.CapeTrelawney
+      this.controller().region == Region.OldWorld ||
+      this.controller().region == Region.CapeTrelawney
     ) {
       columns.push('inRangeOfLocalDepartment');
-    } else if (this.controller.region == Region.NewWorld) {
+    } else if (this.controller().region == Region.NewWorld) {
       columns.push('inRangeOfHaciendaFertiliserWorks');
     }
     columns.push(
@@ -141,14 +141,13 @@ export class Island
 
   formGroup!: FormGroup;
 
-  private _productionLineControls!: ProductionLineControl[];
-  Boost: any;
+  private productionLineControls_!: ProductionLineControl[];
 
   get productionLineControls(): ProductionLineControl[] {
-    if (this._productionLineControls.length == 0) {
+    if (this.productionLineControls_.length == 0) {
       this.addProductionLine();
     }
-    return this._productionLineControls;
+    return this.productionLineControls_;
   }
 
   productionLinesDataSource!: MatTableDataSource<ProductionLineControl>;
@@ -156,57 +155,59 @@ export class Island
   table = viewChild<MatTable<ProductionLineControl>>('productionLinesTable');
 
   get multipleSelectLimit(): number {
-    return this.controller.dolPolicy ==
+    return this.controller().dolPolicy ==
       DepartmentOfLaborPolicy.UnionSubsidiesAct
       ? 4
       : 3;
   }
 
   get inRangeHeader(): string {
-    return this.controller.region == Region.NewWorld
+    return this.controller().region == Region.NewWorld
       ? 'Fert Works'
       : 'Local Dept';
   }
 
   ngOnInit(): void {
     this.formGroup = new FormGroup({
-      name: new FormControl(this.controller.name),
-      region: new FormControl(this.controller.region),
-      dolPolicy: new FormControl(this.controller.dolPolicy),
+      name: new FormControl(this.controller().name),
+      region: new FormControl(this.controller().region),
+      dolPolicy: new FormControl(this.controller().dolPolicy),
     });
     this.formGroup.valueChanges.subscribe((_) => this.pushUpChange());
-    this._productionLineControls = this.controller.productionLines.map((pl) => {
-      const control = new ProductionLineControl(pl);
-      this.registerChildControl(control);
-      return control;
-    });
+    this.productionLineControls_ = this.controller().productionLines.map(
+      (pl) => {
+        const control = new ProductionLineControl(pl);
+        this.registerChildControl(control);
+        return control;
+      },
+    );
 
-    if (this._productionLineControls.length == 0) {
+    if (this.productionLineControls_.length == 0) {
       this.addProductionLine();
     }
 
     this.productionLinesDataSource = new MatTableDataSource(
-      this._productionLineControls,
+      this.productionLineControls_,
     );
     this.afterPushChange();
   }
 
   override beforeBubbleChange(): void {
-    this.controller.name = this.formGroup.value.name;
-    this.controller.region = this.formGroup.value.region;
-    this.controller.dolPolicy = this.formGroup.value.dolPolicy;
-    if (this._productionLineControls.length == 0) {
+    this.controller().name = this.formGroup.value.name;
+    this.controller().region = this.formGroup.value.region;
+    this.controller().dolPolicy = this.formGroup.value.dolPolicy;
+    if (this.productionLineControls_.length == 0) {
       this.addProductionLine();
     }
   }
 
   override afterPushChange(): void {
-    this.updateRegionSpecificSelectOptions();
+    this.updateRegionSpecificSelectOptions_();
     this.table()?.renderRows();
   }
 
-  private updateRegionSpecificSelectOptions(): void {
-    const region = this.controller.region;
+  private updateRegionSpecificSelectOptions_(): void {
+    const region = this.controller().region;
     this.productionBuildings = Object.values(ProductionBuilding).filter(
       (pb) =>
         (lookupProductionInfo(pb)?.allowedRegions?.indexOf(region) ?? -1) != -1,
@@ -217,27 +218,27 @@ export class Island
         : [DepartmentOfLaborPolicy.None];
 
     if (region == Region.OldWorld || region == Region.CapeTrelawney) {
-      this.enableControl('dolPolicy');
+      this.enableControl_('dolPolicy');
     } else {
-      this.clearAndDisableControl('dolPolicy', DepartmentOfLaborPolicy.None);
+      this.clearAndDisableControl_('dolPolicy', DepartmentOfLaborPolicy.None);
     }
   }
 
   addProductionLine(): void {
     const control = new ProductionLineControl(
-      this.controller.addProductionLine(),
+      this.controller().addProductionLine(),
     );
     this.registerChildControl(control);
-    this._productionLineControls.push(control);
+    this.productionLineControls_.push(control);
     this.pushUpChange();
   }
 
   removeProductionLineAt(el: ProductionLineControl): void {
-    const index = this._productionLineControls.indexOf(el);
+    const index = this.productionLineControls_.indexOf(el);
     this.unregisterChildControl(
-      this._productionLineControls.splice(index, 1)[0],
+      this.productionLineControls_.splice(index, 1)[0],
     );
-    this.controller.removeProductionLineAt(index);
+    this.controller().removeProductionLineAt(index);
     this.pushUpChange();
   }
 
@@ -299,11 +300,11 @@ export class Island
     );
   }
 
-  private enableControl(controlName: string): void {
+  private enableControl_(controlName: string): void {
     this.formGroup.controls[controlName].enable({ emitEvent: false });
   }
 
-  private clearAndDisableControl(
+  private clearAndDisableControl_(
     controlName: string,
     clearedValue: any = 0,
   ): void {

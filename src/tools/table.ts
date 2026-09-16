@@ -40,22 +40,22 @@ interface SetIterable<T> extends IteratorObject<
 }
 
 class ReadonlyMapDelegate<K, V> implements ReadonlyMap<K, V> {
-  constructor(private readonly delegate: Map<K, V>) {}
+  constructor(private readonly delegate_: Map<K, V>) {}
 
   get(k: K): V | undefined {
-    return this.delegate.get(k);
+    return this.delegate_.get(k);
   }
 
   *[Symbol.iterator](): Generator<[K, V]> {
-    yield* this.delegate;
+    yield* this.delegate_;
   }
 
   *keys(): Generator<K> {
-    yield* this.delegate.keys();
+    yield* this.delegate_.keys();
   }
 
   *values(): Generator<V> {
-    yield* this.delegate.values();
+    yield* this.delegate_.values();
   }
 }
 
@@ -97,14 +97,14 @@ abstract class AbstractMutibleMultiSet<K, V>
 }
 
 export class MultiSet<K, V> extends AbstractMutibleMultiSet<K, V> {
-  private readonly map = new Map<K, Set<V>>();
+  private readonly map_ = new Map<K, Set<V>>();
 
   override *get(k: K): Generator<V> {
-    yield* this.map.get(k) ?? [];
+    yield* this.map_.get(k) ?? [];
   }
 
   override *flatIterator(): Generator<[K, V]> {
-    for (const [k, vs] of this.map) {
+    for (const [k, vs] of this.map_) {
       for (const v of vs) {
         yield [k, v];
       }
@@ -112,11 +112,11 @@ export class MultiSet<K, V> extends AbstractMutibleMultiSet<K, V> {
   }
 
   override *[Symbol.iterator](): Generator<[K, Iterable<V>]> {
-    yield* this.map;
+    yield* this.map_;
   }
 
   override put(k: K, v: V): void {
-    getOrDefault(this.map, k, () => new Set()).add(v);
+    getOrDefault(this.map_, k, () => new Set()).add(v);
   }
 }
 
@@ -124,16 +124,16 @@ class MultiSetTableDelegate<K1, K2, V> extends AbstractReadonlyMultiSet<
   K1,
   [K2, V]
 > {
-  constructor(private readonly delegate: ReadonlyTable<K1, K2, V>) {
+  constructor(private readonly delegate_: ReadonlyTable<K1, K2, V>) {
     super();
   }
 
   override *get(k1: K1): Generator<[K2, V]> {
-    yield* this.delegate.drill(k1);
+    yield* this.delegate_.drill(k1);
   }
 
   override *[Symbol.iterator](): Generator<[K1, SetIterable<[K2, V]>]> {
-    for (const k1 of this.delegate.keys()) {
+    for (const k1 of this.delegate_.keys()) {
       yield [k1, this.get(k1)];
     }
   }
@@ -193,24 +193,24 @@ class ReadonlyTableDelegate<K1, K2, V> extends AbstractReadonlyTable<
   K2,
   V
 > {
-  constructor(private readonly delegate: ReadonlyTable<K1, K2, V>) {
+  constructor(private readonly delegate_: ReadonlyTable<K1, K2, V>) {
     super();
   }
 
   override get(k1: K1, k2: K2): V | undefined {
-    return this.delegate.get(k1, k2);
+    return this.delegate_.get(k1, k2);
   }
 
   override *keys(): Generator<K1> {
-    yield* this.delegate.keys();
+    yield* this.delegate_.keys();
   }
 
   override drill(k1: K1): ReadonlyMap<K2, V> {
-    return this.delegate.drill(k1);
+    return this.delegate_.drill(k1);
   }
 
   override *[Symbol.iterator](): Generator<[K1, K2, V]> {
-    yield* this.delegate;
+    yield* this.delegate_;
   }
 }
 
@@ -232,31 +232,31 @@ abstract class AbstractMutableTable<K1, K2, V>
 }
 
 export class Table<K1, K2, V> extends AbstractMutableTable<K1, K2, V> {
-  private readonly data: Map<K1, Map<K2, V>> = new Map();
+  private readonly data_: Map<K1, Map<K2, V>> = new Map();
 
   override set(k1: K1, k2: K2, v: V): void {
-    getOrDefault(this.data, k1, () => new Map()).set(k2, v);
+    getOrDefault(this.data_, k1, () => new Map()).set(k2, v);
   }
 
   override get(k1: K1, k2: K2): V | undefined {
-    return this.data.get(k1)?.get(k2);
+    return this.data_.get(k1)?.get(k2);
   }
 
   override *keys(): Generator<K1> {
-    yield* this.data.keys();
+    yield* this.data_.keys();
   }
 
   override getOrDefault(k1: K1, k2: K2, defaultValue: () => V): V {
-    const map = getOrDefault(this.data, k1, () => new Map());
+    const map = getOrDefault(this.data_, k1, () => new Map());
     return getOrDefault(map, k2, defaultValue);
   }
 
   override drill(k1: K1): ReadonlyMap<K2, V> {
-    return new ReadonlyMapDelegate(this.data.get(k1) ?? new Map());
+    return new ReadonlyMapDelegate(this.data_.get(k1) ?? new Map());
   }
 
   override *[Symbol.iterator](): Generator<[K1, K2, V]> {
-    for (const [k1, map] of this.data) {
+    for (const [k1, map] of this.data_) {
       for (const [k2, v] of map) {
         yield [k1, k2, v];
       }

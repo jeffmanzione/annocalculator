@@ -60,7 +60,7 @@ export class TradeRoutesPanel
   tradeRoutes!: TradeRouteControl[];
 
   ngOnInit(): void {
-    this.tradeRoutes = this.controller.tradeRoutes.map((tr) => {
+    this.tradeRoutes = this.controller().tradeRoutes.map((tr) => {
       const control = new TradeRouteControl(tr);
       this.registerChildControl(control);
       return control;
@@ -69,7 +69,7 @@ export class TradeRoutesPanel
   }
 
   addTradeRoute() {
-    const control = new TradeRouteControl(this.controller.addTradeRoute());
+    const control = new TradeRouteControl(this.controller().addTradeRoute());
     this.registerChildControl(control);
     this.tradeRoutes.push(control);
     this.pushUpChange();
@@ -78,7 +78,7 @@ export class TradeRoutesPanel
   removeTradeRouteAt(el: TradeRouteControl) {
     const index = this.tradeRoutes.indexOf(el);
     this.unregisterChildControl(this.tradeRoutes.splice(index, 1)[0]);
-    this.controller.removeTradeRoute(el.id);
+    this.controller().removeTradeRoute(el.id);
     this.pushUpChange();
   }
 
@@ -113,10 +113,10 @@ export class TradeRouteControl extends FormGroupControl<TradeRouteController> {
     this.targetIslandOptions = this.controller.world.islands.filter(
       (i) => i.id != this.controller.sourceIslandId,
     );
-    this.sourceGoodOptions = this.computeSourceGoods();
+    this.sourceGoodOptions = this.computeSourceGoods_();
   }
 
-  private computeSourceGoods(): Good[] {
+  private computeSourceGoods_(): Good[] {
     if (this.controller.sourceIslandId < 0) {
       return [];
     }

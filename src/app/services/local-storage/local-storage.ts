@@ -5,7 +5,7 @@ import { getOrDefault } from '../../../tools/table';
   providedIn: 'root',
 })
 export class LocalStorageManager {
-  private readonly cache = new Map<string, StorageItem<any>>();
+  private readonly cache_ = new Map<string, StorageItem<any>>();
 
   clear(): void {
     localStorage.clear();
@@ -16,7 +16,7 @@ export class LocalStorageManager {
     converter: StorageItemConverter<any> = identityConverter,
   ): StorageItem<T> {
     return getOrDefault(
-      this.cache,
+      this.cache_,
       key,
       () => new StorageItemImpl<T>(key, converter),
     );
@@ -62,23 +62,26 @@ const jsonConverter: StorageItemConverter<object> = {
 
 class StorageItemImpl<T> implements StorageItem<T> {
   constructor(
-    private readonly key: string,
-    private readonly converter: StorageItemConverter<T>,
-  ) { }
+    private readonly key_: string,
+    private readonly converter_: StorageItemConverter<T>,
+  ) {}
 
   clear(): void {
-    localStorage.removeItem(this.key);
+    localStorage.removeItem(this.key_);
   }
 
   get(): T | null {
-    const item = localStorage.getItem(this.key);
+    const item = localStorage.getItem(this.key_);
     if (!item) {
       return null;
     }
-    return this.converter.convertStorageToItem(item);
+    return this.converter_.convertStorageToItem(item);
   }
 
   set(value: T): void {
-    localStorage.setItem(this.key, this.converter.convertItemToStorage(value));
+    localStorage.setItem(
+      this.key_,
+      this.converter_.convertItemToStorage(value),
+    );
   }
 }

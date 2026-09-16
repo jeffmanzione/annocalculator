@@ -34,7 +34,7 @@ function generatePseudorandomInt(): number {
   // Ensure min and max are integers
   const [min, max] = [0, Number.MAX_SAFE_INTEGER];
   // Generate a random number between min (inclusive) and max (inclusive)
-  return Math.floor(Math.random() * (max - min + 1)) + min;
+  return Math.floor(Math.random() * (max - min + 1)) + min; // NOSONAR - Pseudorandomness is sufficient
 }
 
 const resolveDuplicateReplacementGoods = (g1: Good, g2: Good): Good => {
@@ -55,7 +55,7 @@ export class ProductionLineController extends ProductionLineView {
     return new ProductionLineController(model, context);
   }
 
-  private updateGoods(): void {
+  private updateGoods_(): void {
     const productionInfo = lookupProductionInfo(this.model.building)!;
     if (!productionInfo) {
       return;
@@ -85,7 +85,7 @@ export class ProductionLineController extends ProductionLineView {
 
   override set building(value: ProductionBuilding) {
     this.model.building = value;
-    this.updateGoods();
+    this.updateGoods_();
   }
   override get building(): ProductionBuilding {
     return super.building;
@@ -118,7 +118,7 @@ export class ProductionLineController extends ProductionLineView {
       return;
     }
     this.model.items = value;
-    this.updateGoods();
+    this.updateGoods_();
   }
   override get items(): Item[] {
     return super.items;
@@ -244,24 +244,24 @@ export class IslandController extends IslandView {
     return super.dolPolicy;
   }
 
-  private _productionLines?: ProductionLineController[];
+  private productionLines_?: ProductionLineController[];
 
   override get productionLines(): ProductionLineController[] {
-    this._productionLines ??= this.model.productionLines.map((pl) =>
+    this.productionLines_ ??= this.model.productionLines.map((pl) =>
       ProductionLineController.wrap(pl, { ...this.context, island: this }),
     );
-    return this._productionLines;
+    return this.productionLines_;
   }
 
   addProductionLine(): ProductionLineController {
     const productionLine = structuredClone(BASE_PRODUCTION_LINE_MODEL);
     this.model.productionLines.push(productionLine);
-    this._productionLines ??= [];
+    this.productionLines_ ??= [];
     const controller = ProductionLineController.wrap(productionLine, {
       ...this.context,
       island: this,
     });
-    this._productionLines.push(controller);
+    this.productionLines_.push(controller);
     return controller;
   }
 
@@ -278,7 +278,7 @@ export class IslandController extends IslandView {
       return;
     }
     this.model.productionLines.splice(index, 1);
-    this._productionLines!.splice(index, 1);
+    this.productionLines_!.splice(index, 1);
   }
 }
 
@@ -298,20 +298,20 @@ export class WorldController extends WorldView {
     this.model.tradeUnionBonus = value;
   }
 
-  private _islands?: IslandController[];
+  private islands_?: IslandController[];
 
   override get islands(): IslandController[] {
-    this._islands ??= this.model.islands.map((i) =>
-      IslandController.wrap(i, this.selfContextC),
+    this.islands_ ??= this.model.islands.map((i) =>
+      IslandController.wrap(i, this.selfContextC_),
     );
-    return this._islands;
+    return this.islands_;
   }
 
   addIsland(): IslandController {
     const island = structuredClone(BASE_ISLAND_MODEL);
     this.model.islands.push(island);
-    const controller = IslandController.wrap(island, this.selfContextC);
-    this._islands!.push(controller);
+    const controller = IslandController.wrap(island, this.selfContextC_);
+    this.islands_!.push(controller);
     return controller;
   }
 
@@ -328,33 +328,36 @@ export class WorldController extends WorldView {
       return;
     }
     this.model.islands.splice(index, 1);
-    this._islands!.splice(index, 1);
+    this.islands_!.splice(index, 1);
   }
 
-  private _tradeRoutes?: TradeRouteController[];
+  private tradeRoutes_?: TradeRouteController[];
 
   override get tradeRoutes(): TradeRouteController[] {
-    this._tradeRoutes ??= this.model.tradeRoutes.map((i) =>
-      TradeRouteController.wrap(i, this.selfContextC),
+    this.tradeRoutes_ ??= this.model.tradeRoutes.map((i) =>
+      TradeRouteController.wrap(i, this.selfContextC_),
     );
-    return this._tradeRoutes;
+    return this.tradeRoutes_;
   }
 
   addTradeRoute(): TradeRouteController {
     const tradeRoute = structuredClone(BASE_TRADE_ROUTE_MODEL);
     this.model.tradeRoutes.push(tradeRoute);
-    const controller = TradeRouteController.wrap(tradeRoute, this.selfContextC);
-    this._tradeRoutes!.push(controller);
+    const controller = TradeRouteController.wrap(
+      tradeRoute,
+      this.selfContextC_,
+    );
+    this.tradeRoutes_!.push(controller);
     return controller;
   }
 
   removeTradeRoute(id: TradeRouteId) {
     const index = this.model.tradeRoutes.findIndex((tr) => tr.id == id);
     this.model.tradeRoutes.splice(index, 1);
-    this._tradeRoutes!.splice(index, 1);
+    this.tradeRoutes_!.splice(index, 1);
   }
 
-  private get selfContextC(): ViewContext {
+  private get selfContextC_(): ViewContext {
     return { ...this.context, world: this };
   }
 

@@ -249,11 +249,32 @@ export class ProductionLineView
     );
   }
 
-  get efficiencyConstituents(): NumberConstituent[] {
-    const constituents: NumberConstituent[] = [
-      { value: 1, description: 'Base Productivity' },
-    ];
+  private pushTradeUnionEfficiencyConstituents_(
+    constituents: NumberConstituent[],
+  ): void {
+    if (
+      this.inRangeOfLocalDepartment &&
+      this.context.island!.dolPolicy != DepartmentOfLaborPolicy.None
+    ) {
+      constituents.push({
+        value: this.context.world!.tradeUnionBonus,
+        description: 'Palace Trade Union Bonus',
+      });
+    }
+    for (const item of this.items) {
+      const itemInfo = lookupItemInfo(item)!;
+      if ((itemInfo.productivityEffect ?? 0) > 0) {
+        constituents.push({
+          value: itemInfo.productivityEffect! / 100,
+          description: item,
+        });
+      }
+    }
+  }
 
+  private pushBoostEfficiencyConstituents_(
+    constituents: NumberConstituent[],
+  ): void {
     const boostSet = new Set<Boost>(this.boosts);
     if (
       regionSupportsElectricty(this.context.island?.region ?? Region.Unknown) &&
@@ -280,26 +301,17 @@ export class ProductionLineView
     if (boostSet.has(Boost.Silo)) {
       constituents.push({ value: 1, description: Boost.Silo });
     }
+  }
+
+  get efficiencyConstituents(): NumberConstituent[] {
+    const constituents: NumberConstituent[] = [
+      { value: 1, description: 'Base Productivity' },
+    ];
+
+    this.pushBoostEfficiencyConstituents_(constituents);
 
     if (this.hasTradeUnion) {
-      if (
-        this.inRangeOfLocalDepartment &&
-        this.context.island!.dolPolicy != DepartmentOfLaborPolicy.None
-      ) {
-        constituents.push({
-          value: this.context.world!.tradeUnionBonus,
-          description: 'Palace Trade Union Bonus',
-        });
-      }
-      for (const item of this.items) {
-        const itemInfo = lookupItemInfo(item)!;
-        if ((itemInfo.productivityEffect ?? 0) > 0) {
-          constituents.push({
-            value: itemInfo.productivityEffect! / 100,
-            description: item,
-          });
-        }
-      }
+      this.pushTradeUnionEfficiencyConstituents_(constituents);
     }
 
     for (const set of this.culturalSets) {
@@ -610,19 +622,19 @@ export class WorldView extends View<World> implements World {
   }
 
   get islands(): IslandView[] {
-    return this.model.islands.map((i) => IslandView.wrap(i, this.selfContext));
+    return this.model.islands.map((i) => IslandView.wrap(i, this.selfContext_));
   }
 
   lookupIslandById(id: IslandId): IslandView {
     return IslandView.wrap(
       this.model.islands.find((i) => i.id == id)!,
-      this.selfContext,
+      this.selfContext_,
     );
   }
 
   get tradeRoutes(): TradeRouteView[] {
     return this.model.tradeRoutes.map((tr) =>
-      TradeRouteView.wrap(tr, this.selfContext),
+      TradeRouteView.wrap(tr, this.selfContext_),
     );
   }
 
@@ -632,7 +644,7 @@ export class WorldView extends View<World> implements World {
     const id = typeof island === 'number' ? island : island.id;
     return this.model.tradeRoutes
       .filter((tr) => tr.sourceIslandId == id)
-      .map((tr) => TradeRouteView.wrap(tr, this.selfContext));
+      .map((tr) => TradeRouteView.wrap(tr, this.selfContext_));
   }
 
   public lookupTradeRoutesEndingAt(
@@ -641,10 +653,10 @@ export class WorldView extends View<World> implements World {
     const id = typeof island === 'number' ? island : island.id;
     return this.model.tradeRoutes
       .filter((tr) => tr.targetIslandId == id)
-      .map((tr) => TradeRouteView.wrap(tr, this.selfContext));
+      .map((tr) => TradeRouteView.wrap(tr, this.selfContext_));
   }
 
-  private get selfContext(): ViewContext {
+  private get selfContext_(): ViewContext {
     return { world: this };
   }
 }

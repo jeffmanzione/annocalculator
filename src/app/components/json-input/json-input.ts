@@ -25,12 +25,12 @@ export class JsonInput<T> {
   constructor() {
     effect(() => {
       if (this.textArea()) {
-        this.convertObjectToJsonString();
+        this.convertObjectToJsonString_();
       }
     });
   }
 
-  private convertObjectToJsonString(): void {
+  private convertObjectToJsonString_(): void {
     this.textArea()!.nativeElement.value = JSON.stringify(
       this.value(),
       /*replacer=*/ null,

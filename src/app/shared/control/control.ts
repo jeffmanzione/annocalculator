@@ -10,30 +10,30 @@ import {
 import { FormControl, FormGroup } from '@angular/forms';
 
 export abstract class Control {
-  private readonly _change = new EventEmitter<Control>();
+  private readonly change_ = new EventEmitter<Control>();
   public get update() {
-    return this._change;
+    return this.change_;
   }
 
-  private readonly _children: Control[] = [];
+  private readonly children_: Control[] = [];
 
   protected registerChildControl(control: Control): void {
     control.update.subscribe((child) => this.pushUpChange(child));
-    this._children.push(control);
+    this.children_.push(control);
   }
 
   protected unregisterChildControl(control: Control): void {
-    this._children.splice(this._children.indexOf(control), 1);
+    this.children_.splice(this.children_.indexOf(control), 1);
   }
 
   pushUpChange(childChanged?: Control): void {
     this.privateBeforeBubbleChange(childChanged);
-    this._change.emit(this);
+    this.change_.emit(this);
     this.privateAfterPushChange();
   }
 
   protected privateBeforeBubbleChange(childChanged?: Control): void {
-    for (const child of this._children) {
+    for (const child of this.children_) {
       // Avoid reprocessing the same nodes.
       if (child == childChanged) continue;
       child.privateBeforeBubbleChange();
@@ -43,7 +43,7 @@ export abstract class Control {
 
   protected privateAfterPushChange(): void {
     this.afterPushChange();
-    for (const child of this._children) {
+    for (const child of this.children_) {
       child.privateAfterPushChange();
     }
   }
@@ -63,7 +63,7 @@ export abstract class Control {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export abstract class ControlComponent<T> extends Control {
-  private readonly changeDetector = inject(ChangeDetectorRef);
+  private readonly changeDetector_ = inject(ChangeDetectorRef);
 
   constructor() {
     super();
@@ -84,7 +84,7 @@ export abstract class ControlComponent<T> extends Control {
 
   protected override privateAfterPushChange(): void {
     super.privateAfterPushChange();
-    this.changeDetector.markForCheck();
+    this.changeDetector_.markForCheck();
   }
 
   protected onSetController(ctrlr: T): void {
