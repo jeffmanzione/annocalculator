@@ -4,15 +4,28 @@
       <img [src]="buildingIconUrlLookupFn(value())" [alt]="value()" class="icon-big" />
     }
     <div class="name">{{ value() }}</div>
-    <div class="text">Process Time: {{ processTimeSeconds }}s</div>
-    <div class="text input-goods-container">
-      <div class="text">Input Goods:</div>
-      @for (inputGood of inputGoods; track good) {
-        <img [src]="goodIconUrlLookupFn(inputGood)" [alt]="value()" class="good-icon-small" />
-      }
+    <div class="text">
+      <span textLoc="Building Process Time"></span>
+      :
+      {{ processTimeSeconds }}s
     </div>
+    @if (inputGoods.length > 0) {
+      <div class="text input-goods-container">
+        <div class="text">
+          <span textLoc="Inputs"></span>
+          :&nbsp;
+        </div>
+        @for (inputGood of inputGoods; track good) {
+          <img [src]="goodIconUrlLookupFn(inputGood)" [alt]="value()" class="good-icon-small" />
+        }
+      </div>
+    }
     @if (requiresElectricity) {
-      <div class="text">Requires Electricity: Yes</div>
+      <div class="text">
+        <span textLoc="Provides Electricity"></span>
+        :&nbsp;
+        <span textLoc="Yes"></span>
+      </div>
     }
   </div>
 </div>

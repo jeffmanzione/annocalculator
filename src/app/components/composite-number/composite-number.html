@@ -28,19 +28,31 @@
         [suffix]="suffix()"
         [zeroOverride]="zeroOverride()"></formatted-number>
     </div>
-    @for (num of constituentValues(); track num) {
-      <div class="constituent">
-        <formatted-number
-          [value]="num.value"
-          [isPercent]="isPercent()"
-          [format]="format()"
-          [formatFontSpec]="formatFontSpec()"
-          [suffix]="suffix()"
-          [zeroOverride]="zeroOverride()"
-          [showPlusIfPositive]="showPlusIfPositive()"></formatted-number>
-        <div>&nbsp;-&nbsp;</div>
-        <div>{{ num.description }}</div>
-      </div>
-    }
+    <table>
+      @for (num of constituentValues(); track num) {
+        <tr class="constituent">
+          <td>
+            <formatted-number
+              class="vertically-center"
+              [value]="num.value"
+              [isPercent]="isPercent()"
+              [format]="format()"
+              [formatFontSpec]="formatFontSpec()"
+              [suffix]="suffix()"
+              [zeroOverride]="zeroOverride()"
+              [showPlusIfPositive]="showPlusIfPositive()"></formatted-number>
+          </td>
+          <td class="vertically-center">&nbsp;-&nbsp;</td>
+          <td>
+            <div class="description-container vertically-center">
+              @if (num.iconUrl) {
+                <img [src]="num.iconUrl" alt="Icon" class="item-icon-small" />
+              }
+              <div class="description" [textLoc]="toLoc(num.description)"></div>
+            </div>
+          </td>
+        </tr>
+      }
+    </table>
   </div>
 </ng-template>

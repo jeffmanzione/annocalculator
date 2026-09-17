@@ -10,6 +10,7 @@ import {
   lookupBuildingIconUrl,
   lookupGoodIconUrl,
 } from '../../../../../shared/game/icons';
+import { L10nText } from '../../../../../components/text/text';
 
 @Component({
   selector: 'building-tooltip',
@@ -17,7 +18,7 @@ import {
   styleUrl: './building-tooltip.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [{ provide: EnumTooltip, useExisting: ProductionBuildingTooltip }],
-  imports: [],
+  imports: [L10nText],
 })
 export class ProductionBuildingTooltip extends EnumTooltip<ProductionBuilding> {
   productionInfo: ProductionInfo | null = null;

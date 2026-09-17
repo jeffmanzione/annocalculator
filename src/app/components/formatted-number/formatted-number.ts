@@ -6,7 +6,11 @@ import {
   LOCALE_ID,
   ChangeDetectionStrategy,
   computed,
+  inject,
 } from '@angular/core';
+import { L10nText } from '../text/text';
+import { L10nKey } from '../../shared/l10n/l10n';
+import { L10nService } from '../../services/l10n/l10n';
 
 export interface FontSpec {
   color?: string;
@@ -30,9 +34,11 @@ export const GREEN_RED_FONT_SPEC: FormatFontSpec = {
   selector: 'formatted-number',
   templateUrl: './formatted-number.html',
   changeDetection: ChangeDetectionStrategy.Eager,
-  imports: [CommonModule],
+  imports: [CommonModule, L10nText],
 })
 export class FormattedNumber {
+  private readonly l10nService_ = inject(L10nService);
+
   value = input.required<number>();
   isPercent = input<boolean>(false);
   format = input<string>();
@@ -40,8 +46,6 @@ export class FormattedNumber {
   suffix = input<string>('');
   zeroOverride = input<string>();
   showPlusIfPositive = input<boolean>(false);
-
-  constructor(@Inject(LOCALE_ID) private readonly locale: string) {}
 
   computedFormat = computed(
     () => this.format() ?? (this.isPercent() ? '1.0-0' : '1.0-1'),
@@ -90,15 +94,25 @@ export class FormattedNumber {
     const strValue = this.isPercent()
       ? this.formatAsPercent_()
       : this.formatAsNumber_();
-    return `${this.numberPrefix_()}${strValue}${this.suffix()}`;
+    return `${this.numberPrefix_()}${strValue}`;
   });
 
+  suffixAsLoc = computed(() => this.suffix() as L10nKey);
+
   private formatAsPercent_(): string {
-    return formatPercent(this.value(), this.locale, this.computedFormat());
+    return formatPercent(
+      this.value(),
+      this.l10nService_.localeSignal(),
+      this.computedFormat(),
+    );
   }
 
   private formatAsNumber_(): string {
-    return formatNumber(this.value(), this.locale, this.computedFormat());
+    return formatNumber(
+      this.value(),
+      this.l10nService_.localeSignal(),
+      this.computedFormat(),
+    );
   }
 
   private numberPrefix_(): string {

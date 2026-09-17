@@ -5,9 +5,17 @@
     }
     <div class="item-name">{{ value() }}</div>
     <div class="item-rarity">{{ itemInfo!.rarity }}</div>
-    <div class="item-text">Building: {{ itemInfo!.administrativeBuilding }}</div>
+    <div class="item-text">
+      <span textLoc="Building"></span>
+      :&nbsp;
+      <span [textLoc]="administrativeBuilding"></span>
+    </div>
     @if (itemInfo!.productivityEffect ?? 0 > 0) {
-      <div class="item-text">Productivity: {{ itemInfo!.productivityEffect }}%</div>
+      <div class="item-text">
+        <span textLoc="Productivity"></span>
+        :&nbsp;
+        {{ itemInfo!.productivityEffect }}%
+      </div>
     }
     @if (itemInfo!.extraGoods?.length ?? 0 > 0) {
       <div class="item-text extra-goods-container">
@@ -17,7 +25,8 @@
               <img [src]="iconGoodUrlLookupFn(eg.good)" [alt]="eg.good" class="good-icon-small" />
             }
             <div class="extra-good-name">
-              {{ eg.good ?? 'Extra Goods' }}: {{ eg.rateNumerator }} / {{ eg.rateDenominator }}
+              <span [textLoc]="goodToLoc(eg.good)"></span>
+              : {{ eg.rateNumerator }} / {{ eg.rateDenominator }}
             </div>
           </div>
         }
@@ -35,7 +44,11 @@
       </div>
     }
     @if (itemInfo!.providesElectricity) {
-      <div class="item-text">Provides Electricity: Yes</div>
+      <div class="item-text">
+        <span textLoc="Provides Electricity"></span>
+        :&nbsp;
+        <span textLoc="Yes"></span>
+      </div>
     }
   </div>
 </div>

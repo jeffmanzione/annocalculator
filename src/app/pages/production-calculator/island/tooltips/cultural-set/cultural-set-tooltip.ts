@@ -7,6 +7,8 @@ import {
 } from '../../../../../shared/game/facts';
 
 import { lookupGoodIconUrl } from '../../../../../shared/game/icons';
+import { L10nText } from '../../../../../components/text/text';
+import { L10nKey } from '../../../../../shared/l10n/l10n';
 
 @Component({
   selector: 'cultural-set-tooltip',
@@ -14,7 +16,7 @@ import { lookupGoodIconUrl } from '../../../../../shared/game/icons';
   styleUrl: './cultural-set-tooltip.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [{ provide: EnumTooltip, useExisting: CulturalSetTooltip }],
-  imports: [],
+  imports: [L10nText],
 })
 export class CulturalSetTooltip extends EnumTooltip<CulturalSet> {
   setInfo: CulturalSetInfo | null = null;
@@ -29,5 +31,9 @@ export class CulturalSetTooltip extends EnumTooltip<CulturalSet> {
 
   iconGoodUrlLookupFn(good: Good | null | undefined): string {
     return lookupGoodIconUrl(good ?? Good.Unknown);
+  }
+
+  goodToLoc(good: Good | undefined): L10nKey {
+    return (good ?? 'Extra Goods') as L10nKey;
   }
 }

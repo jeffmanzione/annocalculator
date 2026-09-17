@@ -1,4 +1,4 @@
-import { inject, Injectable, signal } from '@angular/core';
+import { computed, inject, Injectable, signal } from '@angular/core';
 import { L10nKey, Language, localizations } from '../../shared/l10n/l10n';
 import {
   LocalStorageManager,
@@ -23,8 +23,20 @@ export class L10nService {
     this.languageLocalStorage_.get() ?? Language.En,
   );
 
+  readonly localeSignal = computed(() => {
+    switch (this.languageSignal()) {
+      case Language.En:
+        return 'en-US';
+      case Language.De:
+        return 'de-DE';
+      case Language.Nl:
+        return 'nl-NL';
+      case Language.Zh:
+        return 'zh-Hans';
+    }
+  });
+
   lookupLocalizedText(key: L10nKey): string {
-    console.log(this);
     const lang = this.languageLocalStorage_.get() ?? Language.En;
     const loc = localizations[key];
     if (!loc) {

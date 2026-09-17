@@ -13,9 +13,12 @@ import {
 import { OverlayModule } from '@angular/cdk/overlay';
 
 import { MatIcon } from '@angular/material/icon';
+import { L10nKey } from '../../shared/l10n/l10n';
+import { L10nText } from '../text/text';
 
 export interface NumberConstituent {
   value: number;
+  iconUrl?: string;
   description: string;
 }
 
@@ -23,7 +26,7 @@ export interface NumberConstituent {
   selector: 'composite-number',
   templateUrl: './composite-number.html',
   styleUrl: './composite-number.scss',
-  imports: [OverlayModule, FormattedNumber, MatIcon],
+  imports: [OverlayModule, FormattedNumber, MatIcon, L10nText],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CompositeNumber {
@@ -64,5 +67,9 @@ export class CompositeNumber {
       this.showTimeoutId_ = undefined;
       this.changeDetectorRef.detectChanges();
     }, 500);
+  }
+
+  toLoc(text: string): L10nKey {
+    return text as L10nKey;
   }
 }

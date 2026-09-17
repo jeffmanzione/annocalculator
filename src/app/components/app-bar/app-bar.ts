@@ -5,7 +5,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { Router } from '@angular/router';
 import { AppInfo, apps, isNotRedirect, WEBSITE_NAME } from '../../app.routes';
 import { L10nText } from '../text/text';
-import { MatSelect, MatSelectModule } from '@angular/material/select';
+import { MatSelectModule } from '@angular/material/select';
 import { Language, languages } from '../../shared/l10n/l10n';
 import { L10nService } from '../../services/l10n/l10n';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
@@ -18,7 +18,6 @@ import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
     MatToolbarModule,
     MatSelectModule,
     L10nText,
-    MatSelect,
   ],
   templateUrl: './app-bar.html',
   changeDetection: ChangeDetectionStrategy.Eager,
@@ -51,5 +50,10 @@ export class AppBar {
 
   navigateTo(app: AppInfo | string): void {
     this.router.navigateByUrl(typeof app === 'string' ? app : app.path);
+  }
+
+  langDisplayName(lang: Language): string {
+    if (lang === Language.Zh) return '中文';
+    return lang;
   }
 }

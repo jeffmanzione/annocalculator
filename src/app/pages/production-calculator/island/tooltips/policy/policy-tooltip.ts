@@ -4,6 +4,7 @@ import { DepartmentOfLaborPolicy } from '../../../../../shared/game/enums';
 
 import { lookupPolicyIconUrl } from '../../../../../shared/game/icons';
 import { lookupPolicyInfo, PolicyInfo } from '../../../../../shared/game/facts';
+import { L10nText } from '../../../../../components/text/text';
 
 @Component({
   selector: 'policy-tooltip',
@@ -11,7 +12,7 @@ import { lookupPolicyInfo, PolicyInfo } from '../../../../../shared/game/facts';
   styleUrl: './policy-tooltip.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [{ provide: EnumTooltip, useExisting: PolicyTooltip }],
-  imports: [],
+  imports: [L10nText],
 })
 export class PolicyTooltip extends EnumTooltip<DepartmentOfLaborPolicy> {
   policyInfo: PolicyInfo | null = null;
@@ -30,10 +31,10 @@ export class PolicyTooltip extends EnumTooltip<DepartmentOfLaborPolicy> {
   }
 
   get extraGoodText(): string {
-    return `Extra Goods: ${this.policyInfo?.extraGood?.rateNumerator} / ${this.policyInfo?.extraGood?.rateDenominator}`;
+    return `${this.policyInfo?.extraGood?.rateNumerator} / ${this.policyInfo?.extraGood?.rateDenominator}`;
   }
 
   get productivityText(): string {
-    return `Productivity: +${(this.policyInfo!.productivityEffect ?? 0) * 100}%`;
+    return `+${(this.policyInfo!.productivityEffect ?? 0) * 100}%`;
   }
 }

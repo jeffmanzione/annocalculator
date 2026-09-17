@@ -19,6 +19,12 @@ import {
   lookupCulturalSetInfo,
 } from '../game/facts';
 import {
+  lookupBoostIconUrl,
+  lookupCulturalSetIconUrl,
+  lookupItemIconUrl,
+  lookupPolicyIconUrl,
+} from '../game/icons';
+import {
   DEFAULT_ISLAND_MODEL,
   DEFAULT_PRODUCTION_LINE_MODEL,
   DEFAULT_WORLD_MODEL,
@@ -259,6 +265,7 @@ export class ProductionLineView
       constituents.push({
         value: this.context.world!.tradeUnionBonus,
         description: 'Palace Trade Union Bonus',
+        iconUrl: '/icons/others/palace.png',
       });
     }
     for (const item of this.items) {
@@ -267,6 +274,7 @@ export class ProductionLineView
         constituents.push({
           value: itemInfo.productivityEffect! / 100,
           description: item,
+          iconUrl: lookupItemIconUrl(item),
         });
       }
     }
@@ -284,22 +292,41 @@ export class ProductionLineView
           (item) => lookupItemInfo(item)?.providesElectricity ?? false,
         ))
     ) {
-      constituents.push({ value: 1, description: 'Electricity' });
+      constituents.push({
+        value: 1,
+        description: 'Electricity',
+        iconUrl: lookupBoostIconUrl(Boost.Electricity),
+      });
       if (this.affectedByGalvanicGrants) {
         constituents.push({
           value: 0.5,
           description: DepartmentOfLaborPolicy.GalvanicGrantsAct,
+          iconUrl: lookupPolicyIconUrl(
+            DepartmentOfLaborPolicy.GalvanicGrantsAct,
+          ),
         });
       }
     }
     if (boostSet.has(Boost.TractorBarn)) {
-      constituents.push({ value: 2, description: Boost.TractorBarn });
+      constituents.push({
+        value: 2,
+        description: Boost.TractorBarn,
+        iconUrl: lookupBoostIconUrl(Boost.TractorBarn),
+      });
     }
     if (boostSet.has(Boost.Fertiliser)) {
-      constituents.push({ value: 1, description: Boost.Fertiliser });
+      constituents.push({
+        value: 1,
+        description: Boost.Fertiliser,
+        iconUrl: lookupBoostIconUrl(Boost.Fertiliser),
+      });
     }
     if (boostSet.has(Boost.Silo)) {
-      constituents.push({ value: 1, description: Boost.Silo });
+      constituents.push({
+        value: 1,
+        description: Boost.Silo,
+        iconUrl: lookupBoostIconUrl(Boost.Silo),
+      });
     }
   }
 
@@ -320,6 +347,7 @@ export class ProductionLineView
         constituents.push({
           value: setInfo.productivityEffect! / 100,
           description: set,
+          iconUrl: lookupCulturalSetIconUrl(set),
         });
       }
     }

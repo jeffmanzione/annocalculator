@@ -5,7 +5,11 @@
     }
     <div class="set-name">{{ displayValue() }}</div>
     @if (setInfo!.productivityEffect ?? 0 > 0) {
-      <div class="set-text">Productivity: {{ setInfo!.productivityEffect }}%</div>
+      <div class="set-text">
+        <span textLoc="Productivity"></span>
+        :
+        {{ setInfo!.productivityEffect }}%
+      </div>
     }
     @if (setInfo!.extraGoods?.length ?? 0 > 0) {
       <div class="set-text extra-goods-container">
@@ -15,7 +19,9 @@
               <img [src]="iconGoodUrlLookupFn(eg.good)" [alt]="eg.good" class="good-icon-small" />
             }
             <div class="extra-good-name">
-              {{ eg.good ?? 'Extra Goods' }}: {{ eg.rateNumerator }} / {{ eg.rateDenominator }}
+              <span [textLoc]="goodToLoc(eg.good)"></span>
+              :
+              {{ eg.rateNumerator }} / {{ eg.rateDenominator }}
             </div>
           </div>
         }

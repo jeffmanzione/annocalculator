@@ -5,12 +5,18 @@
     }
     <div class="item-name">{{ value() }}</div>
     @if ((policyInfo!.productivityEffect ?? 0) > 0) {
-      <div class="item-text">{{ productivityText }}</div>
+      <div class="item-text">
+        <span textLoc="Productivity"></span>
+        :
+        {{ productivityText }}
+      </div>
     }
     @if (policyInfo!.extraGood) {
       <div class="item-text extra-goods-container">
         <div class="extra-good">
           <div class="extra-good-name">
+            <span textLoc="Extra Good"></span>
+            :
             {{ extraGoodText }}
           </div>
         </div>

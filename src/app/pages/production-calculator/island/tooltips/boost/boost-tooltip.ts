@@ -4,6 +4,7 @@ import { Boost } from '../../../../../shared/game/enums';
 import { BoostInfo, lookupBoostInfo } from '../../../../../shared/game/facts';
 
 import { lookupBoostIconUrl } from '../../../../../shared/game/icons';
+import { L10nText } from '../../../../../components/text/text';
 
 @Component({
   selector: 'boost-tooltip',
@@ -11,7 +12,7 @@ import { lookupBoostIconUrl } from '../../../../../shared/game/icons';
   styleUrl: './boost-tooltip.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [{ provide: EnumTooltip, useExisting: BoostTooltip }],
-  imports: [],
+  imports: [L10nText],
 })
 export class BoostTooltip extends EnumTooltip<Boost> {
   boostInfo: BoostInfo | null = null;
@@ -25,10 +26,10 @@ export class BoostTooltip extends EnumTooltip<Boost> {
   }
 
   get extraGoodText(): string {
-    return `Extra Goods: ${this.boostInfo?.extraGood?.rateNumerator} / ${this.boostInfo?.extraGood?.rateDenominator}`;
+    return `${this.boostInfo?.extraGood?.rateNumerator} / ${this.boostInfo?.extraGood?.rateDenominator}`;
   }
 
   get productivityText(): string {
-    return `Productivity: +${(this.boostInfo!.productivityEffect ?? 0) * 100}%`;
+    return `+${(this.boostInfo!.productivityEffect ?? 0) * 100}%`;
   }
 }
