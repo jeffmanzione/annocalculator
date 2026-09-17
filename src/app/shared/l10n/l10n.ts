@@ -50,7 +50,8 @@ export type L10nKey =
   | 'Productivity'
   | 'Base Productivity'
   | '/s'
-  | '/m';
+  | '/m'
+  | 's';
 
 export enum Language {
   En = 'En',
@@ -138,9 +139,9 @@ export const localizations: Localizations = {
   },
   Session: {
     En: 'Session',
-    De: 'Sitzung',
-    Nl: 'Sessie',
-    Zh: '时段',
+    De: 'Region',
+    Nl: 'Regio',
+    Zh: '地区',
   },
   'Department Policy': {
     En: 'Department Policy',
@@ -150,9 +151,9 @@ export const localizations: Localizations = {
   },
   Good: {
     En: 'Good',
-    De: 'Gut',
-    Nl: 'Goed',
-    Zh: '良好',
+    De: 'Ware',
+    Nl: 'Product',
+    Zh: '商品',
   },
   'Production (Total)': {
     En: 'Production (Total)',
@@ -218,7 +219,7 @@ export const localizations: Localizations = {
     En: 'Building',
     De: 'Gebäude',
     Nl: 'Gebouw',
-    Zh: '建筑',
+    Zh: '生产厂房',
   },
   Count: {
     En: 'Count',
@@ -230,7 +231,7 @@ export const localizations: Localizations = {
     En: 'Extras',
     De: 'Extras',
     Nl: 'Extras',
-    Zh: '附加项',
+    Zh: '额外商品',
   },
   Inputs: {
     En: 'Inputs',
@@ -248,7 +249,7 @@ export const localizations: Localizations = {
     En: 'Boosts',
     De: 'Boosts',
     Nl: 'Boosts',
-    Zh: '加成',
+    Zh: '增强',
   },
   'Trade Union': {
     En: 'Trade Union',
@@ -284,25 +285,25 @@ export const localizations: Localizations = {
     En: 'Process Time',
     De: 'Bauzeit',
     Nl: 'Bouwduur',
-    Zh: '建造耗时',
+    Zh: '加工时间',
   },
   'Goods per Minute': {
     En: 'Goods per Minute',
     De: 'Waren pro Minute',
     Nl: 'Goederen per minuut',
-    Zh: '每分钟产量',
+    Zh: '每分钟处理的商品数量',
   },
   'Extra Good': {
     En: 'Extra Good',
     De: 'Besonders gut',
     Nl: 'Extra goed',
-    Zh: '额外物',
+    Zh: '额外商品',
   },
   'Extra Goods': {
     En: 'Extra Goods',
     De: 'Zusätzliche Waren',
     Nl: 'Extra goederen',
-    Zh: '额外物品',
+    Zh: '额外商品',
   },
   Source: {
     En: 'Source',
@@ -344,7 +345,7 @@ export const localizations: Localizations = {
     En: 'Provides Electricity',
     De: 'Provides Electricity',
     Nl: 'Levert elektriciteit',
-    Zh: '供电',
+    Zh: '提供电力',
   },
   Yes: {
     En: 'Yes',
@@ -362,24 +363,30 @@ export const localizations: Localizations = {
     En: 'Productivity',
     De: 'Produktivität',
     Nl: 'Productiviteit',
-    Zh: '产量',
+    Zh: '生产率',
   },
   'Base Productivity': {
     En: 'Base Productivity',
     De: 'Basisproduktivität',
     Nl: 'Basisproductiviteit',
-    Zh: '基础产量',
+    Zh: '基础生产率',
   },
   '/s': {
     En: '/s',
-    De: '/',
+    De: '/s',
     Nl: '/s',
-    Zh: '/每秒',
+    Zh: '/秒',
   },
   '/m': {
     En: '/m',
     De: '/m',
     Nl: '/m',
     Zh: '/分钟',
+  },
+  s: {
+    En: 's',
+    De: 's',
+    Nl: 's',
+    Zh: '秒',
   },
 };
