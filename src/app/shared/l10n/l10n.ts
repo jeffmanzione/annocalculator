@@ -51,7 +51,12 @@ export type L10nKey =
   | 'Base Productivity'
   | '/s'
   | '/m'
-  | 's';
+  | 's'
+  | 'Common'
+  | 'Uncommon'
+  | 'Rare'
+  | 'Epic'
+  | 'Legendary';
 
 export enum Language {
   En = 'En',
@@ -388,5 +393,35 @@ export const localizations: Localizations = {
     De: 's',
     Nl: 's',
     Zh: '秒',
+  },
+  Common: {
+    En: 'Common',
+    De: 'Gewöhnlich',
+    Nl: 'Gewoon',
+    Zh: '普通',
+  },
+  Uncommon: {
+    En: 'Uncommon',
+    De: 'Ungewöhnlich',
+    Nl: 'Niet zo gewoon',
+    Zh: '不常见',
+  },
+  Rare: {
+    En: 'Rare',
+    De: 'Selten',
+    Nl: 'Zeldzaam',
+    Zh: '稀有',
+  },
+  Epic: {
+    En: 'Epic',
+    De: 'Episch',
+    Nl: 'Episch',
+    Zh: '史诗',
+  },
+  Legendary: {
+    En: 'Legendary',
+    De: 'Legendär',
+    Nl: 'Legendarisch',
+    Zh: '传奇',
   },
 };

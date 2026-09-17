@@ -30,6 +30,10 @@ export class ItemTooltip extends EnumTooltip<Item> {
     return this.itemInfo!.administrativeBuilding as L10nKey;
   }
 
+  get itemRarity(): L10nKey {
+    return this.itemInfo!.rarity as L10nKey;
+  }
+
   iconItemUrlLookupFn(_: Item | null): string {
     return this.itemInfo!.iconUrl;
   }
