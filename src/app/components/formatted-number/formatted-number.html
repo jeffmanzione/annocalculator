@@ -1,8 +1,12 @@
-<div [ngStyle]="{ color: color(), 'font-style': style(), 'font-weight': weight() }">
+<div [ngStyle]="{ color: color(), 'font-weight': weight() }" [style]="style()">
   <ng-container>
-    <span>{{ formattedValue() }}</span>
-    @if (suffix().length > 0) {
-      <span class="suffix" [textLoc]="suffixAsLoc()"></span>
+    @if (zeroOverride() && value() == 0) {
+      {{ this.zeroOverride() }}
+    } @else {
+      <span>{{ formattedValue() }}</span>
+      @if (suffix().length > 0) {
+        <span class="suffix" [textLoc]="suffixAsLoc()"></span>
+      }
     }
   </ng-container>
 </div>

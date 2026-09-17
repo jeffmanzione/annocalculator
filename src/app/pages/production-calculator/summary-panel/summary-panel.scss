@@ -31,6 +31,25 @@ card-content {
   margin-left: auto;
 }
 
+.warning-format {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .warning-icon {
+    @include mat.icon-overrides(
+      (
+        color: #ffd700,
+      )
+    );
+    font-size: 14px;
+    width: 0px;
+    overflow: visible;
+    height: 14px;
+    padding-left: 2px;
+  }
+}
+
 :host ::ng-deep {
   div.mat-sort-header-content {
     margin: auto;

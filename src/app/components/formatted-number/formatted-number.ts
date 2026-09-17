@@ -87,9 +87,6 @@ export class FormattedNumber {
   });
 
   formattedValue = computed(() => {
-    if (this.zeroOverride() && this.value() == 0) {
-      return this.zeroOverride()!;
-    }
     const strValue = this.isPercent()
       ? this.formatAsPercent_()
       : this.formatAsNumber_();

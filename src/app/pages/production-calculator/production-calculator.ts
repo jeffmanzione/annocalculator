@@ -305,7 +305,6 @@ export class ProductionCalculatorPage implements OnInit, AfterViewInit {
   }
 
   update(): void {
-    console.log('update');
     this.changeDectorRef_.detectChanges();
     this.world.tradeUnionBonus =
       this.formGroup!.value.tradeUnionBonusPercent / 100;

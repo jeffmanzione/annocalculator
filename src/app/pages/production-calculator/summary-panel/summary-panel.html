@@ -36,10 +36,20 @@
             <span textLoc="Production (Net)"></span>
           </th>
           <td mat-cell *matCellDef="let element">
-            <formatted-number
-              [value]="element.netProductionPerMin"
-              suffix="/m"
-              [formatFontSpec]="colorSpec"></formatted-number>
+            @if (element.hasIssue) {
+              <div class="warning-format">
+                <formatted-number
+                  [value]="element.netProductionPerMin"
+                  suffix="/m"
+                  [formatFontSpec]="warningColorSpec"></formatted-number>
+                <mat-icon class="warning-icon">warning_outlined</mat-icon>
+              </div>
+            } @else {
+              <formatted-number
+                [value]="element.netProductionPerMin"
+                suffix="/m"
+                [formatFontSpec]="colorSpec"></formatted-number>
+            }
           </td>
         </ng-container>
         <ng-container matColumnDef="island-summary">
@@ -73,7 +83,6 @@
                       <formatted-number
                         [value]="element2.localConsumptionPerMin"
                         suffix="/m"
-                        [formatFontSpec]="colorSpec"
                         zeroOverride="-"></formatted-number>
                     </td>
                   </ng-container>
@@ -97,7 +106,6 @@
                       <formatted-number
                         [value]="element2.exportedPerMin"
                         suffix="/m"
-                        [formatFontSpec]="colorSpec"
                         zeroOverride="-"></formatted-number>
                     </td>
                   </ng-container>

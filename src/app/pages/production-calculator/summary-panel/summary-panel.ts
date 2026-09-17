@@ -17,6 +17,7 @@ import {
   MatTableModule,
 } from '@angular/material/table';
 import {
+  FormatFontSpec,
   FormattedNumber,
   GREEN_RED_FONT_SPEC,
 } from '../../../components/formatted-number/formatted-number';
@@ -51,6 +52,7 @@ interface GoodSummaryRow {
   islandSummaries: GoodSummaryCell[];
   showIslandSummary: boolean;
   showIslandSummaryIcon: string;
+  hasIssue?: boolean;
 }
 
 type UpdateStatFn = (
@@ -77,6 +79,15 @@ type UpdateStatFn = (
 })
 export class SummaryPanel implements OnInit, AfterViewInit {
   readonly colorSpec = GREEN_RED_FONT_SPEC;
+  readonly warningColorSpec: FormatFontSpec = {
+    default: {
+      color: '#FFD700',
+      weight: 'bold',
+      style: `text-shadow: 0 0 4px  rgba(255, 255, 255, 1.0),
+    0 0 8px rgba(255, 255, 255, 0.9),
+    0 0 16px rgba(255, 255, 255, 0.6);`,
+    },
+  };
 
   readonly outerColumns = [
     'good',
@@ -299,10 +310,21 @@ export class SummaryPanel implements OnInit, AfterViewInit {
     cellTable.reduceLeft((good, cells) => {
       if (good == Good.Unknown) return;
       const row = this.rows_.get(good)!;
+      row.hasIssue = false;
       row.islandSummaries = Array.from(cells);
+      let hasDefecitOnIsland = false;
       for (const cell of cells) {
         row.totalProductionPerMin += cell.localProductionPerMin;
-        row.netProductionPerMin += this.availableProduction(cell);
+
+        const availableProduction = this.availableProduction(cell);
+        row.netProductionPerMin += availableProduction;
+        if (availableProduction < 0) {
+          hasDefecitOnIsland = true;
+        }
+      }
+      // Call out missing trade route.
+      if (row.netProductionPerMin >= 0 && hasDefecitOnIsland) {
+        row.hasIssue = true;
       }
     });
   }
