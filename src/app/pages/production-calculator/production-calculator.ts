@@ -1,4 +1,5 @@
 import {
+  AfterViewInit,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
@@ -41,6 +42,7 @@ import {
 import { Clipboard } from '@angular/cdk/clipboard';
 import { AcButton } from '../../components/button/button';
 import { L10nText } from '../../components/text/text';
+import { Subscription } from 'rxjs';
 
 const WORLD_KEY = 'anno-1800-production-calculator-world';
 
@@ -211,7 +213,7 @@ const defaultWorld: World = {
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ProductionCalculatorPage implements OnInit {
+export class ProductionCalculatorPage implements OnInit, AfterViewInit {
   readonly defaultActions = [
     {
       icon: 'content_copy',
@@ -246,7 +248,9 @@ export class ProductionCalculatorPage implements OnInit {
 
   islandComponents = viewChildren(Island);
   summaryPanel = viewChild.required(SummaryPanel);
-  tradeRoutesPanel = viewChild(TradeRoutesPanel);
+  tradeRoutesPanel = viewChild.required(TradeRoutesPanel);
+
+  private subscriptions_: Subscription[] = [];
 
   constructor(storageManager: LocalStorageManager) {
     this.worldStorage_ = storageManager.lookupObjectItem(WORLD_KEY);
@@ -258,6 +262,35 @@ export class ProductionCalculatorPage implements OnInit {
     });
     this.formGroup.valueChanges.subscribe(() => this.update());
     this.setWorld(this.worldStorage_.get() ?? defaultWorld);
+  }
+
+  private addAllSubscriptions_(): void {
+    if (this.tradeRoutesPanel()) {
+      this.subscriptions_.push(
+        this.tradeRoutesPanel().update.subscribe(() => this.update()),
+      );
+    }
+    if (this.islandComponents()) {
+      for (const i of this.islandComponents()) {
+        this.subscriptions_.push(i.update.subscribe(() => this.update()));
+      }
+    }
+  }
+
+  private clearAllSubscriptions_(): void {
+    for (const sub of this.subscriptions_) {
+      sub.unsubscribe();
+    }
+    this.subscriptions_ = [];
+  }
+
+  private resetSubscriptions_(): void {
+    this.clearAllSubscriptions_();
+    this.addAllSubscriptions_();
+  }
+
+  ngAfterViewInit(): void {
+    this.resetSubscriptions_();
   }
 
   setWorld(worldModel?: World): void {
@@ -272,10 +305,11 @@ export class ProductionCalculatorPage implements OnInit {
   }
 
   update(): void {
+    console.log('update');
     this.changeDectorRef_.detectChanges();
     this.world.tradeUnionBonus =
       this.formGroup!.value.tradeUnionBonusPercent / 100;
-    if (this.islandComponents) {
+    if (this.islandComponents()) {
       for (const i of this.islandComponents()) {
         i.forceAfterPushChange();
       }

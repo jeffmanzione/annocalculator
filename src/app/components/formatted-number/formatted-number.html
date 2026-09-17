@@ -2,7 +2,7 @@
   <ng-container>
     <span>{{ formattedValue() }}</span>
     @if (suffix().length > 0) {
-      <span [textLoc]="suffixAsLoc()"></span>
+      <span class="suffix" [textLoc]="suffixAsLoc()"></span>
     }
   </ng-container>
 </div>

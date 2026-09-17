@@ -1,9 +1,7 @@
 import { CommonModule, formatNumber, formatPercent } from '@angular/common';
 import {
   Component,
-  Inject,
   input,
-  LOCALE_ID,
   ChangeDetectionStrategy,
   computed,
   inject,
@@ -33,6 +31,7 @@ export const GREEN_RED_FONT_SPEC: FormatFontSpec = {
 @Component({
   selector: 'formatted-number',
   templateUrl: './formatted-number.html',
+  styleUrl: './formatted-number.scss',
   changeDetection: ChangeDetectionStrategy.Eager,
   imports: [CommonModule, L10nText],
 })

@@ -7,13 +7,13 @@
           <th mat-header-cell *matHeaderCellDef mat-sort-header>
             <span textLoc="Good"></span>
           </th>
-          <td mat-cell *matCellDef="let element">
+          <td mat-cell *matCellDef="let element" class="good-name">
             <enum-row [values]="[element.good]" [iconUrlLookupFn]="lookupGoodIconUrl"></enum-row>
           </td>
         </ng-container>
         <ng-container matColumnDef="show-islands">
           <th mat-header-cell *matHeaderCellDef></th>
-          <td mat-cell *matCellDef="let element">
+          <td mat-cell *matCellDef="let element" class="show-islands">
             <button mat-icon-button (click)="toggleIslandSummary(element)">
               <mat-icon [fontIcon]="element.showIslandSummaryIcon"></mat-icon>
             </button>

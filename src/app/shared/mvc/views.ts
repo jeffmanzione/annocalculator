@@ -532,17 +532,18 @@ export class ProductionLineView
   }
 
   get goodsProducedPerMinuteWithExtras(): number {
+    let goodsProducedPerMin = this.goodsProducedPerMinute;
     const extraGoods = this.extraGoods;
-    let rateModifier = 1;
 
     for (const eg of extraGoods) {
       if (eg.good !== this.good) {
         continue;
       }
-      rateModifier *=
-        (eg.rateNumerator + eg.rateDenominator) / eg.rateDenominator;
+      goodsProducedPerMin +=
+        ((this.numBuildings * 60) / this.buildingProcessTimeSeconds) *
+        (eg.rateNumerator / eg.rateDenominator);
     }
-    return this.goodsProducedPerMinute * rateModifier;
+    return goodsProducedPerMin;
   }
 
   get islandHasDepartmentOfLabor(): boolean {
