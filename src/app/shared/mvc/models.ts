@@ -35,6 +35,7 @@ export interface ExtraGood extends Model {
 }
 
 export interface ProductionLine extends Model {
+  id?: ProductionLineId;
   building: ProductionBuilding;
   inputGoods?: Good[];
   good: Good;
@@ -49,6 +50,7 @@ export interface ProductionLine extends Model {
 
 export type IslandId = number;
 export type TradeRouteId = number;
+export type ProductionLineId = number;
 
 export interface TradeRoute extends Model {
   id: TradeRouteId;

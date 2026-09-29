@@ -35,6 +35,7 @@ import {
   TradeRoute,
   IslandId,
   TradeRouteId,
+  ProductionLineId,
   ExtraGood,
   DEFAULT_EXTRA_GOOD_MODEL,
 } from './models';
@@ -130,6 +131,10 @@ export class ProductionLineView
 {
   static wrap(model: ProductionLine, context: ViewContext): ProductionLineView {
     return new ProductionLineView(model, context);
+  }
+
+  get id(): ProductionLineId {
+    return this.model.id!;
   }
 
   get building(): ProductionBuilding {

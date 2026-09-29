@@ -52,7 +52,11 @@ export class ProductionLineController extends ProductionLineView {
     model: ProductionLine,
     context: ViewContext,
   ): ProductionLineController {
-    return new ProductionLineController(model, context);
+    const controller = new ProductionLineController(model, context);
+    if (!model.id || model.id < 0) {
+      controller.model.id = generatePseudorandomInt();
+    }
+    return controller;
   }
 
   private updateGoods_(): void {
