@@ -1,16 +1,15 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  computed,
   OnInit,
+  Signal,
+  signal,
   TemplateRef,
-  viewChild,
 } from '@angular/core';
 import { IslandController } from '../../../shared/mvc/controllers';
-import {
-  MatTable,
-  MatTableDataSource,
-  MatTableModule,
-} from '@angular/material/table';
+import { ProductionLineId } from '../../../shared/mvc/models';
+import { MatTableModule } from '@angular/material/table';
 import {
   FormControl,
   FormGroup,
@@ -147,18 +146,13 @@ export class Island
 
   formGroup!: FormGroup;
 
-  private productionLineControls_!: ProductionLineControl[];
+  private readonly productionLines_ = signal(
+    new Map<ProductionLineId, ProductionLineControl>(),
+  );
 
-  get productionLineControls(): ProductionLineControl[] {
-    if (this.productionLineControls_.length == 0) {
-      this.addProductionLine();
-    }
-    return this.productionLineControls_;
-  }
-
-  productionLinesDataSource!: MatTableDataSource<ProductionLineControl>;
-
-  table = viewChild<MatTable<ProductionLineControl>>('productionLinesTable');
+  readonly productionLineRows: Signal<ProductionLineControl[]> = computed(
+    () => Array.from(this.productionLines_().values()),
+  );
 
   get multipleSelectLimit(): number {
     return this.controller().dolPolicy ==
@@ -180,21 +174,19 @@ export class Island
       dolPolicy: new FormControl(this.controller().dolPolicy),
     });
     this.formGroup.valueChanges.subscribe((_) => this.pushUpChange());
-    this.productionLineControls_ = this.controller().productionLines.map(
-      (pl) => {
-        const control = new ProductionLineControl(pl);
-        this.registerChildControl(control);
-        return control;
-      },
-    );
 
-    if (this.productionLineControls_.length == 0) {
+    const controls = new Map<ProductionLineId, ProductionLineControl>();
+    for (const pl of this.controller().productionLines) {
+      const control = new ProductionLineControl(pl);
+      this.registerChildControl(control);
+      controls.set(pl.id, control);
+    }
+    this.productionLines_.set(controls);
+
+    if (controls.size == 0) {
       this.addProductionLine();
     }
 
-    this.productionLinesDataSource = new MatTableDataSource(
-      this.productionLineControls_,
-    );
     this.afterPushChange();
   }
 
@@ -202,14 +194,13 @@ export class Island
     this.controller().name = this.formGroup.value.name;
     this.controller().region = this.formGroup.value.region;
     this.controller().dolPolicy = this.formGroup.value.dolPolicy;
-    if (this.productionLineControls_.length == 0) {
+    if (this.productionLines_().size == 0) {
       this.addProductionLine();
     }
   }
 
   override afterPushChange(): void {
     this.updateRegionSpecificSelectOptions_();
-    this.table()?.renderRows();
   }
 
   private updateRegionSpecificSelectOptions_(): void {
@@ -231,20 +222,23 @@ export class Island
   }
 
   addProductionLine(): void {
-    const control = new ProductionLineControl(
-      this.controller().addProductionLine(),
-    );
+    const controller = this.controller().addProductionLine();
+    const control = new ProductionLineControl(controller);
     this.registerChildControl(control);
-    this.productionLineControls_.push(control);
+    this.productionLines_.update((controls) =>
+      new Map(controls).set(controller.id, control),
+    );
     this.pushUpChange();
   }
 
-  removeProductionLineAt(el: ProductionLineControl): void {
-    const index = this.productionLineControls_.indexOf(el);
-    this.unregisterChildControl(
-      this.productionLineControls_.splice(index, 1)[0],
-    );
-    this.controller().removeProductionLineAt(index);
+  removeProductionLine(el: ProductionLineControl): void {
+    this.unregisterChildControl(el);
+    this.productionLines_.update((controls) => {
+      const next = new Map(controls);
+      next.delete(el.controller.id);
+      return next;
+    });
+    this.controller().removeProductionLineById(el.controller.id);
     this.pushUpChange();
   }
 

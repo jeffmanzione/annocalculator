@@ -21,6 +21,7 @@ import {
   IslandId,
   BASE_TRADE_ROUTE_MODEL,
   TradeRouteId,
+  ProductionLineId,
 } from './models';
 import {
   IslandView,
@@ -269,16 +270,10 @@ export class IslandController extends IslandView {
     return controller;
   }
 
-  removeProductionLineAt(index: number): void {
-    if (
-      !Number.isInteger(index) ||
-      index < 0 ||
-      index >= this.model.productionLines.length
-    ) {
-      console.warn(
-        'Invalid productionLine index. ' +
-          `Was ${index} and length is ${this.model.productionLines.length}`,
-      );
+  removeProductionLineById(id: ProductionLineId): void {
+    const index = this.model.productionLines.findIndex((pl) => pl.id == id);
+    if (index < 0) {
+      console.warn(`Invalid productionLine id. Was ${id}.`);
       return;
     }
     this.model.productionLines.splice(index, 1);

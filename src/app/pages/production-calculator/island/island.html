@@ -28,10 +28,9 @@
     </section>
     <section>
       <table
-        #productionLinesTable
         mat-table
         class="production-lines-table"
-        [dataSource]="productionLinesDataSource"
+        [dataSource]="productionLineRows()"
         multiTemplateDataRows>
         <ng-container matColumnDef="building">
           <th mat-header-cell *matHeaderCellDef>
@@ -191,7 +190,7 @@
             <span textLoc="Remove"></span>
           </th>
           <td mat-cell *matCellDef="let element" [formGroup]="element.formGroup" class="remove-field">
-            <ac-button icon="delete" (action)="removeProductionLineAt(element)"></ac-button>
+            <ac-button icon="delete" (action)="removeProductionLine(element)"></ac-button>
           </td>
         </ng-container>
         <ng-container matColumnDef="extraGoods">
