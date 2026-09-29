@@ -2,7 +2,6 @@ import { CommonModule } from '@angular/common';
 import {
   Component,
   inject,
-  ChangeDetectionStrategy,
   computed,
   input,
 } from '@angular/core';
@@ -13,7 +12,6 @@ import { L10nKey } from '../../shared/l10n/l10n';
   selector: '[textLoc]',
   imports: [CommonModule],
   template: '{{ localizedText() }}',
-  changeDetection: ChangeDetectionStrategy.Eager,
 })
 export class L10nText {
   private readonly l10nService_ = inject(L10nService);

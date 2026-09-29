@@ -5,7 +5,6 @@ import {
   input,
   computed,
   signal,
-  ChangeDetectionStrategy,
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
@@ -21,7 +20,6 @@ import { L10nKey } from '../../shared/l10n/l10n';
   imports: [EnumRow, MatSelectModule, MatFormFieldModule, L10nText],
   templateUrl: './enum-select.html',
   styleUrl: './enum-select.scss',
-  changeDetection: ChangeDetectionStrategy.Eager,
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,

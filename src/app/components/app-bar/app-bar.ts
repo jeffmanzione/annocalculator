@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { Router } from '@angular/router';
@@ -20,7 +20,6 @@ import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
     L10nText,
   ],
   templateUrl: './app-bar.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './app-bar.scss',
   providers: [
     {

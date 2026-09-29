@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { AppBar } from './components/app-bar/app-bar';
 
@@ -17,7 +17,6 @@ registerLocaleData(localeZhHans);
   selector: 'app-root',
   imports: [RouterOutlet, AppBar],
   templateUrl: './app.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './app.scss',
 })
 export class App implements OnInit {

@@ -1,7 +1,6 @@
 import {
   Component,
   ElementRef,
-  ChangeDetectionStrategy,
   effect,
   model,
   viewChild,
@@ -12,7 +11,6 @@ import { MatInputModule } from '@angular/material/input';
   selector: 'json-input',
   imports: [MatInputModule],
   templateUrl: './json-input.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './json-input.scss',
 })
 export class JsonInput<T> {
