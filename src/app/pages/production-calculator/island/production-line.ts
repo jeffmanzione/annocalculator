@@ -49,14 +49,13 @@ export class ProductionLineControl extends FormGroupControl<ProductionLineContro
     return 'arrow_drop_down';
   });
 
-  // allowedBoosts/allowedItems/allowedCulturalSets stay plain fields, kept
-  // in sync by updateFormStates_() -- see the comment on beforeModelUpdate()
-  // below for why these can't be computed()s: they must reflect the form's
-  // pending (uncommitted) building value, not the last-committed one, or
-  // the correction-before-model-write logic breaks.
-  allowedBoosts: Set<Boost> = new Set();
-  allowedItems: Set<Item> = new Set();
-  allowedCulturalSets: Set<CulturalSet> = new Set();
+  // Written imperatively by updateFormStates_() rather than derived with
+  // computed() -- see the constructor comment for why these specifically
+  // need to react to their own form controls' changes, not to
+  // recomputeTrigger_.
+  readonly allowedBoosts = signal<Set<Boost>>(new Set());
+  readonly allowedItems = signal<Set<Item>>(new Set());
+  readonly allowedCulturalSets = signal<Set<CulturalSet>>(new Set());
 
   readonly inputGoods: Signal<Good[]> = computed(() => {
     this.recomputeTrigger_();
@@ -103,6 +102,29 @@ export class ProductionLineControl extends FormGroupControl<ProductionLineContro
     ]);
     // Show extra goods by default when there are any.
     this.showExtraGoodsRequested_.set(this.controller.extraGoods.length > 0);
+
+    // building and hasTradeUnion are the only two of this row's own form
+    // values that updateFormStates_() reads -- everything else it touches
+    // (boosts/items/culturalSets/inRangeOf...) is an output, not an input.
+    // Subscribing directly to those two controls' own valueChanges (rather
+    // than the whole FormGroup's, which is what pushUpChange() below
+    // listens to) means the correction always lands before this row's
+    // model gets written: Angular's reactive forms fire a child control's
+    // valueChanges before its parent FormGroup's, and it's the parent
+    // FormGroup's valueChanges that triggers pushUpChange() (see
+    // FormGroupControl's constructor), which is what commits form values
+    // to the model. This is what replaces the old
+    // beforeModelUpdate()/afterPushChange() double-call dance -- each
+    // interdependent relationship now reacts to the thing it actually
+    // depends on, instead of everything re-running on a fixed
+    // before/after schedule regardless of what changed.
+    this.formGroup.controls['building'].valueChanges.subscribe(() =>
+      this.updateFormStates_(),
+    );
+    this.formGroup.controls['hasTradeUnion'].valueChanges.subscribe(() =>
+      this.updateFormStates_(),
+    );
+
     this.beforeBubbleChange();
     this.afterPushChange();
   }
@@ -111,15 +133,21 @@ export class ProductionLineControl extends FormGroupControl<ProductionLineContro
     return this.controller;
   }
 
-  // Update the form states (without updating the model/controller).
+  // Update the form states (without updating the model/controller). Reads
+  // this row's own pending (not-yet-committed) building/hasTradeUnion
+  // values when called from the constructor's direct subscriptions above,
+  // and this island's already-committed region/department-of-labor state
+  // when called from afterPushChange() -- both are safe: see the
+  // constructor comment for why the same-row inputs are safe here despite
+  // being pending.
   private updateFormStates_(): void {
     const building: ProductionBuilding = this.formGroup.value.building;
-    this.updateBoostOptions_();
+    this.updateBoostOptions_(building);
     // Some buildings require electricity, and if so, we automatically select it, otherwise, we
     // narrow the field down to possible options.
     if (requiresElectricity(building)) {
       this.clearAndDisableControl_('boosts', [Boost.Electricity]);
-    } else if (this.allowedBoosts.size == 0) {
+    } else if (this.allowedBoosts().size == 0) {
       this.clearAndDisableControl_('boosts', []);
     } else {
       this.enableControl_('boosts');
@@ -127,7 +155,7 @@ export class ProductionLineControl extends FormGroupControl<ProductionLineContro
 
     // Items can only be slotted in trade unions.
     if (this.formGroup.value.hasTradeUnion) {
-      this.updateItemOptions_();
+      this.updateItemOptions_(building);
       this.enableControl_('items');
     } else {
       this.clearAndDisableControl_('items', false);
@@ -155,15 +183,14 @@ export class ProductionLineControl extends FormGroupControl<ProductionLineContro
       this.clearAndDisableControl_('inRangeOfHaciendaFertiliserWorks', false);
     }
 
-    this.updateCulturalSetOptions_();
+    this.updateCulturalSetOptions_(building);
   }
 
-  private updateCulturalSetOptions_() {
-    this.allowedCulturalSets = new Set(
-      lookupAllowedCulturalSets(this.formGroup.value.building),
-    );
+  private updateCulturalSetOptions_(building: ProductionBuilding): void {
+    const allowedCulturalSets = new Set(lookupAllowedCulturalSets(building));
+    this.allowedCulturalSets.set(allowedCulturalSets);
 
-    if (this.allowedCulturalSets.size == 0) {
+    if (allowedCulturalSets.size == 0) {
       this.clearAndDisableControl_('culturalSets', false);
       return;
     }
@@ -172,41 +199,39 @@ export class ProductionLineControl extends FormGroupControl<ProductionLineContro
       []) as CulturalSet[];
     if (
       selectedCulturalSets &&
-      !selectedCulturalSets.every((s) => !this.allowedCulturalSets.has(s))
+      !selectedCulturalSets.every((s) => !allowedCulturalSets.has(s))
     ) {
       this.formGroup.controls['culturalSets'].setValue(
-        selectedCulturalSets.filter((s) => this.allowedCulturalSets.has(s)),
+        selectedCulturalSets.filter((s) => allowedCulturalSets.has(s)),
         { emitEvent: false },
       );
     }
   }
 
-  private updateBoostOptions_(): void {
-    this.allowedBoosts = new Set(
-      lookupAllowedBoosts(this.formGroup.value.building),
-    );
+  private updateBoostOptions_(building: ProductionBuilding): void {
+    const allowedBoosts = new Set(lookupAllowedBoosts(building));
+    this.allowedBoosts.set(allowedBoosts);
     const selectedBoosts = (this.formGroup.value.boosts ?? []) as Boost[];
 
-    if (!selectedBoosts.every((b) => !this.allowedBoosts.has(b))) {
+    if (!selectedBoosts.every((b) => !allowedBoosts.has(b))) {
       this.formGroup.controls['boosts'].setValue(
-        selectedBoosts.filter((b) => this.allowedBoosts.has(b)),
+        selectedBoosts.filter((b) => allowedBoosts.has(b)),
         { emitEvent: false },
       );
     }
   }
-  private updateItemOptions_(): void {
-    const newAllowedItems = new Set(
-      lookupAllowedItems(this.formGroup.value.building),
-    );
-    if (!setsAreEqual(newAllowedItems, this.allowedItems)) {
-      this.allowedItems = newAllowedItems;
+
+  private updateItemOptions_(building: ProductionBuilding): void {
+    const newAllowedItems = new Set(lookupAllowedItems(building));
+    if (!setsAreEqual(newAllowedItems, this.allowedItems())) {
+      this.allowedItems.set(newAllowedItems);
     }
 
     const selectedItems = (this.formGroup.value.items || []) as Item[];
 
-    if (selectedItems.some((i) => !this.allowedItems.has(i))) {
+    if (selectedItems.some((i) => !newAllowedItems.has(i))) {
       this.formGroup.controls['items'].setValue(
-        selectedItems.filter((i) => this.allowedItems.has(i)),
+        selectedItems.filter((i) => newAllowedItems.has(i)),
         { emitEvent: false },
       );
     }
@@ -230,18 +255,13 @@ export class ProductionLineControl extends FormGroupControl<ProductionLineContro
     });
   }
 
-  override beforeModelUpdate(): void {
-    // Form states must be adjusted separately and before model changes to prevent potential infinite
-    // loops caused by interdependent component forms in the hierarchy.
-    this.updateFormStates_();
-  }
-
   override afterPushChange(): void {
+    // Refreshes the parts of updateFormStates_() that depend on this
+    // island's already-committed state (region, department-of-labor
+    // policy) -- safe to read only now, after the model write, unlike the
+    // building/hasTradeUnion-triggered corrections handled by the
+    // constructor's direct subscriptions above.
     this.updateFormStates_();
-    // Bumping after updateFormStates_() (which may itself correct/clear
-    // form values before they're written to the model) ensures the
-    // computed fields above are fresh after the model update -- the same
-    // ordering the old updateAndFormatDerivedFields_() relied on.
     this.recomputeTrigger_.update((v) => v + 1);
   }
 
