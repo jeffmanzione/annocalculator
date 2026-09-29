@@ -115,6 +115,12 @@ export class SummaryPanel implements OnInit, AfterViewInit {
     ): boolean => {
       return data.islandSummaries.length > 0;
     };
+    // MatTableDataSource only runs filterPredicate at all when `filter` is a
+    // non-empty string -- an empty filter short-circuits to "show everything"
+    // regardless of filterPredicate. This app has no user-facing filter box,
+    // so the value itself is unused; it only needs to be non-empty to switch
+    // filtering on.
+    this.tableData.filter = 'show-goods-with-production-or-deficit';
   }
 
   ngAfterViewInit(): void {
