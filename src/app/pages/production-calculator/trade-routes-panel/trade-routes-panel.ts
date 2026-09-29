@@ -1,32 +1,30 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  OnInit,
-  viewChild,
-} from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import {
-  TradeRouteController,
-  WorldController,
-} from '../../../shared/mvc/controllers';
-import {
-  MatTable,
-  MatTableDataSource,
-  MatTableModule,
-} from '@angular/material/table';
-import {
-  ControlComponent,
-  FormGroupControl,
-} from '../../../shared/control/control';
+import { ChangeDetectionStrategy, Component, computed, Signal } from '@angular/core';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { WorldController } from '../../../shared/mvc/controllers';
+import { MatTableModule } from '@angular/material/table';
+import { ControlComponent } from '../../../shared/control/control';
 import { MatSelectModule } from '@angular/material/select';
 import { Good } from '../../../shared/game/enums';
 import { lookupGoodIconUrl } from '../../../shared/game/icons';
 import { EnumSelect } from '../../../components/enum-select/enum-select';
-import { IslandView } from '../../../shared/mvc/views';
 import { CardModule } from '../../../components/card/card';
-import { TradeRouteId } from '../../../shared/mvc/models';
+import { TradeRoute, TradeRouteId } from '../../../shared/mvc/models';
 import { AcButton } from '../../../components/button/button';
 import { L10nText } from '../../../components/text/text';
+import { IslandSummary, TradeRoutesStore } from './trade-routes-store';
+
+/** A single trade-route table row: a stable form bound to one trade route, plus its currently-valid dropdown options. */
+interface TradeRouteRow {
+  id: TradeRouteId;
+  formGroup: FormGroup<{
+    sourceIslandId: FormControl<number | null>;
+    targetIslandId: FormControl<number | null>;
+    good: FormControl<Good | null>;
+  }>;
+  sourceIslandOptions: IslandSummary[];
+  targetIslandOptions: IslandSummary[];
+  sourceGoodOptions: Good[];
+}
 
 @Component({
   selector: 'trade-routes-panel',
@@ -44,10 +42,7 @@ import { L10nText } from '../../../components/text/text';
   styleUrl: './trade-routes-panel.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TradeRoutesPanel
-  extends ControlComponent<WorldController>
-  implements OnInit
-{
+export class TradeRoutesPanel extends ControlComponent<WorldController> {
   readonly displayColumns = [
     'sourceIslandId',
     'targetIslandId',
@@ -55,76 +50,116 @@ export class TradeRoutesPanel
     'remove',
   ];
 
-  dataSource!: MatTableDataSource<TradeRouteControl>;
+  private readonly store_ = new TradeRoutesStore();
 
-  table = viewChild.required<MatTable<TradeRouteControl>>('tradeRouteTable');
+  // Form groups are kept stable across store updates (rather than recreated
+  // on every change) so in-progress edits and open dropdowns aren't reset by
+  // an unrelated change elsewhere, e.g. renaming an island.
+  private readonly formGroups_ = new Map<
+    TradeRouteId,
+    TradeRouteRow['formGroup']
+  >();
 
-  tradeRoutes!: TradeRouteControl[];
+  readonly rows: Signal<TradeRouteRow[]> = computed(() =>
+    this.store_.tradeRoutes().map((tr) => this.rowFor_(tr)),
+  );
 
-  ngOnInit(): void {
-    this.tradeRoutes = this.controller().tradeRoutes.map((tr) => {
-      const control = new TradeRouteControl(tr);
-      this.registerChildControl(control);
-      return control;
+  protected override onSetController(controller: WorldController): void {
+    this.store_.loadTradeRoutes(controller.tradeRoutes);
+    this.refreshIslandSummaries_();
+  }
+
+  addTradeRoute(): void {
+    const added = this.controller().addTradeRoute();
+    this.store_.addTradeRoute({
+      id: added.id,
+      sourceIslandId: added.sourceIslandId,
+      targetIslandId: added.targetIslandId,
+      good: added.good,
     });
-    this.dataSource = new MatTableDataSource(this.tradeRoutes);
-  }
-
-  addTradeRoute() {
-    const control = new TradeRouteControl(this.controller().addTradeRoute());
-    this.registerChildControl(control);
-    this.tradeRoutes.push(control);
+    this.refreshIslandSummaries_();
     this.pushUpChange();
   }
 
-  removeTradeRouteAt(el: TradeRouteControl) {
-    const index = this.tradeRoutes.indexOf(el);
-    this.unregisterChildControl(this.tradeRoutes.splice(index, 1)[0]);
-    this.controller().removeTradeRoute(el.id);
+  removeTradeRouteAt(id: TradeRouteId): void {
+    this.controller().removeTradeRoute(id);
+    this.store_.removeTradeRoute(id);
+    this.formGroups_.delete(id);
+    this.refreshIslandSummaries_();
     this.pushUpChange();
-  }
-
-  override afterPushChange(): void {
-    this.table().renderRows();
   }
 
   lookupGoodIconUrl(good: Good | null): string {
     return lookupGoodIconUrl(good ?? Good.Unknown);
   }
-}
 
-export class TradeRouteControl extends FormGroupControl<TradeRouteController> {
-  get id(): TradeRouteId {
-    return this.controller.id;
-  }
-
-  sourceIslandOptions: IslandView[] = [];
-  targetIslandOptions: IslandView[] = [];
-  sourceGoodOptions: Good[] = [];
-
-  constructor(controller: TradeRouteController) {
-    super(controller, ['sourceIslandId', 'targetIslandId', 'good']);
-    this.beforeBubbleChange();
-    this.afterPushChange();
-  }
-
-  override afterPushChange(): void {
-    this.sourceIslandOptions = this.controller.world.islands.filter(
-      (i) => i.id != this.controller.targetIslandId,
+  /** Re-derives the island name/produced-goods summary the dropdowns read from. Islands live outside this store, so this is a manual refresh rather than a subscription -- see the store's doc comment. */
+  private refreshIslandSummaries_(): void {
+    this.store_.loadIslands(
+      this.controller().islands.map(
+        (island): IslandSummary => ({
+          id: island.id,
+          name: island.name,
+          producedGoods: island.producedGoods,
+        }),
+      ),
     );
-    this.targetIslandOptions = this.controller.world.islands.filter(
-      (i) => i.id != this.controller.sourceIslandId,
-    );
-    this.sourceGoodOptions = this.computeSourceGoods_();
   }
 
-  private computeSourceGoods_(): Good[] {
-    if (this.controller.sourceIslandId < 0) {
-      return [];
+  private rowFor_(tradeRoute: TradeRoute): TradeRouteRow {
+    return {
+      id: tradeRoute.id,
+      formGroup: this.formGroupFor_(tradeRoute),
+      sourceIslandOptions: this.store_.originOptions(tradeRoute.id),
+      targetIslandOptions: this.store_.destinationOptions(tradeRoute.id),
+      sourceGoodOptions: this.store_.goodOptions(tradeRoute.id),
+    };
+  }
+
+  private formGroupFor_(tradeRoute: TradeRoute): TradeRouteRow['formGroup'] {
+    const existing = this.formGroups_.get(tradeRoute.id);
+    if (existing) {
+      return existing;
     }
-    const island = this.controller.world.lookupIslandById(
-      this.controller.sourceIslandId,
+    const formGroup = new FormGroup({
+      sourceIslandId: new FormControl(tradeRoute.sourceIslandId),
+      targetIslandId: new FormControl(tradeRoute.targetIslandId),
+      good: new FormControl(tradeRoute.good),
+    });
+    formGroup.valueChanges.subscribe((value) =>
+      this.onRowEdited_(tradeRoute.id, value),
     );
-    return island.producedGoods;
+    this.formGroups_.set(tradeRoute.id, formGroup);
+    return formGroup;
+  }
+
+  private onRowEdited_(
+    id: TradeRouteId,
+    value: Partial<{
+      sourceIslandId: number | null;
+      targetIslandId: number | null;
+      good: Good | null;
+    }>,
+  ): void {
+    const controller = this.controller().tradeRoutes.find((tr) => tr.id === id);
+    if (!controller) {
+      return;
+    }
+    if (value.sourceIslandId != null) {
+      controller.sourceIslandId = value.sourceIslandId;
+    }
+    if (value.targetIslandId != null) {
+      controller.targetIslandId = value.targetIslandId;
+    }
+    if (value.good != null) {
+      controller.good = value.good;
+    }
+    this.store_.updateTradeRoute(id, {
+      sourceIslandId: controller.sourceIslandId,
+      targetIslandId: controller.targetIslandId,
+      good: controller.good,
+    });
+    this.refreshIslandSummaries_();
+    this.pushUpChange();
   }
 }
