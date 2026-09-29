@@ -69,6 +69,17 @@ export class TradeRoutesPanel extends ControlComponent<WorldController> {
     this.refreshIslandSummaries_();
   }
 
+  // The root component calls this on every world-wide change (an island
+  // rename, an island add/remove, another trade route's edit, ...) via
+  // production-calculator.ts's update(). Re-reading island summaries here,
+  // rather than only when this panel's own rows change, is what keeps the
+  // origin/destination/good dropdowns correct after an edit made elsewhere
+  // -- fixes a bug where they'd otherwise go stale until this panel's own
+  // state next changed.
+  override afterPushChange(): void {
+    this.refreshIslandSummaries_();
+  }
+
   addTradeRoute(): void {
     const added = this.controller().addTradeRoute();
     this.store_.addTradeRoute({
