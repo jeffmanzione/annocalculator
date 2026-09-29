@@ -432,18 +432,20 @@ export class ProductionLineView
 
     for (const boost of this.boosts) {
       const boostInfo = lookupBoostInfo(boost)!;
-      extraGoods.push(
-        ExtraGoodView.wrap(
-          {
-            good: this.good,
-            source: boost,
-            sourceType: 'Boost',
-            rateNumerator: boostInfo.extraGood?.rateNumerator,
-            rateDenominator: boostInfo.extraGood?.rateDenominator,
-          },
-          { productionLine: this, ...this.context },
-        ),
-      );
+      if (boostInfo.extraGood) {
+        extraGoods.push(
+          ExtraGoodView.wrap(
+            {
+              good: this.good,
+              source: boost,
+              sourceType: 'Boost',
+              rateNumerator: boostInfo.extraGood?.rateNumerator,
+              rateDenominator: boostInfo.extraGood?.rateDenominator,
+            },
+            { productionLine: this, ...this.context },
+          ),
+        );
+      }
     }
     return extraGoods;
   }
