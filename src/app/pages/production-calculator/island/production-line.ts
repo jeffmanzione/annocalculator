@@ -17,34 +17,75 @@ import {
 } from '../../../shared/game/facts';
 import { FormGroupControl } from '../../../shared/control/control';
 import { NumberConstituent } from '../../../components/composite-number/composite-number';
-import { MatTableDataSource } from '@angular/material/table';
+import { computed, Signal, signal } from '@angular/core';
 
 export class ProductionLineControl extends FormGroupControl<ProductionLineController> {
-  extraGoods?: MatTableDataSource<ExtraGoodView>;
-  hasExtraGoods = false;
-  showExtraGoods = false;
-  get expandExtraGoodsIcon(): string {
-    if (this.showExtraGoods) {
+  // Bumped after every model update (see afterPushChange()) so the computed
+  // fields below -- which read plain, non-observable controller state --
+  // recompute. Same pattern as SummaryPanel.recomputeTrigger_.
+  private readonly recomputeTrigger_ = signal(0);
+
+  readonly extraGoodsRows: Signal<ExtraGoodView[]> = computed(() => {
+    this.recomputeTrigger_();
+    return this.controller.extraGoods;
+  });
+  readonly hasExtraGoods = computed(() => this.extraGoodsRows().length > 0);
+
+  // UI-only: whether this production line's extra-goods breakdown is
+  // expanded. Deliberately not gated on recomputeTrigger_ -- it's
+  // interaction state, not derived from the world (same principle as the
+  // summary-panel spike's expanded-rows handling).
+  private readonly showExtraGoodsRequested_ = signal(false);
+  readonly showExtraGoods = computed(
+    () => this.showExtraGoodsRequested_() && this.hasExtraGoods(),
+  );
+  readonly expandExtraGoodsIcon = computed(() => {
+    if (this.showExtraGoods()) {
       return 'arrow_drop_up';
     }
-    if (this.extraGoods?.data.length == 0) {
+    if (this.extraGoodsRows().length == 0) {
       return 'check_indeterminate_small';
     }
     return 'arrow_drop_down';
-  }
+  });
 
+  // allowedBoosts/allowedItems/allowedCulturalSets stay plain fields, kept
+  // in sync by updateFormStates_() -- see the comment on beforeModelUpdate()
+  // below for why these can't be computed()s: they must reflect the form's
+  // pending (uncommitted) building value, not the last-committed one, or
+  // the correction-before-model-write logic breaks.
   allowedBoosts: Set<Boost> = new Set();
   allowedItems: Set<Item> = new Set();
   allowedCulturalSets: Set<CulturalSet> = new Set();
 
-  inputGoods: Good[] = [];
+  readonly inputGoods: Signal<Good[]> = computed(() => {
+    this.recomputeTrigger_();
+    return this.controller.inputGoods;
+  });
   // Will always be a list of size 1 since production lines only output 1 good type.
-  outputGoods: Good[] = [];
+  readonly outputGoods: Signal<Good[]> = computed(() => {
+    this.recomputeTrigger_();
+    return [this.controller.good];
+  });
 
-  efficiency: number = 0;
-  efficiencyConstituents: NumberConstituent[] = [];
-  buildingProcessTimeSeconds: number = 0;
-  goodsProducedPerMinute: number = 0;
+  readonly efficiency: Signal<number> = computed(() => {
+    this.recomputeTrigger_();
+    return this.controller.efficiency;
+  });
+  readonly efficiencyConstituents: Signal<NumberConstituent[]> = computed(
+    () => {
+      this.recomputeTrigger_();
+      return this.controller.efficiencyConstituents;
+    },
+  );
+  readonly buildingProcessTimeSeconds: Signal<number> = computed(() => {
+    this.recomputeTrigger_();
+    return this.controller.buildingProcessTimeSeconds;
+  });
+  readonly goodsProducedPerMinute: Signal<number> = computed(() => {
+    this.recomputeTrigger_();
+    return this.controller.goodsProducedPerMinuteWithExtras;
+  });
 
   constructor(controller: ProductionLineController) {
     super(controller, [
@@ -60,12 +101,8 @@ export class ProductionLineControl extends FormGroupControl<ProductionLineContro
       'inRangeOfHaciendaFertiliserWorks',
       'culturalSets',
     ]);
-    this.extraGoods = new MatTableDataSource(this.controller.extraGoods);
-    // Show by default
-    if (this.extraGoods.data.length > 0) {
-      this.hasExtraGoods = true;
-      this.showExtraGoods = true;
-    }
+    // Show extra goods by default when there are any.
+    this.showExtraGoodsRequested_.set(this.controller.extraGoods.length > 0);
     this.beforeBubbleChange();
     this.afterPushChange();
   }
@@ -193,23 +230,6 @@ export class ProductionLineControl extends FormGroupControl<ProductionLineContro
     });
   }
 
-  private updateAndFormatDerivedFields_(): void {
-    this.inputGoods = this.controller.inputGoods;
-    this.outputGoods = [this.controller.good];
-
-    this.efficiency = this.controller.efficiency;
-    this.efficiencyConstituents = this.controller.efficiencyConstituents;
-
-    this.buildingProcessTimeSeconds =
-      this.controller.buildingProcessTimeSeconds;
-    this.goodsProducedPerMinute =
-      this.controller.goodsProducedPerMinuteWithExtras;
-
-    this.extraGoods!.data = this.controller.extraGoods;
-    this.hasExtraGoods = this.extraGoods!.data.length > 0;
-    this.showExtraGoods = this.showExtraGoods && this.hasExtraGoods;
-  }
-
   override beforeModelUpdate(): void {
     // Form states must be adjusted separately and before model changes to prevent potential infinite
     // loops caused by interdependent component forms in the hierarchy.
@@ -218,12 +238,15 @@ export class ProductionLineControl extends FormGroupControl<ProductionLineContro
 
   override afterPushChange(): void {
     this.updateFormStates_();
-    // Derived view fields must be after the model update so that they are fresh after the model update.
-    this.updateAndFormatDerivedFields_();
+    // Bumping after updateFormStates_() (which may itself correct/clear
+    // form values before they're written to the model) ensures the
+    // computed fields above are fresh after the model update -- the same
+    // ordering the old updateAndFormatDerivedFields_() relied on.
+    this.recomputeTrigger_.update((v) => v + 1);
   }
 
   toggleShowExtraGoods(): void {
-    this.showExtraGoods = !this.showExtraGoods && this.hasExtraGoods;
+    this.showExtraGoodsRequested_.update((shown) => !shown);
   }
 }
 

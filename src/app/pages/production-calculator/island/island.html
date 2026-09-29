@@ -65,9 +65,9 @@
             <span textLoc="Extras"></span>
           </th>
           <td mat-cell *matCellDef="let element" class="extra-goods-field">
-            @if (element.hasExtraGoods) {
+            @if (element.hasExtraGoods()) {
               <ac-button
-                [icon]="element.expandExtraGoodsIcon"
+                [icon]="element.expandExtraGoodsIcon()"
                 (action)="element.toggleShowExtraGoods(element)"></ac-button>
             }
           </td>
@@ -78,7 +78,7 @@
           </th>
           <td mat-cell *matCellDef="let element" class="goods-field">
             <enum-row
-              [values]="element.inputGoods"
+              [values]="element.inputGoods()"
               [iconUrlLookupFn]="lookupGoodIconUrl"
               [tooltip]="goodTooltip"></enum-row>
           </td>
@@ -89,7 +89,7 @@
           </th>
           <td mat-cell *matCellDef="let element" class="goods-field">
             <enum-row
-              [values]="element.outputGoods"
+              [values]="element.outputGoods()"
               [iconUrlLookupFn]="lookupGoodIconUrl"
               [tooltip]="goodTooltip"></enum-row>
           </td>
@@ -164,7 +164,7 @@
           </th>
           <td mat-cell class="keep-top" *matCellDef="let element" class="computed-field">
             <composite-number
-              [constituentValues]="element.efficiencyConstituents"
+              [constituentValues]="element.efficiencyConstituents()"
               [showPlusIfPositive]="true"
               [isPercent]="true"></composite-number>
           </td>
@@ -174,7 +174,7 @@
             <span textLoc="Building Process Time"></span>
           </th>
           <td mat-cell class="keep-top" *matCellDef="let element" class="computed-field">
-            <formatted-number [value]="element.buildingProcessTimeSeconds" suffix="s"></formatted-number>
+            <formatted-number [value]="element.buildingProcessTimeSeconds()" suffix="s"></formatted-number>
           </td>
         </ng-container>
         <ng-container matColumnDef="goodsProducedPerMinute">
@@ -182,7 +182,7 @@
             <span textLoc="Goods per Minute"></span>
           </th>
           <td mat-cell class="keep-top" *matCellDef="let element" class="computed-field">
-            <formatted-number [value]="element.goodsProducedPerMinute" suffix="/m"></formatted-number>
+            <formatted-number [value]="element.goodsProducedPerMinute()" suffix="/m"></formatted-number>
           </td>
         </ng-container>
         <ng-container matColumnDef="remove">
@@ -195,10 +195,10 @@
         </ng-container>
         <ng-container matColumnDef="extraGoods">
           <td mat-cell *matCellDef="let element" [attr.colspan]="productionLineColumns.length" class="extra-goods-row">
-            @if (element.showExtraGoods) {
+            @if (element.showExtraGoods()) {
               <div class="extra-goods-outer-container">
                 <div class="extra-goods-inner-container">
-                  <table #extraGoodTables mat-table [dataSource]="element.extraGoods" class="extra-goods-table">
+                  <table #extraGoodTables mat-table [dataSource]="element.extraGoodsRows()" class="extra-goods-table">
                     <ng-container matColumnDef="good">
                       <th mat-header-cell *matHeaderCellDef>
                         <span textLoc="Extra Good"></span>
