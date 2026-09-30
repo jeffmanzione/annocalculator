@@ -8,7 +8,6 @@ import {
   inject,
   input,
   OnInit,
-  signal,
   viewChild,
   viewChildren,
 } from '@angular/core';
@@ -91,18 +90,10 @@ export class SummaryPanel implements OnInit, AfterViewInit {
   sort = viewChild.required(MatSort);
   islandTables = viewChildren(MatTable<GoodSummaryCell>);
 
-  // Bumped by update() (called by the root component on every world-wide
-  // change -- an island edit, a trade route edit, ...) to force rows_ to
-  // recompute. This predates world() being store-backed: it used to be a
-  // plain object whose in-place edits a computed() couldn't observe. Now
-  // that StoreWorldView reads WorldStore's signals, rows_ already tracks
-  // those reads itself, so this trigger is likely redundant -- left in
-  // place until it can be removed deliberately (with the other
-  // recomputeTrigger_s) and verified, rather than as a drive-by.
-  private readonly recomputeTrigger_ = signal(0);
-
+  // world() reads WorldStore's signals, so rows_ recomputes on its own
+  // whenever anything it depends on changes -- no external "please
+  // recompute" call needed.
   private readonly rows_ = computed(() => {
-    this.recomputeTrigger_();
     const world = this.world();
     return world ? computeGoodSummaryRows(world) : new Map<Good, GoodSummaryRow>();
   });
@@ -142,11 +133,6 @@ export class SummaryPanel implements OnInit, AfterViewInit {
       }
       return 0;
     };
-  }
-
-  /** Called by the root component whenever anything in the world changes. */
-  update(): void {
-    this.recomputeTrigger_.update((v) => v + 1);
   }
 
   /** Replaces the table's data with a freshly computed row set, carrying forward which rows the user currently has expanded (computeGoodSummaryRows doesn't know about that -- it's UI state, not derived from the world). */

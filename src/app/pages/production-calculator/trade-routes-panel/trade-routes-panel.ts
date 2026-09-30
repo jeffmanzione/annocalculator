@@ -3,7 +3,6 @@ import {
   Component,
   computed,
   input,
-  output,
   Signal,
 } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -70,10 +69,6 @@ export class TradeRoutesPanel {
   // to refresh via afterPushChange(); see the design doc.)
   world = input.required<StoreWorldController>();
 
-  // Emitted after this panel writes to the store, so the root can save --
-  // replaces Control's `.update` EventEmitter, same as Island.changed.
-  readonly changed = output<void>();
-
   // Form groups are kept stable across store updates (rather than recreated
   // on every change) so in-progress edits and open dropdowns aren't reset by
   // an unrelated change elsewhere, e.g. renaming an island.
@@ -103,13 +98,11 @@ export class TradeRoutesPanel {
 
   addTradeRoute(): void {
     this.world().addTradeRoute();
-    this.changed.emit();
   }
 
   removeTradeRouteAt(id: TradeRouteId): void {
     this.world().removeTradeRoute(id);
     this.formGroups_.delete(id);
-    this.changed.emit();
   }
 
   lookupGoodIconUrl(good: Good | null): string {
@@ -167,6 +160,5 @@ export class TradeRoutesPanel {
     if (value.good != null) {
       controller.good = value.good;
     }
-    this.changed.emit();
   }
 }

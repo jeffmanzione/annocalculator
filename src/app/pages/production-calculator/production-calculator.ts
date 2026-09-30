@@ -1,12 +1,10 @@
 import {
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
   effect,
   inject,
+  Injector,
   OnInit,
-  viewChild,
-  viewChildren,
 } from '@angular/core';
 import { WorldStore } from '../../shared/mvc/world-store';
 import { StoreWorldView } from '../../shared/mvc/world-store-views';
@@ -45,11 +43,6 @@ import {
 import { Clipboard } from '@angular/cdk/clipboard';
 import { AcButton } from '../../components/button/button';
 import { L10nText } from '../../components/text/text';
-// What subscribing to a child's `changed` output() returns.
-interface Unsubscribable {
-  unsubscribe(): void;
-}
-
 const WORLD_KEY = 'anno-1800-production-calculator-world';
 
 const defaultWorld: World = {
@@ -260,61 +253,39 @@ export class ProductionCalculatorPage implements OnInit {
 
   formGroup?: FormGroup;
 
-  private readonly changeDectorRef_ = inject(ChangeDetectorRef);
+  private readonly injector_ = inject(Injector);
   private readonly matDialog_ = inject(MatDialog);
   private readonly clipboard_ = inject(Clipboard);
   private readonly worldStorage_: StorageItem<World>;
 
-  islandComponents = viewChildren(Island);
-  summaryPanel = viewChild(SummaryPanel);
-  tradeRoutesPanel = viewChild(TradeRoutesPanel);
-
-  private subscriptions_: Unsubscribable[] = [];
-
   constructor(storageManager: LocalStorageManager) {
     this.worldStorage_ = storageManager.lookupObjectItem(WORLD_KEY);
-    // Re-wire the "child changed" subscriptions whenever the set of island
-    // components (or the trade-routes panel) changes, so islands added or
-    // removed after the initial render stay correctly wired up. This also
-    // covers the initial render, replacing the old one-shot
-    // ngAfterViewInit() call.
-    effect(() => {
-      this.islandComponents();
-      this.tradeRoutesPanel();
-      this.resetSubscriptions_();
-    });
   }
 
   ngOnInit(): void {
     this.formGroup = new FormGroup({
       tradeUnionBonusPercent: new FormControl(0),
     });
-    this.formGroup.valueChanges.subscribe(() => this.update());
+    this.formGroup.valueChanges.subscribe((value) => {
+      this.world.tradeUnionBonus = value.tradeUnionBonusPercent / 100;
+    });
     this.setWorld(this.worldStorage_.get() ?? defaultWorld);
-  }
 
-  private addAllSubscriptions_(): void {
-    const tradeRoutesPanel = this.tradeRoutesPanel();
-    if (tradeRoutesPanel) {
-      this.subscriptions_.push(
-        tradeRoutesPanel.changed.subscribe(() => this.update()),
-      );
-    }
-    for (const i of this.islandComponents()) {
-      this.subscriptions_.push(i.changed.subscribe(() => this.update()));
-    }
-  }
-
-  private clearAllSubscriptions_(): void {
-    for (const sub of this.subscriptions_) {
-      sub.unsubscribe();
-    }
-    this.subscriptions_ = [];
-  }
-
-  private resetSubscriptions_(): void {
-    this.clearAllSubscriptions_();
-    this.addAllSubscriptions_();
+    // Persist the world whenever anything in the store changes. toWorld()
+    // reads every one of the store's signals, so this effect re-runs after
+    // any write, from any component -- no child needs to tell the root
+    // "something changed, please save" anymore. Effects are batched, so a
+    // burst of writes from one user action saves once. This also runs once
+    // on load, which rewrites an older save in normalized form (ids
+    // assigned, defaults stripped) -- the same data either way.
+    //
+    // Created here rather than in the constructor because store_ only
+    // exists once setWorld() has run. The store is never replaced for the
+    // life of the page (import/reset/clear all reload the page), so the
+    // effect doesn't need to track which store it's saving.
+    effect(() => this.worldStorage_.set(this.store_.toWorld()), {
+      injector: this.injector_,
+    });
   }
 
   setWorld(worldModel?: World): void {
@@ -330,24 +301,12 @@ export class ProductionCalculatorPage implements OnInit {
     );
   }
 
-  update(): void {
-    this.changeDectorRef_.detectChanges();
-    this.world.tradeUnionBonus =
-      this.formGroup!.value.tradeUnionBonusPercent / 100;
-    this.summaryPanel()?.update();
-    this.worldStorage_.set(this.store_.toWorld());
-    // Convert this into a debug-only print.
-    // console.log(this.world.toJsonString());
-  }
-
   addIsland(): void {
     this.world.addIsland();
-    this.update();
   }
 
   removeIsland(id: IslandId): void {
     this.world.removeIsland(id);
-    this.update();
   }
 
   setWorldAndReload(worldModel: World): void {

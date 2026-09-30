@@ -4,7 +4,6 @@ import {
   computed,
   input,
   OnInit,
-  output,
   Signal,
   signal,
   TemplateRef,
@@ -102,12 +101,6 @@ export class Island implements OnInit {
   // production-line.ts was migrated off it the same way, in the commit
   // just before this one).
   controller = input.required<StoreIslandController>();
-
-  // Emitted whenever anything in this island's own form or any of its
-  // production lines' forms changes -- replaces Control's `.update`
-  // EventEmitter. production-calculator.ts subscribes to this exactly the
-  // way it subscribed to `.update` before.
-  readonly changed = output<void>();
 
   readonly regions = Object.values(Region).filter((r) => r != Region.Unknown);
   readonly allDolPolicies = Object.values(DepartmentOfLaborPolicy);
@@ -236,10 +229,11 @@ export class Island implements OnInit {
   // a first production line if none exist yet (same as the old
   // beforeBubbleChange()), then refreshes this island's own derived state,
   // refreshes every production line row (their derived state can depend on
-  // this island's region/DOL policy, which may have just changed), and
-  // finally emits `changed` -- replacing Control's tree-wide
-  // pushUpChange()/afterPushChange() bubble with an explicit, equivalent
-  // sequence scoped to exactly this island and its own production lines.
+  // this island's region/DOL policy, which may have just changed). This
+  // replaced Control's tree-wide pushUpChange()/afterPushChange() bubble
+  // with an explicit sequence scoped to this island and its own production
+  // lines. Saving is no longer this method's concern: the root's persist
+  // effect picks up every store write on its own.
   private notifyChanged_(): void {
     this.controller().name = this.formGroup.value.name;
     this.controller().region = this.formGroup.value.region;
@@ -251,7 +245,6 @@ export class Island implements OnInit {
     for (const pl of this.productionLines_().values()) {
       pl.refresh();
     }
-    this.changed.emit();
   }
 
   // This island's own derived state only (region/dolPolicy-dependent
