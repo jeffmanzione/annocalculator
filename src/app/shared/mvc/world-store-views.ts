@@ -117,8 +117,8 @@ export class StoreExtraGoodView implements ExtraGood {
 
 export class StoreProductionLineView implements ProductionLineEntity {
   constructor(
-    private readonly store: WorldStore,
-    private readonly id_: ProductionLineId,
+    protected readonly store: WorldStore,
+    protected readonly id_: ProductionLineId,
   ) {}
 
   private get model(): ProductionLineEntity {
@@ -555,8 +555,8 @@ export class StoreProductionLineView implements ProductionLineEntity {
 
 export class StoreTradeRouteView implements TradeRoute {
   constructor(
-    private readonly store: WorldStore,
-    private readonly id_: TradeRouteId,
+    protected readonly store: WorldStore,
+    protected readonly id_: TradeRouteId,
   ) {}
 
   private get model(): TradeRoute {
@@ -590,8 +590,8 @@ export class StoreTradeRouteView implements TradeRoute {
 
 export class StoreIslandView implements Island {
   constructor(
-    private readonly store: WorldStore,
-    private readonly id_: IslandId,
+    protected readonly store: WorldStore,
+    protected readonly id_: IslandId,
   ) {}
 
   private get model(): Island {
