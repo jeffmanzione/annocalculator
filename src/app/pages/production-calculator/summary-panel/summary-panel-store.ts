@@ -1,11 +1,51 @@
 import { Boost, Good, Region } from '../../../shared/game/enums';
-import { ExtraGoodView, IslandView, WorldView } from '../../../shared/mvc/views';
 import { IslandId } from '../../../shared/mvc/models';
 import { ReadonlyTable, Table } from '../../../../tools/table';
 
+/**
+ * The minimal shape computeGoodSummaryRows() actually reads, factored out so
+ * it can run against either the original views.ts classes (WorldView/
+ * IslandView/ProductionLineView) or the store-backed equivalents
+ * (StoreWorldView/StoreIslandView/StoreProductionLineView) -- both satisfy
+ * this structurally, since it only names public fields. computeGoodSummaryRows
+ * itself doesn't care which one it's given.
+ */
+export interface SummaryWorldSource {
+  islands: SummaryIslandSource[];
+  tradeRoutes: SummaryTradeRouteSource[];
+}
+
+export interface SummaryIslandSource {
+  id: IslandId;
+  name: string;
+  region: Region;
+  productionLines: SummaryProductionLineSource[];
+}
+
+export interface SummaryProductionLineSource {
+  good: Good;
+  inputGoods: Good[];
+  boosts: Boost[];
+  numBuildings: number;
+  goodsProducedPerMinute: number;
+  goodsConsumedPerMinute: number;
+  extraGoods: SummaryExtraGoodSource[];
+}
+
+export interface SummaryExtraGoodSource {
+  good: Good;
+  producedPerMinute: number;
+}
+
+export interface SummaryTradeRouteSource {
+  sourceIslandId: IslandId;
+  targetIslandId: IslandId;
+  good: Good;
+}
+
 /** One island's production/consumption/trade numbers for a single good, shown in a GoodSummaryRow's island breakdown. */
 export interface GoodSummaryCell {
-  island: IslandView;
+  island: SummaryIslandSource;
   good: Good;
   localProductionPerMin: number;
   localConsumptionPerMin: number;
@@ -42,7 +82,7 @@ export function availableProduction(cell?: GoodSummaryCell): number {
   );
 }
 
-function newCell(island: IslandView, good: Good): GoodSummaryCell {
+function newCell(island: SummaryIslandSource, good: Good): GoodSummaryCell {
   return {
     island,
     good,
@@ -59,11 +99,11 @@ function newCell(island: IslandView, good: Good): GoodSummaryCell {
  * islands.
  */
 function computeLocalProductionAndConsumption(
-  world: WorldView,
+  world: SummaryWorldSource,
 ): Table<IslandId, Good, GoodSummaryCell> {
   const cells = new Table<IslandId, Good, GoodSummaryCell>();
   const record = (
-    island: IslandView,
+    island: SummaryIslandSource,
     good: Good,
     netProductionPerMin: number,
   ): void => {
@@ -80,9 +120,11 @@ function computeLocalProductionAndConsumption(
   for (const island of world.islands) {
     for (const pl of island.productionLines) {
       record(island, pl.good, pl.goodsProducedPerMinute);
+      // pl.extraGoods entries already carry their own resolved good/
+      // producedPerMinute (see ProductionLineView.extraGoods /
+      // StoreProductionLineView.extraGoods) -- no need to re-wrap them.
       for (const eg of pl.extraGoods) {
-        const egView = ExtraGoodView.wrap(eg, { productionLine: pl });
-        record(island, egView.good, egView.producedPerMinute);
+        record(island, eg.good, eg.producedPerMinute);
       }
       for (const ig of pl.inputGoods) {
         record(island, ig, -pl.goodsConsumedPerMinute);
@@ -106,7 +148,7 @@ function computeLocalProductionAndConsumption(
 
 /** Which islands each island's trade routes can ship a given good to. */
 function groupTradeRoutesBySourceAndGood(
-  world: WorldView,
+  world: SummaryWorldSource,
 ): ReadonlyTable<IslandId, Good, IslandId[]> {
   const trades = new Table<IslandId, Good, IslandId[]>();
   for (const tr of world.tradeRoutes) {
@@ -210,7 +252,7 @@ function aggregateRows(
  * how to persist UI-only state (which rows are expanded) across calls, since
  * that isn't part of the underlying data.
  */
-export function computeGoodSummaryRows(world: WorldView): Map<Good, GoodSummaryRow> {
+export function computeGoodSummaryRows(world: SummaryWorldSource): Map<Good, GoodSummaryRow> {
   const cells = computeLocalProductionAndConsumption(world);
   const trades = groupTradeRoutesBySourceAndGood(world);
   distributeTrades(cells, trades);

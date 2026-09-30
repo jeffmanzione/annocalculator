@@ -9,6 +9,8 @@ import {
   viewChildren,
 } from '@angular/core';
 import { WorldController } from '../../shared/mvc/controllers';
+import { WorldStore } from '../../shared/mvc/world-store';
+import { StoreWorldView } from '../../shared/mvc/world-store-views';
 import { Island } from './island/island';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatIconModule } from '@angular/material/icon';
@@ -239,6 +241,17 @@ export class ProductionCalculatorPage implements OnInit {
 
   world!: WorldController;
 
+  // A normalized, read-only mirror of `world`, rebuilt from its current
+  // model data whenever anything changes (see refreshWorldSummary_()) --
+  // exactly the same "refresh a store from whatever currently owns the
+  // real state" pattern trade-routes-panel.ts's own TradeRoutesStore uses
+  // today, just at the world level. Feeds consumers that only need to read
+  // aggregate/derived data (summary-panel.ts so far) via the store-backed
+  // views in world-store-views.ts, without WorldController itself ceasing
+  // to be the actual source of truth -- see the design doc's "World-level
+  // normalization" section for why a wholesale swap isn't safe yet.
+  worldSummary!: StoreWorldView;
+
   formGroup?: FormGroup;
 
   private readonly changeDectorRef_ = inject(ChangeDetectorRef);
@@ -303,9 +316,16 @@ export class ProductionCalculatorPage implements OnInit {
       return;
     }
     this.world = WorldController.wrap(worldModel);
+    this.refreshWorldSummary_();
     this.formGroup!.controls['tradeUnionBonusPercent'].setValue(
       this.world.tradeUnionBonus * 100,
       { emitEvent: false },
+    );
+  }
+
+  private refreshWorldSummary_(): void {
+    this.worldSummary = new StoreWorldView(
+      WorldStore.fromWorld(this.world.copyModel()),
     );
   }
 
@@ -314,6 +334,7 @@ export class ProductionCalculatorPage implements OnInit {
     this.world.tradeUnionBonus =
       this.formGroup!.value.tradeUnionBonusPercent / 100;
     this.tradeRoutesPanel()?.afterPushChange();
+    this.refreshWorldSummary_();
     this.summaryPanel()?.update();
     this.worldStorage_.set(this.world.copyModel());
     // Convert this into a debug-only print.

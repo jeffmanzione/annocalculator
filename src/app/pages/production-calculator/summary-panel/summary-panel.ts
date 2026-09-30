@@ -23,7 +23,6 @@ import {
   FormattedNumber,
   GREEN_RED_FONT_SPEC,
 } from '../../../components/formatted-number/formatted-number';
-import { WorldView } from '../../../shared/mvc/views';
 import { Good } from '../../../shared/game/enums';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -36,6 +35,7 @@ import {
   computeGoodSummaryRows,
   GoodSummaryCell,
   GoodSummaryRow,
+  SummaryWorldSource,
 } from './summary-panel-store';
 
 @Component({
@@ -86,7 +86,7 @@ export class SummaryPanel implements OnInit, AfterViewInit {
 
   readonly tableData = new MatTableDataSource<GoodSummaryRow>();
 
-  world = input<WorldView>();
+  world = input<SummaryWorldSource>();
   table = viewChild.required(MatTable<GoodSummaryRow>);
   sort = viewChild.required(MatSort);
   islandTables = viewChildren(MatTable<GoodSummaryCell>);
