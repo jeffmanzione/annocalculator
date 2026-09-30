@@ -1,8 +1,14 @@
-import { ChangeDetectionStrategy, Component, computed, input, Signal, untracked } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  input,
+  output,
+  Signal,
+} from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { StoreWorldController } from '../../../shared/mvc/world-store-controllers';
 import { MatTableModule } from '@angular/material/table';
-import { ControlComponent } from '../../../shared/control/control';
 import { MatSelectModule } from '@angular/material/select';
 import { Good } from '../../../shared/game/enums';
 import { lookupGoodIconUrl } from '../../../shared/game/icons';
@@ -11,8 +17,12 @@ import { CardModule } from '../../../components/card/card';
 import { TradeRoute, TradeRouteId } from '../../../shared/mvc/models';
 import { AcButton } from '../../../components/button/button';
 import { L10nText } from '../../../components/text/text';
-import { IslandSummary, TradeRoutesStore } from './trade-routes-store';
-import { StoreWorldView } from '../../../shared/mvc/world-store-views';
+import {
+  destinationOptions,
+  goodOptions,
+  IslandSummary,
+  originOptions,
+} from './trade-routes-store';
 
 /** A single trade-route table row: a stable form bound to one trade route, plus its currently-valid dropdown options. */
 interface TradeRouteRow {
@@ -43,7 +53,7 @@ interface TradeRouteRow {
   styleUrl: './trade-routes-panel.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TradeRoutesPanel extends ControlComponent<StoreWorldController> {
+export class TradeRoutesPanel {
   readonly displayColumns = [
     'sourceIslandId',
     'targetIslandId',
@@ -51,12 +61,18 @@ export class TradeRoutesPanel extends ControlComponent<StoreWorldController> {
     'remove',
   ];
 
-  private readonly store_ = new TradeRoutesStore();
+  // The root's store-backed world. Every read below goes through
+  // WorldStore's signals, so rows() recomputes on its own whenever a trade
+  // route or an island (name, production lines) changes anywhere -- no
+  // mirror to refresh, and no "something changed elsewhere" hook needed
+  // from the root. (This panel used to extend ControlComponent and keep a
+  // TradeRoutesStore mirror of trade routes and islands that the root had
+  // to refresh via afterPushChange(); see the design doc.)
+  world = input.required<StoreWorldController>();
 
-  // Read-only view of the root's WorldStore (the same store `controller`
-  // writes to) -- refreshIslandSummaries_() below reads island summaries
-  // from it for the dropdowns. Trade-route edits go through `controller`.
-  world = input<StoreWorldView>();
+  // Emitted after this panel writes to the store, so the root can save --
+  // replaces Control's `.update` EventEmitter, same as Island.changed.
+  readonly changed = output<void>();
 
   // Form groups are kept stable across store updates (rather than recreated
   // on every change) so in-progress edits and open dropdowns aren't reset by
@@ -66,82 +82,50 @@ export class TradeRoutesPanel extends ControlComponent<StoreWorldController> {
     TradeRouteRow['formGroup']
   >();
 
-  readonly rows: Signal<TradeRouteRow[]> = computed(() =>
-    this.store_.tradeRoutes().map((tr) => this.rowFor_(tr)),
+  private readonly islandSummaries_: Signal<IslandSummary[]> = computed(() =>
+    this.world().islands.map(
+      (island): IslandSummary => ({
+        id: island.id,
+        name: island.name,
+        producedGoods: island.producedGoods,
+      }),
+    ),
   );
 
-  protected override onSetController(controller: StoreWorldController): void {
-    // ControlComponent calls this from inside an effect(). The controller
-    // is now backed by WorldStore's signals, so reading
-    // controller.tradeRoutes / world().islands here would otherwise make
-    // that effect re-run (and reload every row) on every store write --
-    // keep it a one-time load per controller, as it was back when the
-    // controller was a plain, non-reactive object.
-    untracked(() => {
-      this.store_.loadTradeRoutes(controller.tradeRoutes);
-      this.refreshIslandSummaries_();
-    });
-  }
+  readonly rows: Signal<TradeRouteRow[]> = computed(() => {
+    const islands = this.islandSummaries_();
+    return this.world().tradeRoutes.map((tr) => this.rowFor_(tr, islands));
+  });
 
-  // The root component calls this on every world-wide change (an island
-  // rename, an island add/remove, another trade route's edit, ...) via
-  // production-calculator.ts's update(). Re-reading island summaries here,
-  // rather than only when this panel's own rows change, is what keeps the
-  // origin/destination/good dropdowns correct after an edit made elsewhere
-  // -- fixes a bug where they'd otherwise go stale until this panel's own
-  // state next changed.
-  override afterPushChange(): void {
-    this.refreshIslandSummaries_();
-  }
+  // Keeps each row's DOM (and so any open dropdown) in place when rows()
+  // produces fresh row objects for the same trade routes.
+  readonly trackRowById = (_: number, row: TradeRouteRow) => row.id;
 
   addTradeRoute(): void {
-    const added = this.controller().addTradeRoute();
-    this.store_.addTradeRoute({
-      id: added.id,
-      sourceIslandId: added.sourceIslandId,
-      targetIslandId: added.targetIslandId,
-      good: added.good,
-    });
-    this.refreshIslandSummaries_();
-    this.pushUpChange();
+    this.world().addTradeRoute();
+    this.changed.emit();
   }
 
   removeTradeRouteAt(id: TradeRouteId): void {
-    this.controller().removeTradeRoute(id);
-    this.store_.removeTradeRoute(id);
+    this.world().removeTradeRoute(id);
     this.formGroups_.delete(id);
-    this.refreshIslandSummaries_();
-    this.pushUpChange();
+    this.changed.emit();
   }
 
   lookupGoodIconUrl(good: Good | null): string {
     return lookupGoodIconUrl(good ?? Good.Unknown);
   }
 
-  /** Re-derives the island name/produced-goods summary the dropdowns read from. Islands live outside this store, so this is a manual refresh rather than a subscription -- see the store's doc comment. */
-  private refreshIslandSummaries_(): void {
-    const world = this.world();
-    if (!world) {
-      return;
-    }
-    this.store_.loadIslands(
-      world.islands.map(
-        (island): IslandSummary => ({
-          id: island.id,
-          name: island.name,
-          producedGoods: island.producedGoods,
-        }),
-      ),
-    );
-  }
-
-  private rowFor_(tradeRoute: TradeRoute): TradeRouteRow {
+  private rowFor_(
+    tradeRoute: TradeRoute,
+    islands: IslandSummary[],
+  ): TradeRouteRow {
     return {
       id: tradeRoute.id,
       formGroup: this.formGroupFor_(tradeRoute),
-      sourceIslandOptions: this.store_.originOptions(tradeRoute.id),
-      targetIslandOptions: this.store_.destinationOptions(tradeRoute.id),
-      sourceGoodOptions: this.store_.goodOptions(tradeRoute.id),
+      sourceIslandOptions: originOptions(tradeRoute, islands),
+      targetIslandOptions: destinationOptions(tradeRoute, islands),
+      sourceGoodOptions: goodOptions(tradeRoute, islands),
     };
   }
 
@@ -170,7 +154,7 @@ export class TradeRoutesPanel extends ControlComponent<StoreWorldController> {
       good: Good | null;
     }>,
   ): void {
-    const controller = this.controller().tradeRoutes.find((tr) => tr.id === id);
+    const controller = this.world().tradeRoutes.find((tr) => tr.id === id);
     if (!controller) {
       return;
     }
@@ -183,12 +167,6 @@ export class TradeRoutesPanel extends ControlComponent<StoreWorldController> {
     if (value.good != null) {
       controller.good = value.good;
     }
-    this.store_.updateTradeRoute(id, {
-      sourceIslandId: controller.sourceIslandId,
-      targetIslandId: controller.targetIslandId,
-      good: controller.good,
-    });
-    this.refreshIslandSummaries_();
-    this.pushUpChange();
+    this.changed.emit();
   }
 }

@@ -12,7 +12,7 @@
         (action)="addTradeRoute()"></ac-button>
     </section>
     <section class="table-container">
-      <table mat-table [dataSource]="rows()">
+      <table mat-table [dataSource]="rows()" [trackBy]="trackRowById">
         <ng-container matColumnDef="sourceIslandId">
           <th mat-header-cell *matHeaderCellDef>
             <span textLoc="Origin"></span>

@@ -45,9 +45,7 @@ import {
 import { Clipboard } from '@angular/cdk/clipboard';
 import { AcButton } from '../../components/button/button';
 import { L10nText } from '../../components/text/text';
-// `Island.changed` is an output() (OutputRefSubscription on subscribe),
-// while `TradeRoutesPanel.update` is still Control's EventEmitter (a real
-// rxjs Subscription) -- this is the minimal common shape both satisfy.
+// What subscribing to a child's `changed` output() returns.
 interface Unsubscribable {
   unsubscribe(): void;
 }
@@ -256,9 +254,8 @@ export class ProductionCalculatorPage implements OnInit {
   // Write-capable view of store_, handed to <island>/<trade-routes-panel>.
   world!: StoreWorldController;
 
-  // Read-only view of the *same* store_, for consumers that only aggregate
-  // (summary-panel.ts, trade-routes-panel.ts's island dropdowns). No longer
-  // a rebuilt-on-every-change snapshot -- it reads live store state.
+  // Read-only view of the *same* store_, for summary-panel.ts (which only
+  // aggregates). It reads live store state rather than a snapshot.
   worldSummary!: StoreWorldView;
 
   formGroup?: FormGroup;
@@ -300,7 +297,7 @@ export class ProductionCalculatorPage implements OnInit {
     const tradeRoutesPanel = this.tradeRoutesPanel();
     if (tradeRoutesPanel) {
       this.subscriptions_.push(
-        tradeRoutesPanel.update.subscribe(() => this.update()),
+        tradeRoutesPanel.changed.subscribe(() => this.update()),
       );
     }
     for (const i of this.islandComponents()) {
@@ -337,7 +334,6 @@ export class ProductionCalculatorPage implements OnInit {
     this.changeDectorRef_.detectChanges();
     this.world.tradeUnionBonus =
       this.formGroup!.value.tradeUnionBonusPercent / 100;
-    this.tradeRoutesPanel()?.afterPushChange();
     this.summaryPanel()?.update();
     this.worldStorage_.set(this.store_.toWorld());
     // Convert this into a debug-only print.
