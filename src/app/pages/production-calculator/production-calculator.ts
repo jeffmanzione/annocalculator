@@ -44,7 +44,12 @@ import {
 import { Clipboard } from '@angular/cdk/clipboard';
 import { AcButton } from '../../components/button/button';
 import { L10nText } from '../../components/text/text';
-import { Subscription } from 'rxjs';
+// `Island.changed` is an output() (OutputRefSubscription on subscribe),
+// while `TradeRoutesPanel.update` is still Control's EventEmitter (a real
+// rxjs Subscription) -- this is the minimal common shape both satisfy.
+interface Unsubscribable {
+  unsubscribe(): void;
+}
 
 const WORLD_KEY = 'anno-1800-production-calculator-world';
 
@@ -263,7 +268,7 @@ export class ProductionCalculatorPage implements OnInit {
   summaryPanel = viewChild(SummaryPanel);
   tradeRoutesPanel = viewChild(TradeRoutesPanel);
 
-  private subscriptions_: Subscription[] = [];
+  private subscriptions_: Unsubscribable[] = [];
 
   constructor(storageManager: LocalStorageManager) {
     this.worldStorage_ = storageManager.lookupObjectItem(WORLD_KEY);
@@ -295,7 +300,7 @@ export class ProductionCalculatorPage implements OnInit {
       );
     }
     for (const i of this.islandComponents()) {
-      this.subscriptions_.push(i.update.subscribe(() => this.update()));
+      this.subscriptions_.push(i.changed.subscribe(() => this.update()));
     }
   }
 

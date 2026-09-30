@@ -2,7 +2,9 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
+  input,
   OnInit,
+  output,
   Signal,
   signal,
   TemplateRef,
@@ -19,7 +21,6 @@ import {
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-import { ControlComponent } from '../../../shared/control/control';
 import { ProductionLineControl } from './production-line';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { FormattedNumber } from '../../../components/formatted-number/formatted-number';
@@ -95,16 +96,25 @@ import { HaciendaTooltip } from './tooltips/hacienda/hacienda-tooltip';
   styleUrl: './island.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class Island
-  extends ControlComponent<IslandController>
-  implements OnInit
-{
+export class Island implements OnInit {
+  // Replaces ControlComponent's inherited `controller` input -- this class
+  // no longer extends the Control tree (see Decision 2 in the design doc;
+  // production-line.ts was migrated off it the same way, in the commit
+  // just before this one).
+  controller = input.required<IslandController>();
+
+  // Emitted whenever anything in this island's own form or any of its
+  // production lines' forms changes -- replaces Control's `.update`
+  // EventEmitter. production-calculator.ts subscribes to this exactly the
+  // way it subscribed to `.update` before.
+  readonly changed = output<void>();
+
   readonly regions = Object.values(Region).filter((r) => r != Region.Unknown);
   readonly allDolPolicies = Object.values(DepartmentOfLaborPolicy);
   readonly goods = Object.values(Good).filter((g) => g != Good.Unknown);
 
-  // Bumped in afterPushChange() so the computed()s below -- which read
-  // plain, non-observable controller state -- recompute. Same pattern as
+  // Bumped in refresh_() so the computed()s below -- which read plain,
+  // non-observable controller state -- recompute. Same pattern as
   // ProductionLineControl.recomputeTrigger_.
   private readonly recomputeTrigger_ = signal(0);
 
@@ -193,11 +203,11 @@ export class Island
       region: new FormControl(this.controller().region),
       dolPolicy: new FormControl(this.controller().dolPolicy),
     });
-    this.formGroup.valueChanges.subscribe((_) => this.pushUpChange());
+    this.formGroup.valueChanges.subscribe(() => this.notifyChanged_());
 
     // dolPolicy only applies in some regions; correct/clear it
     // synchronously in response to region's own valueChanges (which fires
-    // before the whole FormGroup's, and so before pushUpChange() commits
+    // before the whole FormGroup's, and so before notifyChanged_() commits
     // values to the model) -- same pattern as ProductionLineControl's
     // building/hasTradeUnion subscriptions, and for the same reason: this
     // is a correction to a same-row pending value, not a read of already-
@@ -208,8 +218,9 @@ export class Island
 
     const controls = new Map<ProductionLineId, ProductionLineControl>();
     for (const pl of this.controller().productionLines) {
-      const control = new ProductionLineControl(pl);
-      this.registerChildControl(control);
+      const control = new ProductionLineControl(pl, () =>
+        this.notifyChanged_(),
+      );
       controls.set(pl.id, control);
     }
     this.productionLines_.set(controls);
@@ -218,19 +229,34 @@ export class Island
       this.addProductionLine();
     }
 
-    this.afterPushChange();
+    this.refresh_();
   }
 
-  override beforeBubbleChange(): void {
+  // Writes this island's own committed form values to its controller, adds
+  // a first production line if none exist yet (same as the old
+  // beforeBubbleChange()), then refreshes this island's own derived state,
+  // refreshes every production line row (their derived state can depend on
+  // this island's region/DOL policy, which may have just changed), and
+  // finally emits `changed` -- replacing Control's tree-wide
+  // pushUpChange()/afterPushChange() bubble with an explicit, equivalent
+  // sequence scoped to exactly this island and its own production lines.
+  private notifyChanged_(): void {
     this.controller().name = this.formGroup.value.name;
     this.controller().region = this.formGroup.value.region;
     this.controller().dolPolicy = this.formGroup.value.dolPolicy;
     if (this.productionLines_().size == 0) {
       this.addProductionLine();
     }
+    this.refresh_();
+    for (const pl of this.productionLines_().values()) {
+      pl.refresh();
+    }
+    this.changed.emit();
   }
 
-  override afterPushChange(): void {
+  // This island's own derived state only (region/dolPolicy-dependent
+  // option lists) -- renamed from the old afterPushChange() override.
+  private refresh_(): void {
     // Also re-applied here (not just from the region subscription above)
     // to stay correct if this island's region was somehow set to a value
     // and dolPolicy state fell out of sync some other way -- cheap and
@@ -250,23 +276,23 @@ export class Island
 
   addProductionLine(): void {
     const controller = this.controller().addProductionLine();
-    const control = new ProductionLineControl(controller);
-    this.registerChildControl(control);
+    const control = new ProductionLineControl(controller, () =>
+      this.notifyChanged_(),
+    );
     this.productionLines_.update((controls) =>
       new Map(controls).set(controller.id, control),
     );
-    this.pushUpChange();
+    this.notifyChanged_();
   }
 
   removeProductionLine(el: ProductionLineControl): void {
-    this.unregisterChildControl(el);
     this.productionLines_.update((controls) => {
       const next = new Map(controls);
       next.delete(el.controller.id);
       return next;
     });
     this.controller().removeProductionLineById(el.controller.id);
-    this.pushUpChange();
+    this.notifyChanged_();
   }
 
   lookupBuildingIconUrl(building: ProductionBuilding | null): string {

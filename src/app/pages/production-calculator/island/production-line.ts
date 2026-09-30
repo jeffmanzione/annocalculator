@@ -15,12 +15,22 @@ import {
   producesDung,
   lookupAllowedCulturalSets,
 } from '../../../shared/game/facts';
-import { FormGroupControl } from '../../../shared/control/control';
 import { NumberConstituent } from '../../../components/composite-number/composite-number';
 import { computed, Signal, signal } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 
-export class ProductionLineControl extends FormGroupControl<ProductionLineController> {
-  // Bumped after every model update (see afterPushChange()) so the computed
+// A plain (non-Control-tree) class -- this is the last consumer of the old
+// FormGroupControl/Control bubbling machinery to be migrated off it (see
+// Decision 2 in the design doc). Instead of writing form values through a
+// generic "converters" table and bubbling a change event up through a
+// parent/child Control tree, this class writes its own form's committed
+// values straight to its ProductionLineController and calls the
+// `notifyChanged` callback its owner (Island) passes in -- Island is the
+// only caller, so there's no need for the old machinery's generality.
+export class ProductionLineControl {
+  readonly formGroup: FormGroup;
+
+  // Bumped after every model update (see refresh()) so the computed
   // fields below -- which read plain, non-observable controller state --
   // recompute. Same pattern as SummaryPanel.recomputeTrigger_.
   private readonly recomputeTrigger_ = signal(0);
@@ -86,20 +96,32 @@ export class ProductionLineControl extends FormGroupControl<ProductionLineContro
     return this.controller.goodsProducedPerMinuteWithExtras;
   });
 
-  constructor(controller: ProductionLineController) {
-    super(controller, [
-      'building',
-      {
-        controlName: 'numBuildings',
-        updateObject: (v, o) => (o.numBuildings = Number.parseInt(v)),
-      },
-      'boosts',
-      'hasTradeUnion',
-      'items',
-      'inRangeOfLocalDepartment',
-      'inRangeOfHaciendaFertiliserWorks',
-      'culturalSets',
-    ]);
+  constructor(
+    public readonly controller: ProductionLineController,
+    private readonly notifyChanged_: () => void,
+  ) {
+    this.formGroup = new FormGroup({
+      building: new FormControl(controller.building),
+      numBuildings: new FormControl(controller.numBuildings),
+      boosts: new FormControl(controller.boosts),
+      hasTradeUnion: new FormControl(controller.hasTradeUnion),
+      items: new FormControl(controller.items),
+      inRangeOfLocalDepartment: new FormControl(
+        controller.inRangeOfLocalDepartment,
+      ),
+      inRangeOfHaciendaFertiliserWorks: new FormControl(
+        controller.inRangeOfHaciendaFertiliserWorks,
+      ),
+      culturalSets: new FormControl(controller.culturalSets),
+    });
+    // Writes this row's committed form values to its controller, then
+    // notifies Island -- this replaces FormGroupControl's
+    // privateBeforeBubbleChange()-driven converter loop plus pushUpChange().
+    this.formGroup.valueChanges.subscribe(() => {
+      this.writeFormValuesToController_();
+      this.notifyChanged_();
+    });
+
     // Show extra goods by default when there are any.
     this.showExtraGoodsRequested_.set(this.controller.extraGoods.length > 0);
 
@@ -107,17 +129,18 @@ export class ProductionLineControl extends FormGroupControl<ProductionLineContro
     // values that updateFormStates_() reads -- everything else it touches
     // (boosts/items/culturalSets/inRangeOf...) is an output, not an input.
     // Subscribing directly to those two controls' own valueChanges (rather
-    // than the whole FormGroup's, which is what pushUpChange() below
-    // listens to) means the correction always lands before this row's
-    // model gets written: Angular's reactive forms fire a child control's
-    // valueChanges before its parent FormGroup's, and it's the parent
-    // FormGroup's valueChanges that triggers pushUpChange() (see
-    // FormGroupControl's constructor), which is what commits form values
-    // to the model. This is what replaces the old
-    // beforeModelUpdate()/afterPushChange() double-call dance -- each
-    // interdependent relationship now reacts to the thing it actually
-    // depends on, instead of everything re-running on a fixed
-    // before/after schedule regardless of what changed.
+    // than the whole FormGroup's, which is what the constructor's own
+    // valueChanges subscription above listens to) means the correction
+    // always lands before this row's model gets written: Angular's
+    // reactive forms fire a child control's valueChanges before its parent
+    // FormGroup's, and it's the parent FormGroup's valueChanges that
+    // writes committed values to the controller and calls
+    // notifyChanged_(). This is what replaces the old
+    // beforeModelUpdate()/afterPushChange() double-call dance from when
+    // this class extended FormGroupControl -- each interdependent
+    // relationship now reacts to the thing it actually depends on, instead
+    // of everything re-running on a fixed before/after schedule regardless
+    // of what changed.
     this.formGroup.controls['building'].valueChanges.subscribe(() =>
       this.updateFormStates_(),
     );
@@ -125,8 +148,28 @@ export class ProductionLineControl extends FormGroupControl<ProductionLineContro
       this.updateFormStates_(),
     );
 
-    this.beforeBubbleChange();
-    this.afterPushChange();
+    this.writeFormValuesToController_();
+    this.refresh();
+  }
+
+  private writeFormValuesToController_(): void {
+    this.controller.building =
+      this.formGroup.controls['building'].getRawValue();
+    this.controller.numBuildings = Number.parseInt(
+      this.formGroup.controls['numBuildings'].getRawValue(),
+    );
+    this.controller.boosts = this.formGroup.controls['boosts'].getRawValue();
+    this.controller.hasTradeUnion =
+      this.formGroup.controls['hasTradeUnion'].getRawValue();
+    this.controller.items = this.formGroup.controls['items'].getRawValue();
+    this.controller.inRangeOfLocalDepartment =
+      this.formGroup.controls['inRangeOfLocalDepartment'].getRawValue();
+    this.controller.inRangeOfHaciendaFertiliserWorks =
+      this.formGroup.controls[
+        'inRangeOfHaciendaFertiliserWorks'
+      ].getRawValue();
+    this.controller.culturalSets =
+      this.formGroup.controls['culturalSets'].getRawValue();
   }
 
   get view(): ProductionLineView {
@@ -137,9 +180,9 @@ export class ProductionLineControl extends FormGroupControl<ProductionLineContro
   // this row's own pending (not-yet-committed) building/hasTradeUnion
   // values when called from the constructor's direct subscriptions above,
   // and this island's already-committed region/department-of-labor state
-  // when called from afterPushChange() -- both are safe: see the
-  // constructor comment for why the same-row inputs are safe here despite
-  // being pending.
+  // when called from refresh() -- both are safe: see the constructor
+  // comment for why the same-row inputs are safe here despite being
+  // pending.
   private updateFormStates_(): void {
     const building: ProductionBuilding = this.formGroup.value.building;
     this.updateBoostOptions_(building);
@@ -255,12 +298,15 @@ export class ProductionLineControl extends FormGroupControl<ProductionLineContro
     });
   }
 
-  override afterPushChange(): void {
-    // Refreshes the parts of updateFormStates_() that depend on this
-    // island's already-committed state (region, department-of-labor
-    // policy) -- safe to read only now, after the model write, unlike the
-    // building/hasTradeUnion-triggered corrections handled by the
-    // constructor's direct subscriptions above.
+  // Called by Island whenever anything in this row's own subtree changed
+  // (renamed from afterPushChange() -- Island now calls this directly
+  // instead of it being invoked by Control's tree-wide bubble-down).
+  // Refreshes the parts of updateFormStates_() that depend on this
+  // island's already-committed state (region, department-of-labor
+  // policy) -- safe to read only now, after the model write, unlike the
+  // building/hasTradeUnion-triggered corrections handled by the
+  // constructor's direct subscriptions above.
+  refresh(): void {
     this.updateFormStates_();
     this.recomputeTrigger_.update((v) => v + 1);
   }
