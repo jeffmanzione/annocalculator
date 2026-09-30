@@ -93,9 +93,12 @@ export class SummaryPanel implements OnInit, AfterViewInit {
 
   // Bumped by update() (called by the root component on every world-wide
   // change -- an island edit, a trade route edit, ...) to force rows_ to
-  // recompute. world() alone isn't enough: it's the same WorldController
-  // instance across in-place edits, so reading it doesn't establish a
-  // dependency on those edits the way a fresh value would.
+  // recompute. This predates world() being store-backed: it used to be a
+  // plain object whose in-place edits a computed() couldn't observe. Now
+  // that StoreWorldView reads WorldStore's signals, rows_ already tracks
+  // those reads itself, so this trigger is likely redundant -- left in
+  // place until it can be removed deliberately (with the other
+  // recomputeTrigger_s) and verified, rather than as a drive-by.
   private readonly recomputeTrigger_ = signal(0);
 
   private readonly rows_ = computed(() => {

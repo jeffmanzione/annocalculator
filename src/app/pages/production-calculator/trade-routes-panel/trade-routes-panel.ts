@@ -53,13 +53,9 @@ export class TradeRoutesPanel extends ControlComponent<StoreWorldController> {
 
   private readonly store_ = new TradeRoutesStore();
 
-  // A normalized, read-only mirror of the whole world, rebuilt by the root
-  // component on every change (see production-calculator.ts's
-  // refreshWorldSummary_()) -- this is what refreshIslandSummaries_() below
-  // reads from now, instead of reconstructing IslandSummary objects from
-  // `this.controller().islands` itself. Trade routes themselves still go
-  // through `controller` (WorldController remains their source of truth;
-  // see the design doc's "World-level normalization" section for why).
+  // Read-only view of the root's WorldStore (the same store `controller`
+  // writes to) -- refreshIslandSummaries_() below reads island summaries
+  // from it for the dropdowns. Trade-route edits go through `controller`.
   world = input<StoreWorldView>();
 
   // Form groups are kept stable across store updates (rather than recreated
@@ -79,8 +75,8 @@ export class TradeRoutesPanel extends ControlComponent<StoreWorldController> {
     // is now backed by WorldStore's signals, so reading
     // controller.tradeRoutes / world().islands here would otherwise make
     // that effect re-run (and reload every row) on every store write --
-    // keep it a one-time load per controller, as it was with
-    // WorldController's plain, non-reactive objects.
+    // keep it a one-time load per controller, as it was back when the
+    // controller was a plain, non-reactive object.
     untracked(() => {
       this.store_.loadTradeRoutes(controller.tradeRoutes);
       this.refreshIslandSummaries_();

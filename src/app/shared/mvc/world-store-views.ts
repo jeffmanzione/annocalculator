@@ -38,19 +38,17 @@ import {
 import { ProductionLineEntity, WorldStore } from './world-store';
 
 /**
- * Store-backed equivalents of views.ts's View classes: same public getters
- * (behaviorally identical -- verified against the originals with a
- * side-by-side comparison script, see the commit this file was added in),
- * but reading from a WorldStore's flat, id-keyed maps and looking up
- * related entities by id, instead of a manually-threaded ViewContext.
+ * Read-only, store-backed views of the world's entities, holding the app's
+ * computed domain logic (efficiency, extra goods, produced/consumed rates,
+ * ...). Each class takes a WorldStore and an id, reads the store's flat,
+ * id-keyed maps, and reaches related entities by id lookup. They hold no
+ * state of their own beyond the id and always re-read the store's current
+ * maps, so they're cheap to construct.
  *
- * Nothing constructs these yet -- they exist so a consumer (island.ts,
- * production-line.ts, trade-routes-panel.ts, summary-panel.ts) can migrate
- * to reading from WorldStore without also having to re-derive this
- * computation logic itself. Each class takes a WorldStore and an id rather
- * than a model + context, so -- unlike the original Views, which are cheap
- * to recreate on every read -- these are equally cheap: they hold no state
- * of their own beyond the id, and always re-read the store's current maps.
+ * (Ported from the View classes in the now-deleted views.ts, which reached
+ * related entities through a manually-threaded ViewContext instead; the
+ * port was verified behaviorally identical with a side-by-side comparison
+ * script when this file was added.)
  */
 
 export class StoreExtraGoodView implements ExtraGood {

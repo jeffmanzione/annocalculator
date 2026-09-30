@@ -15,12 +15,48 @@ import {
   World,
 } from './models';
 import { Good } from '../game/enums';
-import {
-  arrayEqualsAsSet,
-  generatePseudorandomInt,
-  resolveDuplicateReplacementGoods,
-} from './controllers';
 import { lookupItemInfo, lookupProductionInfo } from '../game/facts';
+
+// Helpers below were moved here from controllers.ts (now deleted), their
+// last remaining consumer being this file.
+
+// Array-typed model fields (boosts/items/culturalSets) are compared
+// against their defaults by content, not by reference: DEFAULT_*_MODEL's
+// array fields are each one specific [] instance, so a freshly-created
+// array from the UI (e.g. selecting then deselecting everything) is never
+// == to it even when empty, and a plain == check here would silently fail
+// to ever clear these fields. Order doesn't matter for these multi-select
+// values, so this compares as sets.
+export function arrayEqualsAsSet<T>(
+  a: T[] | undefined,
+  b: T[] | undefined,
+): boolean {
+  // Defensive: some form-control "cleared" values in production-line.ts are
+  // (incorrectly) `false` rather than `[]` for these array-typed controls
+  // (see clearAndDisableControl_ calls for 'items'/'culturalSets') -- treat
+  // anything that isn't a real array as empty rather than throwing, same as
+  // Array.isArray(a) ? a : [] would for iteration purposes.
+  const setA = new Set(Array.isArray(a) ? a : []);
+  const setB = new Set(Array.isArray(b) ? b : []);
+  return setA.size === setB.size && [...setA].every((x) => setB.has(x));
+}
+
+export function generatePseudorandomInt(): number {
+  // Ensure min and max are integers
+  const [min, max] = [0, Number.MAX_SAFE_INTEGER];
+  // Generate a random number between min (inclusive) and max (inclusive)
+  return Math.floor(Math.random() * (max - min + 1)) + min; // NOSONAR - Pseudorandomness is sufficient
+}
+
+export const resolveDuplicateReplacementGoods = (g1: Good, g2: Good): Good => {
+  // Prefer Susanna the Steam Engineer (switches input from Steam Motors to
+  // Filaments) over Maria Maravilla (switches input from Steam Motors to
+  // Motors) because Filaments are much much easier to produce.
+  if (g1 === Good.Filaments && g2 === Good.Motor) {
+    return Good.Filaments;
+  }
+  return g2;
+};
 
 /**
  * A ProductionLine as held in the normalized store: the same shape as the
@@ -40,7 +76,7 @@ export interface ProductionLineEntity extends ProductionLine {
 }
 
 /**
- * Ported from ProductionLineController.updateGoods_() (controllers.ts):
+ * Ported from the old ProductionLineController.updateGoods_() (in the now-deleted controllers.ts):
  * recomputes `good`/`inputGoods` from `building` (+ `items`, which can
  * replace some of the building's normal input goods -- see
  * resolveDuplicateReplacementGoods). This is a real, eager side effect of
@@ -82,17 +118,16 @@ function computeDerivedGoods(
 
 /**
  * Normalized, id-keyed signal store for a `World`: flat `Map`s instead of
- * one nested tree. This exists alongside `WorldController` for now -- it is
- * not yet read from by any component (see the design doc's "suggested next
- * step"). `fromWorld()`/`toWorld()` are the load/save boundary, and must
+ * one nested tree. This is the app's source of truth for the loaded world
+ * (production-calculator.ts builds one per page load). `fromWorld()`/
+ * `toWorld()` are the load/save boundary, and must
  * round-trip existing saved data losslessly: the app's real users have
  * un-versioned, un-validated `JSON.stringify`/`JSON.parse` data sitting in
  * their browsers' `localStorage` today (see `local-storage.ts`), so this is
  * a hard correctness requirement, not just a nice-to-have. Note that an
  * island/production-line/trade-route with no id yet (older saved data, or a
- * just-created entity) gets one assigned in `fromWorld()`, exactly matching
- * the existing `IslandController.wrap`/`TradeRouteController.wrap`/
- * `ProductionLineController.wrap` convention -- see `controllers.ts`.
+ * just-created entity) gets one assigned in `fromWorld()` (missing or negative id means
+ * unassigned -- the convention the old, now-deleted controllers.ts used).
  */
 export class WorldStore {
   readonly islands: WritableSignal<Map<IslandId, Island>>;

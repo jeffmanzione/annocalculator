@@ -21,45 +21,34 @@ import {
 
 /**
  * Write-capable counterparts to the read-only Store*View classes in
- * world-store-views.ts -- the store-backed equivalents of
- * ProductionLineController/IslandController/TradeRouteController/
- * WorldController in controllers.ts. Same relationship as that file has to
- * views.ts: each class here extends its View, inheriting every getter
- * unchanged, and adds setters/mutation methods that write through
- * WorldStore's mutation API (world-store.ts) instead of assigning directly
- * to a plain model object.
+ * world-store-views.ts: each class here extends its View, inheriting every
+ * getter unchanged, and adds setters/mutation methods that write through
+ * WorldStore's mutation API (world-store.ts). production-calculator.ts
+ * builds one StoreWorldController over its WorldStore and hands its
+ * per-id-cached children to <island>/<trade-routes-panel>.
  *
- * Nothing constructs a StoreWorldController yet -- this is prerequisite
- * scaffolding for repointing production-calculator.ts/island.ts/
- * production-line.ts/trade-routes-panel.ts at WorldStore as the real
- * source of truth (see the design doc's "production-calculator.ts holds
- * WorldStore as source of truth" section, step 2). Until that cutover,
- * WorldController remains the actual source of truth everywhere.
- *
- * Unlike ProductionLineController/IslandController's setters, these don't
- * do their own "delete field if it equals the default" minimization --
+ * (These replaced WorldController/IslandController/ProductionLineController/
+ * TradeRouteController, in the now-deleted controllers.ts.) Unlike those
+ * old setters, these don't do their own "delete field if it equals the
+ * default" minimization --
  * that already moved to WorldStore.toWorld() in step 1 (see
  * stripProductionLineDefaults/stripIslandDefaults/stripWorldDefaults in
  * world-store.ts). Nor do these setters re-derive good/inputGoods or clear
  * items when hasTradeUnion is turned off -- WorldStore.updateProductionLine
  * already does both eagerly, once, in one place, rather than each caller
- * (the old per-field setters here, and now this class) needing to remember
- * to.
+ * needing to remember to.
  *
  * Per-id caching: each class below caches its own child controllers in a
  * plain Map, filled lazily and read fresh from the store's current maps on
- * every access -- mirroring IslandController.productionLines_ and
- * WorldController.islands_/tradeRoutes_ in controllers.ts. This matters
- * for more than just avoiding reallocation: production-calculator.html's
- * `@for (island of world.islands; track island; ...)` (soon to become
- * `track island.id`, per the hazard noted in the design doc) needs a given
- * id's controller object to be the *same* object across re-reads, or
+ * every access. This matters for more than just avoiding reallocation:
+ * production-calculator.html's `@for (island of world.islands; track
+ * island.id)` needs a given id's controller object to be the *same* object
+ * across re-reads, or
  * Angular would tear down and rebuild every child component on every store
  * update. A WorldStore instance is itself long-lived (constructed once per
  * loaded world, not recreated on every mutation -- only its internal
  * signals' Map values change), so caching keyed by the store instance
- * (each StoreWorldController wraps exactly one WorldStore, same as
- * WorldController wraps exactly one World) is sufficient for that
+ * (each StoreWorldController wraps exactly one WorldStore) is sufficient for that
  * identity to hold for as long as the world itself is loaded.
  */
 
@@ -186,10 +175,9 @@ export class StoreIslandController extends StoreIslandView {
    * cached StoreProductionLineController instance for a given id across
    * calls, for the identity-stability reason explained in this file's
    * module doc comment. Still reads the current membership fresh from the
-   * store on every call -- unlike IslandController.productionLines_, which
-   * is only ever updated by this class's own addProductionLine()/
-   * removeProductionLineById() calls, this stays correct even if the
-   * store's productionLines map changes for some other reason.
+   * store on every call, so this stays correct even if the store's
+   * productionLines map changes some way other than through this class's
+   * own addProductionLine()/removeProductionLineById().
    */
   override get productionLines(): StoreProductionLineController[] {
     return [...this.store.productionLines().values()]
