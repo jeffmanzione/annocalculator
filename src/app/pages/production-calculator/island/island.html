@@ -15,7 +15,7 @@
         class="island-select"
         formControlName="dolPolicy"
         label="Department Policy"
-        [options]="dolPolicies"
+        [options]="dolPolicies()"
         [iconUrlLookupFn]="lookupPolicyIconUrl"></enum-select>
     </section>
     <section>
@@ -39,7 +39,7 @@
           <td mat-cell *matCellDef="let element" [formGroup]="element.formGroup">
             <enum-select
               formControlName="building"
-              [options]="productionBuildings"
+              [options]="productionBuildings()"
               [iconUrlLookupFn]="lookupBuildingIconUrl"
               [tooltip]="buildingTooltip"></enum-select>
           </td>

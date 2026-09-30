@@ -103,8 +103,28 @@ export class Island
   readonly allDolPolicies = Object.values(DepartmentOfLaborPolicy);
   readonly goods = Object.values(Good).filter((g) => g != Good.Unknown);
 
-  dolPolicies!: DepartmentOfLaborPolicy[];
-  productionBuildings!: ProductionBuilding[];
+  // Bumped in afterPushChange() so the computed()s below -- which read
+  // plain, non-observable controller state -- recompute. Same pattern as
+  // ProductionLineControl.recomputeTrigger_.
+  private readonly recomputeTrigger_ = signal(0);
+
+  readonly productionBuildings: Signal<ProductionBuilding[]> = computed(() => {
+    this.recomputeTrigger_();
+    const region = this.controller().region;
+    return Object.values(ProductionBuilding).filter(
+      (pb) =>
+        (lookupProductionInfo(pb)?.allowedRegions?.indexOf(region) ?? -1) !=
+        -1,
+    );
+  });
+
+  readonly dolPolicies: Signal<DepartmentOfLaborPolicy[]> = computed(() => {
+    this.recomputeTrigger_();
+    const region = this.controller().region;
+    return region == Region.OldWorld || region == Region.CapeTrelawney
+      ? this.allDolPolicies
+      : [DepartmentOfLaborPolicy.None];
+  });
 
   get productionLineColumns(): string[] {
     const columns = [
@@ -175,6 +195,17 @@ export class Island
     });
     this.formGroup.valueChanges.subscribe((_) => this.pushUpChange());
 
+    // dolPolicy only applies in some regions; correct/clear it
+    // synchronously in response to region's own valueChanges (which fires
+    // before the whole FormGroup's, and so before pushUpChange() commits
+    // values to the model) -- same pattern as ProductionLineControl's
+    // building/hasTradeUnion subscriptions, and for the same reason: this
+    // is a correction to a same-row pending value, not a read of already-
+    // committed state, so it can't wait until after the model write.
+    this.formGroup.controls['region'].valueChanges.subscribe(() =>
+      this.updateDolPolicyControlState_(),
+    );
+
     const controls = new Map<ProductionLineId, ProductionLineControl>();
     for (const pl of this.controller().productionLines) {
       const control = new ProductionLineControl(pl);
@@ -200,20 +231,16 @@ export class Island
   }
 
   override afterPushChange(): void {
-    this.updateRegionSpecificSelectOptions_();
+    // Also re-applied here (not just from the region subscription above)
+    // to stay correct if this island's region was somehow set to a value
+    // and dolPolicy state fell out of sync some other way -- cheap and
+    // idempotent, so there's no harm re-running it on every change.
+    this.updateDolPolicyControlState_();
+    this.recomputeTrigger_.update((v) => v + 1);
   }
 
-  private updateRegionSpecificSelectOptions_(): void {
-    const region = this.controller().region;
-    this.productionBuildings = Object.values(ProductionBuilding).filter(
-      (pb) =>
-        (lookupProductionInfo(pb)?.allowedRegions?.indexOf(region) ?? -1) != -1,
-    );
-    this.dolPolicies =
-      region == Region.OldWorld || region == Region.CapeTrelawney
-        ? this.allDolPolicies
-        : [DepartmentOfLaborPolicy.None];
-
+  private updateDolPolicyControlState_(): void {
+    const region = this.formGroup.value.region;
     if (region == Region.OldWorld || region == Region.CapeTrelawney) {
       this.enableControl_('dolPolicy');
     } else {
