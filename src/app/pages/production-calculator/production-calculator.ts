@@ -8,9 +8,10 @@ import {
   viewChild,
   viewChildren,
 } from '@angular/core';
-import { WorldController } from '../../shared/mvc/controllers';
 import { WorldStore } from '../../shared/mvc/world-store';
 import { StoreWorldView } from '../../shared/mvc/world-store-views';
+import { StoreWorldController } from '../../shared/mvc/world-store-controllers';
+import { IslandId } from '../../shared/mvc/models';
 import { Island } from './island/island';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatIconModule } from '@angular/material/icon';
@@ -244,17 +245,20 @@ export class ProductionCalculatorPage implements OnInit {
     },
   ];
 
-  world!: WorldController;
+  // The actual source of truth for the loaded world: a normalized, id-keyed
+  // signal store (see world-store.ts). Constructed once per loaded world in
+  // setWorld() -- import/reset/clear all go through setWorldAndReload(),
+  // which reloads the page -- so this instance, and the per-id-cached
+  // controllers `world` hands out, stay identity-stable for the page's
+  // lifetime.
+  private store_!: WorldStore;
 
-  // A normalized, read-only mirror of `world`, rebuilt from its current
-  // model data whenever anything changes (see refreshWorldSummary_()) --
-  // exactly the same "refresh a store from whatever currently owns the
-  // real state" pattern trade-routes-panel.ts's own TradeRoutesStore uses
-  // today, just at the world level. Feeds consumers that only need to read
-  // aggregate/derived data (summary-panel.ts so far) via the store-backed
-  // views in world-store-views.ts, without WorldController itself ceasing
-  // to be the actual source of truth -- see the design doc's "World-level
-  // normalization" section for why a wholesale swap isn't safe yet.
+  // Write-capable view of store_, handed to <island>/<trade-routes-panel>.
+  world!: StoreWorldController;
+
+  // Read-only view of the *same* store_, for consumers that only aggregate
+  // (summary-panel.ts, trade-routes-panel.ts's island dropdowns). No longer
+  // a rebuilt-on-every-change snapshot -- it reads live store state.
   worldSummary!: StoreWorldView;
 
   formGroup?: FormGroup;
@@ -320,17 +324,12 @@ export class ProductionCalculatorPage implements OnInit {
     if (!worldModel) {
       return;
     }
-    this.world = WorldController.wrap(worldModel);
-    this.refreshWorldSummary_();
+    this.store_ = WorldStore.fromWorld(worldModel);
+    this.world = new StoreWorldController(this.store_);
+    this.worldSummary = new StoreWorldView(this.store_);
     this.formGroup!.controls['tradeUnionBonusPercent'].setValue(
       this.world.tradeUnionBonus * 100,
       { emitEvent: false },
-    );
-  }
-
-  private refreshWorldSummary_(): void {
-    this.worldSummary = new StoreWorldView(
-      WorldStore.fromWorld(this.world.copyModel()),
     );
   }
 
@@ -339,9 +338,8 @@ export class ProductionCalculatorPage implements OnInit {
     this.world.tradeUnionBonus =
       this.formGroup!.value.tradeUnionBonusPercent / 100;
     this.tradeRoutesPanel()?.afterPushChange();
-    this.refreshWorldSummary_();
     this.summaryPanel()?.update();
-    this.worldStorage_.set(this.world.copyModel());
+    this.worldStorage_.set(this.store_.toWorld());
     // Convert this into a debug-only print.
     // console.log(this.world.toJsonString());
   }
@@ -351,8 +349,8 @@ export class ProductionCalculatorPage implements OnInit {
     this.update();
   }
 
-  removeIslandAt(index: number): void {
-    this.world.removeIslandAt(index);
+  removeIsland(id: IslandId): void {
+    this.world.removeIsland(id);
     this.update();
   }
 
@@ -370,7 +368,7 @@ export class ProductionCalculatorPage implements OnInit {
   }
 
   private copyJsonToClipboard_(): void {
-    this.clipboard_.copy(this.world.toJsonString());
+    this.clipboard_.copy(JSON.stringify(this.store_.toWorld()));
   }
 
   private resetInputToDefault_(): void {
@@ -383,7 +381,7 @@ export class ProductionCalculatorPage implements OnInit {
 
   private get dialogConfig_(): MatDialogConfig<SaveData<World>> {
     return {
-      data: { obj: this.world.copyModel() } as SaveData<World>,
+      data: { obj: this.store_.toWorld() } as SaveData<World>,
       width: '600px',
       height: '700px',
     };

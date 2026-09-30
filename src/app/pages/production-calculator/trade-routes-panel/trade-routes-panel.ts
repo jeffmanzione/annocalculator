@@ -1,6 +1,6 @@
-import { ChangeDetectionStrategy, Component, computed, input, Signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, input, Signal, untracked } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { WorldController } from '../../../shared/mvc/controllers';
+import { StoreWorldController } from '../../../shared/mvc/world-store-controllers';
 import { MatTableModule } from '@angular/material/table';
 import { ControlComponent } from '../../../shared/control/control';
 import { MatSelectModule } from '@angular/material/select';
@@ -43,7 +43,7 @@ interface TradeRouteRow {
   styleUrl: './trade-routes-panel.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TradeRoutesPanel extends ControlComponent<WorldController> {
+export class TradeRoutesPanel extends ControlComponent<StoreWorldController> {
   readonly displayColumns = [
     'sourceIslandId',
     'targetIslandId',
@@ -74,9 +74,17 @@ export class TradeRoutesPanel extends ControlComponent<WorldController> {
     this.store_.tradeRoutes().map((tr) => this.rowFor_(tr)),
   );
 
-  protected override onSetController(controller: WorldController): void {
-    this.store_.loadTradeRoutes(controller.tradeRoutes);
-    this.refreshIslandSummaries_();
+  protected override onSetController(controller: StoreWorldController): void {
+    // ControlComponent calls this from inside an effect(). The controller
+    // is now backed by WorldStore's signals, so reading
+    // controller.tradeRoutes / world().islands here would otherwise make
+    // that effect re-run (and reload every row) on every store write --
+    // keep it a one-time load per controller, as it was with
+    // WorldController's plain, non-reactive objects.
+    untracked(() => {
+      this.store_.loadTradeRoutes(controller.tradeRoutes);
+      this.refreshIslandSummaries_();
+    });
   }
 
   // The root component calls this on every world-wide change (an island

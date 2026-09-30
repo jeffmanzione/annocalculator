@@ -1,5 +1,8 @@
-import { ProductionLineController } from '../../../shared/mvc/controllers';
-import { ExtraGoodView, ProductionLineView } from '../../../shared/mvc/views';
+import { StoreProductionLineController } from '../../../shared/mvc/world-store-controllers';
+import {
+  StoreExtraGoodView,
+  StoreProductionLineView,
+} from '../../../shared/mvc/world-store-views';
 import {
   Boost,
   CulturalSet,
@@ -35,7 +38,7 @@ export class ProductionLineControl {
   // recompute. Same pattern as SummaryPanel.recomputeTrigger_.
   private readonly recomputeTrigger_ = signal(0);
 
-  readonly extraGoodsRows: Signal<ExtraGoodView[]> = computed(() => {
+  readonly extraGoodsRows: Signal<StoreExtraGoodView[]> = computed(() => {
     this.recomputeTrigger_();
     return this.controller.extraGoods;
   });
@@ -97,7 +100,7 @@ export class ProductionLineControl {
   });
 
   constructor(
-    public readonly controller: ProductionLineController,
+    public readonly controller: StoreProductionLineController,
     private readonly notifyChanged_: () => void,
   ) {
     this.formGroup = new FormGroup({
@@ -172,7 +175,7 @@ export class ProductionLineControl {
       this.formGroup.controls['culturalSets'].getRawValue();
   }
 
-  get view(): ProductionLineView {
+  get view(): StoreProductionLineView {
     return this.controller;
   }
 

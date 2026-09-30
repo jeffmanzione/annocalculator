@@ -9,7 +9,7 @@ import {
   signal,
   TemplateRef,
 } from '@angular/core';
-import { IslandController } from '../../../shared/mvc/controllers';
+import { StoreIslandController } from '../../../shared/mvc/world-store-controllers';
 import { ProductionLineId } from '../../../shared/mvc/models';
 import { MatTableModule } from '@angular/material/table';
 import {
@@ -58,7 +58,7 @@ import {
   TooltipDirective,
 } from '../../../components/enum-tooltip/enum-tooltip';
 import { CompositeNumber } from '../../../components/composite-number/composite-number';
-import { ExtraGoodView } from '../../../shared/mvc/views';
+import { StoreExtraGoodView } from '../../../shared/mvc/world-store-views';
 import { BoostTooltip } from './tooltips/boost/boost-tooltip';
 import { ProductionBuildingTooltip } from './tooltips/building/building-tooltip';
 import { CulturalSetTooltip } from './tooltips/cultural-set/cultural-set-tooltip';
@@ -101,7 +101,7 @@ export class Island implements OnInit {
   // no longer extends the Control tree (see Decision 2 in the design doc;
   // production-line.ts was migrated off it the same way, in the commit
   // just before this one).
-  controller = input.required<IslandController>();
+  controller = input.required<StoreIslandController>();
 
   // Emitted whenever anything in this island's own form or any of its
   // production lines' forms changes -- replaces Control's `.update`
@@ -331,7 +331,7 @@ export class Island implements OnInit {
     return lookupCulturalSetIconUrl(set ?? CulturalSet.Unknown);
   }
 
-  extraGoodLookupIconUrlFn(extraGood: ExtraGoodView): (_: any) => string {
+  extraGoodLookupIconUrlFn(extraGood: StoreExtraGoodView): (_: any) => string {
     switch (extraGood.sourceType) {
       case 'Boost':
       case 'ElectrifiedFarm':
@@ -372,7 +372,7 @@ export class Island implements OnInit {
   }
 
   selectTooltip(
-    extraGood: ExtraGoodView,
+    extraGood: StoreExtraGoodView,
     boostTooltip: TemplateRef<any>,
     policyTooltip: TemplateRef<any>,
     haciendaTooltip: TemplateRef<any>,

@@ -126,7 +126,12 @@ export class StoreProductionLineView implements ProductionLineEntity {
   }
 
   get id(): ProductionLineId {
-    return this.model.id!;
+    // Returns id_ directly rather than this.model.id: the two are always
+    // equal while the entity exists, but this one stays readable after the
+    // entity is removed from the store -- Angular's `@for (...; track
+    // x.id)` re-reads the track key of already-removed items while
+    // reconciling, and a store lookup there would throw.
+    return this.id_;
   }
 
   get islandId(): IslandId {
@@ -564,7 +569,12 @@ export class StoreTradeRouteView implements TradeRoute {
   }
 
   get id(): TradeRouteId {
-    return this.model.id;
+    // Returns id_ directly rather than this.model.id: the two are always
+    // equal while the entity exists, but this one stays readable after the
+    // entity is removed from the store -- Angular's `@for (...; track
+    // x.id)` re-reads the track key of already-removed items while
+    // reconciling, and a store lookup there would throw.
+    return this.id_;
   }
 
   get sourceIslandId(): IslandId {
@@ -599,7 +609,12 @@ export class StoreIslandView implements Island {
   }
 
   get id(): IslandId {
-    return this.model.id!;
+    // Returns id_ directly rather than this.model.id: the two are always
+    // equal while the entity exists, but this one stays readable after the
+    // entity is removed from the store -- Angular's `@for (...; track
+    // x.id)` re-reads the track key of already-removed items while
+    // reconciling, and a store lookup there would throw.
+    return this.id_;
   }
 
   get name(): string {

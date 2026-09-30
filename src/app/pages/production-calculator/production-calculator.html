@@ -27,7 +27,7 @@
   <section class="island-list-section">
     @if (world) {
       <mat-accordion multi>
-        @for (island of world.islands; track island; let i = $index) {
+        @for (island of world.islands; track island.id) {
           <mat-expansion-panel [expanded]="true">
             <div class="underlay"></div>
             <mat-expansion-panel-header>
@@ -36,7 +36,7 @@
                 {{ island.name }}
               </mat-panel-title>
               <mat-panel-description>
-                <ac-button class="delete-island-button" icon="delete" (click)="removeIslandAt(i)"></ac-button>
+                <ac-button class="delete-island-button" icon="delete" (click)="removeIsland(island.id)"></ac-button>
               </mat-panel-description>
             </mat-expansion-panel-header>
             <island [controller]="island"></island>
