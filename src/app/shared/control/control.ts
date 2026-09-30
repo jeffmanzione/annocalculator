@@ -78,10 +78,6 @@ export abstract class ControlComponent<T> extends Control {
     return super.update;
   }
 
-  forceAfterPushChange(): void {
-    this.privateAfterPushChange();
-  }
-
   protected override privateAfterPushChange(): void {
     super.privateAfterPushChange();
     this.changeDetector_.markForCheck();

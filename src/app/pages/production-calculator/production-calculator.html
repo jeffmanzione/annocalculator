@@ -39,7 +39,7 @@
                 <ac-button class="delete-island-button" icon="delete" (click)="removeIslandAt(i)"></ac-button>
               </mat-panel-description>
             </mat-expansion-panel-header>
-            <island [controller]="island" (update)="update()"></island>
+            <island [controller]="island"></island>
           </mat-expansion-panel>
         }
       </mat-accordion>
@@ -52,6 +52,6 @@
 <div class="column right-column">
   @if (world) {
     <summary-panel [world]="world"></summary-panel>
-    <trade-routes-panel [controller]="world" (update)="update()"></trade-routes-panel>
+    <trade-routes-panel [controller]="world"></trade-routes-panel>
   }
 </div>

@@ -1,8 +1,8 @@
 import {
-  AfterViewInit,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  effect,
   inject,
   OnInit,
   viewChild,
@@ -213,7 +213,7 @@ const defaultWorld: World = {
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ProductionCalculatorPage implements OnInit, AfterViewInit {
+export class ProductionCalculatorPage implements OnInit {
   readonly defaultActions = [
     {
       icon: 'content_copy',
@@ -247,13 +247,23 @@ export class ProductionCalculatorPage implements OnInit, AfterViewInit {
   private readonly worldStorage_: StorageItem<World>;
 
   islandComponents = viewChildren(Island);
-  summaryPanel = viewChild.required(SummaryPanel);
-  tradeRoutesPanel = viewChild.required(TradeRoutesPanel);
+  summaryPanel = viewChild(SummaryPanel);
+  tradeRoutesPanel = viewChild(TradeRoutesPanel);
 
   private subscriptions_: Subscription[] = [];
 
   constructor(storageManager: LocalStorageManager) {
     this.worldStorage_ = storageManager.lookupObjectItem(WORLD_KEY);
+    // Re-wire the "child changed" subscriptions whenever the set of island
+    // components (or the trade-routes panel) changes, so islands added or
+    // removed after the initial render stay correctly wired up. This also
+    // covers the initial render, replacing the old one-shot
+    // ngAfterViewInit() call.
+    effect(() => {
+      this.islandComponents();
+      this.tradeRoutesPanel();
+      this.resetSubscriptions_();
+    });
   }
 
   ngOnInit(): void {
@@ -265,15 +275,14 @@ export class ProductionCalculatorPage implements OnInit, AfterViewInit {
   }
 
   private addAllSubscriptions_(): void {
-    if (this.tradeRoutesPanel()) {
+    const tradeRoutesPanel = this.tradeRoutesPanel();
+    if (tradeRoutesPanel) {
       this.subscriptions_.push(
-        this.tradeRoutesPanel().update.subscribe(() => this.update()),
+        tradeRoutesPanel.update.subscribe(() => this.update()),
       );
     }
-    if (this.islandComponents()) {
-      for (const i of this.islandComponents()) {
-        this.subscriptions_.push(i.update.subscribe(() => this.update()));
-      }
+    for (const i of this.islandComponents()) {
+      this.subscriptions_.push(i.update.subscribe(() => this.update()));
     }
   }
 
@@ -287,10 +296,6 @@ export class ProductionCalculatorPage implements OnInit, AfterViewInit {
   private resetSubscriptions_(): void {
     this.clearAllSubscriptions_();
     this.addAllSubscriptions_();
-  }
-
-  ngAfterViewInit(): void {
-    this.resetSubscriptions_();
   }
 
   setWorld(worldModel?: World): void {
@@ -308,11 +313,6 @@ export class ProductionCalculatorPage implements OnInit, AfterViewInit {
     this.changeDectorRef_.detectChanges();
     this.world.tradeUnionBonus =
       this.formGroup!.value.tradeUnionBonusPercent / 100;
-    if (this.islandComponents()) {
-      for (const i of this.islandComponents()) {
-        i.forceAfterPushChange();
-      }
-    }
     this.tradeRoutesPanel()?.afterPushChange();
     this.summaryPanel()?.update();
     this.worldStorage_.set(this.world.copyModel());
