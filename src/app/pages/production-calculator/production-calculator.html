@@ -52,6 +52,6 @@
 <div class="column right-column">
   @if (world) {
     <summary-panel [world]="worldSummary"></summary-panel>
-    <trade-routes-panel [controller]="world"></trade-routes-panel>
+    <trade-routes-panel [controller]="world" [world]="worldSummary"></trade-routes-panel>
   }
 </div>

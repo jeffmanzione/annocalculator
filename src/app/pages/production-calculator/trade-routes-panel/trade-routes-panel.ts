@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, Signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, input, Signal } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { WorldController } from '../../../shared/mvc/controllers';
 import { MatTableModule } from '@angular/material/table';
@@ -12,6 +12,7 @@ import { TradeRoute, TradeRouteId } from '../../../shared/mvc/models';
 import { AcButton } from '../../../components/button/button';
 import { L10nText } from '../../../components/text/text';
 import { IslandSummary, TradeRoutesStore } from './trade-routes-store';
+import { StoreWorldView } from '../../../shared/mvc/world-store-views';
 
 /** A single trade-route table row: a stable form bound to one trade route, plus its currently-valid dropdown options. */
 interface TradeRouteRow {
@@ -51,6 +52,15 @@ export class TradeRoutesPanel extends ControlComponent<WorldController> {
   ];
 
   private readonly store_ = new TradeRoutesStore();
+
+  // A normalized, read-only mirror of the whole world, rebuilt by the root
+  // component on every change (see production-calculator.ts's
+  // refreshWorldSummary_()) -- this is what refreshIslandSummaries_() below
+  // reads from now, instead of reconstructing IslandSummary objects from
+  // `this.controller().islands` itself. Trade routes themselves still go
+  // through `controller` (WorldController remains their source of truth;
+  // see the design doc's "World-level normalization" section for why).
+  world = input<StoreWorldView>();
 
   // Form groups are kept stable across store updates (rather than recreated
   // on every change) so in-progress edits and open dropdowns aren't reset by
@@ -106,8 +116,12 @@ export class TradeRoutesPanel extends ControlComponent<WorldController> {
 
   /** Re-derives the island name/produced-goods summary the dropdowns read from. Islands live outside this store, so this is a manual refresh rather than a subscription -- see the store's doc comment. */
   private refreshIslandSummaries_(): void {
+    const world = this.world();
+    if (!world) {
+      return;
+    }
     this.store_.loadIslands(
-      this.controller().islands.map(
+      world.islands.map(
         (island): IslandSummary => ({
           id: island.id,
           name: island.name,
