@@ -5,7 +5,7 @@
 //   node e2e/smoke.mjs [distDir]      (default: dist/annocalculator/browser)
 import { chromium } from 'playwright';
 import path from 'node:path';
-import { DEFAULT_DIST, openPage, savedWorld, serveDist, settle as settleFn } from './support.mjs';
+import { launchBrowser, DEFAULT_DIST, openPage, savedWorld, serveDist, settle as settleFn } from './support.mjs';
 
 const dist = path.resolve(process.argv[2] ?? DEFAULT_DIST);
 const server = await serveDist(dist);
@@ -16,7 +16,7 @@ const check = (name, ok, detail = '') => {
   if (!ok) failures++;
 };
 
-const browser = await chromium.launch();
+const browser = await launchBrowser(chromium);
 const { page, errors } = await openPage(browser);
 
 const saved = () => savedWorld(page);

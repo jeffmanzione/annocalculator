@@ -11,7 +11,7 @@ npm install
 npx playwright install chromium
 ```
 
-`playwright` is pinned to `~1.56.0` because that's the Chromium build preinstalled in Claude's cloud sandbox, so the scripts run there without downloading a browser. Any recent version works locally.
+To use a Chromium other than the one Playwright installed (for example one preinstalled in a sandbox that doesn't match this Playwright version), set `PLAYWRIGHT_CHROMIUM_EXECUTABLE` to its path. In Claude's cloud sandbox that's `/opt/pw-browsers/chromium`.
 
 ## Build first
 
@@ -20,6 +20,8 @@ Both scripts serve an already-built `dist` folder; they don't build anything.
 ```sh
 npx ng build --configuration development
 ```
+
+To avoid silently testing old code, they refuse to run if the build's `index.html` is older than the newest file in the matching `src/` folder, and tell you to rebuild. Set `E2E_ALLOW_STALE=1` to test an old build on purpose. The check applies to any folder with the standard `<repo>/dist/annocalculator/browser` layout, so it covers baseline builds in a `git worktree` too; builds copied elsewhere skip it.
 
 The development configuration is enough for these checks, and it avoids the production build's Google Fonts inlining (which needs network access to fonts.googleapis.com).
 

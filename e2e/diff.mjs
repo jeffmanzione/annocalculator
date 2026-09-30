@@ -8,7 +8,15 @@
 // Exits 1 if any step differs.
 import { chromium } from 'playwright';
 import path from 'node:path';
-import { deepDiff, normalizeIds, openPage, savedWorld, serveDist, settle as settleFn } from './support.mjs';
+import {
+  launchBrowser,
+  deepDiff,
+  normalizeIds,
+  openPage,
+  savedWorld,
+  serveDist,
+  settle as settleFn,
+} from './support.mjs';
 
 const [baselineDir, candidateDir] = process.argv.slice(2);
 if (!baselineDir || !candidateDir) {
@@ -18,7 +26,7 @@ if (!baselineDir || !candidateDir) {
 
 async function run(dist) {
   const server = await serveDist(path.resolve(dist));
-  const browser = await chromium.launch();
+  const browser = await launchBrowser(chromium);
   const { page, errors } = await openPage(browser);
   const snaps = [];
   const settle = () => settleFn(page);

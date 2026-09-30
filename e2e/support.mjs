@@ -19,6 +19,52 @@ const CONTENT_TYPES = {
 };
 
 /**
+ * Launches headless Chromium. By default this uses the browser Playwright
+ * installed itself (`npx playwright install chromium`). Set
+ * PLAYWRIGHT_CHROMIUM_EXECUTABLE to use a different Chromium binary instead,
+ * e.g. one preinstalled in a sandbox that doesn't match this Playwright
+ * version's expected browser build.
+ */
+export function launchBrowser(chromium) {
+  const executablePath = process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE || undefined;
+  return chromium.launch({ executablePath });
+}
+
+/** Newest modification time (ms) of any file under dir. */
+function newestMtimeMs(dir) {
+  let newest = 0;
+  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+    const full = path.join(dir, entry.name);
+    const mtime = entry.isDirectory() ? newestMtimeMs(full) : fs.statSync(full).mtimeMs;
+    newest = Math.max(newest, mtime);
+  }
+  return newest;
+}
+
+/**
+ * Refuses to test a build that's older than its own source: the scripts
+ * serve whatever is in the dist folder and never build anything, so a
+ * stale build silently tests old code. Assumes the standard
+ * `<repo>/dist/annocalculator/browser` layout, and checks `<repo>/src`;
+ * skips the check for folders outside that layout. Set E2E_ALLOW_STALE=1
+ * to skip it deliberately (e.g. to test an old build on purpose).
+ */
+function assertBuildIsCurrent(root) {
+  if (process.env.E2E_ALLOW_STALE === '1') return;
+  const srcDir = path.resolve(root, '..', '..', '..', 'src');
+  if (!fs.existsSync(srcDir)) return;
+  const builtAt = fs.statSync(path.join(root, 'index.html')).mtimeMs;
+  const srcChangedAt = newestMtimeMs(srcDir);
+  if (srcChangedAt > builtAt) {
+    throw new Error(
+      `The build in ${root} (${new Date(builtAt).toISOString()}) is older than the newest file in ` +
+        `${srcDir} (${new Date(srcChangedAt).toISOString()}), so it would test old code. Rebuild first: ` +
+        `npx ng build --configuration development (or set E2E_ALLOW_STALE=1 to test it anyway).`,
+    );
+  }
+}
+
+/**
  * Serves a built app folder on a free localhost port, falling back to
  * index.html for unknown paths (the app is a client-side-routed SPA).
  * Resolves to { url, close }.
@@ -27,6 +73,7 @@ export function serveDist(root) {
   if (!fs.existsSync(path.join(root, 'index.html'))) {
     throw new Error(`No index.html in ${root} -- build first (see e2e/README.md).`);
   }
+  assertBuildIsCurrent(root);
   const server = http.createServer((req, res) => {
     let file = path.join(root, decodeURIComponent(req.url.split('?')[0]));
     if (!file.startsWith(root) || !fs.existsSync(file) || fs.statSync(file).isDirectory()) {
