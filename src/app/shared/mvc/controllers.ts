@@ -38,7 +38,10 @@ import {
 // == to it even when empty, and a plain == check here would silently fail
 // to ever clear these fields. Order doesn't matter for these multi-select
 // values, so this compares as sets.
-function arrayEqualsAsSet<T>(a: T[] | undefined, b: T[] | undefined): boolean {
+export function arrayEqualsAsSet<T>(
+  a: T[] | undefined,
+  b: T[] | undefined,
+): boolean {
   // Defensive: some form-control "cleared" values in production-line.ts are
   // (incorrectly) `false` rather than `[]` for these array-typed controls
   // (see clearAndDisableControl_ calls for 'items'/'culturalSets') -- treat
@@ -56,7 +59,7 @@ export function generatePseudorandomInt(): number {
   return Math.floor(Math.random() * (max - min + 1)) + min; // NOSONAR - Pseudorandomness is sufficient
 }
 
-const resolveDuplicateReplacementGoods = (g1: Good, g2: Good): Good => {
+export const resolveDuplicateReplacementGoods = (g1: Good, g2: Good): Good => {
   // Prefer Susanna the Steam Engineer (switches input from Steam Motors to
   // Filaments) over Maria Maravilla (switches input from Steam Motors to
   // Motors) because Filaments are much much easier to produce.
