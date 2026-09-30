@@ -158,7 +158,7 @@ export class ProductionLineControl extends FormGroupControl<ProductionLineContro
       this.updateItemOptions_(building);
       this.enableControl_('items');
     } else {
-      this.clearAndDisableControl_('items', false);
+      this.clearAndDisableControl_('items', []);
     }
 
     // Local department effects have no effect without a DoL on the island and a Trade Union in
@@ -191,7 +191,7 @@ export class ProductionLineControl extends FormGroupControl<ProductionLineContro
     this.allowedCulturalSets.set(allowedCulturalSets);
 
     if (allowedCulturalSets.size == 0) {
-      this.clearAndDisableControl_('culturalSets', false);
+      this.clearAndDisableControl_('culturalSets', []);
       return;
     }
 

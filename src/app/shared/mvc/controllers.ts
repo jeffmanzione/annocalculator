@@ -31,6 +31,24 @@ import {
   WorldView,
 } from './views';
 
+// Array-typed model fields (boosts/items/culturalSets) are compared
+// against their defaults by content, not by reference: DEFAULT_*_MODEL's
+// array fields are each one specific [] instance, so a freshly-created
+// array from the UI (e.g. selecting then deselecting everything) is never
+// == to it even when empty, and a plain == check here would silently fail
+// to ever clear these fields. Order doesn't matter for these multi-select
+// values, so this compares as sets.
+function arrayEqualsAsSet<T>(a: T[] | undefined, b: T[] | undefined): boolean {
+  // Defensive: some form-control "cleared" values in production-line.ts are
+  // (incorrectly) `false` rather than `[]` for these array-typed controls
+  // (see clearAndDisableControl_ calls for 'items'/'culturalSets') -- treat
+  // anything that isn't a real array as empty rather than throwing, same as
+  // Array.isArray(a) ? a : [] would for iteration purposes.
+  const setA = new Set(Array.isArray(a) ? a : []);
+  const setB = new Set(Array.isArray(b) ? b : []);
+  return setA.size === setB.size && [...setA].every((x) => setB.has(x));
+}
+
 function generatePseudorandomInt(): number {
   // Ensure min and max are integers
   const [min, max] = [0, Number.MAX_SAFE_INTEGER];
@@ -107,7 +125,10 @@ export class ProductionLineController extends ProductionLineView {
   }
 
   override set boosts(value: Boost[]) {
-    if (value == null || value == DEFAULT_PRODUCTION_LINE_MODEL.boosts) {
+    if (
+      value == null ||
+      arrayEqualsAsSet(value, DEFAULT_PRODUCTION_LINE_MODEL.boosts)
+    ) {
       delete this.model.boosts;
       return;
     }
@@ -118,7 +139,10 @@ export class ProductionLineController extends ProductionLineView {
   }
 
   override set items(value: Item[]) {
-    if (value == null || value == DEFAULT_PRODUCTION_LINE_MODEL.items) {
+    if (
+      value == null ||
+      arrayEqualsAsSet(value, DEFAULT_PRODUCTION_LINE_MODEL.items)
+    ) {
       delete this.model.items;
       return;
     }
@@ -170,7 +194,10 @@ export class ProductionLineController extends ProductionLineView {
   }
 
   override set culturalSets(value: CulturalSet[]) {
-    if (value == null || value == DEFAULT_PRODUCTION_LINE_MODEL.culturalSets) {
+    if (
+      value == null ||
+      arrayEqualsAsSet(value, DEFAULT_PRODUCTION_LINE_MODEL.culturalSets)
+    ) {
       delete this.model.culturalSets;
       return;
     }
