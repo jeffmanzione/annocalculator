@@ -49,7 +49,7 @@ function arrayEqualsAsSet<T>(a: T[] | undefined, b: T[] | undefined): boolean {
   return setA.size === setB.size && [...setA].every((x) => setB.has(x));
 }
 
-function generatePseudorandomInt(): number {
+export function generatePseudorandomInt(): number {
   // Ensure min and max are integers
   const [min, max] = [0, Number.MAX_SAFE_INTEGER];
   // Generate a random number between min (inclusive) and max (inclusive)
