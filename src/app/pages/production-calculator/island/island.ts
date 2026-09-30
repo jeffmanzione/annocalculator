@@ -265,8 +265,16 @@ export class Island implements OnInit {
     this.recomputeTrigger_.update((v) => v + 1);
   }
 
+  // Reads region from its own FormControl's .value, not the parent
+  // FormGroup's aggregate this.formGroup.value -- when this runs from
+  // region's own valueChanges subscription (see ngOnInit above), the
+  // parent aggregate hasn't been recomputed yet, so reading it here would
+  // compute off the pre-change region and (like the analogous
+  // building/hasTradeUnion bug in production-line.ts's updateFormStates_)
+  // send the correction to the controller one change late instead of on
+  // this one. See that method's comment for the full explanation.
   private updateDolPolicyControlState_(): void {
-    const region = this.formGroup.value.region;
+    const region = this.formGroup.controls['region'].value;
     if (region == Region.OldWorld || region == Region.CapeTrelawney) {
       this.enableControl_('dolPolicy');
     } else {

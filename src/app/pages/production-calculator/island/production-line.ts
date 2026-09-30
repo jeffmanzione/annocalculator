@@ -183,8 +183,26 @@ export class ProductionLineControl {
   // when called from refresh() -- both are safe: see the constructor
   // comment for why the same-row inputs are safe here despite being
   // pending.
+  //
+  // Reads building/hasTradeUnion from their own FormControl's .value
+  // (this.formGroup.controls[...].value), not from the parent FormGroup's
+  // aggregate this.formGroup.value -- when this method runs from one of
+  // those two controls' own valueChanges (see the constructor), the
+  // control that just changed has already updated its own .value, but the
+  // *parent* FormGroup's aggregate .value hasn't been recomputed yet
+  // (Angular updates a control's own value/emits its own valueChanges
+  // before walking up to recompute and emit the parent's -- see
+  // AbstractControl.updateValueAndValidity() in @angular/forms). Reading
+  // the parent aggregate here used to read one step behind, so a
+  // correction this method makes (e.g. auto-selecting Electricity) would
+  // compute off the stale pre-change building/hasTradeUnion value and,
+  // even though the *form* control still ended up corrected via the
+  // fallback below, the corrected value wouldn't reach the *controller*
+  // until the next unrelated change (found and fixed after being
+  // identified as a pre-existing bug during the Decision-2 migration).
   private updateFormStates_(): void {
-    const building: ProductionBuilding = this.formGroup.value.building;
+    const building: ProductionBuilding =
+      this.formGroup.controls['building'].value;
     this.updateBoostOptions_(building);
     // Some buildings require electricity, and if so, we automatically select it, otherwise, we
     // narrow the field down to possible options.
@@ -197,7 +215,7 @@ export class ProductionLineControl {
     }
 
     // Items can only be slotted in trade unions.
-    if (this.formGroup.value.hasTradeUnion) {
+    if (this.formGroup.controls['hasTradeUnion'].value) {
       this.updateItemOptions_(building);
       this.enableControl_('items');
     } else {
@@ -209,7 +227,7 @@ export class ProductionLineControl {
     if (
       (this.controller.region != Region.NewWorld &&
         !this.controller.islandHasDepartmentOfLabor) ||
-      !this.formGroup.value.hasTradeUnion
+      !this.formGroup.controls['hasTradeUnion'].value
     ) {
       this.clearAndDisableControl_('inRangeOfLocalDepartment', false);
     } else {
