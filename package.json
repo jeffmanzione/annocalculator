@@ -6,7 +6,9 @@
     "start": "ng serve",
     "build": "ng build --configuration production",
     "watch": "ng build --watch --configuration development",
-    "serve-prod": "npm run build && cd ./dist/annocalculator/browser && npx http-server --proxy http://localhost:8080?"
+    "serve-prod": "npm run build && cd ./dist/annocalculator/browser && npx http-server --proxy http://localhost:8080?",
+    "e2e:smoke": "node e2e/smoke.mjs",
+    "e2e:diff": "node e2e/diff.mjs"
   },
   "private": true,
   "dependencies": {
@@ -35,6 +37,7 @@
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
+    "playwright": "~1.56.0",
     "prettier": "^3.7.4",
     "tsx": "^4.20.3",
     "typescript": "6.0.3"
