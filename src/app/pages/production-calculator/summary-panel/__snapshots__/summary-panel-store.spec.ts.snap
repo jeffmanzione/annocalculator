@@ -1,0 +1,457 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`computeGoodSummaryRows > default world summary 1`] = `
+[
+  {
+    "good": "Beer",
+    "hasIssue": false,
+    "islands": [
+      {
+        "consumed": 0,
+        "exported": 0,
+        "imported": 0,
+        "island": "Crown Falls",
+        "produced": 9.2,
+      },
+    ],
+    "netProductionPerMin": 9.2,
+    "totalProductionPerMin": 9.2,
+  },
+  {
+    "good": "Bread",
+    "hasIssue": false,
+    "islands": [
+      {
+        "consumed": 0,
+        "exported": 0,
+        "imported": 0,
+        "island": "Crown Falls",
+        "produced": 23,
+      },
+    ],
+    "netProductionPerMin": 23,
+    "totalProductionPerMin": 23,
+  },
+  {
+    "good": "Coffee",
+    "hasIssue": false,
+    "islands": [
+      {
+        "consumed": 0,
+        "exported": 0,
+        "imported": 0,
+        "island": "Crown Falls",
+        "produced": 4.6,
+      },
+    ],
+    "netProductionPerMin": 4.6,
+    "totalProductionPerMin": 4.6,
+  },
+  {
+    "good": "Cotton",
+    "hasIssue": false,
+    "islands": [
+      {
+        "consumed": 10,
+        "exported": 0,
+        "imported": 0,
+        "island": "Plantation Island",
+        "produced": 10,
+      },
+    ],
+    "netProductionPerMin": 0,
+    "totalProductionPerMin": 10,
+  },
+  {
+    "good": "Cotton Fabric",
+    "hasIssue": false,
+    "islands": [
+      {
+        "consumed": 9.2,
+        "exported": 0,
+        "imported": 10,
+        "island": "Crown Falls",
+        "produced": 0,
+      },
+      {
+        "consumed": 0,
+        "exported": 10,
+        "imported": 0,
+        "island": "Plantation Island",
+        "produced": 10,
+      },
+    ],
+    "netProductionPerMin": 0.8,
+    "totalProductionPerMin": 10,
+  },
+  {
+    "good": "Flour",
+    "hasIssue": false,
+    "islands": [
+      {
+        "consumed": 23,
+        "exported": 0,
+        "imported": 0,
+        "island": "Crown Falls",
+        "produced": 23,
+      },
+    ],
+    "netProductionPerMin": 0,
+    "totalProductionPerMin": 23,
+  },
+  {
+    "good": "Fur Coats",
+    "hasIssue": false,
+    "islands": [
+      {
+        "consumed": 0,
+        "exported": 0,
+        "imported": 0,
+        "island": "Crown Falls",
+        "produced": 9.2,
+      },
+    ],
+    "netProductionPerMin": 9.2,
+    "totalProductionPerMin": 9.2,
+  },
+  {
+    "good": "Furs",
+    "hasIssue": false,
+    "islands": [
+      {
+        "consumed": 9.2,
+        "exported": 0,
+        "imported": 10,
+        "island": "Crown Falls",
+        "produced": 0,
+      },
+      {
+        "consumed": 0,
+        "exported": 10,
+        "imported": 0,
+        "island": "Farm Island",
+        "produced": 10,
+      },
+    ],
+    "netProductionPerMin": 0.8,
+    "totalProductionPerMin": 10,
+  },
+  {
+    "good": "Grain",
+    "hasIssue": false,
+    "islands": [
+      {
+        "consumed": 36.8,
+        "exported": 0,
+        "imported": 48.4,
+        "island": "Crown Falls",
+        "produced": 0,
+      },
+      {
+        "consumed": 0,
+        "exported": 48.4,
+        "imported": 0,
+        "island": "Farm Island",
+        "produced": 48.4,
+      },
+    ],
+    "netProductionPerMin": 11.6,
+    "totalProductionPerMin": 48.4,
+  },
+  {
+    "good": "Hops",
+    "hasIssue": false,
+    "islands": [
+      {
+        "consumed": 9.2,
+        "exported": 0,
+        "imported": 12.1,
+        "island": "Crown Falls",
+        "produced": 0,
+      },
+      {
+        "consumed": 0,
+        "exported": 12.1,
+        "imported": 0,
+        "island": "Farm Island",
+        "produced": 12.1,
+      },
+    ],
+    "netProductionPerMin": 2.9,
+    "totalProductionPerMin": 12.1,
+  },
+  {
+    "good": "Malt",
+    "hasIssue": false,
+    "islands": [
+      {
+        "consumed": 13.8,
+        "exported": 0,
+        "imported": 0,
+        "island": "Crown Falls",
+        "produced": 13.8,
+      },
+    ],
+    "netProductionPerMin": 0,
+    "totalProductionPerMin": 13.8,
+  },
+]
+`;
+
+exports[`computeGoodSummaryRows > feature world summary 1`] = `
+[
+  {
+    "good": "Beef",
+    "hasIssue": false,
+    "islands": [
+      {
+        "consumed": 0,
+        "exported": 0,
+        "imported": 0,
+        "island": "New Isle",
+        "produced": 5.333333,
+      },
+    ],
+    "netProductionPerMin": 5.333333,
+    "totalProductionPerMin": 5.333333,
+  },
+  {
+    "good": "Bread",
+    "hasIssue": false,
+    "islands": [
+      {
+        "consumed": 0,
+        "exported": 0,
+        "imported": 0,
+        "island": "Old Isle",
+        "produced": 2.6,
+      },
+      {
+        "consumed": 0,
+        "exported": 0,
+        "imported": 0,
+        "island": "Galvanic Isle",
+        "produced": 2.5,
+      },
+    ],
+    "netProductionPerMin": 5.1,
+    "totalProductionPerMin": 5.1,
+  },
+  {
+    "good": "Chocolate",
+    "hasIssue": false,
+    "islands": [
+      {
+        "consumed": 0,
+        "exported": 0,
+        "imported": 0,
+        "island": "Old Isle",
+        "produced": 0.52,
+      },
+    ],
+    "netProductionPerMin": 0.52,
+    "totalProductionPerMin": 0.52,
+  },
+  {
+    "good": "Corn",
+    "hasIssue": false,
+    "islands": [
+      {
+        "consumed": 0.4,
+        "exported": 0,
+        "imported": 0,
+        "island": "New Isle",
+        "produced": 0,
+      },
+    ],
+    "netProductionPerMin": -0.4,
+    "totalProductionPerMin": 0,
+  },
+  {
+    "good": "Cotton",
+    "hasIssue": false,
+    "islands": [
+      {
+        "consumed": 0,
+        "exported": 0,
+        "imported": 0,
+        "island": "New Isle",
+        "produced": 5.333333,
+      },
+    ],
+    "netProductionPerMin": 5.333333,
+    "totalProductionPerMin": 5.333333,
+  },
+  {
+    "good": "Dung",
+    "hasIssue": false,
+    "islands": [
+      {
+        "consumed": 0,
+        "exported": 0,
+        "imported": 0,
+        "island": "New Isle",
+        "produced": 1.333333,
+      },
+    ],
+    "netProductionPerMin": 1.333333,
+    "totalProductionPerMin": 1.333333,
+  },
+  {
+    "good": "Fertiliser",
+    "hasIssue": false,
+    "islands": [
+      {
+        "consumed": 0.6,
+        "exported": 0,
+        "imported": 0,
+        "island": "Old Isle",
+        "produced": 0,
+      },
+      {
+        "consumed": 0.4,
+        "exported": 0,
+        "imported": 0,
+        "island": "New Isle",
+        "produced": 0,
+      },
+    ],
+    "netProductionPerMin": -1,
+    "totalProductionPerMin": 0,
+  },
+  {
+    "good": "Flour",
+    "hasIssue": true,
+    "islands": [
+      {
+        "consumed": 2.6,
+        "exported": 0,
+        "imported": 0,
+        "island": "Old Isle",
+        "produced": 6,
+      },
+      {
+        "consumed": 2.5,
+        "exported": 0,
+        "imported": 0,
+        "island": "Galvanic Isle",
+        "produced": 0,
+      },
+    ],
+    "netProductionPerMin": 0.9,
+    "totalProductionPerMin": 6,
+  },
+  {
+    "good": "Furs",
+    "hasIssue": false,
+    "islands": [
+      {
+        "consumed": 0,
+        "exported": 0,
+        "imported": 0,
+        "island": "Old Isle",
+        "produced": 2.31,
+      },
+    ],
+    "netProductionPerMin": 2.31,
+    "totalProductionPerMin": 2.31,
+  },
+  {
+    "good": "Grain",
+    "hasIssue": false,
+    "islands": [
+      {
+        "consumed": 6.8,
+        "exported": 0,
+        "imported": 0,
+        "island": "Old Isle",
+        "produced": 25.5,
+      },
+      {
+        "consumed": 0,
+        "exported": 0,
+        "imported": 0,
+        "island": "Land Reform Isle",
+        "produced": 9.75,
+      },
+    ],
+    "netProductionPerMin": 28.45,
+    "totalProductionPerMin": 35.25,
+  },
+  {
+    "good": "Milk",
+    "hasIssue": false,
+    "islands": [
+      {
+        "consumed": 0,
+        "exported": 0,
+        "imported": 0,
+        "island": "New Isle",
+        "produced": 12,
+      },
+    ],
+    "netProductionPerMin": 12,
+    "totalProductionPerMin": 12,
+  },
+  {
+    "good": "Pigs",
+    "hasIssue": false,
+    "islands": [
+      {
+        "consumed": 0,
+        "exported": 0,
+        "imported": 0,
+        "island": "Old Isle",
+        "produced": 10.666667,
+      },
+    ],
+    "netProductionPerMin": 10.666667,
+    "totalProductionPerMin": 10.666667,
+  },
+  {
+    "good": "Potatoes",
+    "hasIssue": false,
+    "islands": [
+      {
+        "consumed": 0,
+        "exported": 0,
+        "imported": 0,
+        "island": "Old Isle",
+        "produced": 1.9125,
+      },
+    ],
+    "netProductionPerMin": 1.9125,
+    "totalProductionPerMin": 1.9125,
+  },
+  {
+    "good": "Steel",
+    "hasIssue": false,
+    "islands": [
+      {
+        "consumed": 6.133333,
+        "exported": 0,
+        "imported": 0,
+        "island": "Old Isle",
+        "produced": 0,
+      },
+    ],
+    "netProductionPerMin": -6.133333,
+    "totalProductionPerMin": 0,
+  },
+  {
+    "good": "Steel Beams",
+    "hasIssue": false,
+    "islands": [
+      {
+        "consumed": 0,
+        "exported": 0,
+        "imported": 0,
+        "island": "Old Isle",
+        "produced": 8.177778,
+      },
+    ],
+    "netProductionPerMin": 8.177778,
+    "totalProductionPerMin": 8.177778,
+  },
+]
+`;
