@@ -72,6 +72,13 @@ describe('EnumSelect', () => {
     expect(await select.getValueText()).toBe('None');
   });
 
+  it('disables the form control', async () => {
+    const { host, fixture, select } = await setup();
+    host.control.disable();
+    await fixture.whenStable();
+    expect(await select.isDisabled()).toBe(true);
+  });
+
   it('supports several selections', async () => {
     const { host, select } = await setup((h) => (h.multiple = true));
     await select.open();

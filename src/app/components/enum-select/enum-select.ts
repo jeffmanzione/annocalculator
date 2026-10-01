@@ -1,4 +1,5 @@
 import {
+  ChangeDetectorRef,
   Component,
   forwardRef,
   TemplateRef,
@@ -44,6 +45,7 @@ export class EnumSelect<T> implements ControlValueAccessor {
 
   private readonly rows_ = viewChildren(EnumRow);
 
+  private readonly changeDetectorRef_ = inject(ChangeDetectorRef);
   private readonly l10nService_ = inject(L10nService);
   readonly noneText = computed(() => {
     this.l10nService_.languageSignal(); // Re-localize when the language changes.
@@ -82,6 +84,9 @@ export class EnumSelect<T> implements ControlValueAccessor {
 
   setDisabledState?(isDisabled: boolean): void {
     this.isDisabled = isDisabled;
+    // A plain field: without this, zoneless change detection never re-renders
+    // the select when its form control is enabled/disabled programmatically.
+    this.changeDetectorRef_.markForCheck();
   }
 
   /**
