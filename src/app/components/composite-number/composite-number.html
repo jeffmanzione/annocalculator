@@ -48,7 +48,12 @@
               @if (num.iconUrl) {
                 <img [src]="num.iconUrl" alt="Icon" class="item-icon-small" />
               }
-              <div class="description" [textLoc]="toLoc(num.description)"></div>
+              <div class="description-text">
+                <div class="description" [textLoc]="toLoc(num.description)"></div>
+                @if (num.detail) {
+                  <div class="detail">{{ num.detail }}</div>
+                }
+              </div>
             </div>
           </td>
         </tr>

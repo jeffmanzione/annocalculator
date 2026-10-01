@@ -20,6 +20,8 @@ export interface NumberConstituent {
   value: number;
   iconUrl?: string;
   description: string;
+  /** Optional secondary line under the description, e.g. how the value was computed. */
+  detail?: string;
 }
 
 @Component({

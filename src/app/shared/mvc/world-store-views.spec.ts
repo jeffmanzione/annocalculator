@@ -189,10 +189,10 @@ describe('goods per minute constituents', () => {
   it('is just the base production when there are no extra goods of the same good', () => {
     const flourMill = lines().find((pl) => pl.id === 16)!;
     expect(flourMill.goodsProducedPerMinuteConstituents).toEqual([
-      {
+      expect.objectContaining({
         value: flourMill.goodsProducedPerMinute,
         description: 'Base Production',
-      },
+      }),
     ]);
   });
 
@@ -204,6 +204,11 @@ describe('goods per minute constituents', () => {
     expect(extra.description).toBe(DepartmentOfLaborPolicy.SkilledLaborAct);
     expect(extra.value).toBeCloseTo(base.value / 3);
     expect(extra.iconUrl).toBeTruthy();
+    // 2 buildings, 45s base process time, 230% efficiency; a third of the base.
+    expect(base.detail).toBe('2 × 60s ÷ (45s ÷ 230%)');
+    expect(extra.detail).toBe(
+      `1 / 3 × ${Math.round(base.value * 100) / 100}/m`,
+    );
   });
 
   it('leaves out extras of other goods', () => {

@@ -114,6 +114,11 @@ export class StoreExtraGoodView implements ExtraGood {
   }
 }
 
+/** Up to 2 decimals, without trailing zeros (e.g. 26.4, 230, 0.33). */
+function formatDetailNumber(n: number): string {
+  return String(Number(n.toFixed(2)));
+}
+
 function extraGoodSourceIconUrl(eg: StoreExtraGoodView): string {
   switch (eg.sourceType) {
     case 'Boost':
@@ -378,11 +383,13 @@ export class StoreProductionLineView implements ProductionLineEntity {
     return constituents;
   }
 
+  /** The building's process time before efficiency is applied. */
+  get baseBuildingProcessTimeSeconds(): number {
+    return lookupProductionInfo(this.building)?.processingTimeSeconds ?? 0;
+  }
+
   get buildingProcessTimeSeconds(): number {
-    return (
-      (lookupProductionInfo(this.building)?.processingTimeSeconds ?? 0) /
-      this.efficiency
-    );
+    return this.baseBuildingProcessTimeSeconds / this.efficiency;
   }
 
   get extraGoods(): StoreExtraGoodView[] {
@@ -555,8 +562,17 @@ export class StoreProductionLineView implements ProductionLineEntity {
    */
   get goodsProducedPerMinuteConstituents(): NumberConstituent[] {
     const baseProducedPerMinute = this.goodsProducedPerMinute;
+    // buildings x 60s / (base process time / efficiency), spelled out with
+    // language-neutral math so no extra text needs localizing.
     const constituents: NumberConstituent[] = [
-      { value: baseProducedPerMinute, description: 'Base Production' },
+      {
+        value: baseProducedPerMinute,
+        description: 'Base Production',
+        detail:
+          `${formatDetailNumber(this.numBuildings)} × 60s ÷ ` +
+          `(${formatDetailNumber(this.baseBuildingProcessTimeSeconds)}s ÷ ` +
+          `${formatDetailNumber(this.efficiency * 100)}%)`,
+      },
     ];
     for (const eg of this.extraGoods) {
       if (eg.good !== this.good) {
@@ -566,6 +582,10 @@ export class StoreProductionLineView implements ProductionLineEntity {
         value: baseProducedPerMinute * (eg.rateNumerator / eg.rateDenominator),
         description: eg.source,
         iconUrl: extraGoodSourceIconUrl(eg),
+        detail:
+          `${formatDetailNumber(eg.rateNumerator)} / ` +
+          `${formatDetailNumber(eg.rateDenominator)} × ` +
+          `${formatDetailNumber(baseProducedPerMinute)}/m`,
       });
     }
     return constituents;
