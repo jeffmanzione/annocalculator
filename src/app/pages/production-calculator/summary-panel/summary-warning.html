@@ -20,35 +20,11 @@
     <table>
       <tr>
         <th class="island-name"><span textLoc="Island"></span></th>
-        <th><span textLoc="Local Production"></span></th>
-        <th><span textLoc="Local Consumption"></span></th>
-        <th><span textLoc="Imported"></span></th>
-        <th><span textLoc="Exported"></span></th>
         <th><span textLoc="Production (Net)"></span></th>
       </tr>
       @for (cell of row().islandSummaries; track cell.island.id) {
         <tr>
           <td class="island-name">{{ cell.island.name }}</td>
-          <td>
-            <formatted-number
-              [value]="cell.localProductionPerMin"
-              suffix="/m"
-              [formatFontSpec]="colorSpec"
-              zeroOverride="-"></formatted-number>
-          </td>
-          <td>
-            <formatted-number [value]="cell.localConsumptionPerMin" suffix="/m" zeroOverride="-"></formatted-number>
-          </td>
-          <td>
-            <formatted-number
-              [value]="cell.importedPerMin"
-              suffix="/m"
-              [formatFontSpec]="colorSpec"
-              zeroOverride="-"></formatted-number>
-          </td>
-          <td>
-            <formatted-number [value]="cell.exportedPerMin" suffix="/m" zeroOverride="-"></formatted-number>
-          </td>
           <td>
             <formatted-number
               [value]="availableProduction(cell)"
