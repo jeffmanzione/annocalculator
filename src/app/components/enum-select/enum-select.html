@@ -8,6 +8,7 @@
       [disabled]="isDisabled"
       (valueChange)="onChange(value)"
       (closed)="onTouched()"
+      (openedChange)="onOpenedChange($event)"
       [multiple]="multiple()"
       placeholder="None"
       [class.placeholder]="valueAsArray().length == 0">
@@ -42,6 +43,7 @@
     [disabled]="isDisabled"
     (valueChange)="onChange(value)"
     (closed)="onTouched()"
+    (openedChange)="onOpenedChange($event)"
     [multiple]="multiple()"
     placeholder="None">
     <mat-select-trigger>

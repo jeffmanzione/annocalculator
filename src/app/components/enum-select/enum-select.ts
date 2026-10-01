@@ -5,6 +5,7 @@ import {
   input,
   computed,
   signal,
+  viewChildren,
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
@@ -39,6 +40,8 @@ export class EnumSelect<T> implements ControlValueAccessor {
   valueIsExemptFromLimit = input<(_: T) => boolean>((_: T) => false);
   displayTextTransformer = input<(value: T | null) => string>();
 
+  private readonly rows_ = viewChildren(EnumRow);
+
   value = signal<T[] | T | null>(null);
 
   valueAsArray = computed<(T | null)[]>(() => {
@@ -71,6 +74,16 @@ export class EnumSelect<T> implements ControlValueAccessor {
 
   setDisabledState?(isDisabled: boolean): void {
     this.isDisabled = isDisabled;
+  }
+
+  /**
+   * Tooltips are hidden by mouseleave, which never fires for an option whose
+   * element goes away with the closing panel, so hide them explicitly.
+   */
+  onOpenedChange(opened: boolean): void {
+    if (!opened) {
+      this.rows_().forEach((row) => row.hideAllTooltips());
+    }
   }
 
   shouldDisableOption(option: T): boolean {

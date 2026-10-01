@@ -56,6 +56,24 @@ export class EnumRow<T> implements AfterViewChecked {
     this.changeDetectorRef.detectChanges();
   }
 
+  /** Hides every tooltip and cancels any pending one, e.g. when the row's host closes. */
+  hideAllTooltips(): void {
+    if (this.showTimeoutId_ != null) {
+      clearTimeout(this.showTimeoutId_);
+      this.showTimeoutId_ = undefined;
+    }
+    let changed = false;
+    for (const showValue of this.showValues()) {
+      if (showValue.shouldShowOverlay) {
+        showValue.shouldShowOverlay = false;
+        changed = true;
+      }
+    }
+    if (changed) {
+      this.changeDetectorRef.detectChanges();
+    }
+  }
+
   showTooltipAt(index: number): void {
     this.showTimeoutId_ = setTimeout(() => {
       this.showValues()[index].shouldShowOverlay = true;
