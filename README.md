@@ -59,6 +59,22 @@ npm run build
 
 Output will be in the dist/ directory.
 
+### Testing
+
+```bash
+npm test                          # unit tests (Vitest, via ng test); watches in a terminal
+npm test -- --watch=false         # run once
+```
+
+Unit tests live next to the code they cover as `*.spec.ts` files.
+
+End-to-end checks of a built app (Playwright) are in [`e2e/`](e2e/README.md):
+
+```bash
+npx ng build --configuration development
+npm run e2e:smoke
+```
+
 ## 🐛 Contributing / Bug Reports
 
 If you spot a bug or have an idea for a new feature:
