@@ -89,6 +89,8 @@ export class ProductionLineControl {
   readonly goodsProducedPerMinute: Signal<number> = computed(() => {
     return this.controller.goodsProducedPerMinuteWithExtras;
   });
+  readonly goodsProducedPerMinuteConstituents: Signal<NumberConstituent[]> =
+    computed(() => this.controller.goodsProducedPerMinuteConstituents);
 
   constructor(
     public readonly controller: StoreProductionLineController,

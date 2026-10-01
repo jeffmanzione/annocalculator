@@ -168,3 +168,47 @@ describe('hand-derived rules', () => {
     expect(goods).toContain(Good.Chocolate);
   });
 });
+
+describe('goods per minute constituents', () => {
+  const lines = () =>
+    viewOf(featureWorld()).islands.flatMap((i) => i.productionLines);
+
+  it('sum to goodsProducedPerMinuteWithExtras for every line', () => {
+    for (const pl of [
+      ...lines(),
+      ...viewOf(defaultWorld).islands.flatMap((i) => i.productionLines),
+    ]) {
+      const sum = pl.goodsProducedPerMinuteConstituents.reduce(
+        (t, c) => t + c.value,
+        0,
+      );
+      expect(sum).toBe(pl.goodsProducedPerMinuteWithExtras);
+    }
+  });
+
+  it('is just the base production when there are no extra goods of the same good', () => {
+    const flourMill = lines().find((pl) => pl.id === 16)!;
+    expect(flourMill.goodsProducedPerMinuteConstituents).toEqual([
+      {
+        value: flourMill.goodsProducedPerMinute,
+        description: 'Base Production',
+      },
+    ]);
+  });
+
+  it('lists each same-good extra with its source and share of the base output', () => {
+    // Steelworks with Skilled Labor Act: 1 extra Steel Beams per 3 produced.
+    const steelworks = lines().find((pl) => pl.id === 11)!;
+    const [base, extra] = steelworks.goodsProducedPerMinuteConstituents;
+    expect(base.description).toBe('Base Production');
+    expect(extra.description).toBe(DepartmentOfLaborPolicy.SkilledLaborAct);
+    expect(extra.value).toBeCloseTo(base.value / 3);
+    expect(extra.iconUrl).toBeTruthy();
+  });
+
+  it('leaves out extras of other goods', () => {
+    // The Bakery's Fine Cake Decorator makes Chocolate, which is not Bread.
+    const bakery = lines().find((pl) => pl.id === 14)!;
+    expect(bakery.goodsProducedPerMinuteConstituents.length).toBe(1);
+  });
+});

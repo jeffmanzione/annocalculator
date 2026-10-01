@@ -21,6 +21,7 @@ import {
 import {
   lookupBoostIconUrl,
   lookupCulturalSetIconUrl,
+  lookupHaciendaFertilizerWorksIconUrl,
   lookupItemIconUrl,
   lookupPolicyIconUrl,
 } from '../game/icons';
@@ -110,6 +111,22 @@ export class StoreExtraGoodView implements ExtraGood {
 
   get producedPerMinute(): number {
     return this.productionLine.numBuildings * this.producedPerMinutePerBuilding;
+  }
+}
+
+function extraGoodSourceIconUrl(eg: StoreExtraGoodView): string {
+  switch (eg.sourceType) {
+    case 'Boost':
+    case 'ElectrifiedFarm':
+      return lookupBoostIconUrl(eg.source as Boost);
+    case 'DepartmentOfLaborPolicy':
+      return lookupPolicyIconUrl(eg.source as DepartmentOfLaborPolicy);
+    case 'HaciendaFertilizerWorks':
+      return lookupHaciendaFertilizerWorksIconUrl(null);
+    case 'CulturalSet':
+      return lookupCulturalSetIconUrl(eg.source as CulturalSet);
+    default:
+      return lookupItemIconUrl(eg.source as Item);
   }
 }
 
@@ -532,19 +549,33 @@ export class StoreProductionLineView implements ProductionLineEntity {
     return (this.numBuildings * 60) / this.buildingProcessTimeSeconds;
   }
 
-  get goodsProducedPerMinuteWithExtras(): number {
-    let goodsProducedPerMin = this.goodsProducedPerMinute;
-    const extraGoods = this.extraGoods;
-
-    for (const eg of extraGoods) {
+  /**
+   * Explains goodsProducedPerMinuteWithExtras: the building's base output plus
+   * what each extra good of the same good adds. The values sum to the total.
+   */
+  get goodsProducedPerMinuteConstituents(): NumberConstituent[] {
+    const baseProducedPerMinute = this.goodsProducedPerMinute;
+    const constituents: NumberConstituent[] = [
+      { value: baseProducedPerMinute, description: 'Base Production' },
+    ];
+    for (const eg of this.extraGoods) {
       if (eg.good !== this.good) {
         continue;
       }
-      goodsProducedPerMin +=
-        ((this.numBuildings * 60) / this.buildingProcessTimeSeconds) *
-        (eg.rateNumerator / eg.rateDenominator);
+      constituents.push({
+        value: baseProducedPerMinute * (eg.rateNumerator / eg.rateDenominator),
+        description: eg.source,
+        iconUrl: extraGoodSourceIconUrl(eg),
+      });
     }
-    return goodsProducedPerMin;
+    return constituents;
+  }
+
+  get goodsProducedPerMinuteWithExtras(): number {
+    return this.goodsProducedPerMinuteConstituents.reduce(
+      (total, c) => total + c.value,
+      0,
+    );
   }
 
   get islandHasDepartmentOfLabor(): boolean {

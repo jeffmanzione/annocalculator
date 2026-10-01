@@ -49,6 +49,7 @@ export type L10nKey =
   | 'No'
   | 'Productivity'
   | 'Base Productivity'
+  | 'Base Production'
   | '/s'
   | '/m'
   | 's'
@@ -375,6 +376,12 @@ export const localizations: Localizations = {
     De: 'Basisproduktivität',
     Nl: 'Basisproductiviteit',
     Zh: '基础生产率',
+  },
+  'Base Production': {
+    En: 'Base Production',
+    De: 'Basisproduktion',
+    Nl: 'Basisproductie',
+    Zh: '基础产量',
   },
   '/s': {
     En: '/s',

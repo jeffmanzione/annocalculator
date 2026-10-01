@@ -182,7 +182,10 @@
             <span textLoc="Goods per Minute"></span>
           </th>
           <td mat-cell class="keep-top" *matCellDef="let element" class="computed-field">
-            <formatted-number [value]="element.goodsProducedPerMinute()" suffix="/m"></formatted-number>
+            <composite-number
+              [constituentValues]="element.goodsProducedPerMinuteConstituents()"
+              [showPlusIfPositive]="true"
+              suffix="/m"></composite-number>
           </td>
         </ng-container>
         <ng-container matColumnDef="remove">
