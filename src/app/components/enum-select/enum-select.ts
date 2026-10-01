@@ -5,6 +5,7 @@ import {
   input,
   computed,
   signal,
+  inject,
   viewChildren,
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
@@ -15,6 +16,7 @@ import { EnumRow } from '../enum-row/enum-row';
 import { EnumTooltip } from '../enum-tooltip/enum-tooltip';
 import { L10nText } from '../text/text';
 import { L10nKey } from '../../shared/l10n/l10n';
+import { L10nService } from '../../services/l10n/l10n';
 
 @Component({
   selector: 'enum-select',
@@ -41,6 +43,12 @@ export class EnumSelect<T> implements ControlValueAccessor {
   displayTextTransformer = input<(value: T | null) => string>();
 
   private readonly rows_ = viewChildren(EnumRow);
+
+  private readonly l10nService_ = inject(L10nService);
+  readonly noneText = computed(() => {
+    this.l10nService_.languageSignal(); // Re-localize when the language changes.
+    return this.l10nService_.lookupLocalizedText('None');
+  });
 
   value = signal<T[] | T | null>(null);
 

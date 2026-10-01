@@ -10,7 +10,7 @@
       (closed)="onTouched()"
       (openedChange)="onOpenedChange($event)"
       [multiple]="multiple()"
-      placeholder="None"
+      [placeholder]="noneText()"
       [class.placeholder]="valueAsArray().length == 0">
       <mat-select-trigger>
         <enum-row
@@ -45,7 +45,7 @@
     (closed)="onTouched()"
     (openedChange)="onOpenedChange($event)"
     [multiple]="multiple()"
-    placeholder="None">
+    [placeholder]="noneText()">
     <mat-select-trigger>
       <enum-row
         [values]="valueAsArray()"

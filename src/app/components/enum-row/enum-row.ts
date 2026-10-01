@@ -10,10 +10,12 @@ import {
   TemplateRef,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { L10nKey } from '../../shared/l10n/l10n';
+import { L10nText } from '../text/text';
 
 @Component({
   selector: 'enum-row',
-  imports: [CommonModule, OverlayModule],
+  imports: [CommonModule, OverlayModule, L10nText],
   templateUrl: './enum-row.html',
   styleUrl: './enum-row.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -24,6 +26,10 @@ export class EnumRow<T> implements AfterViewChecked {
   tooltip = input<TemplateRef<any> | null | undefined>(null);
   values = input<(T | null)[]>([]);
   placeholderText = input('None');
+
+  toLoc(text: string): L10nKey {
+    return text as L10nKey;
+  }
   iconUrlLookupFn = input<(_: T | null) => string>((_: T | null) => '');
   displayTextTransformer = input<(value: T | null) => string>();
 

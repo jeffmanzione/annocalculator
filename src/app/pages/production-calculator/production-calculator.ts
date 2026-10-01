@@ -36,6 +36,7 @@ import {
 import { Clipboard } from '@angular/cdk/clipboard';
 import { AcButton } from '../../components/button/button';
 import { L10nText } from '../../components/text/text';
+import { L10nKey } from '../../shared/l10n/l10n';
 import { defaultWorld } from './default-world';
 const WORLD_KEY = 'anno-1800-production-calculator-world';
 
@@ -66,7 +67,11 @@ const WORLD_KEY = 'anno-1800-production-calculator-world';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProductionCalculatorPage implements OnInit {
-  readonly defaultActions = [
+  readonly defaultActions: {
+    icon: string;
+    fn: () => void;
+    tooltip: L10nKey;
+  }[] = [
     {
       icon: 'content_copy',
       fn: () => this.copyJsonToClipboard_(),
