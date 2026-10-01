@@ -18,7 +18,6 @@ import {
   MatTableModule,
 } from '@angular/material/table';
 import {
-  FormatFontSpec,
   FormattedNumber,
   GREEN_RED_FONT_SPEC,
 } from '../../../components/formatted-number/formatted-number';
@@ -36,6 +35,7 @@ import {
   GoodSummaryRow,
   SummaryWorldSource,
 } from './summary-panel-store';
+import { SummaryWarning } from './summary-warning';
 
 @Component({
   selector: 'summary-panel',
@@ -48,6 +48,7 @@ import {
     MatSortModule,
     EnumRow,
     L10nText,
+    SummaryWarning,
   ],
   templateUrl: './summary-panel.html',
   styleUrl: './summary-panel.scss',
@@ -55,16 +56,6 @@ import {
 })
 export class SummaryPanel implements OnInit, AfterViewInit {
   readonly colorSpec = GREEN_RED_FONT_SPEC;
-  readonly warningColorSpec: FormatFontSpec = {
-    default: {
-      color: '#FFD700',
-      weight: 'bold',
-      style: `text-shadow: 0 0 4px  rgba(255, 255, 255, 1.0),
-    0 0 8px rgba(255, 255, 255, 0.9),
-    0 0 16px rgba(255, 255, 255, 0.6);`,
-    },
-  };
-
   readonly outerColumns = [
     'good',
     'show-islands',

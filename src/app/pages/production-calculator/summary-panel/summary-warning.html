@@ -1,0 +1,63 @@
+<div
+  cdkOverlayOrigin
+  #trigger="cdkOverlayOrigin"
+  class="warning-format"
+  (mouseenter)="showTooltipAt()"
+  (mouseleave)="hideTooltip()">
+  <formatted-number
+    [value]="row().netProductionPerMin"
+    suffix="/m"
+    [formatFontSpec]="warningColorSpec"></formatted-number>
+  <mat-icon class="warning-icon">warning_outlined</mat-icon>
+</div>
+<ng-template
+  cdkConnectedOverlay
+  [cdkConnectedOverlayOrigin]="trigger"
+  [cdkConnectedOverlayOpen]="showTooltip"
+  (detach)="hideTooltip()">
+  <div class="tooltip-container">
+    <div class="explanation" textLoc="Uncovered Deficit Explanation"></div>
+    <table>
+      <tr>
+        <th class="island-name"><span textLoc="Island"></span></th>
+        <th><span textLoc="Local Production"></span></th>
+        <th><span textLoc="Local Consumption"></span></th>
+        <th><span textLoc="Imported"></span></th>
+        <th><span textLoc="Exported"></span></th>
+        <th><span textLoc="Production (Net)"></span></th>
+      </tr>
+      @for (cell of row().islandSummaries; track cell.island.id) {
+        <tr>
+          <td class="island-name">{{ cell.island.name }}</td>
+          <td>
+            <formatted-number
+              [value]="cell.localProductionPerMin"
+              suffix="/m"
+              [formatFontSpec]="colorSpec"
+              zeroOverride="-"></formatted-number>
+          </td>
+          <td>
+            <formatted-number [value]="cell.localConsumptionPerMin" suffix="/m" zeroOverride="-"></formatted-number>
+          </td>
+          <td>
+            <formatted-number
+              [value]="cell.importedPerMin"
+              suffix="/m"
+              [formatFontSpec]="colorSpec"
+              zeroOverride="-"></formatted-number>
+          </td>
+          <td>
+            <formatted-number [value]="cell.exportedPerMin" suffix="/m" zeroOverride="-"></formatted-number>
+          </td>
+          <td>
+            <formatted-number
+              [value]="availableProduction(cell)"
+              suffix="/m"
+              [formatFontSpec]="colorSpec"
+              zeroOverride="-"></formatted-number>
+          </td>
+        </tr>
+      }
+    </table>
+  </div>
+</ng-template>

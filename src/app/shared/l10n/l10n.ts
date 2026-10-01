@@ -50,6 +50,7 @@ export type L10nKey =
   | 'Productivity'
   | 'Base Productivity'
   | 'Base Production'
+  | 'Uncovered Deficit Explanation'
   | '/s'
   | '/m'
   | 's'
@@ -382,6 +383,12 @@ export const localizations: Localizations = {
     De: 'Basisproduktion',
     Nl: 'Basisproductie',
     Zh: '基础产量',
+  },
+  'Uncovered Deficit Explanation': {
+    En: 'Enough of this good is produced overall, but some islands run a deficit that no trade route covers. Add a trade route from an island with a surplus.',
+    De: 'Insgesamt wird genug von dieser Ware produziert, aber einige Inseln haben ein Defizit, das keine Handelsroute deckt. Füge eine Handelsroute von einer Insel mit Überschuss hinzu.',
+    Nl: 'In totaal wordt er genoeg van dit goed geproduceerd, maar sommige eilanden hebben een tekort dat door geen enkele handelsroute wordt gedekt. Voeg een handelsroute toe vanaf een eiland met een overschot.',
+    Zh: '总体上该商品的产量足够，但部分岛屿存在缺口，且没有任何贸易路线可以弥补。请添加一条来自有盈余岛屿的贸易路线。',
   },
   '/s': {
     En: '/s',
