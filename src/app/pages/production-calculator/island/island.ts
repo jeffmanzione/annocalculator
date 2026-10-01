@@ -106,13 +106,9 @@ export class Island implements OnInit {
   readonly allDolPolicies = Object.values(DepartmentOfLaborPolicy);
   readonly goods = Object.values(Good).filter((g) => g != Good.Unknown);
 
-  // Bumped in refresh_() so the computed()s below -- which read plain,
-  // non-observable controller state -- recompute. Same pattern as
-  // ProductionLineControl.recomputeTrigger_.
-  private readonly recomputeTrigger_ = signal(0);
-
+  // Region-dependent option lists. controller().region reads WorldStore's
+  // signals, so these recompute on their own when the region changes.
   readonly productionBuildings: Signal<ProductionBuilding[]> = computed(() => {
-    this.recomputeTrigger_();
     const region = this.controller().region;
     return Object.values(ProductionBuilding).filter(
       (pb) =>
@@ -122,7 +118,6 @@ export class Island implements OnInit {
   });
 
   readonly dolPolicies: Signal<DepartmentOfLaborPolicy[]> = computed(() => {
-    this.recomputeTrigger_();
     const region = this.controller().region;
     return region == Region.OldWorld || region == Region.CapeTrelawney
       ? this.allDolPolicies
@@ -247,15 +242,15 @@ export class Island implements OnInit {
     }
   }
 
-  // This island's own derived state only (region/dolPolicy-dependent
-  // option lists) -- renamed from the old afterPushChange() override.
+  // Re-applies the dolPolicy enable/disable correction (renamed from the
+  // old afterPushChange() override). The region subscription in ngOnInit
+  // already does this on region changes; re-running it here keeps it
+  // correct if dolPolicy state fell out of sync some other way -- cheap
+  // and idempotent. (The region-dependent option lists used to be
+  // refreshed here too, via a manual recompute counter; they're plain
+  // store-tracking computed()s now.)
   private refresh_(): void {
-    // Also re-applied here (not just from the region subscription above)
-    // to stay correct if this island's region was somehow set to a value
-    // and dolPolicy state fell out of sync some other way -- cheap and
-    // idempotent, so there's no harm re-running it on every change.
     this.updateDolPolicyControlState_();
-    this.recomputeTrigger_.update((v) => v + 1);
   }
 
   // Reads region from its own FormControl's .value, not the parent

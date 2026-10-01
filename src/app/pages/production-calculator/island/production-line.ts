@@ -33,21 +33,18 @@ import { FormControl, FormGroup } from '@angular/forms';
 export class ProductionLineControl {
   readonly formGroup: FormGroup;
 
-  // Bumped after every model update (see refresh()) so the computed
-  // fields below -- which read plain, non-observable controller state --
-  // recompute. Same pattern as SummaryPanel.recomputeTrigger_.
-  private readonly recomputeTrigger_ = signal(0);
-
+  // The derived fields below read `controller`'s getters, which read
+  // WorldStore's signals, so each computed() recomputes on its own when
+  // anything it depends on changes (this row, its island, or the world's
+  // trade-union bonus).
   readonly extraGoodsRows: Signal<StoreExtraGoodView[]> = computed(() => {
-    this.recomputeTrigger_();
     return this.controller.extraGoods;
   });
   readonly hasExtraGoods = computed(() => this.extraGoodsRows().length > 0);
 
   // UI-only: whether this production line's extra-goods breakdown is
-  // expanded. Deliberately not gated on recomputeTrigger_ -- it's
-  // interaction state, not derived from the world (same principle as the
-  // summary-panel spike's expanded-rows handling).
+  // expanded. Interaction state, not derived from the world (same
+  // principle as the summary-panel spike's expanded-rows handling).
   private readonly showExtraGoodsRequested_ = signal(false);
   readonly showExtraGoods = computed(
     () => this.showExtraGoodsRequested_() && this.hasExtraGoods(),
@@ -64,38 +61,32 @@ export class ProductionLineControl {
 
   // Written imperatively by updateFormStates_() rather than derived with
   // computed() -- see the constructor comment for why these specifically
-  // need to react to their own form controls' changes, not to
-  // recomputeTrigger_.
+  // need to react to their own form controls' pending changes, not to
+  // committed store state.
   readonly allowedBoosts = signal<Set<Boost>>(new Set());
   readonly allowedItems = signal<Set<Item>>(new Set());
   readonly allowedCulturalSets = signal<Set<CulturalSet>>(new Set());
 
   readonly inputGoods: Signal<Good[]> = computed(() => {
-    this.recomputeTrigger_();
     return this.controller.inputGoods;
   });
   // Will always be a list of size 1 since production lines only output 1 good type.
   readonly outputGoods: Signal<Good[]> = computed(() => {
-    this.recomputeTrigger_();
     return [this.controller.good];
   });
 
   readonly efficiency: Signal<number> = computed(() => {
-    this.recomputeTrigger_();
     return this.controller.efficiency;
   });
   readonly efficiencyConstituents: Signal<NumberConstituent[]> = computed(
     () => {
-      this.recomputeTrigger_();
       return this.controller.efficiencyConstituents;
     },
   );
   readonly buildingProcessTimeSeconds: Signal<number> = computed(() => {
-    this.recomputeTrigger_();
     return this.controller.buildingProcessTimeSeconds;
   });
   readonly goodsProducedPerMinute: Signal<number> = computed(() => {
-    this.recomputeTrigger_();
     return this.controller.goodsProducedPerMinuteWithExtras;
   });
 
@@ -329,7 +320,6 @@ export class ProductionLineControl {
   // constructor's direct subscriptions above.
   refresh(): void {
     this.updateFormStates_();
-    this.recomputeTrigger_.update((v) => v + 1);
   }
 
   toggleShowExtraGoods(): void {
