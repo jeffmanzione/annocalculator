@@ -68,6 +68,9 @@ div .mat-expansion-panel-body {
 }
 
 div .mat-mdc-text-field-wrapper {
+  // Round all four corners like the outline's border: Material rounds only the
+  // top two, and the square bottom corners of the fill showed outside the curve.
+  border-radius: 4px;
   background-color: anno.$parchment-lightest;
   padding: 0 12px;
   letter-spacing: -0.25px;
@@ -149,6 +152,75 @@ a:focus-visible,
 // A table row lights up under the pointer, like the game's list cards.
 tr.mat-mdc-row:hover > td.mat-mdc-cell {
   background-color: color.scale(theme-colors.$table-bg-color, $lightness: 2%);
+}
+
+// A floating label straddles the top edge of its field, so its upper half sat on
+// the tan panel and its lower half on the field's cream fill. Give it a plate in
+// the field's own color, edged like the field and set into its border.
+//
+// The plate is drawn on the outline's cut-out (the unscaled box Material sizes
+// to the label), not on the label itself: Material scales the label by 0.75, so
+// a border on it is a fractional-pixel hairline at a fractional position, and
+// depending on the display one of its sides can vanish. On the unscaled box the
+// border is a whole device pixel on every side. The field's own border is kept
+// running behind the plate (the cut-out gets its top border back, 2px when
+// focused like the rest of the outline), so there is never a gap beside it.
+//
+// Material clips the cut-out 1px in from its left edge to hide its own
+// (transparent) side border, which would also chop off the part of the plate that
+// reaches past that edge, so the clip is dropped. The plate's edge colors come
+// from the same theme variables as the field's border, per state, because the
+// cut-out's side borders are transparent and cannot be inherited.
+.mat-mdc-form-field .mdc-notched-outline--notched .mdc-notched-outline__notch {
+  // The plate below is positioned against the cut-out.
+  position: relative;
+  clip-path: none;
+  border-top-style: solid;
+  border-top-width: 1px;
+
+  &::before {
+    content: '';
+    position: absolute;
+    // The cut-out is the label's width plus 8px on the right (the label itself
+    // starts at its left edge, see below); these offsets leave the text 6px of
+    // plate on each side, and the plate sits centered on the border line.
+    left: -5px;
+    right: 2px;
+    top: -7px;
+    height: 12px;
+    box-sizing: border-box;
+    background: anno.$parchment-lightest;
+    border: 1px solid var(--mat-form-field-outlined-outline-color);
+    border-radius: 3px;
+  }
+
+  .mdc-floating-label {
+    z-index: 2;
+    // Material offsets the label 4px from the cut-out's left edge, leaving room
+    // for the gap it cuts in the border. The plate covers that gap, so the offset
+    // only pushed the text off-center within the plate.
+    left: 0;
+  }
+}
+
+.mat-mdc-form-field
+  .mdc-text-field:hover:not(.mdc-text-field--focused):not(.mdc-text-field--disabled)
+  .mdc-notched-outline--notched
+  .mdc-notched-outline__notch::before {
+  border-color: var(--mat-form-field-outlined-hover-outline-color);
+}
+
+.mat-mdc-form-field .mdc-text-field--disabled .mdc-notched-outline--notched .mdc-notched-outline__notch::before {
+  border-color: var(--mat-form-field-outlined-disabled-outline-color);
+}
+
+.mat-mdc-form-field .mdc-text-field--focused .mdc-notched-outline--notched .mdc-notched-outline__notch {
+  border-top-width: 2px;
+
+  &::before {
+    top: -8px;
+    border-color: var(--mat-form-field-outlined-focus-outline-color);
+  }
 }
 
 mat-pseudo-checkbox {

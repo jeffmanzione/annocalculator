@@ -49,7 +49,16 @@ npm run e2e:layout                    # uses dist/annocalculator/browser
 node e2e/layout.mjs path/to/browser   # or any other build
 ```
 
-Renders the default world at several desktop widths (1440 to 2560 px) in each language (English, German, Dutch, Chinese) and checks that no header word is wider than its column (a header breaking mid-word) and that no computed value is clipped. The tables size their columns from their content rather than fixed pixel widths, so this is what catches a translation or a new column that no longer fits.
+Renders the default world at several desktop widths (1440 to 2560 px) in each language (English, German, Dutch, Chinese) and checks that no header word is wider than its column (a header breaking mid-word) that no computed value is clipped, and that each floating field label is a solid, fully edged plate in its field's fill, with the border running unbroken behind it and the plate staying within the field. The tables size their columns from their content rather than fixed pixel widths, so this is what catches a translation or a new column that no longer fits.
+
+## `npm run e2e:label-edges` — does a field label's plate show both edges?
+
+```sh
+npm run e2e:label-edges                    # uses dist/annocalculator/browser
+node e2e/label-edges.mjs path/to/browser   # or any other build
+```
+
+A floating field label sits in a small plate across the field's top border. A one-pixel line at a fractional position can vanish from one side on some displays, so this renders the page at display scales from 1x to 3x (including 1.25x and 1.5x) and reads the actual pixels where the plate stands against the panel, requiring a clearly darker edge on both the left and the right.
 
 ## `npm run e2e:diff -- <baseline> <candidate>` — did a refactor change what's saved?
 

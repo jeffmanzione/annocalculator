@@ -60,6 +60,53 @@ for (const width of WIDTHS) {
           if (td.scrollWidth > td.clientWidth + 1) found.push(`value "${td.textContent.trim()}" is clipped`);
         }
       }
+      // A field's cream fill must be rounded on all four corners like its border,
+      // or the square corners of the fill poke out beside the curve.
+      for (const wrapper of document.querySelectorAll('island .mat-mdc-text-field-wrapper')) {
+        const style = getComputedStyle(wrapper);
+        for (const corner of ['TopLeft', 'TopRight', 'BottomRight', 'BottomLeft']) {
+          if (parseFloat(style[`border${corner}Radius`]) < 4) {
+            found.push(
+              `field fill has a square ${corner
+                .replace(/([A-Z])/g, ' $1')
+                .trim()
+                .toLowerCase()} corner`,
+            );
+          }
+        }
+      }
+
+      // A floating field label sits in a plate set into the field's top border. The
+      // plate (drawn on the label's cut-out) must be a solid, fully edged box in the
+      // field's own fill, the border must run unbroken behind it with no clip
+      // chopping it off, and it must stay within the field's width.
+      for (const label of document.querySelectorAll('island .mdc-floating-label--float-above')) {
+        const field = label.closest('.mat-mdc-form-field');
+        const notchEl = label.closest('.mdc-notched-outline__notch');
+        const name = (label.textContent || '').trim();
+        const fill = getComputedStyle(field.querySelector('.mat-mdc-text-field-wrapper')).backgroundColor;
+        const plate = getComputedStyle(notchEl, '::before');
+        const notch = getComputedStyle(notchEl);
+        if (plate.backgroundColor !== fill)
+          found.push(`label "${name}": plate ${plate.backgroundColor} does not match its field ${fill}`);
+        for (const side of ['Top', 'Right', 'Bottom', 'Left']) {
+          if (plate[`border${side}Style`] !== 'solid')
+            found.push(`label "${name}": plate has no ${side.toLowerCase()} edge`);
+          if (plate[`border${side}Color`] === 'rgba(0, 0, 0, 0)')
+            found.push(`label "${name}": plate ${side.toLowerCase()} edge is transparent`);
+        }
+        if (notch.borderTopStyle !== 'solid') found.push(`label "${name}": the field's border has a gap behind it`);
+        if (notch.clipPath !== 'none') found.push(`label "${name}": its cut-out is clipped (${notch.clipPath})`);
+        const n = notchEl.getBoundingClientRect();
+        const f = field.getBoundingClientRect();
+        if (n.left - 5 < f.left - 0.5 || n.right > f.right + 0.5) found.push(`label "${name}" sticks out of its field`);
+        // The text is centered in its plate (plate runs from 5px left of the cut-out to 2px left of its end).
+        const l = label.getBoundingClientRect();
+        const padLeft = l.left - (n.left - 5);
+        const padRight = n.right - 2 - l.right;
+        if (Math.abs(padLeft - padRight) > 1.5)
+          found.push(`label "${name}" is off-center in its plate (${padLeft.toFixed(1)}px left, ${padRight.toFixed(1)}px right)`);
+      }
       return [...new Set(found)];
     });
 
