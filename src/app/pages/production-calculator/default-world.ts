@@ -1,75 +1,51 @@
-import {
-  Boost,
-  DepartmentOfLaborPolicy,
-  Good,
-  ProductionBuilding,
-  Region,
-} from '../../shared/game/enums';
+import { Good, ProductionBuilding, Region } from '../../shared/game/enums';
 import { World } from '../../shared/mvc/models';
 
-/** The world a first-time visitor sees, and what "reset" restores. */
+/**
+ * The world a first-time visitor sees, and what "reset" restores.
+ *
+ * A small starter meant to be read at a glance, with every number in balance
+ * so the Summary shows no shortages and no warnings:
+ *
+ *  - Farm Island (Old World) grows Grain and hunts Furs.
+ *  - Crown Falls (Cape Trelawney) mills Grain into Flour, bakes Bread and
+ *    makes Fur Coats; it gets its Grain and Furs by trade route.
+ *  - Plantation Island (New World) grows Cotton and weaves Cotton Fabric,
+ *    shipped to Crown Falls for the Fur Dealer.
+ *
+ * Only the basics are switched on (no boosts, trade union, items or
+ * department policy), so a newcomer can change a building count and see
+ * exactly what follows before meeting the advanced options.
+ *
+ * Quantities are 1 building = 1 or 2 goods per minute, chosen so each chain
+ * balances exactly: 4 Grain Farms feed 2 Flour Mills, which feed 4 Bakeries
+ * (4 Bread/min); 2 Hunting Cabins and 1 Cotton Mill (fed by 2 Cotton
+ * Plantations) supply 1 Fur Dealer (2 Fur Coats/min).
+ */
 export const defaultWorld: World = {
-  tradeUnionBonus: 0.3,
   islands: [
     {
       id: 1,
       name: 'Crown Falls',
       region: Region.CapeTrelawney,
-      dolPolicy: DepartmentOfLaborPolicy.SkilledLaborAct,
       productionLines: [
-        {
-          building: ProductionBuilding.Bakery,
-          inputGoods: [Good.Flour],
-          good: Good.Bread,
-          numBuildings: 10,
-          boosts: [Boost.Electricity],
-          hasTradeUnion: true,
-          inRangeOfLocalDepartment: true,
-        },
         {
           building: ProductionBuilding.FlourMill,
           inputGoods: [Good.Grain],
           good: Good.Flour,
-          numBuildings: 5,
-          boosts: [Boost.Electricity],
-          hasTradeUnion: true,
-          inRangeOfLocalDepartment: true,
-        },
-        {
-          building: ProductionBuilding.Brewery,
-          inputGoods: [Good.Malt, Good.Hops],
-          good: Good.Beer,
-          numBuildings: 4,
-          boosts: [Boost.Electricity],
-          hasTradeUnion: true,
-          inRangeOfLocalDepartment: true,
-        },
-        {
-          building: ProductionBuilding.Malthouse,
-          inputGoods: [Good.Grain],
-          good: Good.Malt,
-          numBuildings: 3,
-          boosts: [Boost.Electricity],
-          hasTradeUnion: true,
-          inRangeOfLocalDepartment: true,
-        },
-        {
-          building: ProductionBuilding.AdvancedCoffeeRoaster,
-          inputGoods: [Good.Malt],
-          good: Good.Coffee,
           numBuildings: 2,
-          boosts: [Boost.Electricity],
-          hasTradeUnion: true,
-          inRangeOfLocalDepartment: true,
+        },
+        {
+          building: ProductionBuilding.Bakery,
+          inputGoods: [Good.Flour],
+          good: Good.Bread,
+          numBuildings: 4,
         },
         {
           building: ProductionBuilding.FurDealer,
           inputGoods: [Good.CottonFabric, Good.Furs],
           good: Good.FurCoats,
-          numBuildings: 2,
-          boosts: [Boost.Electricity],
-          hasTradeUnion: true,
-          inRangeOfLocalDepartment: true,
+          numBuildings: 1,
         },
       ],
     },
@@ -77,28 +53,16 @@ export const defaultWorld: World = {
       id: 2,
       name: 'Farm Island',
       region: Region.OldWorld,
-      dolPolicy: DepartmentOfLaborPolicy.LandReformAct,
       productionLines: [
         {
           building: ProductionBuilding.GrainFarm,
           good: Good.Grain,
-          numBuildings: 8,
-          boosts: [Boost.TractorBarn],
-          hasTradeUnion: true,
-          inRangeOfLocalDepartment: true,
-        },
-        {
-          building: ProductionBuilding.HopFarm,
-          good: Good.Hops,
-          numBuildings: 3,
-          boosts: [Boost.TractorBarn],
-          hasTradeUnion: true,
-          inRangeOfLocalDepartment: true,
+          numBuildings: 4,
         },
         {
           building: ProductionBuilding.HuntingCabin,
           good: Good.Furs,
-          numBuildings: 10,
+          numBuildings: 2,
         },
       ],
     },
@@ -110,41 +74,20 @@ export const defaultWorld: World = {
         {
           building: ProductionBuilding.CottonPlantation,
           good: Good.Cotton,
-          numBuildings: 10,
+          numBuildings: 2,
         },
         {
           building: ProductionBuilding.CottonMill,
-          good: Good.CottonFabric,
           inputGoods: [Good.Cotton],
-          numBuildings: 5,
+          good: Good.CottonFabric,
+          numBuildings: 1,
         },
       ],
     },
   ],
   tradeRoutes: [
-    {
-      id: 1,
-      sourceIslandId: 2,
-      targetIslandId: 1,
-      good: Good.Grain,
-    },
-    {
-      id: 2,
-      sourceIslandId: 2,
-      targetIslandId: 1,
-      good: Good.Hops,
-    },
-    {
-      id: 3,
-      sourceIslandId: 2,
-      targetIslandId: 1,
-      good: Good.Furs,
-    },
-    {
-      id: 4,
-      sourceIslandId: 3,
-      targetIslandId: 1,
-      good: Good.CottonFabric,
-    },
+    { id: 1, sourceIslandId: 2, targetIslandId: 1, good: Good.Grain },
+    { id: 2, sourceIslandId: 2, targetIslandId: 1, good: Good.Furs },
+    { id: 3, sourceIslandId: 3, targetIslandId: 1, good: Good.CottonFabric },
   ],
 };

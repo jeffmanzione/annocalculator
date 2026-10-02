@@ -29,7 +29,7 @@ await settle();
 
 // 1. Boot with the default world.
 check('boots with 3 default islands', (await islands().count()) === 3);
-check('trade routes table shows 4 rows', (await page.locator('trade-routes-panel tr.mat-mdc-row').count()) === 4);
+check('trade routes table shows 3 rows', (await page.locator('trade-routes-panel tr.mat-mdc-row').count()) === 3);
 const summaryRowsBefore = await page.locator('summary-panel tr.mat-mdc-row').count();
 check('summary panel renders rows', summaryRowsBefore > 0, `${summaryRowsBefore} rows`);
 
@@ -143,7 +143,7 @@ await settle();
 const goodOpts = await page.locator('mat-option').allInnerTexts();
 check(
   "goods dropdown lists the origin island's goods",
-  ['Grain', 'Hops', 'Furs'].every((g) => goodOpts.some((o) => o.includes(g))),
+  ['Grain', 'Furs'].every((g) => goodOpts.some((o) => o.includes(g))),
   JSON.stringify(goodOpts),
 );
 await page.keyboard.press('Escape');
@@ -161,12 +161,15 @@ check(
 await page.getByRole('button', { name: 'Add Trade Route' }).click();
 await settle();
 s = await saved();
-check('add trade route persists', s.tradeRoutes.length === 4, String(s.tradeRoutes.length));
-check('trade routes table shows 4 rows', (await page.locator('trade-routes-panel tr.mat-mdc-row').count()) === 4);
+check('add trade route persists', s.tradeRoutes.length === nBefore, String(s.tradeRoutes.length));
+check(
+  `trade routes table shows ${nBefore} rows`,
+  (await page.locator('trade-routes-panel tr.mat-mdc-row').count()) === nBefore,
+);
 await page.locator('trade-routes-panel tr.mat-mdc-row').last().locator('ac-button, button').last().click();
 await settle();
 s = await saved();
-check('remove trade route persists', s.tradeRoutes.length === 3, String(s.tradeRoutes.length));
+check('remove trade route persists', s.tradeRoutes.length === nBefore - 1, String(s.tradeRoutes.length));
 
 // 6. Remove the added island (by id) -> the right one goes; others untouched.
 await page.locator('.delete-island-button').nth(3).click();

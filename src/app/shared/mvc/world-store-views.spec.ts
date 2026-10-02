@@ -56,23 +56,33 @@ describe('default world', () => {
     expect(islandTable(world())).toMatchSnapshot();
   });
 
-  it("Crown Falls' Bakery drops from 230% to 200% without its DOL policy", () => {
+  it('makes 1 good per minute per building at base efficiency', () => {
+    // Nothing is boosted, so each Bakery makes 1 Bread/min (60s) and each
+    // Flour Mill 2 Flour/min (30s).
+    const crownFalls = world().islands.find((i) => i.name === 'Crown Falls')!;
+    const line = (building: ProductionBuilding) =>
+      crownFalls.productionLines.find((pl) => pl.building === building)!;
+    expect(line(ProductionBuilding.Bakery).efficiency).toBe(1);
+    expect(line(ProductionBuilding.Bakery).goodsProducedPerMinute).toBeCloseTo(
+      4,
+    ); // 4 Bakeries
+    expect(
+      line(ProductionBuilding.FlourMill).goodsProducedPerMinute,
+    ).toBeCloseTo(4); // 2 Mills x 2
+  });
+
+  it('adding a Bakery adds exactly one Bread per minute', () => {
     const store = WorldStore.fromWorld(structuredClone(defaultWorld));
     const view = new StoreWorldView(store);
-    const crownFalls = view.islands.find((i) => i.name === 'Crown Falls')!;
     const bakery = () =>
-      crownFalls.productionLines.find(
-        (pl) => pl.building === ProductionBuilding.Bakery,
-      )!;
-
-    expect(bakery().efficiency).toBeCloseTo(2.3);
-    expect(bakery().goodsProducedPerMinute).toBeCloseTo(23);
-
-    store.updateIsland(crownFalls.id, {
-      dolPolicy: DepartmentOfLaborPolicy.None,
-    });
-    expect(bakery().efficiency).toBeCloseTo(2.0);
-    expect(bakery().goodsProducedPerMinute).toBeCloseTo(20);
+      view.islands
+        .find((i) => i.name === 'Crown Falls')!
+        .productionLines.find(
+          (pl) => pl.building === ProductionBuilding.Bakery,
+        )!;
+    expect(bakery().goodsProducedPerMinute).toBeCloseTo(4);
+    store.updateProductionLine(bakery().id, { numBuildings: 5 });
+    expect(bakery().goodsProducedPerMinute).toBeCloseTo(5);
   });
 });
 
