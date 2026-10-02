@@ -1,4 +1,4 @@
-import { computed, inject, Injectable, signal } from '@angular/core';
+import { computed, effect, inject, Injectable, signal } from '@angular/core';
 import { L10nKey, Language, localizations } from '../../shared/l10n/l10n';
 import {
   LocalStorageManager,
@@ -35,6 +35,28 @@ export class L10nService {
         return 'zh-Hans';
     }
   });
+
+  /** The BCP 47 tag for the current language, e.g. for the page's `lang`. */
+  readonly languageTagSignal = computed(() => {
+    switch (this.languageSignal()) {
+      case Language.En:
+        return 'en';
+      case Language.De:
+        return 'de';
+      case Language.Nl:
+        return 'nl';
+      case Language.Zh:
+        return 'zh-Hans';
+    }
+  });
+
+  constructor() {
+    // Keep the document's language in step with the UI language: it drives
+    // screen readers, hyphenation and per-language styling (`:lang(zh)`).
+    effect(() => {
+      document.documentElement.lang = this.languageTagSignal();
+    });
+  }
 
   lookupLocalizedText(key: L10nKey): string {
     const lang = this.languageLocalStorage_.get() ?? Language.En;

@@ -56,4 +56,19 @@ describe('L10nService', () => {
       'Alpaca Wool',
     );
   });
+
+  it('keeps the document language in step with the UI language', () => {
+    const service = create();
+    TestBed.tick();
+    expect(document.documentElement.lang).toBe('en');
+    for (const [language, tag] of [
+      [Language.De, 'de'],
+      [Language.Nl, 'nl'],
+      [Language.Zh, 'zh-Hans'],
+    ] as const) {
+      service.setLanguage(language);
+      TestBed.tick();
+      expect(document.documentElement.lang).toBe(tag);
+    }
+  });
 });

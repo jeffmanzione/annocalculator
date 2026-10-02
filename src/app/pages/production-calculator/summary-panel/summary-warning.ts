@@ -38,14 +38,10 @@ export class SummaryWarning {
   row = input.required<GoodSummaryRow>();
 
   readonly colorSpec = GREEN_RED_FONT_SPEC;
+  // Gold on the dark plate (see summary-warning.scss): high contrast on
+  // parchment, in the same family as the title plate.
   readonly warningColorSpec: FormatFontSpec = {
-    default: {
-      color: '#FFD700',
-      weight: 'bold',
-      style: `text-shadow: 0 0 4px  rgba(255, 255, 255, 1.0),
-    0 0 8px rgba(255, 255, 255, 0.9),
-    0 0 16px rgba(255, 255, 255, 0.6);`,
-    },
+    default: { color: '#ffd66b', weight: 'bold' },
   };
 
   /** The timeout ID of any current timer set to show the tooltip */

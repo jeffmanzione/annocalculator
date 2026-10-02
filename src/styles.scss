@@ -122,6 +122,19 @@ h4,
   }
 }
 
+.mdc-button .mdc-button__label {
+  // The display serif's letters sit about 2px high in their line box (CJK
+  // glyphs about the same), which looks off-center in a button; nudge the label
+  // down to compensate. The leading icon moves with it so they stay aligned.
+  position: relative;
+  top: 2px;
+}
+
+.mdc-button > .mat-icon {
+  position: relative;
+  top: 1px;
+}
+
 .mdc-button--unelevated.mat-mdc-unelevated-button:disabled {
   opacity: 0.55;
 }

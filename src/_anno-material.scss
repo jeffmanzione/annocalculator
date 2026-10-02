@@ -110,21 +110,26 @@ $theme: mat.m2-define-light-theme(
       outlined-outline-color: rgba(anno.$ink, 0.45),
       outlined-hover-outline-color: anno.$ink,
       outlined-focus-outline-color: anno.$slate,
-      outlined-label-text-color: anno.$ink-muted,
-      outlined-hover-label-text-color: anno.$ink,
-      outlined-focus-label-text-color: anno.$slate,
+      // Labels: dark ink, a little larger and bold, so they stay readable
+      // on the parchment.
+      outlined-label-text-color: anno.$ink,
+      outlined-hover-label-text-color: anno.$ink-strong,
+      outlined-focus-label-text-color: anno.$slate-dark,
+      outlined-label-text-size: 12px,
+      outlined-label-text-populated-size: 11px,
+      outlined-label-text-weight: 700,
       outlined-input-text-color: anno.$ink,
-      outlined-disabled-input-text-color: rgba(anno.$ink, 0.5),
+      outlined-disabled-input-text-color: rgba(anno.$ink, 0.65),
       outlined-disabled-outline-color: rgba(anno.$ink, 0.2),
-      outlined-disabled-label-text-color: rgba(anno.$ink, 0.5),
+      outlined-disabled-label-text-color: rgba(anno.$ink, 0.65),
     )
   );
 
   @include mat.select-overrides(
     (
       enabled-trigger-text-color: anno.$ink,
-      disabled-trigger-text-color: rgba(anno.$ink, 0.5),
-      placeholder-text-color: rgba(anno.$ink, 0.6),
+      disabled-trigger-text-color: rgba(anno.$ink, 0.65),
+      placeholder-text-color: rgba(anno.$ink, 0.75),
       enabled-arrow-color: anno.$ink-muted,
       focused-arrow-color: anno.$slate,
       panel-background-color: anno.$parchment-lighter,
