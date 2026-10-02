@@ -26,7 +26,7 @@
         text="Add Production Line"
         (action)="addProductionLine()"></ac-button>
     </section>
-    <section>
+    <section class="table-scroll">
       <table
         mat-table
         class="production-lines-table"
@@ -204,7 +204,7 @@
               <div class="extra-goods-outer-container">
                 <div class="extra-goods-inner-container">
                   <table #extraGoodTables mat-table [dataSource]="element.extraGoodsRows()" class="extra-goods-table">
-                    <ng-container matColumnDef="good">
+                    <ng-container matColumnDef="extraGood">
                       <th mat-header-cell *matHeaderCellDef>
                         <span textLoc="Extra Good"></span>
                       </th>

@@ -154,7 +154,7 @@ export class Island implements OnInit {
   }
 
   readonly extraGoodColumns = [
-    'good',
+    'extraGood',
     'source',
     'rateNumerator',
     'divideSymbol',

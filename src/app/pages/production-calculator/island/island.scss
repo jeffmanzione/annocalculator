@@ -22,9 +22,69 @@
   min-width: 80%;
 }
 
+// Column sizing for the production line table and its nested extra goods table.
+//
+// Instead of a hand-picked pixel width per column (which broke whenever a
+// translation or screen size didn't match the guess), columns come in two
+// kinds, applied through the `mat-column-<name>` classes Angular Material adds
+// to every header and body cell:
+//
+//  * Content-sized ("fit") columns -- checkboxes, numbers, icon buttons --
+//    shrink to their content (`width: 1%` + `nowrap` cells). A table column can
+//    never be narrower than its longest unbreakable header word, so these are
+//    always wide enough for their header and value in every language.
+//  * Flexible columns -- the selects -- share the remaining width by percentage
+//    and truncate their text, but never drop below `$flex-min-width`
+//    (`min-width` beats the `max-width: 0` that lets them shrink below their
+//    content).
+//
+// When the panel is too narrow for all of that, its container scrolls
+// horizontally rather than crushing the content.
+//
+// Rules select cells by their `mat-column-*` class only: Angular scopes these
+// styles with an attribute that Material's own <thead>/<tbody>/<tr> elements
+// don't carry, so selectors through them would never match. Column names are
+// therefore unique across the two tables (the nested one uses `extraGood`).
+
+$flex-min-width: 5.5rem;
+
+@mixin header-and-cell($name) {
+  th.mat-column-#{$name},
+  td.mat-column-#{$name} {
+    @content;
+  }
+}
+
+@mixin fit-columns($names...) {
+  @each $name in $names {
+    @include header-and-cell($name) {
+      width: 1%;
+    }
+    td.mat-column-#{$name} {
+      white-space: nowrap;
+    }
+  }
+}
+
+// `$columns` maps a column name to its share of the table width.
+@mixin flex-columns($columns) {
+  @each $name, $share in $columns {
+    @include header-and-cell($name) {
+      width: $share;
+      min-width: $flex-min-width;
+      max-width: 0;
+    }
+  }
+}
+
+.table-scroll {
+  overflow-x: auto;
+}
+
 table.production-lines-table {
   border-collapse: collapse;
   display: table;
+  width: 100%;
 
   mat-form-field {
     width: 100%;
@@ -43,73 +103,74 @@ table.production-lines-table {
 
   th,
   td {
-    max-width: 0px;
     padding: 4px;
     text-align: center;
-    word-wrap: break-word;
   }
 
-  td.extra-goods-row {
-    padding: 0;
-  }
-
+  // Headers wrap between words only (a word is never split), so a column's
+  // minimum width is its longest header word in the current language. German
+  // compounds carry soft hyphens, and `keep-all` stops Chinese headers from
+  // breaking between any two characters (orphaning a single one).
   th {
+    overflow-wrap: normal;
+    word-break: keep-all;
     letter-spacing: -0.5px;
     background-color: color.scale(theme-colors.$table-bg-color, $lightness: -6%);
   }
 
   td {
-    padding: 4px;
     background-color: color.scale(theme-colors.$table-bg-color, $lightness: -3%);
 
-    &.building-count {
-      width: 50px;
-      max-width: 50px;
-    }
-
-    &.goods-field {
-      width: 120px;
-      max-width: 120px;
-    }
-
-    &.boosts-field {
-      width: 130px;
-      max-width: 130px;
+    &.extra-goods-row {
+      padding: 0;
     }
 
     &.production-line-row {
       border-bottom: none;
     }
+  }
 
-    &.extra-goods-field {
-      width: 35px;
-      max-width: 35px;
-    }
+  // --- Production lines ---
+  @include flex-columns(
+    (
+      building: 19%,
+      inputGoods: 8%,
+      good: 8%,
+      boosts: 11%,
+      items: 12%,
+      culturalSets: 12%,
+    )
+  );
+  @include fit-columns(
+    expandExtraGoods,
+    hasTradeUnion,
+    inRangeOfLocalDepartment,
+    inRangeOfHaciendaFertiliserWorks,
+    efficiency,
+    buildingProcessTimeSeconds,
+    goodsProducedPerMinute,
+    remove
+  );
 
-    &.remove-field {
-      width: 55px;
-      max-width: 55px;
-    }
+  // The count column holds a text field, whose intrinsic width is far wider
+  // than a building count, so it gets an explicit size.
+  @include header-and-cell(numBuildings) {
+    width: 3.5rem;
+    min-width: 3.5rem;
+    max-width: 3.5rem;
+  }
 
-    &.fraction-field {
-      width: 45px;
-      max-width: 45px;
-    }
+  // --- Extra goods (nested table) ---
+  table.extra-goods-table {
+    width: 100%;
 
-    &.division-field {
-      width: 15px;
-      max-width: 15px;
-    }
-
-    &.checkbox-field {
-      width: 50px;
-      max-width: 50px;
-    }
-
-    &.computed-field {
-      width: 60px;
-      max-width: 60px;
-    }
+    @include flex-columns(
+      (
+        extraGood: 24%,
+        source: 36%,
+      )
+    );
+    @include fit-columns(rateNumerator, divideSymbol, rateDenominator, producedPerMinute);
   }
 }
 

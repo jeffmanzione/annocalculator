@@ -1,6 +1,6 @@
 # End-to-end checks
 
-Two Playwright scripts that drive a **built** copy of the app in headless Chromium. They exist because `ngc`/type-checking can't catch runtime behavior: both regressions found during the WorldStore migration (removing a middle island crashing, trade-route rows breaking after an edit) type-checked cleanly.
+Playwright scripts that drive a **built** copy of the app in headless Chromium. They exist because `ngc`/type-checking can't catch runtime behavior: both regressions found during the WorldStore migration (removing a middle island crashing, trade-route rows breaking after an edit) type-checked cleanly.
 
 There's no test runner involved: each script is plain Node, prints PASS/FAIL (or SAME/DIFF) lines, and exits non-zero on failure.
 
@@ -40,6 +40,15 @@ Starts from the default world in a fresh browser profile and checks, among other
 - removing the last island and a middle island removes the right one by id, and leaves the others' components alive;
 - reloading restores the saved world; the trade-union bonus persists; no store-internal fields (`islandId`) leak into the saved JSON;
 - no uncaught errors or console errors (network "Failed to load resource" messages are ignored).
+
+## `npm run e2e:layout` — do the island tables fit?
+
+```sh
+npm run e2e:layout                    # uses dist/annocalculator/browser
+node e2e/layout.mjs path/to/browser   # or any other build
+```
+
+Renders the default world at several desktop widths (1440 to 2560 px) in each language (English, German, Dutch, Chinese) and checks that no header word is wider than its column (a header breaking mid-word) and that no computed value is clipped. The tables size their columns from their content rather than fixed pixel widths, so this is what catches a translation or a new column that no longer fits.
 
 ## `npm run e2e:diff -- <baseline> <candidate>` — did a refactor change what's saved?
 
