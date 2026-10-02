@@ -96,6 +96,18 @@ button {
   text-shadow: none;
 }
 
+.app-version {
+  align-self: center;
+  margin: 0 12px 0 14px;
+  font-family: anno.$font-display;
+  font-size: 12px;
+  letter-spacing: 0.4px;
+  color: rgba(anno.$plate-text, 0.6);
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.7);
+  user-select: text;
+  white-space: nowrap;
+}
+
 .lang-option {
   text-wrap: nowrap;
   text-transform: uppercase;

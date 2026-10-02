@@ -11,6 +11,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { Language, languages } from '../../shared/l10n/l10n';
 import { L10nService } from '../../services/l10n/l10n';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
+import { version } from '../../../../package.json';
 
 @Component({
   selector: 'app-bar',
@@ -33,6 +34,8 @@ import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
   ],
 })
 export class AppBar {
+  /** The release number, from package.json (bumped on each release branch). */
+  readonly version = version;
   readonly langauges = languages;
   readonly router = inject(Router);
 

@@ -4,6 +4,7 @@
 //
 //   node e2e/smoke.mjs [distDir]      (default: dist/annocalculator/browser)
 import { chromium } from 'playwright';
+import fs from 'node:fs';
 import path from 'node:path';
 import { launchBrowser, DEFAULT_DIST, openPage, savedWorld, serveDist, settle as settleFn } from './support.mjs';
 
@@ -29,6 +30,12 @@ await settle();
 
 // 1. Boot with the default world.
 check('boots with 3 default islands', (await islands().count()) === 3);
+const packageVersion = JSON.parse(fs.readFileSync(new URL('../package.json', import.meta.url), 'utf8')).version;
+check(
+  "the toolbar shows the app's version",
+  (await page.locator('.app-version').innerText()) === `v${packageVersion}`,
+  await page.locator('.app-version').innerText(),
+);
 check('trade routes table shows 3 rows', (await page.locator('trade-routes-panel tr.mat-mdc-row').count()) === 3);
 const summaryRowsBefore = await page.locator('summary-panel tr.mat-mdc-row').count();
 check('summary panel renders rows', summaryRowsBefore > 0, `${summaryRowsBefore} rows`);
