@@ -221,6 +221,12 @@ tr.mat-mdc-row:hover > td.mat-mdc-cell {
     top: -8px;
     border-color: var(--mat-form-field-outlined-focus-outline-color);
   }
+
+  // The thicker border pushes the label's containing box down 1px; take it back
+  // so the label doesn't move when the field gains focus.
+  .mdc-floating-label {
+    top: 17px;
+  }
 }
 
 mat-pseudo-checkbox {

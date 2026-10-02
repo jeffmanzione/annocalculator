@@ -110,6 +110,16 @@ for (const width of WIDTHS) {
       return [...new Set(found)];
     });
 
+    // A label must not move when its field gains focus (focus thickens the border).
+    const labelTop = () =>
+      page.locator('island .island-name-field .mdc-floating-label').first().evaluate((l) => l.getBoundingClientRect().top);
+    const restTop = await labelTop();
+    await page.locator('island .island-name-field input').first().focus();
+    await page.waitForTimeout(300);
+    const focusTop = await labelTop();
+    if (Math.abs(focusTop - restTop) > 0.1) problems.push(`label moves ${(focusTop - restTop).toFixed(2)}px on focus`);
+    await page.evaluate(() => document.activeElement?.blur());
+
     const ok = problems.length === 0;
     console.log(
       `${ok ? 'PASS' : 'FAIL'}  ${String(width).padEnd(4)} ${language.padEnd(2)}${ok ? '' : '  -- ' + problems.join('; ')}`,
