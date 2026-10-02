@@ -87,6 +87,26 @@ describe('SummaryWarning', () => {
     ]);
   });
 
+  it('aligns each column header with the cells below it', () => {
+    trigger().dispatchEvent(new Event('mouseenter'));
+    vi.advanceTimersByTime(500);
+    const rows = [...tooltip()!.querySelectorAll('tr')].map((tr) => [
+      ...tr.querySelectorAll('th, td'),
+    ]);
+    const alignment = (el: Element) => getComputedStyle(el).textAlign;
+    const [header, ...body] = rows;
+    expect(header.length).toBe(2);
+    for (const [column, headerCell] of header.entries()) {
+      for (const row of body) {
+        expect(alignment(headerCell), `column ${column}`).toBe(
+          alignment(row[column]),
+        );
+      }
+    }
+    // And they are the expected way round: names on the left, numbers on the right.
+    expect(header.map(alignment)).toEqual(['left', 'right']);
+  });
+
   it('colors surplus green and deficit red', () => {
     trigger().dispatchEvent(new Event('mouseenter'));
     vi.advanceTimersByTime(500);

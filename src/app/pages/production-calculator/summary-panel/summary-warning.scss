@@ -51,9 +51,11 @@
     border-collapse: collapse;
 
     // Same header bar and row finish as the app's other tables.
+    // Headers are aligned with their columns: numbers on the right, with the
+    // island column overriding to the left below.
     th {
       padding: 4px 8px;
-      text-align: center;
+      text-align: right;
       white-space: nowrap;
       font-size: 10.5px;
       font-weight: 500;
