@@ -2,7 +2,9 @@ import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { Router } from '@angular/router';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { NavigationEnd, Router } from '@angular/router';
+import { filter, map } from 'rxjs';
 import { AppInfo, apps, isNotRedirect, WEBSITE_NAME } from '../../app.routes';
 import { L10nText } from '../text/text';
 import { MatSelectModule } from '@angular/material/select';
@@ -33,6 +35,17 @@ import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 export class AppBar {
   readonly langauges = languages;
   readonly router = inject(Router);
+
+  // router.url isn't reactive: without this, the bar would not re-render once a
+  // navigation finishes (the app is zoneless) and the current tab would never
+  // show as selected.
+  private readonly currentUrl_ = toSignal(
+    this.router.events.pipe(
+      filter((event) => event instanceof NavigationEnd),
+      map(() => this.router.url),
+    ),
+    { initialValue: this.router.url },
+  );
   readonly website = WEBSITE_NAME;
   readonly apps = apps.filter(isNotRedirect);
 
@@ -44,7 +57,7 @@ export class AppBar {
   }
 
   isCurrentApp(app: AppInfo): boolean {
-    return '/' + app.path == this.router.url;
+    return '/' + app.path == this.currentUrl_();
   }
 
   navigateTo(app: AppInfo | string): void {
