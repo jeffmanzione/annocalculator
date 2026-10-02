@@ -74,8 +74,8 @@
         inset 0 -1px 0 rgba(anno.$ink, 0.16);
     }
 
-    // Island names read left-to-right; the header stays centered like the others.
-    td.island-name {
+    // The island column, header included, is left-aligned over the names.
+    .island-name {
       text-align: left;
     }
   }
