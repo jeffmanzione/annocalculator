@@ -22,9 +22,41 @@ Visit the tool here: [https://AnnoCalculator.com](https://AnnoCalculator.com)
 
 ## 🖼️ Screenshots
 
-![Whole app screenshot](https://github.com/jeffmanzione/annocalculator/blob/main/screenshots/whole_app.png 'Whole app screenshot')
-![Summary screenshot](https://github.com/jeffmanzione/annocalculator/blob/main/screenshots/summary.png 'Summary screenshot')
-![Island editor screenshot](https://github.com/jeffmanzione/annocalculator/blob/main/screenshots/island_editor.png 'Island editor screenshot')
+![The calculator with three islands, the Palace prestige level, the summary and trade routes](https://github.com/jeffmanzione/annocalculator/blob/main/screenshots/whole_app.jpg 'The whole app')
+
+### Plan each island
+
+Add production lines, pick boosts, items and cultural sets, and read the efficiency, process time and output of every line. Extra goods (like the Fine Cake Decorator's chocolate) are listed under the line that produces them.
+
+![An island with its production lines and a substituted input explained](https://github.com/jeffmanzione/annocalculator/blob/main/screenshots/island_editor.png 'Island editor')
+
+### See where every number comes from
+
+Hover the info icon next to an efficiency to see each bonus that adds up to it, including the Palace's Trade Union bonus. Pick the Palace's prestige level once in the global parameters and it applies everywhere.
+
+|                                                                                         Efficiency breakdown                                                                                         |                                                                            Palace prestige level                                                                             |
+| :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
+| ![Tooltip listing base productivity, the Palace Trade Union bonus and an item](https://github.com/jeffmanzione/annocalculator/blob/main/screenshots/efficiency_breakdown.png 'Efficiency breakdown') | ![The Palace prestige level dropdown with each level's bonus](https://github.com/jeffmanzione/annocalculator/blob/main/screenshots/palace_level.png 'Palace prestige level') |
+
+### Specialists that swap inputs
+
+When a specialist substitutes an input good, the good glows and its tooltip says what it replaces and which specialist does it.
+
+![A glowing Grain input with a tooltip: replaces Flour, specialist Baker](https://github.com/jeffmanzione/annocalculator/blob/main/screenshots/substituted_input.png 'A substituted input')
+
+### Totals and trade between islands
+
+The summary shows total and net production of every good across all your islands (a shortfall turns red). Trade routes move goods between islands, and the net figures account for them.
+
+![The summary of goods and the trade routes between islands](https://github.com/jeffmanzione/annocalculator/blob/main/screenshots/summary.png 'Summary and trade routes')
+
+### In your language
+
+English, German, Dutch and Chinese.
+
+|                                                        Deutsch                                                        |                                                           中文                                                           |
+| :-------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------: |
+| ![The calculator in German](https://github.com/jeffmanzione/annocalculator/blob/main/screenshots/german.jpg 'German') | ![The calculator in Chinese](https://github.com/jeffmanzione/annocalculator/blob/main/screenshots/chinese.jpg 'Chinese') |
 
 ## 🧑‍💻 Tech Stack
 
