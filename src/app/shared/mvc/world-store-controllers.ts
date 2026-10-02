@@ -7,11 +7,7 @@ import {
   ProductionBuilding,
   Region,
 } from '../game/enums';
-import {
-  IslandId,
-  ProductionLineId,
-  TradeRouteId,
-} from './models';
+import { IslandId, ProductionLineId, TradeRouteId } from './models';
 import { WorldStore } from './world-store';
 import {
   StoreIslandView,
@@ -213,8 +209,11 @@ export class StoreWorldController {
   get tradeUnionBonus(): number {
     return this.store.tradeUnionBonus();
   }
-  set tradeUnionBonus(value: number) {
-    this.store.setTradeUnionBonus(value);
+  get palacePrestigeLevel(): number | null {
+    return this.store.palacePrestigeLevel();
+  }
+  set palacePrestigeLevel(value: number | null) {
+    this.store.setPalacePrestigeLevel(value);
   }
 
   private readonly islandControllers_ = new Map<

@@ -1,11 +1,10 @@
-import { signal, WritableSignal } from '@angular/core';
+import { computed, Signal, signal, WritableSignal } from '@angular/core';
 import {
   BASE_ISLAND_MODEL,
   BASE_PRODUCTION_LINE_MODEL,
   BASE_TRADE_ROUTE_MODEL,
   DEFAULT_ISLAND_MODEL,
   DEFAULT_PRODUCTION_LINE_MODEL,
-  DEFAULT_WORLD_MODEL,
   Island,
   IslandId,
   ProductionLine,
@@ -16,6 +15,10 @@ import {
 } from './models';
 import { Good, Item, ProductionBuilding } from '../game/enums';
 import { lookupItemInfo, lookupProductionInfo } from '../game/facts';
+import {
+  palacePrestigeLevelForBonus,
+  palaceTradeUnionBonus,
+} from '../game/palace';
 
 // Helpers below were moved here from controllers.ts (now deleted), their
 // last remaining consumer being this file.
@@ -171,18 +174,24 @@ export class WorldStore {
     Map<ProductionLineId, ProductionLineEntity>
   >;
   readonly tradeRoutes: WritableSignal<Map<TradeRouteId, TradeRoute>>;
-  readonly tradeUnionBonus: WritableSignal<number>;
+  /** The Palace's prestige level; null when there is no Palace. */
+  readonly palacePrestigeLevel: WritableSignal<number | null>;
+  /** The Trade Union bonus (a fraction) the Palace's level gives. */
+  readonly tradeUnionBonus: Signal<number>;
 
   private constructor(
     islands: Map<IslandId, Island>,
     productionLines: Map<ProductionLineId, ProductionLineEntity>,
     tradeRoutes: Map<TradeRouteId, TradeRoute>,
-    tradeUnionBonus: number,
+    palacePrestigeLevel: number | null,
   ) {
     this.islands = signal(islands);
     this.productionLines = signal(productionLines);
     this.tradeRoutes = signal(tradeRoutes);
-    this.tradeUnionBonus = signal(tradeUnionBonus);
+    this.palacePrestigeLevel = signal(palacePrestigeLevel);
+    this.tradeUnionBonus = computed(() =>
+      palaceTradeUnionBonus(this.palacePrestigeLevel()),
+    );
   }
 
   static fromWorld(world: World): WorldStore {
@@ -234,7 +243,9 @@ export class WorldStore {
       islands,
       productionLines,
       tradeRoutes,
-      world.tradeUnionBonus ?? DEFAULT_WORLD_MODEL.tradeUnionBonus!,
+      // Worlds saved before the Palace level existed stored the bonus itself.
+      world.palacePrestigeLevel ??
+        palacePrestigeLevelForBonus(world.tradeUnionBonus ?? 0),
     );
   }
 
@@ -255,7 +266,7 @@ export class WorldStore {
     );
 
     const world: World = {
-      tradeUnionBonus: this.tradeUnionBonus(),
+      palacePrestigeLevel: this.palacePrestigeLevel() ?? undefined,
       islands,
       tradeRoutes: [...this.tradeRoutes().values()],
     };
@@ -406,8 +417,8 @@ export class WorldStore {
     });
   }
 
-  setTradeUnionBonus(value: number): void {
-    this.tradeUnionBonus.set(value);
+  setPalacePrestigeLevel(value: number | null): void {
+    this.palacePrestigeLevel.set(value);
   }
 }
 
@@ -468,8 +479,9 @@ function stripIslandDefaults(island: Island): Island {
 
 function stripWorldDefaults(world: World): World {
   const result = { ...world };
-  if (result.tradeUnionBonus == DEFAULT_WORLD_MODEL.tradeUnionBonus) {
-    delete result.tradeUnionBonus;
+  if (result.palacePrestigeLevel == null) {
+    delete result.palacePrestigeLevel;
   }
+  delete result.tradeUnionBonus;
   return result;
 }

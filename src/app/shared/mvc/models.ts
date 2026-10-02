@@ -68,6 +68,13 @@ export interface Island extends Model {
 }
 
 export interface World extends Model {
+  /** The Palace's prestige level; absent when there is no Palace. */
+  palacePrestigeLevel?: number;
+  /**
+   * Only read from worlds saved before palacePrestigeLevel existed, and converted
+   * to a level on load. Never written.
+   * @deprecated
+   */
   tradeUnionBonus?: number;
   islands: Island[];
   tradeRoutes: TradeRoute[];
@@ -136,7 +143,6 @@ export const BASE_WORLD_MODEL: World = {
 };
 
 export const DEFAULT_WORLD_MODEL: World = {
-  tradeUnionBonus: 0,
   islands: [],
   tradeRoutes: [],
 };

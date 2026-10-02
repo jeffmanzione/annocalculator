@@ -38,6 +38,12 @@
   flex: 1;
 }
 
+// Just wide enough for the longest option ("25 (+60%)") and its icon.
+.palace-select {
+  display: block;
+  width: 180px;
+}
+
 .buttons-container {
   display: flex;
   height: 100%;

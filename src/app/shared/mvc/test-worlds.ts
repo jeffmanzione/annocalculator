@@ -20,7 +20,7 @@ import { StoreWorldView } from './world-store-views';
  * Ids are fixed so snapshots are stable.
  */
 export const featureWorld = (): World => ({
-  tradeUnionBonus: 0.3,
+  palacePrestigeLevel: 10,
   islands: [
     {
       id: 1,

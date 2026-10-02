@@ -38,6 +38,14 @@ import { AcButton } from '../../components/button/button';
 import { L10nText } from '../../components/text/text';
 import { L10nKey } from '../../shared/l10n/l10n';
 import { defaultWorld } from './default-world';
+import { EnumSelect } from '../../components/enum-select/enum-select';
+import {
+  MAX_PALACE_PRESTIGE_LEVEL,
+  palaceTradeUnionBonus,
+} from '../../shared/game/palace';
+
+/** The form's value for "no Palace" (a select can't hold null as a choice). */
+const NO_PALACE = -1;
 const WORLD_KEY = 'anno-1800-production-calculator-world';
 
 @Component({
@@ -45,6 +53,7 @@ const WORLD_KEY = 'anno-1800-production-calculator-world';
   imports: [
     AcButton,
     CardModule,
+    EnumSelect,
     Island,
     MatDialogModule,
     MatExpansionModule,
@@ -111,6 +120,19 @@ export class ProductionCalculatorPage implements OnInit {
 
   formGroup?: FormGroup;
 
+  readonly palacePrestigeLevels = [
+    NO_PALACE,
+    ...Array.from({ length: MAX_PALACE_PRESTIGE_LEVEL + 1 }, (_, i) => i),
+  ];
+
+  readonly lookupPalaceIconUrl = () => '/icons/others/palace.png';
+
+  /** E.g. "10 (+30%)": the level and the Trade Union bonus it gives. */
+  readonly palaceLevelText = (level: number | null): string =>
+    level == null || level === NO_PALACE
+      ? 'None'
+      : `${level} (+${Math.round(palaceTradeUnionBonus(level) * 100)}%)`;
+
   private readonly injector_ = inject(Injector);
   private readonly matDialog_ = inject(MatDialog);
   private readonly clipboard_ = inject(Clipboard);
@@ -122,10 +144,13 @@ export class ProductionCalculatorPage implements OnInit {
 
   ngOnInit(): void {
     this.formGroup = new FormGroup({
-      tradeUnionBonusPercent: new FormControl(0),
+      palacePrestigeLevel: new FormControl(NO_PALACE),
     });
     this.formGroup.valueChanges.subscribe((value) => {
-      this.world.tradeUnionBonus = value.tradeUnionBonusPercent / 100;
+      this.world.palacePrestigeLevel =
+        value.palacePrestigeLevel === NO_PALACE
+          ? null
+          : value.palacePrestigeLevel;
     });
     this.setWorld(this.worldStorage_.get() ?? defaultWorld);
 
@@ -153,8 +178,8 @@ export class ProductionCalculatorPage implements OnInit {
     this.store_ = WorldStore.fromWorld(worldModel);
     this.world = new StoreWorldController(this.store_);
     this.worldSummary = new StoreWorldView(this.store_);
-    this.formGroup!.controls['tradeUnionBonusPercent'].setValue(
-      this.world.tradeUnionBonus * 100,
+    this.formGroup!.controls['palacePrestigeLevel'].setValue(
+      this.world.palacePrestigeLevel ?? NO_PALACE,
       { emitEvent: false },
     );
   }

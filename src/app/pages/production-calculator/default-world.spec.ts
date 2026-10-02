@@ -66,7 +66,8 @@ describe('default world', () => {
   });
 
   it('shows a few items but keeps every other advanced option off', () => {
-    expect(defaultWorld.tradeUnionBonus ?? 0).toBe(0);
+    expect(defaultWorld.palacePrestigeLevel).toBeUndefined();
+    expect(defaultWorld.tradeUnionBonus).toBeUndefined();
     const items: Item[] = [];
     for (const island of defaultWorld.islands) {
       expect(island.dolPolicy, island.name).toBeUndefined();

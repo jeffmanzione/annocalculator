@@ -238,13 +238,15 @@ check(
   'reload keeps renamed island',
   (await islands().nth(0).locator('input[aria-label="name"]').inputValue()) === 'Crown Falls Renamed',
 );
-await page.locator('input[aria-label="tradeUnionBonusPercent"]').fill('50');
+await page.locator('.global-parameters-card mat-select').click();
+await page.locator('mat-option', { hasText: '20 (+50%)' }).click();
 await settle();
 s = await saved();
-check('trade union bonus persists', s.tradeUnionBonus === 0.5, String(s.tradeUnionBonus));
+check('palace prestige level persists', s.palacePrestigeLevel === 20, String(s.palacePrestigeLevel));
+check('old trade union bonus is not written', !('tradeUnionBonus' in s));
 check(
-  'saved JSON shape stable across reload (except bonus)',
-  JSON.stringify({ ...s, tradeUnionBonus: beforeReload.tradeUnionBonus }) === JSON.stringify(beforeReload),
+  'saved JSON shape stable across reload (except palace level)',
+  JSON.stringify({ ...s, palacePrestigeLevel: beforeReload.palacePrestigeLevel }) === JSON.stringify(beforeReload),
 );
 
 // 9. Minimization still applies: no empty arrays / default fields stored.

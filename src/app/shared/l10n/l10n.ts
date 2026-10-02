@@ -11,7 +11,7 @@ export type L10nKey =
   | 'Cancel'
   | 'Apply Changes'
   | 'Remove'
-  | 'Palace Trade Union Bonus (%)'
+  | 'Palace Prestige Level'
   | 'Island Name'
   | 'Session'
   | 'Department Policy'
@@ -182,11 +182,11 @@ export const localizations: Localizations = {
     Nl: 'Wissen',
     Zh: '移除',
   },
-  'Palace Trade Union Bonus (%)': {
-    En: 'Palace Trade Union Bonus (%)',
-    De: 'Gewerkschaftsbonus des Palasts (%)',
-    Nl: 'Vakbondsbonus van het paleis (%)',
-    Zh: '宫殿工会加成 (%)',
+  'Palace Prestige Level': {
+    En: 'Palace Prestige Level',
+    De: 'Prestigestufe des Palasts',
+    Nl: 'Prestigeniveau van het paleis',
+    Zh: '宫殿声望等级',
   },
   'Island Name': {
     En: 'Island Name',

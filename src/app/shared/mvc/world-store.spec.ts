@@ -16,7 +16,7 @@ const line = (overrides: object = {}) => ({
 });
 
 const sampleWorld = (): World => ({
-  tradeUnionBonus: 5,
+  palacePrestigeLevel: 5,
   islands: [
     {
       id: 1,
@@ -101,7 +101,6 @@ describe('WorldStore load/save', () => {
 
   it('strips defaults on save, comparing arrays by content', () => {
     const world: World = {
-      tradeUnionBonus: 0,
       islands: [
         {
           id: 1,
@@ -123,6 +122,7 @@ describe('WorldStore load/save', () => {
       tradeRoutes: [],
     };
     const saved = WorldStore.fromWorld(world).toWorld();
+    expect('palacePrestigeLevel' in saved).toBe(false);
     expect('tradeUnionBonus' in saved).toBe(false);
     expect('dolPolicy' in saved.islands[0]).toBe(false);
     expect(saved.islands[0].productionLines[0]).toEqual({
@@ -145,7 +145,7 @@ describe('WorldStore load/save', () => {
 
   it('keeps non-default values', () => {
     const saved = WorldStore.fromWorld(sampleWorld()).toWorld();
-    expect(saved.tradeUnionBonus).toBe(5);
+    expect(saved.palacePrestigeLevel).toBe(5);
     expect(saved.islands[0].dolPolicy).toBe(
       DepartmentOfLaborPolicy.SkilledLaborAct,
     );
@@ -268,10 +268,53 @@ describe('WorldStore mutations', () => {
     });
   });
 
-  it('setTradeUnionBonus updates the signal', () => {
+  it('setPalacePrestigeLevel updates the level and the bonus it gives', () => {
     const store = WorldStore.fromWorld(sampleWorld());
-    store.setTradeUnionBonus(12);
-    expect(store.toWorld().tradeUnionBonus).toBe(12);
+    store.setPalacePrestigeLevel(12);
+    expect(store.toWorld().palacePrestigeLevel).toBe(12);
+    expect(store.tradeUnionBonus()).toBeCloseTo(0.34);
+    store.setPalacePrestigeLevel(null);
+    expect('palacePrestigeLevel' in store.toWorld()).toBe(false);
+    expect(store.tradeUnionBonus()).toBe(0);
+  });
+
+  describe('worlds saved with the old Trade Union bonus', () => {
+    const load = (tradeUnionBonus?: number) => {
+      const world = { ...sampleWorld(), tradeUnionBonus } as World;
+      delete world.palacePrestigeLevel;
+      return WorldStore.fromWorld(world);
+    };
+
+    it('converts the bonus to the nearest prestige level', () => {
+      expect(load(0.3).palacePrestigeLevel()).toBe(10);
+      expect(load(0.3).tradeUnionBonus()).toBeCloseTo(0.3);
+      expect(load(0.1).palacePrestigeLevel()).toBe(0);
+      expect(load(0.6).palacePrestigeLevel()).toBe(25);
+      expect(load(0.25).palacePrestigeLevel()).toBe(8); // 7.5 rounds up
+      expect(load(0.07).palacePrestigeLevel()).toBe(0);
+      expect(load(2).palacePrestigeLevel()).toBe(25);
+    });
+
+    it('treats no bonus as no Palace', () => {
+      expect(load(0).palacePrestigeLevel()).toBeNull();
+      expect(load(undefined).palacePrestigeLevel()).toBeNull();
+      expect(load(0).tradeUnionBonus()).toBe(0);
+    });
+
+    it('saves the level and drops the old bonus', () => {
+      const saved = load(0.3).toWorld();
+      expect(saved.palacePrestigeLevel).toBe(10);
+      expect('tradeUnionBonus' in saved).toBe(false);
+    });
+
+    it('prefers the level when a world has both', () => {
+      const store = WorldStore.fromWorld({
+        ...sampleWorld(),
+        palacePrestigeLevel: 3,
+        tradeUnionBonus: 0.6,
+      });
+      expect(store.palacePrestigeLevel()).toBe(3);
+    });
   });
 });
 

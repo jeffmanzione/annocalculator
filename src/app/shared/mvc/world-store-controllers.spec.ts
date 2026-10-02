@@ -90,13 +90,14 @@ describe('StoreWorldController writes', () => {
     island.name = 'Renamed';
     island.dolPolicy = DepartmentOfLaborPolicy.SkilledLaborAct;
     island.productionLines[0].numBuildings = 7;
-    world.tradeUnionBonus = 4;
+    world.palacePrestigeLevel = 4;
     expect(store.islands().get(1)?.name).toBe('Renamed');
     expect(store.islands().get(1)?.dolPolicy).toBe(
       DepartmentOfLaborPolicy.SkilledLaborAct,
     );
     expect(store.productionLines().get(10)?.numBuildings).toBe(7);
-    expect(store.tradeUnionBonus()).toBe(4);
+    expect(store.palacePrestigeLevel()).toBe(4);
+    expect(store.tradeUnionBonus()).toBeCloseTo(0.18);
   });
 
   it('truncates non-integer numBuildings with a warning', () => {
