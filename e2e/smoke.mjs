@@ -262,6 +262,21 @@ check(
   await cell.locator('.count-step-down').click();
   await cell.locator('.count-step-down').click();
   check('count down arrow stops at zero', (await count.inputValue()) === '0');
+  // Stepping through the count never resizes the table's columns or rows.
+  const shape = () =>
+    islands().nth(0).locator('table.production-lines-table').evaluate((table) => ({
+      cols: [...table.querySelectorAll('th')].map((th) => Math.round(th.getBoundingClientRect().width)),
+      rows: [...table.querySelectorAll('tr.mat-mdc-row')].map((r) => Math.round(r.getBoundingClientRect().height)),
+    }));
+  await count.fill('1');
+  await settle();
+  const before = JSON.stringify(await shape());
+  let shifted = '';
+  for (let i = 0; i < 25; i++) {
+    await cell.locator('.count-step-up').click();
+    if (JSON.stringify(await shape()) !== before) shifted ||= `at ${await count.inputValue()}`;
+  }
+  check('stepping the count keeps the table layout still', shifted === '', shifted);
   await settle();
 }
 

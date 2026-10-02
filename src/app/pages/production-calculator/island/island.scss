@@ -159,6 +159,22 @@ table.production-lines-table {
     remove
   );
 
+  // The columns whose numbers change with the count are content-sized, so they
+  // would otherwise resize -- and shift every other column -- on each click of
+  // the count's arrows. Reserve room for a wide value up front, with digits of
+  // equal width so a change of digit doesn't resize them either.
+  td.mat-column-efficiency,
+  td.mat-column-buildingProcessTimeSeconds,
+  td.mat-column-goodsProducedPerMinute {
+    font-variant-numeric: tabular-nums;
+  }
+  @include header-and-cell(goodsProducedPerMinute) {
+    min-width: 6rem;
+  }
+  @include header-and-cell(efficiency) {
+    min-width: 4.5rem;
+  }
+
   // The count column holds a text field, whose intrinsic width is far wider
   // than a building count, so it gets an explicit size.
   @include header-and-cell(numBuildings) {
