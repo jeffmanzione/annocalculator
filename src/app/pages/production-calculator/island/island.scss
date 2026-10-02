@@ -243,6 +243,15 @@ table.production-lines-table {
       )
     );
     @include fit-columns(rateNumerator, divideSymbol, rateDenominator, producedPerMinute);
+
+    // Same as the main table: this value changes with the count, so give it a
+    // steady width rather than let it resize the columns beside it.
+    td.mat-column-producedPerMinute {
+      font-variant-numeric: tabular-nums;
+    }
+    @include header-and-cell(producedPerMinute) {
+      min-width: 4.5rem;
+    }
   }
 }
 
