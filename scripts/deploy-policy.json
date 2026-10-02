@@ -1,0 +1,17 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "ReadAndWriteTheSiteBucket",
+      "Effect": "Allow",
+      "Action": ["s3:ListBucket", "s3:GetObject", "s3:GetObjectVersion", "s3:PutObject"],
+      "Resource": ["arn:aws:s3:::annocalculator-com", "arn:aws:s3:::annocalculator-com/*"]
+    },
+    {
+      "Sid": "InvalidateTheDistribution",
+      "Effect": "Allow",
+      "Action": ["cloudfront:CreateInvalidation", "cloudfront:GetInvalidation"],
+      "Resource": "arn:aws:cloudfront::*:distribution/E212U9B15HNWT6"
+    }
+  ]
+}

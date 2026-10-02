@@ -11,7 +11,8 @@
     "e2e:smoke": "node e2e/smoke.mjs",
     "e2e:layout": "node e2e/layout.mjs",
     "e2e:label-edges": "node e2e/label-edges.mjs",
-    "e2e:diff": "node e2e/diff.mjs"
+    "e2e:diff": "node e2e/diff.mjs",
+    "deploy": "node scripts/deploy.mjs"
   },
   "private": true,
   "dependencies": {
