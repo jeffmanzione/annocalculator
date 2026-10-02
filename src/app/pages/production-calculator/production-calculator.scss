@@ -114,6 +114,8 @@ island {
 }
 
 .add-island-button-section {
-  border-top: 2px solid #ddd;
+  // A rule with a lit edge, like an engraved divider on the page.
+  border-top: 2px solid rgba(anno.$ink, 0.35);
+  box-shadow: inset 0 1px 0 rgba(anno.$parchment-lightest, 0.6);
   padding-top: 16px;
 }

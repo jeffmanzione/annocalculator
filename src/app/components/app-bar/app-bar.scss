@@ -16,6 +16,18 @@
   box-shadow:
     0 4px 14px rgba(0, 0, 0, 0.5),
     inset 0 1px 0 rgba(255, 242, 199, 0.14);
+  position: relative;
+
+  // A fine inner brass line, like the bevel on the game's title plate.
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 3px 3px 0 3px;
+    border: 1px solid rgba(anno.$brass, 0.28);
+    border-bottom: none;
+    border-radius: 3px 3px 0 0;
+    pointer-events: none;
+  }
 }
 
 .underlay {
@@ -70,6 +82,11 @@ button {
   font-size: 20px;
   color: anno.$plate-text;
   letter-spacing: 0.3px;
+}
+
+.toolbar-item:not(.toolbar-item-selected):hover {
+  background: rgba(255, 242, 199, 0.1);
+  border-color: rgba(anno.$brass, 0.55);
 }
 
 .toolbar-item-selected {
