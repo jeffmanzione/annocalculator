@@ -1,11 +1,16 @@
-import { Good, ProductionBuilding, Region } from '../../shared/game/enums';
+import {
+  Good,
+  Item,
+  ProductionBuilding,
+  Region,
+} from '../../shared/game/enums';
 import { World } from '../../shared/mvc/models';
 
 /**
  * The world a first-time visitor sees, and what "reset" restores.
  *
- * A small starter meant to be read at a glance, with every number in balance
- * so the Summary shows no shortages and no warnings:
+ * A small starter that reads at a glance, with every number in balance so the
+ * Summary shows no shortages and no warnings:
  *
  *  - Farm Island (Old World) grows Grain and hunts Furs.
  *  - Crown Falls (Cape Trelawney) mills Grain into Flour, bakes Bread and
@@ -13,14 +18,17 @@ import { World } from '../../shared/mvc/models';
  *  - Plantation Island (New World) grows Cotton and weaves Cotton Fabric,
  *    shipped to Crown Falls for the Fur Dealer.
  *
- * Only the basics are switched on (no boosts, trade union, items or
- * department policy), so a newcomer can change a building count and see
- * exactly what follows before meeting the advanced options.
+ * A few specialists (items) show how they work, each a different idea: a
+ * plain +10% (Cropper, Poacher), a bigger boost for a mill (Burrstone), and
+ * Fine Cake Decorator, which also adds a bonus good (Chocolate). Items need the
+ * Trade Union box ticked. Everything else advanced (boosts, department
+ * policies, cultural sets, the trade union bonus) stays off.
  *
- * Quantities are 1 building = 1 or 2 goods per minute, chosen so each chain
- * balances exactly: 4 Grain Farms feed 2 Flour Mills, which feed 4 Bakeries
- * (4 Bread/min); 2 Hunting Cabins and 1 Cotton Mill (fed by 2 Cotton
- * Plantations) supply 1 Fur Dealer (2 Fur Coats/min).
+ * Quantities are chosen so the chains balance, leaving only a sliver of
+ * spare Flour, Grain and Furs: 5 Grain Farms (+10%) feed 2 Flour Mills (+35%),
+ * which feed 4 Bakeries (+30%) for 5.2 Bread/min; 2 Hunting Cabins (+10%) and 1
+ * Cotton Mill (fed by 2 Cotton Plantations) supply 1 Fur Dealer (2 Fur
+ * Coats/min).
  */
 export const defaultWorld: World = {
   islands: [
@@ -34,12 +42,16 @@ export const defaultWorld: World = {
           inputGoods: [Good.Grain],
           good: Good.Flour,
           numBuildings: 2,
+          hasTradeUnion: true,
+          items: [Item.Burrstone],
         },
         {
           building: ProductionBuilding.Bakery,
           inputGoods: [Good.Flour],
           good: Good.Bread,
           numBuildings: 4,
+          hasTradeUnion: true,
+          items: [Item.FineCakeDecorator],
         },
         {
           building: ProductionBuilding.FurDealer,
@@ -57,12 +69,16 @@ export const defaultWorld: World = {
         {
           building: ProductionBuilding.GrainFarm,
           good: Good.Grain,
-          numBuildings: 4,
+          numBuildings: 5,
+          hasTradeUnion: true,
+          items: [Item.Cropper],
         },
         {
           building: ProductionBuilding.HuntingCabin,
           good: Good.Furs,
           numBuildings: 2,
+          hasTradeUnion: true,
+          items: [Item.Poacher],
         },
       ],
     },

@@ -56,22 +56,27 @@ describe('default world', () => {
     expect(islandTable(world())).toMatchSnapshot();
   });
 
-  it('makes 1 good per minute per building at base efficiency', () => {
-    // Nothing is boosted, so each Bakery makes 1 Bread/min (60s) and each
-    // Flour Mill 2 Flour/min (30s).
-    const crownFalls = world().islands.find((i) => i.name === 'Crown Falls')!;
-    const line = (building: ProductionBuilding) =>
-      crownFalls.productionLines.find((pl) => pl.building === building)!;
-    expect(line(ProductionBuilding.Bakery).efficiency).toBe(1);
-    expect(line(ProductionBuilding.Bakery).goodsProducedPerMinute).toBeCloseTo(
-      4,
-    ); // 4 Bakeries
-    expect(
-      line(ProductionBuilding.FlourMill).goodsProducedPerMinute,
-    ).toBeCloseTo(4); // 2 Mills x 2
+  it('makes the base amount per building where nothing is boosted', () => {
+    // Plantation Island's Cotton Mill has no items: 30s per Cotton Fabric = 2/min.
+    const mill = world()
+      .islands.find((i) => i.name === 'Plantation Island')!
+      .productionLines.find(
+        (pl) => pl.building === ProductionBuilding.CottonMill,
+      )!;
+    expect(mill.efficiency).toBe(1);
+    expect(mill.goodsProducedPerMinute).toBeCloseTo(2);
   });
 
-  it('adding a Bakery adds exactly one Bread per minute', () => {
+  it('a specialist adds its productivity to the Bakery', () => {
+    // Fine Cake Decorator is +30%; a Bakery makes 1 Bread/min (60s) at 100%.
+    const bakery = world()
+      .islands.find((i) => i.name === 'Crown Falls')!
+      .productionLines.find((pl) => pl.building === ProductionBuilding.Bakery)!;
+    expect(bakery.efficiency).toBeCloseTo(1.3);
+    expect(bakery.goodsProducedPerMinute).toBeCloseTo(4 * 1.3); // 4 Bakeries
+  });
+
+  it('adding a Bakery adds 1.3 Bread per minute with that specialist', () => {
     const store = WorldStore.fromWorld(structuredClone(defaultWorld));
     const view = new StoreWorldView(store);
     const bakery = () =>
@@ -80,9 +85,21 @@ describe('default world', () => {
         .productionLines.find(
           (pl) => pl.building === ProductionBuilding.Bakery,
         )!;
-    expect(bakery().goodsProducedPerMinute).toBeCloseTo(4);
+    expect(bakery().goodsProducedPerMinute).toBeCloseTo(5.2);
     store.updateProductionLine(bakery().id, { numBuildings: 5 });
-    expect(bakery().goodsProducedPerMinute).toBeCloseTo(5);
+    expect(bakery().goodsProducedPerMinute).toBeCloseTo(6.5);
+  });
+
+  it("the Bakery's specialist also makes Chocolate, 1 for every 5 Bread", () => {
+    const bakery = world()
+      .islands.find((i) => i.name === 'Crown Falls')!
+      .productionLines.find((pl) => pl.building === ProductionBuilding.Bakery)!;
+    const chocolate = bakery.extraGoods.find(
+      (eg) => eg.good === Good.Chocolate,
+    )!;
+    expect(chocolate.producedPerMinute).toBeCloseTo(
+      bakery.goodsProducedPerMinute / 5,
+    );
   });
 });
 

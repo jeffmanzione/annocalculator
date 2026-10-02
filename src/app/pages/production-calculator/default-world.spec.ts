@@ -1,5 +1,5 @@
-import { Good, Region } from '../../shared/game/enums';
-import { lookupProductionInfo } from '../../shared/game/facts';
+import { Good, Item, Region } from '../../shared/game/enums';
+import { lookupItemInfo, lookupProductionInfo } from '../../shared/game/facts';
 import { viewOf } from '../../shared/mvc/test-worlds';
 import { defaultWorld } from './default-world';
 import {
@@ -34,13 +34,15 @@ describe('default world', () => {
     ).toEqual([]);
   });
 
-  it('turns out Bread and Fur Coats as its finished goods', () => {
+  it('turns out Bread, Chocolate and Fur Coats as its finished goods', () => {
     const rows = summary();
-    expect(rows.get(Good.Bread)!.netProductionPerMin).toBeCloseTo(4);
+    // 4 Bakeries at +30% (Fine Cake Decorator); the item also adds 1/5 Chocolate.
+    expect(rows.get(Good.Bread)!.netProductionPerMin).toBeCloseTo(5.2);
+    expect(rows.get(Good.Chocolate)!.netProductionPerMin).toBeCloseTo(1.04);
     expect(rows.get(Good.FurCoats)!.netProductionPerMin).toBeCloseTo(2);
   });
 
-  it('consumes exactly what its chains produce, so nothing is wasted', () => {
+  it('wastes next to nothing: intermediate goods leave under 1/min to spare', () => {
     const rows = summary();
     for (const good of [
       Good.Grain,
@@ -49,7 +51,9 @@ describe('default world', () => {
       Good.Cotton,
       Good.CottonFabric,
     ]) {
-      expect(rows.get(good)!.netProductionPerMin, good).toBeCloseTo(0);
+      const net = rows.get(good)!.netProductionPerMin;
+      expect(net, good).toBeGreaterThanOrEqual(-1e-9);
+      expect(net, good).toBeLessThan(1);
     }
   });
 
@@ -61,22 +65,32 @@ describe('default world', () => {
     );
   });
 
-  it('keeps the advanced options off so there is nothing to explain yet', () => {
+  it('shows a few items but keeps every other advanced option off', () => {
     expect(defaultWorld.tradeUnionBonus ?? 0).toBe(0);
+    const items: Item[] = [];
     for (const island of defaultWorld.islands) {
       expect(island.dolPolicy, island.name).toBeUndefined();
       for (const line of island.productionLines) {
-        expect(line.boosts ?? [], `${island.name}/${line.building}`).toEqual(
-          [],
-        );
-        expect(line.items ?? [], `${island.name}/${line.building}`).toEqual([]);
-        expect(
-          line.culturalSets ?? [],
-          `${island.name}/${line.building}`,
-        ).toEqual([]);
-        expect(line.hasTradeUnion ?? false).toBe(false);
+        const where = `${island.name}/${line.building}`;
+        expect(line.boosts ?? [], where).toEqual([]);
+        expect(line.culturalSets ?? [], where).toEqual([]);
+        // Items only work inside a trade union, so a line with items must have it ticked.
+        if ((line.items ?? []).length > 0) {
+          expect(line.hasTradeUnion, where).toBe(true);
+          // And each must be a specialist for this very building.
+          for (const item of line.items!) {
+            expect(
+              lookupItemInfo(item)!.targets,
+              `${item} on ${where}`,
+            ).toContain(line.building);
+          }
+        }
+        items.push(...(line.items ?? []));
       }
     }
+    // "A few": enough to demonstrate, not so many it overwhelms.
+    expect(items.length).toBeGreaterThanOrEqual(3);
+    expect(items.length).toBeLessThanOrEqual(5);
   });
 
   it('only uses buildings the game allows in each island region', () => {
