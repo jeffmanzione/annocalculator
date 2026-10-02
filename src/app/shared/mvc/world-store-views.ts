@@ -114,11 +114,6 @@ export class StoreExtraGoodView implements ExtraGood {
   }
 }
 
-/** Up to 2 decimals, without trailing zeros (e.g. 26.4, 230, 0.33). */
-function formatDetailNumber(n: number): string {
-  return String(Number(n.toFixed(2)));
-}
-
 function extraGoodSourceIconUrl(eg: StoreExtraGoodView): string {
   switch (eg.sourceType) {
     case 'Boost':
@@ -568,10 +563,17 @@ export class StoreProductionLineView implements ProductionLineEntity {
       {
         value: baseProducedPerMinute,
         description: 'Base Production',
-        detail:
-          `${formatDetailNumber(this.numBuildings)} × 60s ÷ ` +
-          `(${formatDetailNumber(this.baseBuildingProcessTimeSeconds)}s ÷ ` +
-          `${formatDetailNumber(this.efficiency * 100)}%)`,
+        detail: [
+          { value: this.numBuildings },
+          '×',
+          { value: 60, unit: 's' },
+          '÷',
+          '(',
+          { value: this.baseBuildingProcessTimeSeconds, unit: 's' },
+          '÷',
+          { value: this.efficiency, isPercent: true },
+          ')',
+        ],
       },
     ];
     for (const eg of this.extraGoods) {
@@ -582,10 +584,13 @@ export class StoreProductionLineView implements ProductionLineEntity {
         value: baseProducedPerMinute * (eg.rateNumerator / eg.rateDenominator),
         description: eg.source,
         iconUrl: extraGoodSourceIconUrl(eg),
-        detail:
-          `${formatDetailNumber(eg.rateNumerator)} / ` +
-          `${formatDetailNumber(eg.rateDenominator)} × ` +
-          `${formatDetailNumber(baseProducedPerMinute)}/m`,
+        detail: [
+          { value: eg.rateNumerator },
+          '/',
+          { value: eg.rateDenominator },
+          '×',
+          { value: baseProducedPerMinute, unit: '/m' },
+        ],
       });
     }
     return constituents;

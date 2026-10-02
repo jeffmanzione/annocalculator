@@ -205,10 +205,24 @@ describe('goods per minute constituents', () => {
     expect(extra.value).toBeCloseTo(base.value / 3);
     expect(extra.iconUrl).toBeTruthy();
     // 2 buildings, 45s base process time, 230% efficiency; a third of the base.
-    expect(base.detail).toBe('2 × 60s ÷ (45s ÷ 230%)');
-    expect(extra.detail).toBe(
-      `1 / 3 × ${Math.round(base.value * 100) / 100}/m`,
-    );
+    expect(base.detail).toEqual([
+      { value: 2 },
+      '×',
+      { value: 60, unit: 's' },
+      '÷',
+      '(',
+      { value: 45, unit: 's' },
+      '÷',
+      { value: expect.closeTo(2.3), isPercent: true },
+      ')',
+    ]);
+    expect(extra.detail).toEqual([
+      { value: 1 },
+      '/',
+      { value: 3 },
+      '×',
+      { value: base.value, unit: '/m' },
+    ]);
   });
 
   it('leaves out extras of other goods', () => {

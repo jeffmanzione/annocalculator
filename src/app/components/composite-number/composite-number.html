@@ -29,7 +29,7 @@
         [zeroOverride]="zeroOverride()"></formatted-number>
     </div>
     <table>
-      @for (num of constituentValues(); track num) {
+      @for (num of constituentValues(); track num; let i = $index) {
         <tr class="constituent">
           <td>
             <formatted-number
@@ -50,8 +50,8 @@
               }
               <div class="description-text">
                 <div class="description" [textLoc]="toLoc(num.description)"></div>
-                @if (num.detail) {
-                  <div class="detail">{{ num.detail }}</div>
+                @if (detailTexts()[i]) {
+                  <div class="detail">{{ detailTexts()[i] }}</div>
                 }
               </div>
             </div>
