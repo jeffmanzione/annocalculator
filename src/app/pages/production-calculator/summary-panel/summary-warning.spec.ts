@@ -93,8 +93,8 @@ describe('SummaryWarning', () => {
     const numbers = [
       ...tooltip()!.querySelectorAll('formatted-number div'),
     ] as HTMLElement[];
-    expect(numbers[0].style.color).toBe('rgb(0, 185, 56)');
-    expect(numbers[1].style.color).toBe('rgb(217, 48, 37)');
+    expect(numbers[0].style.color).toBe('rgb(54, 118, 24)');
+    expect(numbers[1].style.color).toBe('rgb(176, 55, 44)');
   });
 
   it('hides on mouse leave and cancels a pending show', () => {

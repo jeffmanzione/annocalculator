@@ -1,7 +1,21 @@
 @use '@angular/material' as mat;
+@use '../../../anno-palette' as anno;
 
+// The game's dark olive title plate, trimmed in brass. The nav links are its
+// tabs: the current one is a raised parchment tab that opens into the page.
 .toolbar {
-  box-shadow: 0 3px 10px #00000040;
+  @include mat.toolbar-overrides(
+    (
+      container-background-color: transparent,
+      container-text-color: anno.$plate-text,
+      standard-height: 56px,
+    )
+  );
+  background: linear-gradient(to bottom, anno.$plate-light, anno.$plate 55%, #28220f);
+  border-bottom: 2px solid anno.$brass;
+  box-shadow:
+    0 4px 14px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 242, 199, 0.14);
 }
 
 .underlay {
@@ -10,57 +24,66 @@
   height: 100%;
   background-image: url(/anno_1800_logo.png);
   background-size: contain;
-  opacity: 10%;
+  opacity: 7%;
   filter: invert(100%);
 }
 
 .toolbar-items {
-  text-shadow:
-    0 0 3px 0 #00000040,
-    0 0 5px #00000040;
   position: relative;
   display: flex;
+  align-items: flex-end;
   width: 100%;
   height: 100%;
 }
 
 .toolbar-text-shadow {
-  text-shadow:
-    0 0 3px #00000040,
-    0 0 5px #00000040;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.7);
 }
 
 button {
   @include mat.button-overrides(
     (
-      text-disabled-label-text-color: white,
-      text-label-text-weight: 400,
-      text-label-text-size: 13px,
-      text-horizontal-padding: 16px,
+      text-label-text-color: anno.$parchment-light,
+      text-disabled-label-text-color: anno.$ink-strong,
+      text-label-text-weight: 700,
+      text-label-text-size: 15px,
+      text-horizontal-padding: 18px,
       text-container-height: 100%,
     )
   );
+  font-family: anno.$font-display;
 }
 
 .toolbar-item {
   box-sizing: border-box;
-  border-bottom: 4px solid #0000;
+  height: 36px;
+  margin: 0 3px -2px;
+  border: 1px solid transparent;
+  border-bottom: none;
+  border-radius: 5px 5px 0 0;
 }
 
 .toolbar-title {
-  font-weight: 600;
-  font-size: 16px;
+  align-self: center;
+  margin-right: 12px;
+  font-weight: 700;
+  font-size: 20px;
+  color: anno.$plate-text;
+  letter-spacing: 0.3px;
 }
 
 .toolbar-item-selected {
-  border-bottom: 4px solid lightgray;
+  height: 38px;
+  background: linear-gradient(to bottom, anno.$parchment-lighter, anno.$parchment-light);
+  border-color: anno.$brass;
+  text-shadow: none;
 }
 
 .lang-option {
   text-wrap: nowrap;
   text-transform: uppercase;
-  color: rgba(0, 0, 0, 0.75);
-  font-weight: 500;
+  color: anno.$ink;
+  font-weight: 700;
   font-size: 13px;
 }
 

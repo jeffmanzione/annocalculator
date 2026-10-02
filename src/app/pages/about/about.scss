@@ -1,3 +1,4 @@
+@use '../../../anno-palette' as anno;
 :host {
   display: block;
   width: 100%;
@@ -34,11 +35,12 @@
 }
 
 .disclaimer {
-  background-color: #fff3cd;
-  border: 1px solid #ffeeba;
+  background-color: rgba(anno.$parchment-lighter, 0.6);
+  border: 1px solid rgba(anno.$ink, 0.45);
+  box-shadow: inset 0 0 18px rgba(anno.$parchment-lightest, 0.5);
   padding: 16px 32px;
-  border-radius: 16px;
-  color: #856404;
+  border-radius: 3px;
+  color: anno.$ink;
 }
 
 h2 {

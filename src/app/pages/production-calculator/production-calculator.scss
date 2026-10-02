@@ -1,3 +1,4 @@
+@use '../../../anno-palette' as anno;
 :host {
   display: flex;
   flex-direction: row;
@@ -45,9 +46,9 @@
     margin: auto 4px;
   }
 
-  background-color: white;
+  background-color: anno.$parchment-lightest;
   border-radius: 8px;
-  border: rgba(0, 0, 0, 0.3) solid 1px;
+  border: rgba(anno.$ink, 0.4) solid 1px;
 }
 
 .island-list-section {

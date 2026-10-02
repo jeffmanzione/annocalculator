@@ -42,3 +42,6 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
+
+# In-game reference screenshots used while styling the UI. Ubisoft artwork: never commit.
+/docs/reference/

@@ -1,6 +1,8 @@
 @use 'sass:color';
 @use '@angular/material' as mat;
 @use 'theme-colors';
+@use 'anno-palette' as anno;
+@use 'anno-material' as anno-material;
 
 @font-face {
   font-family: Elizabeth;
@@ -9,39 +11,30 @@
 
 @include mat.core();
 
-$web-primary: mat.m2-define-palette(mat.$m2-indigo-palette);
-$web-accent: mat.m2-define-palette(mat.$m2-pink-palette, A200, A100, A400);
-$web-warn: mat.m2-define-palette(mat.$m2-red-palette);
+@include mat.all-component-themes(anno-material.$theme);
+@include mat.all-component-typographies(anno-material.$typography);
+@include anno-material.component-overrides;
 
-$web-font-family: 'Rubik', arial, sans-serif;
-
-$web-typography-level: mat.m2-define-typography-level(
-  $font-family: $web-font-family,
-  $font-weight: 400,
-  $font-size: 11px,
-  $line-height: 11px,
-);
-
-$web-fonts: mat.m2-define-typography-config(
-  $font-family: $web-font-family,
-  $body-1: $web-typography-level,
-  $body-2: $web-typography-level,
-);
-
-$web-theme: mat.m2-define-light-theme(
-  (
-    color: (
-      primary: $web-primary,
-      accent: $web-accent,
-      warn: $web-warn,
-    ),
-    typography: $web-fonts,
-    density: -5,
-  )
-);
-
-@include mat.all-component-themes($web-theme);
-@include mat.all-component-typographies($web-fonts);
+// Shared design tokens, for component styles that want a custom property
+// instead of importing the palette.
+:root {
+  --anno-parchment: #{anno.$parchment};
+  --anno-parchment-light: #{anno.$parchment-light};
+  --anno-parchment-lighter: #{anno.$parchment-lighter};
+  --anno-parchment-dark: #{anno.$parchment-dark};
+  --anno-parchment-shade: #{anno.$parchment-shade};
+  --anno-parchment-deep: #{anno.$parchment-deep};
+  --anno-plate: #{anno.$plate};
+  --anno-plate-text: #{anno.$plate-text};
+  --anno-brass: #{anno.$brass};
+  --anno-ink: #{anno.$ink};
+  --anno-ink-strong: #{anno.$ink-strong};
+  --anno-ink-muted: #{anno.$ink-muted};
+  --anno-slate: #{anno.$slate};
+  --anno-green: #{anno.$green};
+  --anno-font-display: #{anno.$font-display};
+  --anno-font-body: #{anno.$font-body};
+}
 
 ::-webkit-scrollbar {
   width: theme-colors.$scrollbar-width;
@@ -75,9 +68,34 @@ div .mat-expansion-panel-body {
 }
 
 div .mat-mdc-text-field-wrapper {
-  background-color: white;
+  background-color: anno.$parchment-lightest;
   padding: 0 12px;
   letter-spacing: -0.25px;
+}
+
+// Headings: the display serif, with a hairline under panel titles like the
+// game's section headers ("Crown Falls" ... rule).
+h1,
+h2,
+h3,
+h4,
+.mat-mdc-card-title,
+.mat-mdc-dialog-title {
+  font-family: anno.$font-display;
+  color: anno.$ink-strong;
+}
+
+.mat-mdc-card-title {
+  color: anno.$ink-strong;
+  width: 100%;
+  padding-bottom: 4px;
+  border-bottom: 1px solid rgba(anno.$ink, 0.3);
+}
+
+.mat-expansion-panel-header-title {
+  font-family: anno.$font-display;
+  font-size: 17px;
+  font-weight: 700;
 }
 
 mat-pseudo-checkbox {
@@ -93,14 +111,29 @@ table {
 
   tr {
     box-sizing: border-box;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+    border-bottom: 1px solid rgba(anno.$ink, 0.18);
   }
 }
 
+// Page: aged parchment, lit from the upper middle and darkening toward the
+// edges, with a fine paper grain on top and a shadow under the top bar.
 body {
   margin: 0;
-  background-color: theme-colors.$bg-color;
   height: 100%;
+  color: anno.$ink;
+  background-color: anno.$vignette-edge;
+  background-image:
+    linear-gradient(to bottom, rgba(anno.$vignette-dark, 0.7), transparent 150px),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .32 0 0 0 0 .2 0 0 0 0 .08 0 0 0 .2 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E"),
+    radial-gradient(
+      ellipse 90% 80% at 50% 38%,
+      anno.$parchment-light 0%,
+      anno.$parchment 40%,
+      #c7a76c 64%,
+      anno.$vignette-mid 90%,
+      anno.$vignette-edge 100%
+    );
+  background-attachment: fixed;
 
   @include mat.table-overrides(
     (

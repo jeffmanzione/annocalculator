@@ -1,3 +1,5 @@
+@use '../../../anno-palette' as anno;
+
 div {
   width: 100%;
   height: 100%;
@@ -5,5 +7,11 @@ div {
   textarea {
     width: 100%;
     height: 100%;
+    box-sizing: border-box;
+    padding: 8px;
+    color: anno.$ink;
+    background-color: anno.$parchment-lightest;
+    border: 1px solid rgba(anno.$ink, 0.45);
+    border-radius: 3px;
   }
 }

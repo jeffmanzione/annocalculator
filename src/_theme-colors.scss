@@ -4,6 +4,7 @@
 @use 'sass:color';
 @use 'sass:map';
 @use '@angular/material' as mat;
+@use 'anno-palette' as anno;
 
 // Note: Color palettes are generated from primary: #02c6ee, secondary: #ffbe00
 $_palettes: (
@@ -209,11 +210,11 @@ $tertiary-palette: map.merge(map.get($_palettes, tertiary), $_rest);
   );
 }
 
-$bg-color: rgb(238, 238, 245);
-$table-bg-color: rgb(245, 245, 245);
+$bg-color: anno.$parchment;
+$table-bg-color: anno.$parchment-light;
 
-$scrollbar-width: 5px;
+$scrollbar-width: 7px;
 $scrollbar-border-radius: 6px;
-$scrollbar-background-color: argb(0, 0, 0, 0);
-$scrollbar-thumb-color: gray;
-$scrollbar-thumb-hover-color: color.scale($scrollbar-thumb-color, $lightness: 30%);
+$scrollbar-background-color: rgba(52, 42, 34, 0.25);
+$scrollbar-thumb-color: anno.$parchment-deep;
+$scrollbar-thumb-hover-color: color.scale($scrollbar-thumb-color, $lightness: -15%);

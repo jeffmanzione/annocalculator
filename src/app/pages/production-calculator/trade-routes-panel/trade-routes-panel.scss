@@ -1,6 +1,7 @@
 @use 'sass:color';
 @use '@angular/material' as mat;
 @use '../../../../theme-colors';
+@use '../../../../anno-palette' as anno;
 
 // Don't cut off text.
 :host ::ng-deep {
@@ -45,7 +46,9 @@ table {
   }
 
   th {
-    background-color: color.scale(theme-colors.$table-bg-color, $lightness: -6%);
+    background: linear-gradient(to bottom, anno.$slate-light, anno.$slate);
+    color: anno.$parchment-lighter;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.45);
   }
 
   td {

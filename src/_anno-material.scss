@@ -1,0 +1,222 @@
+// Angular Material palettes and typography for the Anno 1800-inspired look.
+@use '@angular/material' as mat;
+@use 'anno-palette' as anno;
+
+// Slate blue: the game's selected-row / header-bar color.
+$slate-palette: (
+  50: #e8eaee,
+  100: #ccd0d9,
+  200: #aab0be,
+  300: #8a91a3,
+  400: #6b7388,
+  500: anno.$slate,
+  600: #474f5d,
+  700: anno.$slate-dark,
+  800: #2f353f,
+  900: #23272f,
+  A100: #c8cfe3,
+  A200: #98a4cc,
+  A400: #5f74b3,
+  A700: #3f5399,
+  contrast: (
+    50: rgba(0, 0, 0, 0.87),
+    100: rgba(0, 0, 0, 0.87),
+    200: rgba(0, 0, 0, 0.87),
+    300: rgba(0, 0, 0, 0.87),
+    400: white,
+    500: white,
+    600: white,
+    700: white,
+    800: white,
+    900: white,
+    A100: rgba(0, 0, 0, 0.87),
+    A200: rgba(0, 0, 0, 0.87),
+    A400: white,
+    A700: white,
+  ),
+);
+
+// Green: positive values, progress bars and checkmarks in the game.
+$green-palette: (
+  50: #eaf6e2,
+  100: #cbe8b8,
+  200: #a8d88b,
+  300: #84c75e,
+  400: #6abc3d,
+  500: anno.$green,
+  600: anno.$green-dark,
+  700: #327617,
+  800: #275d12,
+  900: #1a400b,
+  A100: #c6f0a8,
+  A200: #a2e276,
+  A400: #6ed12e,
+  A700: #4fb513,
+  contrast: (
+    50: rgba(0, 0, 0, 0.87),
+    100: rgba(0, 0, 0, 0.87),
+    200: rgba(0, 0, 0, 0.87),
+    300: rgba(0, 0, 0, 0.87),
+    400: rgba(0, 0, 0, 0.87),
+    500: rgba(0, 0, 0, 0.87),
+    600: white,
+    700: white,
+    800: white,
+    900: white,
+    A100: rgba(0, 0, 0, 0.87),
+    A200: rgba(0, 0, 0, 0.87),
+    A400: rgba(0, 0, 0, 0.87),
+    A700: white,
+  ),
+);
+
+$primary: mat.m2-define-palette($slate-palette);
+$accent: mat.m2-define-palette($green-palette, 600, 400, 800);
+$warn: mat.m2-define-palette(mat.$m2-red-palette);
+
+$body-level: mat.m2-define-typography-level(
+  $font-family: anno.$font-body,
+  $font-weight: 500,
+  $font-size: 12px,
+  $line-height: 14px,
+);
+
+$typography: mat.m2-define-typography-config(
+  $font-family: anno.$font-body,
+  $headline-5: mat.m2-define-typography-level(anno.$font-display, 24px, 700),
+  $headline-6: mat.m2-define-typography-level(anno.$font-display, 20px, 700),
+  $subtitle-1: mat.m2-define-typography-level(anno.$font-display, 16px, 700),
+  $body-1: $body-level,
+  $body-2: $body-level,
+);
+
+$theme: mat.m2-define-light-theme(
+  (
+    color: (
+      primary: $primary,
+      accent: $accent,
+      warn: $warn,
+    ),
+    typography: $typography,
+    density: -5,
+  )
+);
+
+// Component-level overrides, applied on top of the theme in styles.scss.
+@mixin component-overrides {
+  // Text fields and selects: inset parchment fields with ink borders.
+  @include mat.form-field-overrides(
+    (
+      outlined-outline-color: rgba(anno.$ink, 0.45),
+      outlined-hover-outline-color: anno.$ink,
+      outlined-focus-outline-color: anno.$slate,
+      outlined-label-text-color: anno.$ink-muted,
+      outlined-hover-label-text-color: anno.$ink,
+      outlined-focus-label-text-color: anno.$slate,
+      outlined-input-text-color: anno.$ink,
+      outlined-disabled-input-text-color: rgba(anno.$ink, 0.5),
+      outlined-disabled-outline-color: rgba(anno.$ink, 0.2),
+      outlined-disabled-label-text-color: rgba(anno.$ink, 0.5),
+    )
+  );
+
+  @include mat.select-overrides(
+    (
+      enabled-trigger-text-color: anno.$ink,
+      disabled-trigger-text-color: rgba(anno.$ink, 0.5),
+      placeholder-text-color: rgba(anno.$ink, 0.6),
+      enabled-arrow-color: anno.$ink-muted,
+      focused-arrow-color: anno.$slate,
+      panel-background-color: anno.$parchment-lighter,
+    )
+  );
+
+  @include mat.option-overrides(
+    (
+      label-text-color: anno.$ink,
+      selected-state-label-text-color: anno.$ink-strong,
+      selected-state-layer-color: rgba(anno.$slate, 0.18),
+      hover-state-layer-color: rgba(anno.$parchment-deep, 0.35),
+      focus-state-layer-color: rgba(anno.$parchment-deep, 0.45),
+    )
+  );
+
+  @include mat.checkbox-overrides(
+    (
+      unselected-icon-color: anno.$ink-muted,
+      unselected-hover-icon-color: anno.$ink,
+      selected-icon-color: anno.$green-dark,
+      selected-hover-icon-color: anno.$green-dark,
+      selected-focus-icon-color: anno.$green-dark,
+      selected-checkmark-color: white,
+      disabled-unselected-icon-color: rgba(anno.$ink, 0.3),
+      label-text-color: anno.$ink,
+    )
+  );
+
+  // Panels: translucent parchment so the page grain shows through.
+  @include mat.card-overrides(
+    (
+      elevated-container-color: rgba(anno.$parchment-lighter, 0.45),
+      elevated-container-shape: 3px,
+      subtitle-text-color: anno.$ink-muted,
+      title-text-font: anno.$font-display,
+      title-text-size: 22px,
+      title-text-weight: 700,
+      title-text-line-height: 26px,
+    )
+  );
+
+  @include mat.expansion-overrides(
+    (
+      container-background-color: rgba(anno.$parchment-lighter, 0.45),
+      container-text-color: anno.$ink,
+      container-shape: 3px,
+      header-text-color: anno.$ink-strong,
+      header-description-color: anno.$ink-muted,
+      header-indicator-color: anno.$ink-muted,
+      header-hover-state-layer-color: rgba(anno.$parchment-deep, 0.25),
+      header-focus-state-layer-color: rgba(anno.$parchment-deep, 0.3),
+    )
+  );
+
+  @include mat.dialog-overrides(
+    (
+      container-color: anno.$parchment-lighter,
+      subhead-color: anno.$ink-strong,
+      subhead-font: anno.$font-display,
+      subhead-size: 22px,
+      subhead-weight: 700,
+      subhead-line-height: 28px,
+      supporting-text-color: anno.$ink,
+      container-shape: 3px,
+    )
+  );
+
+  @include mat.icon-button-overrides(
+    (
+      icon-color: anno.$ink,
+    )
+  );
+
+  // Filled buttons: slate blue like the game's selected rows, with a cream label.
+  @include mat.button-overrides(
+    (
+      filled-container-color: anno.$slate,
+      filled-label-text-color: anno.$parchment-lighter,
+      filled-label-text-font: anno.$font-display,
+      filled-label-text-weight: 700,
+      text-label-text-color: anno.$ink-strong,
+      text-label-text-font: anno.$font-display,
+      text-label-text-weight: 700,
+    )
+  );
+
+  @include mat.tooltip-overrides(
+    (
+      container-color: anno.$plate,
+      supporting-text-color: anno.$plate-text,
+      supporting-text-font: anno.$font-body,
+    )
+  );
+}

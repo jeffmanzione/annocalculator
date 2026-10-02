@@ -22,9 +22,9 @@ export interface FormatFontSpec {
 }
 
 export const GREEN_RED_FONT_SPEC: FormatFontSpec = {
-  default: { color: 'rgba(0, 0, 0, 0.62)' },
-  positive: { color: 'rgb(0, 185, 56)' },
-  negative: { color: 'rgb(217, 48, 37)', weight: 'bold' },
+  default: { color: 'rgba(74, 47, 18, 0.7)' },
+  positive: { color: 'rgb(54, 118, 24)', weight: 'bold' },
+  negative: { color: 'rgb(176, 55, 44)', weight: 'bold' },
 };
 
 @Component({

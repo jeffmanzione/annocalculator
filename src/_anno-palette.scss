@@ -1,0 +1,42 @@
+// Colors for the Anno 1800-inspired look, sampled from the in-game Statistics
+// screens: aged parchment panels, a dark vignette, a dark olive title plate,
+// brown ink, slate-blue selection bars and green accents.
+//
+// These are original CSS values (no game artwork is used or shipped).
+
+// --- Parchment ---
+$parchment: #dcbc82; // main panel / card rows
+$parchment-light: #e9cd96; // active tab, raised surfaces
+$parchment-lighter: #efdcb0; // buttons, tooltips, toasts
+$parchment-lightest: #f6ead0; // text fields
+$parchment-dark: #cdac77; // idle tabs, table headers
+$parchment-shade: #b79662; // tab outlines, borders
+$parchment-deep: #a07f4d; // strong borders
+
+// --- Vignette (page edges) ---
+$vignette-mid: #8c744c;
+$vignette-edge: #655135;
+$vignette-dark: #342a22;
+
+// --- Title plate / dark chrome ---
+$plate: #332b19;
+$plate-light: #4a3f26;
+$plate-text: #fff2c7;
+$brass: #a8884a; // thin trim around the plate
+
+// --- Ink ---
+$ink: #4a2f12; // body text
+$ink-strong: #392c15; // headings
+$ink-muted: #7a5e35; // secondary text
+
+// --- Selection / emphasis ---
+$slate: #515969; // selected rows, header bars, primary buttons
+$slate-light: #6b7388;
+$slate-dark: #3b424e;
+$green: #55af25; // positive values, progress, checkboxes
+$green-dark: #3e8f1c;
+$red: #b0372c;
+
+// --- Fonts (loaded from Google Fonts in index.html) ---
+$font-display: 'Gelasio', Georgia, 'Times New Roman', serif;
+$font-body: 'Lora', Georgia, 'Times New Roman', serif;

@@ -100,9 +100,9 @@ describe('FormattedNumber', () => {
     });
 
     it('picks the positive, negative and default font by sign', async () => {
-      expect(await colorOf(5, GREEN_RED_FONT_SPEC)).toBe('rgb(0, 185, 56)');
-      expect(await colorOf(-5, GREEN_RED_FONT_SPEC)).toBe('rgb(217, 48, 37)');
-      expect(await colorOf(0, GREEN_RED_FONT_SPEC)).toBe('rgba(0, 0, 0, 0.62)');
+      expect(await colorOf(5, GREEN_RED_FONT_SPEC)).toBe('rgb(54, 118, 24)');
+      expect(await colorOf(-5, GREEN_RED_FONT_SPEC)).toBe('rgb(176, 55, 44)');
+      expect(await colorOf(0, GREEN_RED_FONT_SPEC)).toBe('rgba(74, 47, 18, 0.7)');
     });
 
     it('falls back to the default font when a sign has no entry', async () => {
