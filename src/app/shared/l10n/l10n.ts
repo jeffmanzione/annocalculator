@@ -46,6 +46,8 @@ export type L10nKey =
   | 'Imported'
   | 'Exported'
   | 'Base Production'
+  | 'Replaces'
+  | 'Specialist'
   | 'Uncovered Deficit Explanation'
   | 'Provides Electricity'
   | 'Yes'
@@ -383,6 +385,18 @@ export const localizations: Localizations = {
     De: 'Exportiert',
     Nl: 'Geëxporteerd',
     Zh: '出口',
+  },
+  Replaces: {
+    En: 'Replaces',
+    De: 'Ersetzt',
+    Nl: 'Vervangt',
+    Zh: '替代',
+  },
+  Specialist: {
+    En: 'Specialist',
+    De: 'Spezialist',
+    Nl: 'Specialist',
+    Zh: '专家',
   },
   'Base Production': {
     En: 'Base Production',

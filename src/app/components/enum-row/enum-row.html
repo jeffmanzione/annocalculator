@@ -10,6 +10,7 @@
         [src]="iconUrlLookupFn()(valueContainer.value)"
         [alt]="valueContainer"
         class="item-icon-small"
+        [class.glow]="iconGlowFn()(valueContainer.value)"
         [class.item-icon-right-padding]="showValues().length > 1" />
     }
     @if (showValues().length == 1) {

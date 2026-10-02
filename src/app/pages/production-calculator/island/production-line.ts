@@ -1,4 +1,5 @@
 import { StoreProductionLineController } from '../../../shared/mvc/world-store-controllers';
+import { InputGoodSource } from '../../../shared/mvc/world-store';
 import {
   StoreExtraGoodView,
   StoreProductionLineView,
@@ -69,6 +70,10 @@ export class ProductionLineControl {
 
   readonly inputGoods: Signal<Good[]> = computed(() => {
     return this.controller.inputGoods;
+  });
+  /** Each input good with the specialist that substituted it, if any. */
+  readonly inputGoodSources: Signal<InputGoodSource[]> = computed(() => {
+    return this.controller.inputGoodSources;
   });
   // Will always be a list of size 1 since production lines only output 1 good type.
   readonly outputGoods: Signal<Good[]> = computed(() => {
@@ -161,9 +166,7 @@ export class ProductionLineControl {
     this.controller.inRangeOfLocalDepartment =
       this.formGroup.controls['inRangeOfLocalDepartment'].getRawValue();
     this.controller.inRangeOfHaciendaFertiliserWorks =
-      this.formGroup.controls[
-        'inRangeOfHaciendaFertiliserWorks'
-      ].getRawValue();
+      this.formGroup.controls['inRangeOfHaciendaFertiliserWorks'].getRawValue();
     this.controller.culturalSets =
       this.formGroup.controls['culturalSets'].getRawValue();
   }

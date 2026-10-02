@@ -12,6 +12,16 @@
   margin: auto;
 }
 
+// A tight gold glow around an icon that stands in for something else (a
+// substituted input good). drop-shadow follows the icon's own outline, so the
+// glow hugs its shape. Gold on parchment is low contrast, so the warm layers are
+// doubled to saturate them (pale yellow core, then gold and amber), kept within
+// a few pixels so it stays obvious without spilling onto neighboring icons.
+.item-icon-small.glow {
+  filter: drop-shadow(0 0 2px #fff27a) drop-shadow(0 0 2px #fff27a) drop-shadow(0 0 4px #ffc400)
+    drop-shadow(0 0 5px #ffae00);
+}
+
 .item-icon-right-padding {
   padding-right: 6px;
 }

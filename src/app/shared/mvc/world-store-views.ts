@@ -36,7 +36,12 @@ import {
   TradeRoute,
   TradeRouteId,
 } from './models';
-import { ProductionLineEntity, WorldStore } from './world-store';
+import {
+  InputGoodSource,
+  ProductionLineEntity,
+  resolveInputGoods,
+  WorldStore,
+} from './world-store';
 
 /**
  * Read-only, store-backed views of the world's entities, holding the app's
@@ -163,6 +168,14 @@ export class StoreProductionLineView implements ProductionLineEntity {
 
   get inputGoods(): Good[] {
     return this.model.inputGoods ?? DEFAULT_PRODUCTION_LINE_MODEL.inputGoods!;
+  }
+
+  /**
+   * `inputGoods` with, for each, whether a specialist substituted it and which
+   * one (see resolveInputGoods).
+   */
+  get inputGoodSources(): InputGoodSource[] {
+    return resolveInputGoods(this.building, this.model.items);
   }
 
   get good(): Good {

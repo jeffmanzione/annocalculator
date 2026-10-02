@@ -6,7 +6,7 @@ import {
   Region,
 } from '../game/enums';
 import { World } from './models';
-import { arrayEqualsAsSet, WorldStore } from './world-store';
+import { arrayEqualsAsSet, resolveInputGoods, WorldStore } from './world-store';
 
 const line = (overrides: object = {}) => ({
   building: ProductionBuilding.Bakery,
@@ -272,5 +272,90 @@ describe('WorldStore mutations', () => {
     const store = WorldStore.fromWorld(sampleWorld());
     store.setTradeUnionBonus(12);
     expect(store.toWorld().tradeUnionBonus).toBe(12);
+  });
+});
+
+describe('resolveInputGoods', () => {
+  it("is the building's normal inputs, none substituted, without items", () => {
+    expect(resolveInputGoods(ProductionBuilding.CabAssemblyLine, [])).toEqual([
+      { good: Good.SteamMotors },
+      { good: Good.Chassis },
+    ]);
+    expect(
+      resolveInputGoods(ProductionBuilding.CabAssemblyLine, undefined),
+    ).toHaveLength(2);
+  });
+
+  it('records which item replaced which good', () => {
+    expect(
+      resolveInputGoods(ProductionBuilding.CabAssemblyLine, [
+        Item.MariaMaravilla,
+      ]),
+    ).toEqual([
+      {
+        good: Good.Motor,
+        replaces: Good.SteamMotors,
+        item: Item.MariaMaravilla,
+      },
+      { good: Good.Chassis },
+    ]);
+  });
+
+  it('can replace a different good with a different item', () => {
+    expect(resolveInputGoods(ProductionBuilding.Bakery, [Item.Baker])).toEqual([
+      { good: Good.Grain, replaces: Good.Flour, item: Item.Baker },
+    ]);
+  });
+
+  it("credits Susannah, whose Filaments win over Maria's Motors, in either order", () => {
+    for (const items of [
+      [Item.SusannahtheSteamEngineer, Item.MariaMaravilla],
+      [Item.MariaMaravilla, Item.SusannahtheSteamEngineer],
+    ]) {
+      expect(
+        resolveInputGoods(ProductionBuilding.CabAssemblyLine, items)[0],
+      ).toEqual({
+        good: Good.Filaments,
+        replaces: Good.SteamMotors,
+        item: Item.SusannahtheSteamEngineer,
+      });
+    }
+  });
+
+  it('is empty for a building that does not exist', () => {
+    expect(resolveInputGoods(ProductionBuilding.Unknown, [Item.Baker])).toEqual(
+      [],
+    );
+  });
+
+  it('always agrees with the stored inputGoods after an edit', () => {
+    const store = WorldStore.fromWorld({
+      islands: [
+        {
+          id: 1,
+          name: 'I',
+          productionLines: [
+            {
+              id: 10,
+              building: ProductionBuilding.CabAssemblyLine,
+              good: Good.SteamCarriages,
+              numBuildings: 1,
+            },
+          ],
+        },
+      ],
+      tradeRoutes: [],
+    });
+    for (const items of [
+      [],
+      [Item.MariaMaravilla],
+      [Item.SusannahtheSteamEngineer, Item.MariaMaravilla],
+    ]) {
+      store.updateProductionLine(10, { hasTradeUnion: true, items });
+      const line = store.productionLines().get(10)!;
+      expect(line.inputGoods).toEqual(
+        resolveInputGoods(line.building, line.items).map((s) => s.good),
+      );
+    }
   });
 });

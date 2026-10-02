@@ -36,6 +36,7 @@ Starts from the default world in a fresh browser profile and checks, among other
 
 - renaming an island and editing a building count persist to localStorage, and the summary panel updates;
 - adding an island keeps the existing `<island>` components alive (not destroyed and recreated), and the new island's edits persist;
+- a specialist that substitutes an input good (the Baker swapping a Bakery's Flour for Grain) puts a glow on that icon and explains it in the tooltip, and taking the specialist off removes the glow;
 - trade-route dropdowns: origin/destination exclude each other, pick up islands added or renamed elsewhere, list the origin island's goods; editing and then deleting a route works;
 - removing the last island and a middle island removes the right one by id, and leaves the others' components alive;
 - reloading restores the saved world; the trade-union bonus persists; no store-internal fields (`islandId`) leak into the saved JSON;

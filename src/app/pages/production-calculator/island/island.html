@@ -78,9 +78,11 @@
           </th>
           <td mat-cell *matCellDef="let element" class="goods-field">
             <enum-row
-              [values]="element.inputGoods()"
-              [iconUrlLookupFn]="lookupGoodIconUrl"
-              [tooltip]="goodTooltip"></enum-row>
+              [values]="element.inputGoodSources()"
+              [iconUrlLookupFn]="lookupInputGoodIconUrl"
+              [displayTextTransformer]="inputGoodName"
+              [iconGlowFn]="isSubstitutedInput"
+              [tooltip]="inputGoodTooltip"></enum-row>
           </td>
         </ng-container>
         <ng-container matColumnDef="good">
@@ -282,6 +284,9 @@
 
 <ng-template #goodTooltip let-value="value">
   <simple-tooltip [value]="value" [iconUrlLookupFn]="lookupGoodIconUrl"></simple-tooltip>
+</ng-template>
+<ng-template #inputGoodTooltip let-value="value">
+  <input-good-tooltip [value]="value"></input-good-tooltip>
 </ng-template>
 <ng-template #haciendaTooltip let-value="value">
   <hacienda-tooltip [value]="value"></hacienda-tooltip>

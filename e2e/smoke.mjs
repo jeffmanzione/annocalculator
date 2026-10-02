@@ -66,6 +66,30 @@ check(
 );
 check('summary panel updates after edit', (await page.locator('summary-panel').innerText()) !== summaryTextBefore);
 
+// 3b. A specialist that substitutes an input good: glow on the icon, explained in the tooltip.
+{
+  const bakeryRow = islands().nth(0).locator('tr.mat-mdc-row', { has: page.locator('enum-select', { hasText: 'Bakery' }) }).first();
+  const inputIcons = () => bakeryRow.locator('td.mat-column-inputGoods img.item-icon-small');
+  check('a normal input has no glow', (await inputIcons().first().evaluate((i) => i.classList.contains('glow'))) === false);
+  const toggleBaker = async () => {
+    await bakeryRow.locator('td.mat-column-items mat-select').click();
+    await settle();
+    await page.locator('mat-option').filter({ hasText: /^\s*Baker\s*$/ }).click();
+    await page.keyboard.press('Escape');
+    await settle();
+  };
+  await toggleBaker(); // Baker swaps the Bakery's Flour for Grain
+  check('a substituted input gets a glow', await inputIcons().first().evaluate((i) => i.classList.contains('glow')));
+  await bakeryRow.locator('td.mat-column-inputGoods .item-container').first().hover();
+  await page.waitForTimeout(800);
+  const subTip = (await page.locator('input-good-tooltip').innerText()).replace(/\s+/g, ' ');
+  check('tooltip names the good, what it replaces and the specialist', /Grain.*Replaces.*Flour.*Specialist.*Baker/.test(subTip), subTip);
+  await page.mouse.move(5, 5);
+  await settle();
+  await toggleBaker(); // take the Baker off again
+  check('removing the specialist removes the glow', (await inputIcons().first().evaluate((i) => i.classList.contains('glow'))) === false);
+}
+
 // 4. Add an island -> existing islands keep their component instances; new island edits persist.
 await page.getByRole('button', { name: 'Add Island' }).click();
 await settle();

@@ -64,6 +64,8 @@ import { CulturalSetTooltip } from './tooltips/cultural-set/cultural-set-tooltip
 import { L10nText } from '../../../components/text/text';
 import { PolicyTooltip } from './tooltips/policy/policy-tooltip';
 import { HaciendaTooltip } from './tooltips/hacienda/hacienda-tooltip';
+import { InputGoodTooltip } from './tooltips/input-good/input-good-tooltip';
+import { InputGoodSource } from '../../../shared/mvc/world-store';
 
 @Component({
   selector: 'island',
@@ -90,6 +92,7 @@ import { HaciendaTooltip } from './tooltips/hacienda/hacienda-tooltip';
     L10nText,
     PolicyTooltip,
     HaciendaTooltip,
+    InputGoodTooltip,
   ],
   templateUrl: './island.html',
   styleUrl: './island.scss',
@@ -112,8 +115,7 @@ export class Island implements OnInit {
     const region = this.controller().region;
     return Object.values(ProductionBuilding).filter(
       (pb) =>
-        (lookupProductionInfo(pb)?.allowedRegions?.indexOf(region) ?? -1) !=
-        -1,
+        (lookupProductionInfo(pb)?.allowedRegions?.indexOf(region) ?? -1) != -1,
     );
   });
 
@@ -168,8 +170,8 @@ export class Island implements OnInit {
     new Map<ProductionLineId, ProductionLineControl>(),
   );
 
-  readonly productionLineRows: Signal<ProductionLineControl[]> = computed(
-    () => Array.from(this.productionLines_().values()),
+  readonly productionLineRows: Signal<ProductionLineControl[]> = computed(() =>
+    Array.from(this.productionLines_().values()),
   );
 
   get multipleSelectLimit(): number {
@@ -294,6 +296,15 @@ export class Island implements OnInit {
   lookupBuildingIconUrl(building: ProductionBuilding | null): string {
     return lookupBuildingIconUrl(building ?? ProductionBuilding.Unknown);
   }
+
+  // Inputs are shown from their InputGoodSource so a substituted good can be
+  // marked and explained; these adapt that to enum-row's per-value callbacks.
+  readonly lookupInputGoodIconUrl = (source: InputGoodSource | null): string =>
+    lookupGoodIconUrl(source?.good ?? Good.Unknown);
+  readonly inputGoodName = (source: InputGoodSource | null): string =>
+    source?.good ?? '';
+  readonly isSubstitutedInput = (source: InputGoodSource | null): boolean =>
+    !!source?.replaces;
 
   lookupGoodIconUrl(good: Good | null): string {
     return lookupGoodIconUrl(good ?? Good.Unknown);

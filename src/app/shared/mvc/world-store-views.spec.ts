@@ -1,6 +1,7 @@
 import {
   DepartmentOfLaborPolicy,
   Good,
+  Item,
   ProductionBuilding,
 } from '../game/enums';
 import { defaultWorld } from '../../pages/production-calculator/default-world';
@@ -256,5 +257,40 @@ describe('goods per minute constituents', () => {
     // The Bakery's Fine Cake Decorator makes Chocolate, which is not Bread.
     const bakery = lines().find((pl) => pl.id === 14)!;
     expect(bakery.goodsProducedPerMinuteConstituents.length).toBe(1);
+  });
+});
+
+describe('inputGoodSources', () => {
+  it('exposes each input with the specialist that substituted it', () => {
+    const world = viewOf({
+      islands: [
+        {
+          id: 1,
+          name: 'Isle',
+          productionLines: [
+            {
+              id: 1,
+              building: ProductionBuilding.Bakery,
+              good: Good.Bread,
+              numBuildings: 1,
+              hasTradeUnion: true,
+              items: [Item.Baker],
+            },
+            {
+              id: 2,
+              building: ProductionBuilding.Bakery,
+              good: Good.Bread,
+              numBuildings: 1,
+            },
+          ],
+        },
+      ],
+      tradeRoutes: [],
+    });
+    const [withBaker, plain] = world.islands[0].productionLines;
+    expect(withBaker.inputGoodSources).toEqual([
+      { good: Good.Grain, replaces: Good.Flour, item: Item.Baker },
+    ]);
+    expect(plain.inputGoodSources).toEqual([{ good: Good.Flour }]);
   });
 });

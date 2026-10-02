@@ -14,7 +14,7 @@ import {
   TradeRouteId,
   World,
 } from './models';
-import { Good } from '../game/enums';
+import { Good, Item, ProductionBuilding } from '../game/enums';
 import { lookupItemInfo, lookupProductionInfo } from '../game/facts';
 
 // Helpers below were moved here from controllers.ts (now deleted), their
@@ -76,10 +76,64 @@ export interface ProductionLineEntity extends ProductionLine {
 }
 
 /**
+ * One input good of a production line, with how it came to be that good. An
+ * input is a substitution when a specialist (item) swapped it for the building's
+ * normal one: `replaces` is the good it stands in for and `item` the specialist
+ * responsible. Both are absent for the building's normal inputs.
+ */
+export interface InputGoodSource {
+  good: Good;
+  replaces?: Good;
+  item?: Item;
+}
+
+/**
+ * The input goods of a `building` with the given `items` slotted in, and for
+ * each substituted one, what it replaces and which item did it. Items can
+ * replace some of the building's normal input goods -- see
+ * resolveDuplicateReplacementGoods for what happens when two items replace the
+ * same one. Goods that resolve to Unknown are left out.
+ */
+export function resolveInputGoods(
+  building: ProductionBuilding,
+  items: Item[] | undefined,
+): InputGoodSource[] {
+  const productionInfo = lookupProductionInfo(building);
+  if (!productionInfo) {
+    return [];
+  }
+
+  // Keyed by the building's normal input good; the value is what it became.
+  const resolved = new Map<Good, InputGoodSource>(
+    productionInfo.inputGoods?.map((ig) => [ig, { good: ig }]),
+  );
+  for (const item of items ?? []) {
+    const itemInfo = lookupItemInfo(item)!;
+    for (const replacementGood of itemInfo.replacementGoods ?? []) {
+      const current = resolved.get(replacementGood.from);
+      const good = resolveDuplicateReplacementGoods(
+        current?.good as Good,
+        replacementGood.to,
+      );
+      // If the earlier item wins (e.g. Susannah's Filaments over Maria's
+      // Motors), it stays the one credited.
+      resolved.set(
+        replacementGood.from,
+        good === current?.good
+          ? current
+          : { good, replaces: replacementGood.from, item },
+      );
+    }
+  }
+
+  return [...resolved.values()].filter((source) => source.good != Good.Unknown);
+}
+
+/**
  * Ported from the old ProductionLineController.updateGoods_() (in the now-deleted controllers.ts):
  * recomputes `good`/`inputGoods` from `building` (+ `items`, which can
  * replace some of the building's normal input goods -- see
- * resolveDuplicateReplacementGoods). This is a real, eager side effect of
+ * resolveInputGoods). This is a real, eager side effect of
  * changing `building` or `items`, not an export-minimization nicety, so
  * updateProductionLine() below calls this whenever a patch touches either
  * field, rather than deferring it to toWorld() the way default-clearing is.
@@ -92,27 +146,9 @@ function computeDerivedGoods(
     return { good: Good.Unknown, inputGoods: [] };
   }
 
-  const inputGoodMappings = new Map<Good, Good>(
-    productionInfo.inputGoods?.map((ig) => [ig, ig]),
-  );
-  for (const item of pl.items ?? []) {
-    const itemInfo = lookupItemInfo(item)!;
-    for (const replacementGood of itemInfo.replacementGoods ?? []) {
-      inputGoodMappings.set(
-        replacementGood.from,
-        resolveDuplicateReplacementGoods(
-          inputGoodMappings.get(replacementGood.from)!,
-          replacementGood.to,
-        ),
-      );
-    }
-  }
-
   return {
     good: productionInfo.good,
-    inputGoods: [...inputGoodMappings.values()].filter(
-      (g) => g != Good.Unknown,
-    ),
+    inputGoods: resolveInputGoods(pl.building, pl.items).map((s) => s.good),
   };
 }
 
@@ -166,7 +202,11 @@ export class WorldStore {
       // ProductionLineEntity side (islandId), and toWorld() re-derives this
       // array from the productionLines map at save time. Leaving a stale
       // copy here would let the two get out of sync.
-      islands.set(islandId, { ...islandRest, id: islandId, productionLines: [] });
+      islands.set(islandId, {
+        ...islandRest,
+        id: islandId,
+        productionLines: [],
+      });
 
       for (const productionLineModel of rawProductionLines) {
         const productionLineId =
@@ -184,7 +224,9 @@ export class WorldStore {
     const tradeRoutes = new Map<TradeRouteId, TradeRoute>();
     for (const tradeRouteModel of world.tradeRoutes) {
       const tradeRouteId =
-        tradeRouteModel.id >= 0 ? tradeRouteModel.id : generatePseudorandomInt();
+        tradeRouteModel.id >= 0
+          ? tradeRouteModel.id
+          : generatePseudorandomInt();
       tradeRoutes.set(tradeRouteId, { ...tradeRouteModel, id: tradeRouteId });
     }
 

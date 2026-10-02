@@ -7,6 +7,7 @@ import {
   Boost,
   CulturalSet,
   DepartmentOfLaborPolicy,
+  Good,
   Item,
   ProductionBuilding,
 } from '../../../../shared/game/enums';
@@ -15,6 +16,7 @@ import { ProductionBuildingTooltip } from './building/building-tooltip';
 import { CulturalSetTooltip } from './cultural-set/cultural-set-tooltip';
 import { HaciendaTooltip } from './hacienda/hacienda-tooltip';
 import { ItemTooltip } from './item/item-tooltip';
+import { InputGoodTooltip } from './input-good/input-good-tooltip';
 import { PolicyTooltip } from './policy/policy-tooltip';
 
 const render = async <T>(type: Type<EnumTooltip<T>>, value: T) => {
@@ -142,6 +144,75 @@ describe('enum tooltips', () => {
         'Hacienda Fertilizer Works',
       );
       expect(text()).toContain('Dung');
+    });
+  });
+
+  describe('input good', () => {
+    it('shows just the good for a normal input', async () => {
+      const { text, fixture } = await render(InputGoodTooltip, {
+        good: Good.Flour,
+      });
+      expect(text()).toBe('Flour');
+      expect(
+        (fixture.nativeElement as HTMLElement).querySelector('.substitution'),
+      ).toBeNull();
+      expect(
+        (fixture.nativeElement as HTMLElement).querySelector(
+          '.good-icon-big.glow',
+        ),
+      ).toBeNull();
+    });
+
+    // The label and value of each "Replaces" / "Specialist" row, e.g. ['Replaces', 'Flour'].
+    const rows = (el: HTMLElement) =>
+      [...el.querySelectorAll('.substitution-row')].map((row) => [
+        row.querySelector('.label')!.textContent!.trim(),
+        row.querySelector('span:not(.label)')!.textContent!.trim(),
+      ]);
+
+    it('explains a substitution: what it replaces and which specialist did it', async () => {
+      const { fixture } = await render(InputGoodTooltip, {
+        good: Good.Grain,
+        replaces: Good.Flour,
+        item: Item.Baker,
+      });
+      const el = fixture.nativeElement as HTMLElement;
+      expect(el.querySelector('.good-name')!.textContent).toBe('Grain');
+      expect(rows(el)).toEqual([
+        ['Replaces', 'Flour'],
+        ['Specialist', 'Baker'],
+      ]);
+      // The good, the good it replaces and the specialist each get an icon.
+      expect(el.querySelectorAll('img').length).toBe(3);
+      expect(el.querySelector('.good-icon-big.glow')).not.toBeNull();
+    });
+
+    it('localizes its labels', async () => {
+      const { fixture } = await render(InputGoodTooltip, {
+        good: Good.Grain,
+        replaces: Good.Flour,
+        item: Item.Baker,
+      });
+      TestBed.inject(L10nService).setLanguage(Language.De);
+      await fixture.whenStable();
+      expect(rows(fixture.nativeElement as HTMLElement)).toEqual([
+        ['Ersetzt', 'Flour'],
+        ['Spezialist', 'Baker'],
+      ]);
+    });
+
+    it('re-renders when the substitution changes', async () => {
+      const { text, fixture } = await render(InputGoodTooltip, {
+        good: Good.Flour,
+      });
+      fixture.componentRef.setInput('value', {
+        good: Good.Filaments,
+        replaces: Good.SteamMotors,
+        item: Item.SusannahtheSteamEngineer,
+      });
+      await fixture.whenStable();
+      expect(text()).toContain('Filaments');
+      expect(text()).toContain('Susannah the Steam Engineer');
     });
   });
 });

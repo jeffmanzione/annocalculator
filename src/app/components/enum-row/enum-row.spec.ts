@@ -72,6 +72,42 @@ describe('EnumRow', () => {
     expect(el().querySelector('.item-text-container')).toBeNull();
   });
 
+  describe('glow', () => {
+    const imgs = () => [...el().querySelectorAll('img')] as HTMLImageElement[];
+    const lookup = (v: string | null) => `/icons/${v}.png`;
+
+    it('puts no glow on any icon by default', async () => {
+      await render({ values: ['a', 'b'], iconUrlLookupFn: lookup });
+      expect(imgs().map((i) => i.classList.contains('glow'))).toEqual([
+        false,
+        false,
+      ]);
+    });
+
+    it('puts a glow only on the values the callback selects', async () => {
+      await render({
+        values: ['a', 'b', 'c'],
+        iconUrlLookupFn: lookup,
+        iconGlowFn: (v: string | null) => v === 'b',
+      });
+      expect(imgs().map((i) => i.classList.contains('glow'))).toEqual([
+        false,
+        true,
+        false,
+      ]);
+    });
+
+    it('works for a single value shown with its name too', async () => {
+      await render({
+        values: ['a'],
+        iconUrlLookupFn: lookup,
+        iconGlowFn: () => true,
+      });
+      expect(imgs()[0].classList.contains('glow')).toBe(true);
+      expect(el().textContent!.trim()).toBe('a');
+    });
+  });
+
   describe('tooltip state', () => {
     const shown = () =>
       fixture.componentInstance.showValues().map((v) => v.shouldShowOverlay);

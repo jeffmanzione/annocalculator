@@ -32,6 +32,8 @@ export class EnumRow<T> implements AfterViewChecked {
   }
   iconUrlLookupFn = input<(_: T | null) => string>((_: T | null) => '');
   displayTextTransformer = input<(value: T | null) => string>();
+  /** Marks values whose icon should get a glow, e.g. a substituted input good. */
+  iconGlowFn = input<(_: T | null) => boolean>(() => false);
 
   showValues = computed(() =>
     this.values().map((v) => ({ value: v, shouldShowOverlay: false })),
