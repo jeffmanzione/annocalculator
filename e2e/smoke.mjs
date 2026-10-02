@@ -249,6 +249,22 @@ check(
   JSON.stringify({ ...s, palacePrestigeLevel: beforeReload.palacePrestigeLevel }) === JSON.stringify(beforeReload),
 );
 
+// The count's arrows step it by one and stop at zero.
+{
+  const cell = islands().nth(0).locator('.building-count').first();
+  const count = cell.locator('input[aria-label="numBuildings"]');
+  await count.fill('2');
+  await cell.locator('.count-step-up').click();
+  check('count up arrow adds one', (await count.inputValue()) === '3');
+  await cell.locator('.count-step-down').click();
+  await cell.locator('.count-step-down').click();
+  check('count down arrow subtracts one', (await count.inputValue()) === '1');
+  await cell.locator('.count-step-down').click();
+  await cell.locator('.count-step-down').click();
+  check('count down arrow stops at zero', (await count.inputValue()) === '0');
+  await settle();
+}
+
 // 9. Minimization still applies: no empty arrays / default fields stored.
 const raw = JSON.stringify(s);
 check('no islandId leaks into saved JSON', !raw.includes('islandId'));

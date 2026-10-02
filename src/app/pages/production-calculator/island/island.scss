@@ -162,9 +162,58 @@ table.production-lines-table {
   // The count column holds a text field, whose intrinsic width is far wider
   // than a building count, so it gets an explicit size.
   @include header-and-cell(numBuildings) {
-    width: 3.5rem;
-    min-width: 3.5rem;
-    max-width: 3.5rem;
+    width: 5rem;
+    min-width: 5rem;
+    max-width: 5rem;
+  }
+
+  // Up/down arrows stacked beside the count, themed like the dropdown arrows
+  // (the browser's own spinner paints a white box over the parchment).
+  input[aria-label='numBuildings'] {
+    appearance: textfield;
+    -moz-appearance: textfield;
+
+    &::-webkit-inner-spin-button,
+    &::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+  }
+
+  .count-steppers {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-right: 6px;
+  }
+
+  .count-step {
+    all: unset;
+    box-sizing: border-box;
+    width: 16px;
+    height: 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &::after {
+      content: '';
+      border-left: 5px solid transparent;
+      border-right: 5px solid transparent;
+    }
+
+    &-up::after {
+      border-bottom: 6px solid anno.$ink-muted;
+    }
+
+    &-down::after {
+      border-top: 6px solid anno.$ink-muted;
+    }
+
+    &:hover::after {
+      filter: brightness(0.6);
+    }
   }
 
   // --- Extra goods (nested table) ---
