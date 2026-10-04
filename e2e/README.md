@@ -60,6 +60,15 @@ node e2e/label-edges.mjs path/to/browser   # or any other build
 
 A floating field label sits in a small plate across the field's top border. A one-pixel line at a fractional position can vanish from one side on some displays, so this renders the page at display scales from 1x to 3x (including 1.25x and 1.5x) and reads the actual pixels where the plate stands against the panel, requiring a clearly darker edge on both the left and the right.
 
+## `npm run e2e:tracking` — is the visit counting wired up?
+
+```sh
+npm run e2e:tracking                    # uses dist/annocalculator/browser
+node e2e/tracking.mjs path/to/browser   # or any other build
+```
+
+Serves the built app to the browser as `https://annocalculator.com` (the only address the counter runs on) and replaces GoatCounter's script with a stub that records what it is asked to count, so nothing is ever sent and no test visits reach the real dashboard. Checks that the script is loaded and configured for the right site, that the first page and then each page navigated to are reported by path, and that a visitor sending Do Not Track or Global Privacy Control, or running the app from a local address, is not counted.
+
 ## `npm run e2e:diff -- <baseline> <candidate>` — did a refactor change what's saved?
 
 ```sh

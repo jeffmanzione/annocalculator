@@ -162,6 +162,7 @@ npx ng build --configuration development
 npm run e2e:smoke                          # does the app still work end to end?
 npm run e2e:layout                         # do the tables and field labels fit in every language and width?
 npm run e2e:label-edges                    # do field label plates show both edges at different display scales?
+npm run e2e:tracking                       # is the visit counting wired up (without sending any visits)?
 ```
 
 See [`e2e/README.md`](e2e/README.md) for what each one checks. Rebuild before running them: they refuse to test a build that is older than the source.
@@ -327,6 +328,7 @@ aws cloudfront create-invalidation --distribution-id E212U9B15HNWT6 --paths "/*"
 The live site counts visits with [GoatCounter](https://www.goatcounter.com): page views and the visitor's country, with no cookies and no personal data. The counts are on the dashboard at https://annocalculator.goatcounter.com.
 
 - The code is in `src/app/services/analytics/analytics.ts`. It only runs on annocalculator.com, so local development, previews and the e2e checks are never counted, and it skips visitors who send Do Not Track or Global Privacy Control.
+- `npm run e2e:tracking` checks the wiring without sending any real visits (see [`e2e/README.md`](e2e/README.md)).
 - The dashboard is set up once at goatcounter.com: sign up with the site code `annocalculator` (the `GOATCOUNTER_CODE` constant) and the domain `annocalculator.com`. If you ever use a different code, change the constant.
 - The About page tells visitors about this, in all four languages. Update that text if the tracking ever changes.
 
