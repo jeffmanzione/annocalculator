@@ -16,7 +16,7 @@ describe('AboutPage', () => {
     return { fixture, el: fixture.nativeElement as HTMLElement };
   };
 
-  it('has the six sections, each with a heading', async () => {
+  it('has the seven sections, each with a heading', async () => {
     const { el } = await setup();
     expect(
       [...el.querySelectorAll('h2')].map((h) =>
@@ -27,8 +27,10 @@ describe('AboutPage', () => {
       'What This Tool Does',
       'Why It Exists',
       'Save Your Work',
+      'Privacy',
       'Feedback',
     ]);
+    expect(el.textContent).toContain('GoatCounter');
     expect(el.querySelector('.disclaimer')!.textContent).toContain(
       'not affiliated with',
     );

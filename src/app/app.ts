@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { AppBar } from './components/app-bar/app-bar';
+import { Analytics } from './services/analytics/analytics';
 
 import localeDe from '@angular/common/locales/de';
 import localeNl from '@angular/common/locales/nl';
@@ -20,11 +21,15 @@ registerLocaleData(localeZhHans);
   styleUrl: './app.scss',
 })
 export class App implements OnInit {
+  private readonly analytics_ = inject(Analytics);
+
   ngOnInit(): void {
     // Strip 'www.' from the URL. This is a personal preference of mine.
     const location = globalThis.location;
     if (location.hostname.startsWith(WWW_PREFIX)) {
       location.hostname = location.hostname.slice(WWW_PREFIX.length);
+      return; // The page is reloading on the real address; count the visit there.
     }
+    this.analytics_.start();
   }
 }

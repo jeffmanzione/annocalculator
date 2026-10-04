@@ -87,6 +87,8 @@ export type L10nKey =
   | 'About Why Text'
   | 'About Save Heading'
   | 'About Save Text'
+  | 'About Privacy Heading'
+  | 'About Privacy Text'
   | 'About Feedback Heading'
   | 'About Feedback Intro'
   | 'About Feedback Link'
@@ -637,6 +639,18 @@ export const localizations: Localizations = {
     De: 'Die Seite nutzt den lokalen Browserspeicher, damit deine Welt zwischen Besuchen und beim Neuladen der Seite erhalten bleibt. Beachte, dass deine Welt verloren geht, wenn du die Websitedaten löschst. Um sie zu behalten, kannst du deine Produktionsdaten als JSON exportieren und später wieder importieren, um genau dort weiterzumachen, wo du aufgehört hast. Außerdem gibt es eine manuelle Bearbeitungsfunktion für alle, die ihre Daten direkt anpassen oder teilen möchten ... aus welchem Grund auch immer.',
     Nl: 'De site gebruikt de lokale opslag van je browser, zodat je wereld bewaard blijft tussen bezoeken en na het herladen van de pagina. Let op: je wereld gaat verloren als je de sitegegevens wist. Om je wereld te bewaren kun je je productiegegevens als JSON exporteren en later weer importeren om precies verder te gaan waar je gebleven was. Er is ook een functie voor handmatig bewerken voor wie zijn gegevens rechtstreeks wil aanpassen of delen... om wat voor reden dan ook.',
     Zh: '本站使用浏览器本地存储，因此你的世界会在多次访问和刷新页面之间保留。请注意，清除网站数据会导致你的世界丢失。若想长期保存，可以将生产数据导出为 JSON，之后再导入，从上次中断的地方继续。另外还提供手动编辑功能，供想要直接调整或分享数据的用户使用……不管出于什么原因。',
+  },
+  'About Privacy Heading': {
+    En: 'Privacy',
+    De: 'Datenschutz',
+    Nl: 'Privacy',
+    Zh: '隐私',
+  },
+  'About Privacy Text': {
+    En: 'Your world stays in your browser and is never sent to a server. To see roughly how many people use the site and which countries they visit from, it uses GoatCounter, a privacy-friendly visit counter: no cookies, no personal data, no tracking across sites. If your browser sends Do Not Track, your visit is not counted.',
+    De: 'Deine Welt bleibt in deinem Browser und wird nie an einen Server gesendet. Um ungefähr zu erfahren, wie viele Menschen die Seite nutzen und aus welchen Ländern sie besucht wird, verwendet sie GoatCounter, einen datenschutzfreundlichen Besucherzähler: keine Cookies, keine personenbezogenen Daten, kein seitenübergreifendes Tracking. Sendet dein Browser „Do Not Track“, wird dein Besuch nicht gezählt.',
+    Nl: 'Je wereld blijft in je browser en wordt nooit naar een server verstuurd. Om ongeveer te zien hoeveel mensen de site gebruiken en uit welke landen, gebruikt de site GoatCounter, een privacyvriendelijke bezoekersteller: geen cookies, geen persoonsgegevens, geen tracking over sites heen. Als je browser Do Not Track verstuurt, wordt je bezoek niet geteld.',
+    Zh: '你的世界保存在你的浏览器中，不会发送到任何服务器。为了大致了解有多少人使用本站、来自哪些国家，本站使用 GoatCounter 这一注重隐私的访问计数器：不使用 Cookie，不收集个人数据，也不会跨网站追踪。如果你的浏览器发送了“请勿跟踪”（Do Not Track），你的访问不会被计入。',
   },
   'About Feedback Heading': {
     En: 'Feedback',
