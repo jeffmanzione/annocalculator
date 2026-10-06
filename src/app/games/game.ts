@@ -1,4 +1,5 @@
 import { InjectionToken } from '@angular/core';
+import { Language } from '../shared/l10n/l10n';
 import {
   SummaryIslandSource,
   SummaryProductionLineSource,
@@ -19,6 +20,9 @@ export interface GameDefinition {
   readonly goods: readonly GoodId[];
 
   goodIconUrl(good: GoodId | null | undefined): string;
+
+  /** The good's name in the language shown (the game's own name for it, in the languages the game has). */
+  goodName(good: GoodId | null | undefined, language: Language): string;
 
   /**
    * Goods a production line consumes on top of its recipe, per minute (positive numbers). Anno 1800's

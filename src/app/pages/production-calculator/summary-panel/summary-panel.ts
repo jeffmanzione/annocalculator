@@ -22,6 +22,7 @@ import {
   GREEN_RED_FONT_SPEC,
 } from '../../../components/formatted-number/formatted-number';
 import { GAME, GoodId } from '../../../games/game';
+import { L10nService } from '../../../services/l10n/l10n';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSort, MatSortModule } from '@angular/material/sort';
@@ -73,6 +74,7 @@ export class SummaryPanel implements OnInit, AfterViewInit {
 
   private readonly changeDetector_ = inject(ChangeDetectorRef);
   private readonly game_ = inject(GAME);
+  private readonly l10n_ = inject(L10nService);
 
   readonly tableData = new MatTableDataSource<GoodSummaryRow>();
 
@@ -116,7 +118,7 @@ export class SummaryPanel implements OnInit, AfterViewInit {
     ): string | number => {
       switch (sortHeaderId) {
         case 'good':
-          return data.good.toLocaleLowerCase();
+          return this.goodName(data.good).toLocaleLowerCase();
         case 'total-production-per-min':
           return data.totalProductionPerMin;
         case 'net-production-per-min':
@@ -151,6 +153,9 @@ export class SummaryPanel implements OnInit, AfterViewInit {
   }
 
   readonly lookupGoodIconUrl = (good: GoodId | null | undefined): string => this.game_.goodIconUrl(good);
+
+  /** The good's name in the current language (read from the language signal, so the table follows a change of language). */
+  readonly goodName = (good: GoodId | null | undefined): string => this.game_.goodName(good, this.l10n_.languageSignal());
 
   availableProduction(cell?: GoodSummaryCell): number {
     return computeAvailableProduction(cell);

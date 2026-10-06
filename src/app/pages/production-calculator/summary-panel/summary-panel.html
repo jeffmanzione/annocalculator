@@ -8,7 +8,7 @@
             <span textLoc="Good"></span>
           </th>
           <td mat-cell *matCellDef="let element" class="good-name">
-            <enum-row [values]="[element.good]" [iconUrlLookupFn]="lookupGoodIconUrl"></enum-row>
+            <enum-row [values]="[element.good]" [iconUrlLookupFn]="lookupGoodIconUrl" [displayTextTransformer]="goodName"></enum-row>
           </td>
         </ng-container>
         <ng-container matColumnDef="show-islands">

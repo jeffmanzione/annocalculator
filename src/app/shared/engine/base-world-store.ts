@@ -111,8 +111,8 @@ export abstract class BaseWorldStore<
 
   /** A new, empty island (without an id). */
   protected abstract newIsland(): Omit<StoredIsland<I>, 'id'>;
-  /** A new production line (without an id). */
-  protected abstract newProductionLine(): L;
+  /** A new production line for an island (without an id). */
+  protected abstract newProductionLine(islandId: EntityId): L;
   /** A new trade route (without an id). */
   protected abstract newTradeRoute(): Omit<T, 'id'>;
 
@@ -164,7 +164,11 @@ export abstract class BaseWorldStore<
 
   addProductionLine(islandId: EntityId): EntityId {
     const id = generateId();
-    const line = { ...this.newProductionLine(), id, islandId } as StoredLine<L>;
+    const line = {
+      ...this.newProductionLine(islandId),
+      id,
+      islandId,
+    } as StoredLine<L>;
     this.productionLines.update((lines) => new Map(lines).set(id, line));
     return id;
   }

@@ -10,6 +10,7 @@ import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angul
 import { MatTableModule } from '@angular/material/table';
 import { MatSelectModule } from '@angular/material/select';
 import { GAME, GoodId } from '../../../games/game';
+import { L10nService } from '../../../services/l10n/l10n';
 import { EnumSelect } from '../../../components/enum-select/enum-select';
 import { CardModule } from '../../../components/card/card';
 import { TradeRouteId } from '../../../shared/mvc/models';
@@ -71,6 +72,7 @@ export class TradeRoutesPanel {
   world = input.required<TradeRoutesWorld>();
 
   private readonly game_ = inject(GAME);
+  private readonly l10n_ = inject(L10nService);
 
   // Form groups are kept stable across store updates (rather than recreated
   // on every change) so in-progress edits and open dropdowns aren't reset by
@@ -109,6 +111,9 @@ export class TradeRoutesPanel {
   }
 
   readonly lookupGoodIconUrl = (good: GoodId | null): string => this.game_.goodIconUrl(good);
+
+  /** The good's name in the current language. */
+  readonly goodName = (good: GoodId | null): string => this.game_.goodName(good, this.l10n_.languageSignal());
 
   private rowFor_(
     tradeRoute: TradeRouteEditor,

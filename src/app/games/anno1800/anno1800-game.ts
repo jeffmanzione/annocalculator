@@ -23,6 +23,9 @@ export const anno1800Game: GameDefinition = {
 
   goods: Object.values(Good).filter((good) => good !== Good.Unknown),
 
+  // Anno 1800's names are shown as they are (in English) in every language.
+  goodName: (good) => good ?? '',
+
   goodIconUrl: (good) =>
     lookupGoodIconUrl((good as Good | null | undefined) ?? Good.Unknown),
 

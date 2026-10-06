@@ -53,7 +53,8 @@
             <enum-select
               formControlName="good"
               [options]="element.sourceGoodOptions"
-              [iconUrlLookupFn]="lookupGoodIconUrl"></enum-select>
+              [iconUrlLookupFn]="lookupGoodIconUrl"
+              [displayTextTransformer]="goodName"></enum-select>
           </td>
         </ng-container>
         <ng-container matColumnDef="remove">
