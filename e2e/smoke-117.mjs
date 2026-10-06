@@ -94,15 +94,17 @@ check('a reload keeps the islands and the edit', (await islands().count()) === 4
 // 6b. Buildings that burn coal show it among their inputs, and a repeatable discovery has a level.
 check('a coal-burning building lists Coal with its use per minute', (await page.locator('.extra-good').filter({ hasText: /Coal.*\/m/s }).count()) > 0);
 const levelInput = page.locator('input[aria-label^="repeatable-tech-"]');
-await levelInput.fill('3');
+await levelInput.fill('17');
+await levelInput.press('Tab');
 await settle();
 const repeatableId = JSON.parse(fs.readFileSync(path.resolve('src/app/games/anno117/data/anno117-data.json'), 'utf8')).techs.find((t) => t.repeatable).id;
 s = await saved();
 check('a repeatable discovery saves one entry per level', s.world.techs.filter((t) => t === repeatableId).length === 3, JSON.stringify(s.world.techs));
 await page.reload();
 await page.waitForSelector('anno-117-island');
-check('and shows the level again after a reload', (await levelInput.inputValue()) === '3');
+check('and shows the level again after a reload, in percent, with a typed 17% cut down to 15%', (await levelInput.inputValue()) === '15');
 await levelInput.fill('0');
+await levelInput.press('Tab');
 await settle();
 
 // 7. The language follows into the goods' names (the game's own German name).

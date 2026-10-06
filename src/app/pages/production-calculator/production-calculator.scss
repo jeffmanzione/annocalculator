@@ -1,4 +1,5 @@
 @use '../../../anno-palette' as anno;
+@use '../../../count-stepper';
 :host {
   display: flex;
   flex-direction: row;
@@ -134,12 +135,23 @@ anno-117-island {
   align-items: flex-start;
   gap: 8px;
 
+  // Wide enough for a few discoveries' names and the count of the rest, not the whole card.
   .discoveries-select {
-    flex: 1;
-    min-width: 12rem;
+    flex: none;
+    width: 16rem;
+    max-width: 100%;
   }
 
   .repeatable-tech {
     width: 11rem;
+  }
+}
+
+// The arrows of Anno 117's repeatable discovery, the same as the production line's count.
+.repeatable-tech {
+  @include count-stepper.count-stepper;
+
+  input[type='number'] {
+    appearance: textfield;
   }
 }

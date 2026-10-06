@@ -39,7 +39,7 @@ import {
 import { L10nKey } from '../../shared/l10n/l10n';
 import { GAME } from '../game';
 import { anno117Game, iconUrl, nameIn } from './anno117-game';
-import { anno117Data, techsById } from './game/data';
+import { anno117Data, buffsById, effectsById, techsById } from './game/data';
 import { Anno117Island } from './island/anno117-island';
 import { defaultWorld117 } from './model/default-world';
 import {
@@ -171,8 +171,31 @@ export class Anno117Page implements OnInit {
     this.world.oneTimeTechs = ids;
   }
 
-  setTechLevel(id: number, value: string | number): void {
-    this.world.setTechLevel(id, Number.parseInt(String(value), 10));
+  /** What one level of a repeatable discovery adds, in percent (Beneath Bedrock: 5). */
+  techStep(id: number): number {
+    const effect = effectsById.get(techsById.get(id)?.effects[0] ?? 0);
+    return buffsById.get(effect?.buffs[0] ?? 0)?.productivity || 1;
+  }
+
+  /** The bonus a repeatable discovery gives at its level, in percent. */
+  techPercent(id: number): number {
+    return this.world.techLevel(id) * this.techStep(id);
+  }
+
+  /** Raises or lowers a repeatable discovery by one level (one step of its percentage). */
+  stepTechLevel(id: number, delta: number): void {
+    this.world.setTechLevel(id, this.world.techLevel(id) + delta);
+  }
+
+  /** Sets the level from a percentage typed in; anything between two steps is cut down to the step below. */
+  setTechPercent(id: number, input: HTMLInputElement): void {
+    const percent = Number.parseFloat(input.value);
+    const level = Math.floor(
+      (Number.isNaN(percent) ? 0 : percent) / this.techStep(id),
+    );
+    this.world.setTechLevel(id, level);
+    // Show what was kept, even when it is the same level as before (so the typed 17 reads 15 again).
+    input.value = String(this.techPercent(id));
   }
 
   addIsland(): void {

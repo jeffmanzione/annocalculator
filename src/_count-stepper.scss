@@ -1,0 +1,41 @@
+@use 'anno-palette' as anno;
+
+// The up and down arrows beside a number input (see the production line's Count), themed like the
+// dropdown arrows. Put them in a `<span matSuffix class="count-steppers">` after the input.
+@mixin count-stepper {
+  .count-steppers {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-right: 6px;
+  }
+
+  .count-step {
+    all: unset;
+    box-sizing: border-box;
+    width: 16px;
+    height: 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &::after {
+      content: '';
+      border-left: 5px solid transparent;
+      border-right: 5px solid transparent;
+    }
+
+    &-up::after {
+      border-bottom: 6px solid anno.$ink-muted;
+    }
+
+    &-down::after {
+      border-top: 6px solid anno.$ink-muted;
+    }
+
+    &:hover::after {
+      filter: brightness(0.6);
+    }
+  }
+}
