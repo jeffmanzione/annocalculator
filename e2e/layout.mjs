@@ -20,7 +20,7 @@ let failures = 0;
 
 for (const width of WIDTHS) {
   const page = await browser.newPage({ viewport: { width, height: 1100 } });
-  await page.goto(`${server.url}/calculator`);
+  await page.goto(`${server.url}/anno-1800-calculator`);
   await page.waitForSelector('island');
   await settle(page);
 
@@ -133,7 +133,7 @@ for (const width of WIDTHS) {
 // fits the panel without scrolling sideways, in every language.
 for (const width of WIDTHS) {
   const page = await browser.newPage({ viewport: { width, height: 1100 } });
-  await page.goto(`${server.url}/anno-117`);
+  await page.goto(`${server.url}/anno-117-calculator`);
   await page.waitForSelector('anno-117-island');
   await settle(page);
 

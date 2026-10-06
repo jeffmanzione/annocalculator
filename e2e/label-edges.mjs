@@ -19,7 +19,7 @@ let failures = 0;
 for (const dsf of [1, 1.25, 1.5, 1.75, 2, 3]) {
   const context = await browser.newContext({ viewport: { width: 1920, height: 1080 }, deviceScaleFactor: dsf });
   const page = await context.newPage();
-  await page.goto(`${server.url}/calculator`);
+  await page.goto(`${server.url}/anno-1800-calculator`);
   await page.waitForSelector('island');
   await settle(page);
 

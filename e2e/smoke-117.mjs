@@ -21,7 +21,7 @@ const saved = async () => JSON.parse(await page.evaluate((k) => localStorage.get
 const summaryText = () => page.locator('summary-panel').innerText();
 const islands = () => page.locator('anno-117-island');
 
-await page.goto(`${server.url}/anno-117`);
+await page.goto(`${server.url}/anno-117-calculator`);
 await page.waitForSelector('anno-117-island');
 await settle();
 
@@ -156,7 +156,7 @@ const celtic = new Set(data.factories.filter((f) => f.regions.includes('Celtic')
 check('the island moves to Albion with Celtic buildings', s.world.islands[1].session === 6627 && s.world.islands[1].productionLines.every((l) => celtic.has(l.building)));
 
 // 9. The calculators keep separate saves.
-await page.goto(`${server.url}/calculator`);
+await page.goto(`${server.url}/anno-1800-calculator`);
 await page.waitForSelector('island');
 await settle();
 check('visiting the Anno 1800 page makes its own save', (await page.evaluate((k) => localStorage.getItem(k), WORLD_KEY)) !== null);

@@ -52,7 +52,7 @@ async function run(dist) {
   };
   const island = (i) => page.locator('island').nth(i);
 
-  await page.goto(`${server.url}/calculator`);
+  await page.goto(`${server.url}/anno-1800-calculator`);
   await page.waitForSelector('island');
   await settle();
 
@@ -115,7 +115,7 @@ async function runSeeded(dist) {
       },
       [WORLD_KEY, seed],
     );
-    await page.goto(`${server.url}/calculator`);
+    await page.goto(`${server.url}/anno-1800-calculator`);
     await page.waitForSelector('island, .island-list-section');
     await settleFn(page);
     snaps.push([`${path.basename(file)}: after loading`, normalizeIds(await savedWorld(page))]);

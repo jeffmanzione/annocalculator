@@ -60,11 +60,11 @@ describe('Analytics', () => {
     expect(e.goatcounter?.endpoint).toBe(`https://${GOATCOUNTER_CODE}.goatcounter.com/count`);
 
     // The first page is reported once the script has loaded; the counter then adds count().
-    events.next(new NavigationEnd(1, '/', '/calculator'));
+    events.next(new NavigationEnd(1, '/', '/anno-1800-calculator'));
     const count = vi.fn();
     e.goatcounter!.count = count;
     script.onload!();
-    expect(count).toHaveBeenCalledWith({ path: '/calculator' });
+    expect(count).toHaveBeenCalledWith({ path: '/anno-1800-calculator' });
 
     events.next(new NavigationEnd(2, '/about', '/about'));
     expect(count).toHaveBeenLastCalledWith({ path: '/about' });

@@ -1,7 +1,6 @@
 import { Route, Routes } from '@angular/router';
 import { Type } from '@angular/core';
 import { AboutPage } from './pages/about/about';
-import { ProductionCalculatorPage } from './pages/production-calculator/production-calculator';
 import { L10nKey } from './shared/l10n/l10n';
 
 export const WEBSITE_NAME = 'AnnoCalculator.com';
@@ -16,20 +15,24 @@ export interface AppInfo {
 }
 
 export const apps: AppInfo[] = [
-  // The Anno 1800 calculator keeps the address it has always had: people have links and saves for it.
   {
-    path: 'calculator',
-    target: ProductionCalculatorPage,
+    path: 'anno-1800-calculator',
+    loadTarget: () =>
+      import('./pages/production-calculator/production-calculator').then(
+        (m) => m.ProductionCalculatorPage,
+      ),
     name: 'Anno 1800',
   },
   {
-    path: 'anno-117',
+    path: 'anno-117-calculator',
     loadTarget: () =>
       import('./games/anno117/anno117-page').then((m) => m.Anno117Page),
     name: 'Anno 117',
   },
   { path: 'about', target: AboutPage, name: 'About' },
-  { path: '**', target: 'calculator' },
+  // The Anno 1800 calculator used to live at /calculator: people have links to it.
+  { path: 'calculator', target: 'anno-1800-calculator' },
+  { path: '**', target: 'anno-1800-calculator' },
 ];
 
 export const routes: Routes = apps.map(convertToRoute);

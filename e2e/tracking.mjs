@@ -55,21 +55,21 @@ async function openPage({ initScript } = {}) {
 // 1. The live address: loaded, configured, and every page reported.
 {
   const { context, page, requests, errors } = await openPage();
-  await page.goto(`${LIVE}/calculator`);
+  await page.goto(`${LIVE}/anno-1800-calculator`);
   await page.waitForSelector('island');
   await settle(page);
   const config = await page.evaluate(() => ({ no_onload: window.goatcounter?.no_onload, endpoint: window.goatcounter?.endpoint }));
   check('the counter script is loaded on the live address', requests.some((u) => u.includes('gc.zgo.at/count.js')));
   check('the counter is told not to count on load itself', config.no_onload === true, JSON.stringify(config));
   check('the counter reports to the annocalculator site', config.endpoint === 'https://annocalculator.goatcounter.com/count', config.endpoint);
-  check('the first page is counted', JSON.stringify(await page.evaluate(() => window.__counted)) === '["/calculator"]');
+  check('the first page is counted', JSON.stringify(await page.evaluate(() => window.__counted)) === '["/anno-1800-calculator"]');
   await page.getByRole('button', { name: 'Anno 117' }).click();
   await settle(page);
   await page.getByRole('button', { name: 'About' }).click();
   await settle(page);
   check(
     'navigating to the other pages counts each one, including the Anno 117 page',
-    JSON.stringify(await page.evaluate(() => window.__counted)) === '["/calculator","/anno-117","/about"]',
+    JSON.stringify(await page.evaluate(() => window.__counted)) === '["/anno-1800-calculator","/anno-117-calculator","/about"]',
   );
   check('only the counter script was requested from GoatCounter', requests.length === 1, requests.join(' '));
   check('no page errors on the live address', errors.length === 0, errors.join(' | '));
@@ -82,7 +82,7 @@ for (const [label, initScript] of [
   ['Global Privacy Control', () => Object.defineProperty(Navigator.prototype, 'globalPrivacyControl', { get: () => true })],
 ]) {
   const { context, page, requests } = await openPage({ initScript });
-  await page.goto(`${LIVE}/calculator`);
+  await page.goto(`${LIVE}/anno-1800-calculator`);
   await page.waitForSelector('island');
   await settle(page);
   check(`${label} is not counted`, requests.length === 0, requests.join(' '));
@@ -92,7 +92,7 @@ for (const [label, initScript] of [
 // 3. Running the app locally is never counted.
 {
   const { context, page, requests } = await openPage();
-  await page.goto(`${server.url}/calculator`);
+  await page.goto(`${server.url}/anno-1800-calculator`);
   await page.waitForSelector('island');
   await settle(page);
   check('a local address is not counted', requests.length === 0, requests.join(' '));

@@ -24,7 +24,7 @@ const saved = () => savedWorld(page);
 const islands = () => page.locator('island');
 const settle = () => settleFn(page);
 
-await page.goto(`${server.url}/calculator`);
+await page.goto(`${server.url}/anno-1800-calculator`);
 await page.waitForSelector('island');
 await settle();
 
@@ -290,6 +290,13 @@ check(
 // 9. Minimization still applies: no empty arrays / default fields stored.
 const raw = JSON.stringify(s);
 check('no islandId leaks into saved JSON', !raw.includes('islandId'));
+
+// The old address and anything unknown lead to the Anno 1800 calculator.
+for (const old of ['/calculator', '/no-such-page']) {
+  await page.goto(`${server.url}${old}`);
+  await page.waitForSelector('island');
+  check(`${old} redirects to the Anno 1800 calculator`, new URL(page.url()).pathname === '/anno-1800-calculator', page.url());
+}
 
 check('no console/page errors', errors.length === 0, errors.slice(0, 5).join(' | '));
 await browser.close();
