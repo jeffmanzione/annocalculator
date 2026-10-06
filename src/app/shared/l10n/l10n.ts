@@ -95,6 +95,9 @@ export type L10nKey =
   | 'About Feature Specialists'
   | 'About Feature Save'
   | 'About Feature JSON'
+  | 'About Feature Anno 117'
+  | 'About Credits Heading'
+  | 'About Credits Text'
   | 'About Tool Audience'
   | 'About Why Heading'
   | 'About Why Text'
@@ -630,10 +633,10 @@ export const localizations: Localizations = {
     Zh: '免责声明：',
   },
   'About Disclaimer Text': {
-    En: 'This is a fan-made tool and is not affiliated with, endorsed by, or in any way officially connected with Ubisoft or the Anno series. All trademarks and copyrights related to Anno 1800 are the property of Ubisoft.',
-    De: 'Dies ist ein von Fans erstelltes Tool und steht in keiner Verbindung zu Ubisoft oder der Anno-Reihe, wird nicht von ihnen unterstützt und ist in keiner Weise offiziell mit ihnen verbunden. Alle Marken und Urheberrechte im Zusammenhang mit Anno 1800 sind Eigentum von Ubisoft.',
-    Nl: 'Dit is een door fans gemaakte tool en is op geen enkele manier verbonden met, goedgekeurd door of officieel gelieerd aan Ubisoft of de Anno-serie. Alle handelsmerken en auteursrechten met betrekking tot Anno 1800 zijn eigendom van Ubisoft.',
-    Zh: '这是一个由粉丝制作的工具，与育碧或《纪元》系列没有任何隶属、认可或官方关联。与《纪元 1800》相关的所有商标和版权均归育碧所有。',
+    En: 'This is a fan-made tool and is not affiliated with, endorsed by, or in any way officially connected with Ubisoft or the Anno series. All trademarks and copyrights related to Anno 1800 and Anno 117: Pax Romana, including their names, icons and game data, are the property of Ubisoft.',
+    De: 'Dies ist ein von Fans erstelltes Tool und steht in keiner Verbindung zu Ubisoft oder der Anno-Reihe, wird nicht von ihnen unterstützt und ist in keiner Weise offiziell mit ihnen verbunden. Alle Marken und Urheberrechte im Zusammenhang mit Anno 1800 und Anno 117: Pax Romana, einschließlich ihrer Namen, Symbole und Spieldaten, sind Eigentum von Ubisoft.',
+    Nl: 'Dit is een door fans gemaakte tool en is op geen enkele manier verbonden met, goedgekeurd door of officieel gelieerd aan Ubisoft of de Anno-serie. Alle handelsmerken en auteursrechten met betrekking tot Anno 1800 en Anno 117: Pax Romana, inclusief hun namen, pictogrammen en spelgegevens, zijn eigendom van Ubisoft.',
+    Zh: '这是一个由粉丝制作的工具，与育碧或《纪元》系列没有任何隶属、认可或官方关联。与《纪元 1800》和《纪元 117：罗马和平》相关的所有商标和版权，包括其名称、图标和游戏数据，均归育碧所有。',
   },
   'About Tool Heading': {
     En: 'About This Tool',
@@ -642,10 +645,10 @@ export const localizations: Localizations = {
     Zh: '关于本工具',
   },
   'About Tool Intro': {
-    En: "Welcome to the Anno 1800 Production Calculator - your companion for efficient city planning and production optimization in Ubisoft's Anno 1800.",
-    De: 'Willkommen beim Anno-1800-Produktionsrechner – dein Begleiter für effiziente Stadtplanung und Produktionsoptimierung in Ubisofts Anno 1800.',
-    Nl: 'Welkom bij de Anno 1800 Productiecalculator – je metgezel voor efficiënte stadsplanning en productieoptimalisatie in Ubisofts Anno 1800.',
-    Zh: '欢迎使用《纪元 1800》生产计算器——高效规划城市、优化生产的得力助手。',
+    En: "Welcome to the Anno Production Calculator - your companion for efficient city planning and production optimization in Ubisoft's Anno 1800 and Anno 117: Pax Romana.",
+    De: 'Willkommen beim Anno-Produktionsrechner – dein Begleiter für effiziente Stadtplanung und Produktionsoptimierung in Ubisofts Anno 1800 und Anno 117: Pax Romana.',
+    Nl: 'Welkom bij de Anno Productiecalculator – je metgezel voor efficiënte stadsplanning en productieoptimalisatie in Ubisofts Anno 1800 en Anno 117: Pax Romana.',
+    Zh: '欢迎使用《纪元》生产计算器——在《纪元 1800》和《纪元 117：罗马和平》中高效规划城市、优化生产的得力助手。',
   },
   'About Tool Details': {
     En: "Whether you're managing your Crown Falls metropolis or just starting your first island in the Old World, this tool helps you determine exactly how many production buildings you need to satisfy your population's demands, streamline trade between islands, and keep your economy running smoothly.",
@@ -700,6 +703,24 @@ export const localizations: Localizations = {
     De: 'Produktion über den erweiterten JSON-Editor manuell feinjustieren',
     Nl: 'Stem de productie handmatig af via de geavanceerde JSON-editor',
     Zh: '通过高级 JSON 编辑器手动微调生产',
+  },
+  'About Feature Anno 117': {
+    En: 'Also covers Anno 117: Pax Romana, with its provinces, aqueducts, silos, items, discoveries and patron deities',
+    De: 'Deckt auch Anno 117: Pax Romana ab, mit Provinzen, Aquädukten, Silos, Gegenständen, Entdeckungen und Schutzgottheiten',
+    Nl: 'Behandelt ook Anno 117: Pax Romana, met provincies, aquaducten, silo’s, voorwerpen, ontdekkingen en beschermgoden',
+    Zh: '同时支持《纪元 117：罗马和平》，包括行省、水道、筒仓、物品、发现和守护神',
+  },
+  'About Credits Heading': {
+    En: 'Credits',
+    De: 'Danksagung',
+    Nl: 'Dankbetuiging',
+    Zh: '致谢',
+  },
+  'About Credits Text': {
+    En: 'The Anno 117 game data (goods, buildings, items, discoveries and patrons) comes from the community Anno 117 calculator by NiHoel and the anno-mods project, which extracted it from the game. Thank you to everyone who built and shared it.',
+    De: 'Die Spieldaten zu Anno 117 (Waren, Gebäude, Gegenstände, Entdeckungen und Schutzgottheiten) stammen aus dem Anno-117-Rechner der Community von NiHoel und dem Projekt anno-mods, die sie aus dem Spiel extrahiert haben. Danke an alle, die ihn entwickelt und geteilt haben.',
+    Nl: 'De spelgegevens van Anno 117 (goederen, gebouwen, voorwerpen, ontdekkingen en beschermgoden) komen uit de Anno 117-calculator van de community door NiHoel en het project anno-mods, die ze uit het spel hebben gehaald. Bedankt aan iedereen die hem heeft gebouwd en gedeeld.',
+    Zh: '《纪元 117》的游戏数据（商品、建筑、物品、发现和守护神）来自 NiHoel 和 anno-mods 项目的社区版《纪元 117》计算器，它们从游戏中提取了这些数据。感谢所有开发并分享它的人。',
   },
   'About Tool Audience': {
     En: "This calculator is designed to be both beginner-friendly and powerful for advanced players who want full control over their empire's supply lines.",

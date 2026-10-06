@@ -63,9 +63,14 @@ async function openPage({ initScript } = {}) {
   check('the counter is told not to count on load itself', config.no_onload === true, JSON.stringify(config));
   check('the counter reports to the annocalculator site', config.endpoint === 'https://annocalculator.goatcounter.com/count', config.endpoint);
   check('the first page is counted', JSON.stringify(await page.evaluate(() => window.__counted)) === '["/calculator"]');
+  await page.getByRole('button', { name: 'Anno 117' }).click();
+  await settle(page);
   await page.getByRole('button', { name: 'About' }).click();
   await settle(page);
-  check('navigating to another page counts it', JSON.stringify(await page.evaluate(() => window.__counted)) === '["/calculator","/about"]');
+  check(
+    'navigating to the other pages counts each one, including the Anno 117 page',
+    JSON.stringify(await page.evaluate(() => window.__counted)) === '["/calculator","/anno-117","/about"]',
+  );
   check('only the counter script was requested from GoatCounter', requests.length === 1, requests.join(' '));
   check('no page errors on the live address', errors.length === 0, errors.join(' | '));
   await context.close();

@@ -16,7 +16,7 @@ describe('AboutPage', () => {
     return { fixture, el: fixture.nativeElement as HTMLElement };
   };
 
-  it('has the seven sections, each with a heading', async () => {
+  it('has the eight sections, each with a heading', async () => {
     const { el } = await setup();
     expect(
       [...el.querySelectorAll('h2')].map((h) =>
@@ -27,6 +27,7 @@ describe('AboutPage', () => {
       'What This Tool Does',
       'Why It Exists',
       'Save Your Work',
+      'Credits',
       'Privacy',
       'Feedback',
     ]);
@@ -38,7 +39,7 @@ describe('AboutPage', () => {
 
   it('lists the features', async () => {
     const { el } = await setup();
-    expect(el.querySelectorAll('li').length).toBe(7);
+    expect(el.querySelectorAll('li').length).toBe(8);
   });
 
   it('keeps a space between the disclaimer label and its text', async () => {
