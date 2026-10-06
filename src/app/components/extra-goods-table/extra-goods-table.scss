@@ -1,0 +1,62 @@
+@use '../../../anno-table';
+
+// Columns share the width the way the production lines table's selects do: the good and its source take
+// their percentage and cut their text short, the numbers take what they need.
+$flex-min-width: 5.5rem;
+
+.outer-container {
+  display: flex;
+  justify-content: space-evenly;
+  margin: 8px;
+}
+
+.inner-container {
+  min-width: 80%;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+
+  @include anno-table.anno-table-cells;
+
+  th {
+    font-weight: 500;
+    height: 30px;
+    line-height: 1;
+  }
+
+  th.good,
+  th.source {
+    min-width: $flex-min-width;
+    max-width: 0;
+  }
+
+  th.good {
+    width: 24%;
+  }
+
+  th.source {
+    width: 36%;
+  }
+
+  th.fit {
+    width: 1%;
+  }
+
+  td.fit {
+    width: 1%;
+    white-space: nowrap;
+  }
+
+  // This value changes with the count, so give it a steady width rather than let it resize the
+  // columns beside it.
+  th.per-minute,
+  td.per-minute {
+    min-width: 4.5rem;
+  }
+
+  td.per-minute {
+    font-variant-numeric: tabular-nums;
+  }
+}

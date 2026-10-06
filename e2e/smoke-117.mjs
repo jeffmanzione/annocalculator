@@ -115,7 +115,7 @@ await settle();
   await page.reload();
   await page.waitForSelector('anno-117-island');
   await settle();
-  const table = () => islands().nth(0).locator('table.extra-goods-table');
+  const table = () => islands().nth(0).locator('extra-goods-table table');
   check('extra goods are shown by default', (await table().count()) === 1);
   await islands().nth(0).locator('td.extras-field ac-button').click();
   await settle();

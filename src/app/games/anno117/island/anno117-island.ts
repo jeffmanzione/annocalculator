@@ -5,6 +5,8 @@ import {
   inject,
   input,
   signal,
+  TemplateRef,
+  viewChild,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -15,6 +17,10 @@ import {
   CompositeNumber,
   NumberConstituent,
 } from '../../../components/composite-number/composite-number';
+import {
+  ExtraGoodsRow,
+  ExtraGoodsTable,
+} from '../../../components/extra-goods-table/extra-goods-table';
 import { EnumRow } from '../../../components/enum-row/enum-row';
 import { EnumSelect } from '../../../components/enum-select/enum-select';
 import { FormattedNumber } from '../../../components/formatted-number/formatted-number';
@@ -90,6 +96,7 @@ interface Named {
     CompositeNumber,
     EnumRow,
     EnumSelect,
+    ExtraGoodsTable,
     FormattedNumber,
     FormsModule,
     L10nText,
@@ -235,6 +242,23 @@ export class Anno117Island {
     extra ? this.sourceOf(extra).description : '';
   readonly sourceIcon = (extra: ExtraSource | null): string =>
     (extra && this.sourceOf(extra).iconUrl) || '';
+
+  // How the extra goods table draws a row's source.
+  readonly sourceIconOf = () => this.sourceIcon;
+  private readonly sourceTooltip_ =
+    viewChild.required<TemplateRef<any>>('sourceTooltip');
+  readonly sourceTooltipOf = () => this.sourceTooltip_();
+
+  /** A line's extra output as rows for the extra goods table. */
+  extraGoodsRows(line: Line117Controller): ExtraGoodsRow[] {
+    return line.extraGoodRows.map((extra) => ({
+      good: extra.good,
+      source: this.sourceValue(extra),
+      rateNumerator: extra.amount,
+      rateDenominator: extra.everyCycles,
+      producedPerMinute: extra.producedPerMinute,
+    }));
+  }
 
   /** Which tooltip describes the source of an extra output. */
   sourceKind(extra: ExtraSource): TooltipKind {

@@ -131,56 +131,7 @@ mat-checkbox {
   font-size: 0.85em;
 }
 
-// Extra goods, as a table under the line they belong to, styled like Anno 1800's: the same header and
-// cells as the lines table above it (it sits inside it), a widest-share layout for the good and its
-// source, and the numbers as narrow columns.
+// The extra goods table fills its row.
 tr.extra-goods-tr > td.extra-goods-cell {
   padding: 0;
-}
-
-.extra-goods-outer-container {
-  display: flex;
-  justify-content: space-evenly;
-  margin: 8px;
-}
-
-.extra-goods-inner-container {
-  min-width: 80%;
-}
-
-table.lines-table table.extra-goods-table {
-  width: 100%;
-  min-width: 0;
-  // A table does not take its parent's collapsed borders, which left a 2px gap between the cells.
-  border-collapse: collapse;
-  border-spacing: 0;
-
-  th {
-    // Above the cells that scroll beneath the header, as in the Anno 1800 table.
-    z-index: 99;
-  }
-
-  th.extra-good-col {
-    width: 24%;
-  }
-
-  th.source-col {
-    width: 36%;
-  }
-
-  th.fraction-col,
-  th.divide-col,
-  th.per-minute-col {
-    width: 1%;
-  }
-
-  td.numeric {
-    white-space: nowrap;
-    font-variant-numeric: tabular-nums;
-  }
-
-  th.per-minute-col,
-  td.per-minute {
-    min-width: 4.5rem;
-  }
 }

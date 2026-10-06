@@ -7,6 +7,7 @@ import {
   Signal,
   signal,
   TemplateRef,
+  viewChild,
 } from '@angular/core';
 import { StoreIslandController } from '../../../shared/mvc/world-store-controllers';
 import { ProductionLineId } from '../../../shared/mvc/models';
@@ -50,6 +51,7 @@ import {
 } from '../../../games/anno1800/game/icons';
 import { TextFieldModule } from '@angular/cdk/text-field';
 import { AcButton } from '../../../components/button/button';
+import { ExtraGoodsTable } from '../../../components/extra-goods-table/extra-goods-table';
 import { StepperInput } from '../../../components/stepper-input/stepper-input';
 import { EnumRow } from '../../../components/enum-row/enum-row';
 import { TooltipDirective } from '../../../components/enum-tooltip/enum-tooltip';
@@ -65,6 +67,7 @@ import { InputGoodSource } from '../../../shared/mvc/world-store';
     AcButton,
     Anno1800Tooltip,
     CompositeNumber,
+    ExtraGoodsTable,
     EnumRow,
     EnumSelect,
     FormattedNumber,
@@ -140,15 +143,6 @@ export class Island implements OnInit {
     );
     return columns;
   }
-
-  readonly extraGoodColumns = [
-    'extraGood',
-    'source',
-    'rateNumerator',
-    'divideSymbol',
-    'rateDenominator',
-    'producedPerMinute',
-  ];
 
   formGroup!: FormGroup;
 
@@ -356,28 +350,39 @@ export class Island implements OnInit {
     this.formGroup.controls[controlName].disable({ emitEvent: false });
   }
 
-  selectTooltip(
+  private readonly boostTooltip_ =
+    viewChild.required<TemplateRef<any>>('boostTooltip');
+  private readonly policyTooltip_ =
+    viewChild.required<TemplateRef<any>>('policyTooltip');
+  private readonly haciendaTooltip_ =
+    viewChild.required<TemplateRef<any>>('haciendaTooltip');
+  private readonly itemTooltip_ =
+    viewChild.required<TemplateRef<any>>('itemTooltip');
+  private readonly culturalSetTooltip_ =
+    viewChild.required<TemplateRef<any>>('culturalSetTooltip');
+
+  /** How an extra good's source is drawn: its icon and its tooltip depend on what kind of source it is. */
+  readonly extraGoodSourceIcon = (
     extraGood: StoreExtraGoodView,
-    boostTooltip: TemplateRef<any>,
-    policyTooltip: TemplateRef<any>,
-    haciendaTooltip: TemplateRef<any>,
-    itemTooltip: TemplateRef<any>,
-    culturalSetTooltip: TemplateRef<any>,
-  ): TemplateRef<any> {
+  ): ((_: any) => string) => this.extraGoodLookupIconUrlFn(extraGood);
+
+  readonly extraGoodSourceTooltip = (
+    extraGood: StoreExtraGoodView,
+  ): TemplateRef<any> => {
     switch (extraGood.sourceType) {
       case 'Boost':
       case 'ElectrifiedFarm':
-        return boostTooltip;
+        return this.boostTooltip_();
       case 'DepartmentOfLaborPolicy':
-        return policyTooltip;
+        return this.policyTooltip_();
       case 'HaciendaFertilizerWorks':
-        return haciendaTooltip;
+        return this.haciendaTooltip_();
       case 'CulturalSet':
-        return culturalSetTooltip;
+        return this.culturalSetTooltip_();
       default:
-        return itemTooltip;
+        return this.itemTooltip_();
     }
-  }
+  };
 
   transformCulturalSetName(value: CulturalSet | null): string {
     if (!value) {

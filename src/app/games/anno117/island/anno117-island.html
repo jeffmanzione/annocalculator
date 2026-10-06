@@ -189,48 +189,14 @@
         @if (showExtraGoods(line)) {
           <tr class="extra-goods-tr">
             <td colspan="11" class="extra-goods-cell">
-              <div class="extra-goods-outer-container">
-                <div class="extra-goods-inner-container">
-                  <table class="extra-goods-table">
-                    <thead>
-                      <tr>
-                        <th class="extra-good-col"><span textLoc="Extra Good"></span></th>
-                        <th class="source-col"><span textLoc="Source"></span></th>
-                        <th class="fraction-col"><span textLoc="Numerator"></span></th>
-                        <th class="divide-col">/</th>
-                        <th class="fraction-col"><span textLoc="Denominator"></span></th>
-                        <th class="per-minute-col"><span textLoc="Goods per Minute"></span></th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      @for (extra of line.extraGoodRows; track $index) {
-                        <tr>
-                          <td>
-                            <enum-row
-                              [values]="[extra.good]"
-                              [iconUrlLookupFn]="productIcon"
-                              [displayTextTransformer]="productName"
-                              [tooltip]="goodTooltip"></enum-row>
-                          </td>
-                          <td>
-                            <enum-row
-                              [values]="[sourceValue(extra)]"
-                              [iconUrlLookupFn]="sourceIcon"
-                              [displayTextTransformer]="sourceName"
-                              [tooltip]="sourceTooltip"></enum-row>
-                          </td>
-                          <td class="numeric"><formatted-number [value]="extra.amount"></formatted-number></td>
-                          <td class="numeric">/</td>
-                          <td class="numeric"><formatted-number [value]="extra.everyCycles"></formatted-number></td>
-                          <td class="numeric per-minute">
-                            <formatted-number [value]="extra.producedPerMinute" suffix="/m"></formatted-number>
-                          </td>
-                        </tr>
-                      }
-                    </tbody>
-                  </table>
-                </div>
-              </div>
+              <extra-goods-table
+                [rows]="extraGoodsRows(line)"
+                [goodIcon]="productIcon"
+                [goodName]="productName"
+                [goodTooltip]="goodTooltip"
+                [sourceIcon]="sourceIconOf"
+                [sourceName]="sourceName"
+                [sourceTooltip]="sourceTooltipOf"></extra-goods-table>
             </td>
           </tr>
         }

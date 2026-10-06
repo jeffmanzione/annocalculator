@@ -1,0 +1,43 @@
+<div class="outer-container">
+  <div class="inner-container">
+    <table>
+      <thead>
+        <tr>
+          <th class="good"><span textLoc="Extra Good"></span></th>
+          <th class="source"><span textLoc="Source"></span></th>
+          <th class="fit"><span textLoc="Numerator"></span></th>
+          <th class="fit">/</th>
+          <th class="fit"><span textLoc="Denominator"></span></th>
+          <th class="fit per-minute"><span textLoc="Goods per Minute"></span></th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (row of rows(); track $index) {
+          <tr>
+            <td>
+              <enum-row
+                [values]="[row.good]"
+                [iconUrlLookupFn]="goodIcon()"
+                [displayTextTransformer]="goodName()"
+                [tooltip]="goodTooltip()"></enum-row>
+            </td>
+            <td>
+              <enum-row
+                [values]="row.source ? [row.source] : []"
+                [iconUrlLookupFn]="sourceIcon()(row)"
+                [displayTextTransformer]="sourceName()"
+                [tooltip]="sourceTooltip()(row)"
+                placeholderText="-"></enum-row>
+            </td>
+            <td class="fit"><formatted-number [value]="row.rateNumerator"></formatted-number></td>
+            <td class="fit">/</td>
+            <td class="fit"><formatted-number [value]="row.rateDenominator"></formatted-number></td>
+            <td class="fit per-minute">
+              <formatted-number [value]="row.producedPerMinute" suffix="/m"></formatted-number>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>

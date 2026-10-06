@@ -14,17 +14,7 @@
   );
 }
 
-.extra-goods-outer-container {
-  display: flex;
-  justify-content: space-evenly;
-  margin: 8px;
-}
-
-.extra-goods-inner-container {
-  min-width: 80%;
-}
-
-// Column sizing for the production line table and its nested extra goods table.
+// Column sizing for the production line table (the extra goods table under a line has its own).
 //
 // Instead of a hand-picked pixel width per column (which broke whenever a
 // translation or screen size didn't match the guess), columns come in two
@@ -92,13 +82,6 @@ table.production-lines-table {
     width: 100%;
   }
 
-  table.extra-goods-table {
-    th {
-      // No idea where the th z-index is overridden directly to 100. It's not in the code.
-      z-index: 99 !important;
-    }
-  }
-
   thead {
     display: table-header-group;
   }
@@ -159,28 +142,6 @@ table.production-lines-table {
     width: 5rem;
     min-width: 5rem;
     max-width: 5rem;
-  }
-
-  // --- Extra goods (nested table) ---
-  table.extra-goods-table {
-    width: 100%;
-
-    @include flex-columns(
-      (
-        extraGood: 24%,
-        source: 36%,
-      )
-    );
-    @include fit-columns(rateNumerator, divideSymbol, rateDenominator, producedPerMinute);
-
-    // Same as the main table: this value changes with the count, so give it a
-    // steady width rather than let it resize the columns beside it.
-    td.mat-column-producedPerMinute {
-      font-variant-numeric: tabular-nums;
-    }
-    @include header-and-cell(producedPerMinute) {
-      min-width: 4.5rem;
-    }
   }
 }
 
