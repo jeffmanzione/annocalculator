@@ -379,6 +379,21 @@ export class World117Controller {
     this.store.setTechs(value);
   }
 
+  /** The techs researched once, which the discoveries list shows (a repeatable one has a level instead). */
+  get oneTimeTechs(): number[] {
+    return this.store.oneTimeTechs();
+  }
+  set oneTimeTechs(value: number[]) {
+    this.store.setOneTimeTechs(value);
+  }
+
+  techLevel(id: number): number {
+    return this.store.techs().filter((t) => t === id).length;
+  }
+  setTechLevel(id: number, level: number): void {
+    this.store.setTechLevel(id, level);
+  }
+
   setTech(id: number, researched: boolean): void {
     this.store.setTech(id, researched);
   }

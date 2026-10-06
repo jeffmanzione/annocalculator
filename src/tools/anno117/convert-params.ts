@@ -268,6 +268,7 @@ const techs = (params.techs as any[]).map((t) => {
     ...(areaBuffsOfTech.length
       ? { areaBuffs: areaBuffsOfTech as number[] }
       : {}),
+    ...(t.isRepeatable ? { repeatable: true as const } : {}),
   };
 });
 

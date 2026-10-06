@@ -14,8 +14,12 @@ import {
   MatDialogModule,
 } from '@angular/material/dialog';
 import { MatExpansionModule } from '@angular/material/expansion';
-import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
+import {
+  MAT_FORM_FIELD_DEFAULT_OPTIONS,
+  MatFormFieldModule,
+} from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { AcButton } from '../../components/button/button';
 import { CardModule } from '../../components/card/card';
@@ -48,7 +52,7 @@ import {
 } from './model/models';
 import { World117Controller } from './model/world-controllers';
 import { Anno117Tooltip } from './tooltips/anno117-tooltip';
-import { WorldStore117 } from './model/world-store-117';
+import { MAX_TECH_LEVEL, WorldStore117 } from './model/world-store-117';
 
 /** The Anno 117 calculator page: the same layout as the Anno 1800 one, with Anno 117's islands and rules. */
 @Component({
@@ -63,7 +67,9 @@ import { WorldStore117 } from './model/world-store-117';
     L10nText,
     MatDialogModule,
     MatExpansionModule,
+    MatFormFieldModule,
     MatIconModule,
+    MatInputModule,
     MatSnackBarModule,
     SummaryPanel,
     TradeRoutesPanel,
@@ -125,7 +131,11 @@ export class Anno117Page implements OnInit {
 
   // --- Choices for the discoveries ---
 
-  readonly techChoices = anno117Data.techs.map((t) => t.id);
+  readonly techChoices = anno117Data.techs
+    .filter((t) => !t.repeatable)
+    .map((t) => t.id);
+  readonly repeatableTechs = anno117Data.techs.filter((t) => t.repeatable);
+  readonly maxTechLevel = MAX_TECH_LEVEL;
   readonly techName = (id: number | null): string =>
     nameIn(
       id ? techsById.get(id)?.name : undefined,
@@ -158,7 +168,11 @@ export class Anno117Page implements OnInit {
   }
 
   setTechs(ids: number[]): void {
-    this.world.techs = ids;
+    this.world.oneTimeTechs = ids;
+  }
+
+  setTechLevel(id: number, value: string | number): void {
+    this.world.setTechLevel(id, Number.parseInt(String(value), 10));
   }
 
   addIsland(): void {

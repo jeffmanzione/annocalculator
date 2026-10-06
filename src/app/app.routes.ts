@@ -24,7 +24,8 @@ export const apps: AppInfo[] = [
   },
   {
     path: 'anno-117',
-    loadTarget: () => import('./games/anno117/anno117-page').then((m) => m.Anno117Page),
+    loadTarget: () =>
+      import('./games/anno117/anno117-page').then((m) => m.Anno117Page),
     name: 'Anno 117',
   },
   { path: 'about', target: AboutPage, name: 'About' },

@@ -12,7 +12,7 @@ import {
   productivity,
   WorldSettings,
 } from './rules';
-import { anno117Data, factoriesById, itemsById } from './data';
+import { anno117Data, effectsById, factoriesById, itemsById } from './data';
 
 // Hand-derived expectations from the game data (see data/NOTICE.md). Ids of the things used here:
 //   2693 Wheat Farm (Roman): connected to an aqueduct it gets +50% productivity (buff 28480)
@@ -264,17 +264,30 @@ describe('items and effects', () => {
     expect(contributions(line(BAKERY, { items: [item.id] }))).toEqual([]);
   });
 
-  it('adds boost buffs only to boosted items', () => {
+  it('swaps an item for its boosted form instead of adding to it', () => {
     const boostable = anno117Data.items.find((i) => i.boostBuffs?.length)!;
     const building = boostable.targets[0];
     const plain = contributions(line(building, { items: [boostable.id] }));
     const boosted = contributions(
       line(building, { items: [boostable.id], boostedItems: [boostable.id] }),
     );
-    expect(boosted.length).toBe(plain.length + boostable.boostBuffs!.length);
-    expect(boosted.filter((c) => c.source === 'boostedItem').length).toBe(
-      boostable.boostBuffs!.length,
-    );
+    expect(plain.every((c) => c.source === 'item')).toBe(true);
+    expect(boosted.length).toBe(boostable.boostBuffs!.length);
+    expect(boosted.every((c) => c.source === 'boostedItem')).toBe(true);
+  });
+
+  it('counts a repeatable discovery once for each time it was researched', () => {
+    const repeatable = anno117Data.techs.find((t) => t.repeatable)!;
+    const effect = effectsById.get(repeatable.effects[0])!;
+    const target = effect.targets[0];
+    const scalings = (techs: number[]) =>
+      contributions(line(target), island(), world({ techs }))
+        .filter((c) => c.source === 'tech')
+        .map((c) => c.scaling);
+    expect(scalings([repeatable.id])).toEqual([1]);
+    expect(scalings([repeatable.id, repeatable.id, repeatable.id])).toEqual([
+      3,
+    ]);
   });
 
   it('applies a researched tech once, and an island effect only to the buildings it targets', () => {

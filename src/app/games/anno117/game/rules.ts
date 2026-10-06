@@ -118,9 +118,10 @@ export function buffContributions(
   for (const itemId of line.items) {
     const item = itemsById.get(itemId);
     if (!item || !item.targets.includes(line.building)) continue;
-    add('item', item.id, item.buffs);
-    if (line.boostedItems.includes(item.id))
-      add('boostedItem', item.id, item.boostBuffs ?? []);
+    // A boosted item's buffs take the place of the item's own; they do not come on top of them.
+    if (line.boostedItems.includes(item.id) && item.boostBuffs?.length)
+      add('boostedItem', item.id, item.boostBuffs);
+    else add('item', item.id, item.buffs);
   }
 
   // Effects, each counted once even if it is reachable in two ways.
@@ -132,9 +133,11 @@ export function buffContributions(
     seen.add(effectId);
     add(source, effect.id, effect.buffs, scaling);
   };
-  for (const techId of world.techs) {
-    for (const effectId of techsById.get(techId)?.effects ?? [])
-      addEffect('tech', effectId, 1);
+  // A repeatable tech researched several times acts that many times over.
+  for (const [techId, times] of researchedTimes(world.techs)) {
+    const tech = techsById.get(techId);
+    for (const effectId of tech?.effects ?? [])
+      addEffect('tech', effectId, tech?.repeatable ? times : 1);
   }
   for (const effectId of island.effects) addEffect('effect', effectId, 1);
   const patron =
@@ -147,6 +150,13 @@ export function buffContributions(
     );
   }
   return result;
+}
+
+/** How many times each tech was researched (a repeatable one can be listed more than once). */
+function researchedTimes(techs: readonly number[]): Map<number, number> {
+  const times = new Map<number, number>();
+  for (const id of techs) times.set(id, (times.get(id) ?? 0) + 1);
+  return times;
 }
 
 /**

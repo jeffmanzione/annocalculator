@@ -127,6 +127,8 @@ export interface Anno117Tech {
   effects: number[];
   /** Fertility buffs the tech gives instead of productivity. */
   areaBuffs?: number[];
+  /** Can be researched again and again, each time adding its effect once more. */
+  repeatable?: true;
 }
 
 export interface Anno117Patron {

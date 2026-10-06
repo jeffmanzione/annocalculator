@@ -9,10 +9,11 @@ import {
 import {
   counterpart,
   factoriesForSession,
+  MAX_TECH_LEVEL,
   regionOfSession,
   WorldStore117,
 } from './world-store-117';
-import { factoriesById } from '../game/data';
+import { anno117Data, factoriesById } from '../game/data';
 
 // Ids: 3174 Bakery (Roman) and 5960 Bakery (Celtic); 2693 Wheat Farm (Roman), which can have an aqueduct;
 // 2793 Pig Farm (Roman), which can have a silo; item 160057 is for the Celtic Narcissium (5615) only.
@@ -188,6 +189,25 @@ describe('WorldStore117', () => {
     expect(
       factoriesById.get(store.productionLines().get(11)!.building)!.regions,
     ).toContain('Celtic');
+  });
+
+  it('keeps a level for a repeatable discovery and none for the others', () => {
+    const repeatable = anno117Data.techs.find((t) => t.repeatable)!.id;
+    const store = WorldStore117.fromWorld({ islands: [], tradeRoutes: [] });
+    store.setTechLevel(repeatable, 3);
+    store.setTech(38708, true);
+    store.setTech(38708, true);
+    expect(store.techs()).toEqual(
+      [38708, repeatable, repeatable, repeatable].sort((a, b) => a - b),
+    );
+    expect(store.oneTimeTechs()).toEqual([38708]);
+    // Choosing the one-time discoveries again leaves the level alone.
+    store.setOneTimeTechs([]);
+    expect(store.techs()).toEqual([repeatable, repeatable, repeatable]);
+    store.setTechLevel(repeatable, 0);
+    expect(store.techs()).toEqual([]);
+    store.setTechLevel(repeatable, 1000);
+    expect(store.techs().length).toBe(MAX_TECH_LEVEL);
   });
 
   it('researches and un-researches techs once each', () => {

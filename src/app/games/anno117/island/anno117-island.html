@@ -124,6 +124,16 @@
               [iconUrlLookupFn]="productIcon"
               [displayTextTransformer]="productName"
               [tooltip]="goodTooltip"></enum-row>
+            @for (use of line.extraConsumption; track use.good) {
+              <div class="extra-good">
+                <enum-row
+                  [values]="[use.good]"
+                  [iconUrlLookupFn]="productIcon"
+                  [displayTextTransformer]="productName"
+                  [tooltip]="goodTooltip"></enum-row>
+                <formatted-number [value]="use.perMinute" suffix="/m"></formatted-number>
+              </div>
+            }
           </td>
           <td class="goods-field">
             <enum-row

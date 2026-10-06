@@ -20,8 +20,21 @@
             [iconUrlLookupFn]="techIcon"
             [displayTextTransformer]="techName"
             [tooltip]="techTooltip"
-            [ngModel]="world.techs"
+            [ngModel]="world.oneTimeTechs"
             (ngModelChange)="setTechs($event)"></enum-select>
+          @for (tech of repeatableTechs; track tech.id) {
+            <mat-form-field class="repeatable-tech">
+              <mat-label>{{ techName(tech.id) }}</mat-label>
+              <input
+                matInput
+                type="number"
+                min="0"
+                [max]="maxTechLevel"
+                [attr.aria-label]="'repeatable-tech-' + tech.id"
+                [ngModel]="world.techLevel(tech.id)"
+                (ngModelChange)="setTechLevel(tech.id, $event)" />
+            </mat-form-field>
+          }
         </card-content>
       </card>
     </section>

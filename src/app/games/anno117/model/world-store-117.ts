@@ -1,4 +1,4 @@
-import { signal, WritableSignal } from '@angular/core';
+import { computed, signal, Signal, WritableSignal } from '@angular/core';
 import {
   BaseWorldStore,
   EntityId,
@@ -7,7 +7,7 @@ import {
   StoredIsland,
   StoredLine,
 } from '../../../shared/engine/base-world-store';
-import { anno117Data, factoriesById, itemsById } from '../game/data';
+import { anno117Data, factoriesById, itemsById, techsById } from '../game/data';
 import { Anno117Factory } from '../game/data-types';
 import {
   ALBION,
@@ -57,8 +57,23 @@ function tidyLine<L extends ProductionLine117>(line: L): L {
   return tidy;
 }
 
-const SAVED_TECHS = (techs: readonly number[]) =>
-  [...new Set(techs)].sort((a, b) => a - b);
+/** The most times a repeatable discovery can be researched here. */
+export const MAX_TECH_LEVEL = 99;
+
+/** Techs as they are kept and saved: sorted, each once, except a repeatable one that is listed once per time researched. */
+const SAVED_TECHS = (techs: readonly number[]) => {
+  const times = new Map<number, number>();
+  for (const id of techs) times.set(id, (times.get(id) ?? 0) + 1);
+  return [...times.keys()]
+    .sort((a, b) => a - b)
+    .flatMap((id) =>
+      Array<number>(
+        techsById.get(id)?.repeatable
+          ? Math.min(times.get(id)!, MAX_TECH_LEVEL)
+          : 1,
+      ).fill(id),
+    );
+};
 
 /**
  * The Anno 117 calculator's world: islands, production lines and trade routes (see BaseWorldStore),
@@ -70,6 +85,10 @@ export class WorldStore117 extends BaseWorldStore<
   TradeRoute117
 > {
   readonly techs: WritableSignal<number[]>;
+  /** The techs that are researched once or not at all (not the repeatable ones, which have a level). */
+  readonly oneTimeTechs: Signal<number[]> = computed(() =>
+    [...new Set(this.techs())].filter((id) => !techsById.get(id)?.repeatable),
+  );
 
   private constructor(
     islands: Map<EntityId, StoredIsland<Island117>>,
@@ -151,9 +170,30 @@ export class WorldStore117 extends BaseWorldStore<
     });
   }
 
+  /** Replaces the techs researched once, leaving the levels of the repeatable ones as they are. */
+  setOneTimeTechs(ids: readonly number[]): void {
+    this.techs.update((techs) =>
+      SAVED_TECHS([
+        ...ids.filter((id) => !techsById.get(id)?.repeatable),
+        ...techs.filter((id) => techsById.get(id)?.repeatable),
+      ]),
+    );
+  }
+
   /** Replaces the researched techs. */
   setTechs(ids: readonly number[]): void {
     this.techs.set(SAVED_TECHS(ids));
+  }
+
+  /** How many times a repeatable discovery was researched. */
+  setTechLevel(id: number, level: number): void {
+    const times = Math.max(0, Math.min(MAX_TECH_LEVEL, Math.trunc(level) || 0));
+    this.techs.update((techs) =>
+      SAVED_TECHS([
+        ...techs.filter((t) => t !== id),
+        ...Array<number>(times).fill(id),
+      ]),
+    );
   }
 
   /** Marks a tech researched or not. */

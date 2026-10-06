@@ -75,7 +75,15 @@ export function efficiencyConstituents(
   let base = 0;
   let bonus = 0;
   for (const c of line.contributions) {
-    const detail = describeSource(c.source, c.sourceId, language);
+    const described = describeSource(c.source, c.sourceId, language);
+    // A repeatable discovery researched several times counts that many times.
+    const detail =
+      c.source === 'tech' && c.scaling > 1
+        ? {
+            ...described,
+            description: `${described.description} x${c.scaling}`,
+          }
+        : described;
     const baseValue = ((c.buff.baseProductivity ?? 0) * c.scaling) / 100;
     const bonusValue = ((c.buff.productivity ?? 0) * c.scaling) / 100;
     base += baseValue;

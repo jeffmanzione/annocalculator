@@ -5412,7 +5412,8 @@
       "id": 37870,
       "name": { "en": "Beneath Bedrock", "de": "Die Tiefen des Berges", "zh": "基岩之下" },
       "icon": "slot_mountain.webp",
-      "effects": [82017]
+      "effects": [82017],
+      "repeatable": true
     },
     {
       "id": 82032,
