@@ -43,14 +43,19 @@ try {
   if (!args.has('--skip-build')) run('npm', ['run', 'build']);
 
   const files = fs.readdirSync(DIST);
-  const hashed = files.filter((f) => /^(main|styles)-[A-Z0-9]+\.(js|css)$/.test(f));
-  if (hashed.length !== 2) throw new Error(`Expected one main and one styles bundle in ${DIST}, found: ${hashed.join(', ')}`);
-  if (!fs.readFileSync(path.join(DIST, hashed.find((f) => f.startsWith('main'))), 'utf8').includes(`"${version}"`))
+  const bundles = files.filter((f) => /^(main|styles)-[A-Z0-9]+\.(js|css)$/.test(f));
+  if (bundles.length !== 2) throw new Error(`Expected one main and one styles bundle in ${DIST}, found: ${bundles.join(', ')}`);
+  // Pages loaded on demand (such as the Anno 117 calculator) are separate chunks, named by content like the bundles.
+  const chunks = files.filter((f) => /^chunk-[A-Z0-9]+\.js$/.test(f));
+  const hashed = [...bundles, ...chunks];
+  if (!fs.readFileSync(path.join(DIST, bundles.find((f) => f.startsWith('main'))), 'utf8').includes(`"${version}"`))
     throw new Error(`The build in ${DIST} does not contain version ${version}: rebuild.`);
 
   const previous = awsOut('s3api', 'head-object', '--bucket', BUCKET, '--key', 'index.html', '--query', 'VersionId', '--output', 'text');
   console.log(`Rollback target (current index.html version): ${previous}`);
 
+  // The bundles and chunks go up first: the old page keeps working while they land, and the new
+  // index.html below only points at files that already exist.
   const types = { '.js': 'application/javascript', '.css': 'text/css' };
   for (const file of hashed) {
     const args = ['s3', 'cp', path.join(DIST, file), `s3://${BUCKET}/${file}`, '--cache-control', 'public,max-age=31536000,immutable', '--content-type', types[path.extname(file)]];
@@ -58,7 +63,7 @@ try {
     aws(...args);
   }
   // Fonts, icons and the like: unchanged most releases, so only differences go up.
-  aws('s3', 'sync', DIST, `s3://${BUCKET}`, '--exclude', 'index.html', '--exclude', 'main-*', '--exclude', 'styles-*', ...(dryRun ? ['--dryrun'] : []));
+  aws('s3', 'sync', DIST, `s3://${BUCKET}`, '--exclude', 'index.html', '--exclude', 'main-*', '--exclude', 'styles-*', '--exclude', 'chunk-*', ...(dryRun ? ['--dryrun'] : []));
   aws('s3', 'cp', path.join(DIST, 'index.html'), `s3://${BUCKET}/index.html`, '--cache-control', 'no-cache', '--content-type', 'text/html', ...(dryRun ? ['--dryrun'] : []));
 
   if (dryRun) {
@@ -68,7 +73,7 @@ try {
     console.log(`Invalidating CloudFront (${invalidation})...`);
     aws('cloudfront', 'wait', 'invalidation-completed', '--distribution-id', DISTRIBUTION_ID, '--id', invalidation);
     const live = await (await fetch(SITE)).text();
-    const missing = hashed.filter((f) => !live.includes(f));
+    const missing = bundles.filter((f) => !live.includes(f));
     if (missing.length) throw new Error(`${SITE} is not serving ${missing.join(', ')} yet.`);
     console.log(`Done: ${SITE} is serving ${version}. To roll back, restore index.html version ${previous} and invalidate again.`);
   }

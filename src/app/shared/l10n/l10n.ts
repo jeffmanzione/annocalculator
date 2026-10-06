@@ -1,5 +1,6 @@
 export type L10nKey =
-  | 'Calculator'
+  | 'Anno 1800'
+  | 'Anno 117'
   | 'About'
   | 'Default Actions'
   | 'Global Parameters'
@@ -112,11 +113,17 @@ export type Localizations = {
 };
 
 export const localizations: Localizations = {
-  Calculator: {
-    En: 'Calculator',
-    De: 'Rechner',
-    Nl: 'Rekenmachine',
-    Zh: '计算器',
+  'Anno 1800': {
+    En: 'Anno 1800',
+    De: 'Anno 1800',
+    Nl: 'Anno 1800',
+    Zh: '纪元 1800',
+  },
+  'Anno 117': {
+    En: 'Anno 117',
+    De: 'Anno 117',
+    Nl: 'Anno 117',
+    Zh: '纪元 117',
   },
   About: {
     En: 'About',
