@@ -1,0 +1,38 @@
+<section class="global-parameters-section">
+  <card presentation="accent">
+    <card-title><span textLoc="Default Actions"></span></card-title>
+    <card-content class="buttons-container">
+      @for (action of actions(); track action) {
+        <ac-button [icon]="action.icon" [tooltip]="action.tooltip" (action)="action.fn()"></ac-button>
+      }
+    </card-content>
+  </card>
+  <card class="global-parameters-card">
+    <card-title><span textLoc="Global Parameters"></span></card-title>
+    <card-content>
+      <ng-content select="[globalParameters]"></ng-content>
+    </card-content>
+  </card>
+</section>
+<section class="island-list-section">
+  <mat-accordion multi>
+    @for (island of islands(); track island.id) {
+      <mat-expansion-panel [expanded]="true">
+        <div class="underlay"></div>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <mat-icon>flag</mat-icon>
+            {{ island.name }}
+          </mat-panel-title>
+          <mat-panel-description>
+            <ac-button class="delete-island-button" icon="delete" (click)="removeIsland.emit(island.id)"></ac-button>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <ng-container *ngTemplateOutlet="islandTemplate(); context: { $implicit: island }"></ng-container>
+      </mat-expansion-panel>
+    }
+  </mat-accordion>
+</section>
+<section class="add-island-button-section">
+  <ac-button appearance="filled" color="primary" icon="add" text="Add Island" (click)="addIsland.emit()"></ac-button>
+</section>

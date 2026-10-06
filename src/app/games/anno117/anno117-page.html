@@ -1,76 +1,44 @@
-<div class="column left-column">
-  @if (world) {
-    <section class="global-parameters-section">
-      <card presentation="accent">
-        <card-title><span textLoc="Default Actions"></span></card-title>
-        <card-content class="buttons-container">
-          @for (action of defaultActions; track action) {
-            <ac-button [icon]="action.icon" [tooltip]="action.tooltip" (action)="action.fn()"></ac-button>
-          }
-        </card-content>
-      </card>
-      <card class="global-parameters-card">
-        <card-title><span textLoc="Global Parameters"></span></card-title>
-        <card-content>
-          <div class="discoveries-row">
-            <enum-select
-              class="discoveries-select"
-              label="Discoveries"
-              [multiple]="true"
-              [options]="techChoices"
-              [iconUrlLookupFn]="techIcon"
-              [displayTextTransformer]="techName"
-              [tooltip]="techTooltip"
-              [ngModel]="world.oneTimeTechs"
-              (ngModelChange)="setTechs($event)"></enum-select>
-            @for (tech of repeatableTechs; track tech.id) {
-              <stepper-input
-                class="repeatable-tech"
-                commit="change"
-                suffix="%"
-                [label]="techName(tech.id)"
-                [ariaLabel]="'repeatable-tech-' + tech.id"
-                [step]="techStep(tech.id)"
-                [max]="maxTechLevel * techStep(tech.id)"
-                [ngModel]="techPercent(tech.id)"
-                (ngModelChange)="setTechPercent(tech.id, $event)"></stepper-input>
-            }
-          </div>
-        </card-content>
-      </card>
-    </section>
-  }
-  <section class="island-list-section">
-    @if (world) {
-      <mat-accordion multi>
-        @for (island of world.islands; track island.id) {
-          <mat-expansion-panel [expanded]="true">
-            <div class="underlay"></div>
-            <mat-expansion-panel-header>
-              <mat-panel-title>
-                <mat-icon>flag</mat-icon>
-                {{ island.name }}
-              </mat-panel-title>
-              <mat-panel-description>
-                <ac-button class="delete-island-button" icon="delete" (click)="removeIsland(island.id)"></ac-button>
-              </mat-panel-description>
-            </mat-expansion-panel-header>
-            <anno-117-island [controller]="island"></anno-117-island>
-          </mat-expansion-panel>
-        }
-      </mat-accordion>
-    }
-  </section>
-  <section class="add-island-button-section">
-    <ac-button appearance="filled" color="primary" icon="add" text="Add Island" (click)="addIsland()"></ac-button>
-  </section>
-</div>
-<div class="column right-column">
-  @if (world) {
+@if (world) {
+  <calculator-column
+    class="column left-column"
+    [actions]="defaultActions"
+    [islands]="world.islands"
+    [islandTemplate]="islandEditor"
+    (addIsland)="addIsland()"
+    (removeIsland)="removeIsland($event)">
+    <div globalParameters class="discoveries-row">
+      <enum-select
+        class="discoveries-select"
+        label="Discoveries"
+        [multiple]="true"
+        [options]="techChoices"
+        [iconUrlLookupFn]="techIcon"
+        [displayTextTransformer]="techName"
+        [tooltip]="techTooltip"
+        [ngModel]="world.oneTimeTechs"
+        (ngModelChange)="setTechs($event)"></enum-select>
+      @for (tech of repeatableTechs; track tech.id) {
+        <stepper-input
+          class="repeatable-tech"
+          commit="change"
+          suffix="%"
+          [label]="techName(tech.id)"
+          [ariaLabel]="'repeatable-tech-' + tech.id"
+          [step]="techStep(tech.id)"
+          [max]="maxTechLevel * techStep(tech.id)"
+          [ngModel]="techPercent(tech.id)"
+          (ngModelChange)="setTechPercent(tech.id, $event)"></stepper-input>
+      }
+    </div>
+  </calculator-column>
+  <div class="column right-column">
     <summary-panel [world]="world"></summary-panel>
     <trade-routes-panel [world]="world"></trade-routes-panel>
-  }
-</div>
+  </div>
+}
+<ng-template #islandEditor let-island>
+  <anno-117-island [controller]="island"></anno-117-island>
+</ng-template>
 <ng-template #techTooltip let-value="value">
   <anno-117-tooltip kind="tech" [value]="value"></anno-117-tooltip>
 </ng-template>

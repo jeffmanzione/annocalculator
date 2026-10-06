@@ -1,39 +1,20 @@
-import { Clipboard } from '@angular/cdk/clipboard';
 import {
   ChangeDetectionStrategy,
   Component,
-  effect,
   inject,
-  Injector,
   OnInit,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import {
-  MatDialog,
-  MatDialogConfig,
-  MatDialogModule,
-} from '@angular/material/dialog';
-import { MatExpansionModule } from '@angular/material/expansion';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
-import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
-import { AcButton } from '../../components/button/button';
-import { CardModule } from '../../components/card/card';
 import { EnumSelect } from '../../components/enum-select/enum-select';
 import { StepperInput } from '../../components/stepper-input/stepper-input';
-import { L10nText } from '../../components/text/text';
-import {
-  SaveData,
-  SaveDialog,
-} from '../../pages/production-calculator/save-dialog/save-dialog';
+import { CalculatorColumn } from '../../pages/production-calculator/calculator-column/calculator-column';
+import { CalculatorPage } from '../../pages/production-calculator/calculator-page';
 import { SummaryPanel } from '../../pages/production-calculator/summary-panel/summary-panel';
 import { TradeRoutesPanel } from '../../pages/production-calculator/trade-routes-panel/trade-routes-panel';
 import { L10nService } from '../../services/l10n/l10n';
-import {
-  LocalStorageManager,
-  StorageItem,
-} from '../../services/local-storage/local-storage';
-import { L10nKey } from '../../shared/l10n/l10n';
+import { LocalStorageManager } from '../../services/local-storage/local-storage';
 import { GAME } from '../game';
 import { anno117Game, iconUrl, nameIn } from './anno117-game';
 import { anno117Data, buffsById, effectsById, techsById } from './game/data';
@@ -55,18 +36,13 @@ import { MAX_TECH_LEVEL, WorldStore117 } from './model/world-store-117';
 @Component({
   selector: 'anno-117-page',
   imports: [
-    AcButton,
     Anno117Tooltip,
     Anno117Island,
-    CardModule,
+    CalculatorColumn,
     EnumSelect,
     FormsModule,
-    L10nText,
-    MatDialogModule,
-    MatExpansionModule,
-    MatIconModule,
-    StepperInput,
     MatSnackBarModule,
+    StepperInput,
     SummaryPanel,
     TradeRoutesPanel,
   ],
@@ -82,47 +58,36 @@ import { MAX_TECH_LEVEL, WorldStore117 } from './model/world-store-117';
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class Anno117Page implements OnInit {
-  readonly defaultActions: {
-    icon: string;
-    fn: () => void;
-    tooltip: L10nKey;
-  }[] = [
-    {
-      icon: 'content_copy',
-      fn: () => this.copyJsonToClipboard_(),
-      tooltip: 'Copy the JSON representation of your inputs to your clipboard.',
-    },
-    {
-      icon: 'edit_square',
-      fn: () => this.openSaveDialog_(),
-      tooltip: 'Manually edit the JSON inputs.',
-    },
-    {
-      icon: 'refresh',
-      fn: () => this.setWorldAndReload_(defaultWorld117),
-      tooltip: 'Reset the inputs to a default example.',
-    },
-    {
-      icon: 'delete',
-      fn: () => this.setWorldAndReload_({ islands: [], tradeRoutes: [] }),
-      tooltip: 'Completely clear the inputs.',
-    },
-  ];
-
+export class Anno117Page extends CalculatorPage<Save117> implements OnInit {
   /** The world's source of truth, built once for the life of the page (import, reset and clear reload it). */
   private store_!: WorldStore117;
   world!: World117Controller;
 
-  private readonly injector_ = inject(Injector);
-  private readonly matDialog_ = inject(MatDialog);
-  private readonly clipboard_ = inject(Clipboard);
   private readonly snackBar_ = inject(MatSnackBar);
   private readonly l10n_ = inject(L10nService);
-  private readonly worldStorage_: StorageItem<Save117>;
 
   constructor(storageManager: LocalStorageManager) {
-    this.worldStorage_ = storageManager.lookupObjectItem(WORLD_KEY_117);
+    super(storageManager, WORLD_KEY_117);
+  }
+
+  protected override currentSave_(): Save117 {
+    return saveOf(this.store_.toWorld());
+  }
+  protected override defaultSave_(): Save117 {
+    return saveOf(defaultWorld117);
+  }
+  protected override emptySave_(): Save117 {
+    return saveOf({ islands: [], tradeRoutes: [] });
+  }
+  protected override readSave_(edited: Save117): Save117 {
+    return saveOf(worldFromSave(edited));
+  }
+  protected override rejectSave_(error: unknown): void {
+    const message =
+      error instanceof InvalidSaveError
+        ? error.message
+        : 'This is not an Anno 117 world.';
+    this.snackBar_.open(message, 'OK', { duration: 8000 });
   }
 
   // --- Choices for the discoveries ---
@@ -143,10 +108,7 @@ export class Anno117Page implements OnInit {
   ngOnInit(): void {
     this.store_ = WorldStore117.fromWorld(this.loadWorld_());
     this.world = new World117Controller(this.store_);
-    // Save whenever anything changes (this also runs once on load).
-    effect(() => this.worldStorage_.set(saveOf(this.store_.toWorld())), {
-      injector: this.injector_,
-    });
+    this.persistWhenChanged_();
   }
 
   /** The saved world, or the starter world for a first visit or if what is stored cannot be read. */
@@ -189,40 +151,5 @@ export class Anno117Page implements OnInit {
 
   removeIsland(id: number): void {
     this.world.removeIsland(id);
-  }
-
-  // --- Default actions ---
-
-  private setWorldAndReload_(world: World117): void {
-    this.worldStorage_.set(saveOf(world));
-    globalThis.location.reload();
-  }
-
-  private copyJsonToClipboard_(): void {
-    this.clipboard_.copy(JSON.stringify(saveOf(this.store_.toWorld())));
-  }
-
-  private openSaveDialog_(): void {
-    const config: MatDialogConfig<SaveData<Save117>> = {
-      data: { obj: saveOf(this.store_.toWorld()) },
-      width: '600px',
-      height: '700px',
-    };
-    this.matDialog_
-      .open(SaveDialog, config)
-      .afterClosed()
-      .subscribe((result) => {
-        if (!result) return;
-        try {
-          // Checked before anything is stored, so a world from the wrong game or a typo cannot break the page.
-          this.setWorldAndReload_(worldFromSave(result));
-        } catch (error) {
-          const message =
-            error instanceof InvalidSaveError
-              ? error.message
-              : 'This is not an Anno 117 world.';
-          this.snackBar_.open(message, 'OK', { duration: 8000 });
-        }
-      });
   }
 }

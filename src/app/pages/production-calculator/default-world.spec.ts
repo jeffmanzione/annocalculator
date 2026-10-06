@@ -1,6 +1,9 @@
 import { Good, Item, Region } from '../../games/anno1800/game/enums';
 import { anno1800Game } from '../../games/anno1800/anno1800-game';
-import { lookupItemInfo, lookupProductionInfo } from '../../games/anno1800/game/facts';
+import {
+  lookupItemInfo,
+  lookupProductionInfo,
+} from '../../games/anno1800/game/facts';
 import { viewOf } from '../../shared/mvc/test-worlds';
 import { defaultWorld } from './default-world';
 import {

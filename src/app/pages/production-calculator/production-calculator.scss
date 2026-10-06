@@ -1,4 +1,5 @@
-@use '../../../anno-palette' as anno;
+// Layout shared by both games' calculator pages: the left column (a calculator-column, with its own
+// styles) beside the right column with the summary and the trade routes.
 :host {
   display: flex;
   flex-direction: row;
@@ -20,72 +21,13 @@
   flex-direction: column;
 }
 
-.global-parameters-section {
-  padding-bottom: 16px;
-  display: flex;
-  flex-direction: row;
-
-  card {
-    margin-right: 16px;
-
-    &:last-child {
-      margin-right: 0;
-    }
-  }
-}
-
-.global-parameters-card {
-  flex: 1;
-}
-
 // Just wide enough for the longest option ("25 (+60%)") and its icon.
 .palace-select {
   display: block;
   width: 180px;
 }
 
-.buttons-container {
-  display: flex;
-  height: 100%;
-
-  ac-button {
-    margin: auto 4px;
-  }
-
-  background-color: anno.$parchment-lightest;
-  border-radius: 8px;
-  border: rgba(anno.$ink, 0.4) solid 1px;
-}
-
-.island-list-section {
-  flex: 1;
-  overflow-x: hidden;
-  height: 100%;
-  position: relative;
-}
-
-mat-accordion {
-  width: 100%;
-  position: absolute;
-
-  mat-expansion-panel {
-    div.underlay {
-      z-index: 0;
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-image: url(/anno_1800_logo.png);
-      background-size: 300px;
-      background-repeat: space;
-      opacity: 5%;
-    }
-  }
-}
-
-mat-panel-title,
-mat-panel-description,
+// Above the background logo that each island's panel has behind it.
 island,
 anno-117-island {
   position: relative;
@@ -107,24 +49,6 @@ anno-117-island {
   trade-routes-panel {
     flex: 1;
   }
-}
-
-.delete-island-button {
-  display: flex;
-  margin-left: auto;
-  order: 2;
-  ::ng-deep {
-    button {
-      margin: auto;
-    }
-  }
-}
-
-.add-island-button-section {
-  // A rule with a lit edge, like an engraved divider on the page.
-  border-top: 2px solid rgba(anno.$ink, 0.35);
-  box-shadow: inset 0 1px 0 rgba(anno.$parchment-lightest, 0.6);
-  padding-top: 16px;
 }
 
 // Anno 117's discoveries: the list and the level of the repeatable one, side by side.
