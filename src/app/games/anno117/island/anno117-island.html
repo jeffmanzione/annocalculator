@@ -71,8 +71,7 @@
         <th class="goods"><span textLoc="Inputs"></span></th>
         <th class="goods"><span textLoc="Output"></span></th>
         <th class="items"><span textLoc="Items"></span></th>
-        <th class="check"><span textLoc="Aqueduct"></span></th>
-        <th class="check"><span textLoc="Silo"></span></th>
+        <th class="modules"><span textLoc="Modules"></span></th>
         <th class="computed"><span textLoc="Efficiency"></span></th>
         <th class="computed"><span textLoc="Building Process Time"></span></th>
         <th class="computed"><span textLoc="Goods per Minute"></span></th>
@@ -156,19 +155,21 @@
                 (ngModelChange)="line.boostedItems = $event"></enum-select>
             }
           </td>
-          <td class="checkbox-field">
+          <td class="modules-field">
             <mat-checkbox
               aria-label="aqueduct"
               [disabled]="!line.canHaveAqueduct"
               [ngModel]="line.aqueduct"
-              (ngModelChange)="line.aqueduct = $event"></mat-checkbox>
-          </td>
-          <td class="checkbox-field">
+              (ngModelChange)="line.aqueduct = $event">
+              <span textLoc="Aqueduct"></span>
+            </mat-checkbox>
             <mat-checkbox
               aria-label="silo"
               [disabled]="!line.canHaveSilo"
               [ngModel]="line.silo"
-              (ngModelChange)="line.silo = $event"></mat-checkbox>
+              (ngModelChange)="line.silo = $event">
+              <span textLoc="Silo"></span>
+            </mat-checkbox>
           </td>
           <td class="computed-field">
             <composite-number

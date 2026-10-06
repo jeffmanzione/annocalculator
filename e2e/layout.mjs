@@ -129,6 +129,58 @@ for (const width of WIDTHS) {
   await page.close();
 }
 
+// The Anno 117 page: no header word wider than its column, no value clipped, and the island's table
+// fits the panel without scrolling sideways, in every language.
+for (const width of WIDTHS) {
+  const page = await browser.newPage({ viewport: { width, height: 1100 } });
+  await page.goto(`${server.url}/anno-117`);
+  await page.waitForSelector('anno-117-island');
+  await settle(page);
+
+  for (const language of LANGUAGES) {
+    if (language !== 'EN') {
+      await page.locator('mat-toolbar mat-select').click();
+      await page.getByRole('option', { name: language, exact: true }).click();
+      await settle(page);
+    }
+    const problems = await page.evaluate(() => {
+      const found = [];
+      for (const table of document.querySelectorAll('anno-117-island table')) {
+        const measure = (th, word) => {
+          const probe = document.createElement('span');
+          const style = getComputedStyle(th);
+          probe.style.cssText = `position:absolute;visibility:hidden;white-space:nowrap;font:${style.font};letter-spacing:${style.letterSpacing}`;
+          probe.textContent = word;
+          document.body.appendChild(probe);
+          const widthPx = probe.getBoundingClientRect().width;
+          probe.remove();
+          return widthPx;
+        };
+        for (const th of table.querySelectorAll('th')) {
+          const available = th.clientWidth - 8;
+          const text = (th.textContent || '').trim();
+          const pieces = /[㐀-鿿]/.test(text) ? [text] : text.split(/[\s­]+/);
+          for (const piece of pieces) {
+            if (piece && measure(th, piece) > available + 0.5) {
+              found.push(`header "${piece}" is wider than its column (${Math.round(available)}px)`);
+            }
+          }
+        }
+        for (const td of table.querySelectorAll('td.computed-field, td.goods-field')) {
+          if (td.scrollWidth > td.clientWidth + 1) found.push(`value "${td.textContent.trim()}" is clipped`);
+        }
+        const scroller = table.closest('.table-scroll');
+        if (scroller && scroller.scrollWidth > scroller.clientWidth + 1) found.push('the table scrolls sideways');
+      }
+      return [...new Set(found)];
+    });
+    const ok = problems.length === 0;
+    console.log(`${ok ? 'PASS' : 'FAIL'}  ${String(width).padEnd(4)} ${language.padEnd(2)} (Anno 117)${ok ? '' : '  -- ' + problems.join('; ')}`);
+    if (!ok) failures++;
+  }
+  await page.close();
+}
+
 await browser.close();
 await server.close();
 

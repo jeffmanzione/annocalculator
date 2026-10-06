@@ -7,6 +7,7 @@ export type L10nKey =
   | 'Events'
   | 'Missing Fertilities'
   | 'Aqueduct'
+  | 'Modules'
   | 'Silo'
   | 'Boosted Items'
   | 'Discoveries'
@@ -165,6 +166,12 @@ export const localizations: Localizations = {
     De: 'Fehlende Fruchtbarkeiten',
     Nl: 'Ontbrekende vruchtbaarheden',
     Zh: '缺少的肥力',
+  },
+  Modules: {
+    En: 'Modules',
+    De: 'Module',
+    Nl: 'Modules',
+    Zh: '模块',
   },
   'Aqueduct': {
     En: 'Aqueduct',

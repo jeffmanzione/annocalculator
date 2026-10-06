@@ -88,19 +88,32 @@ table.lines-table {
   }
 
   th.count {
-    width: 5.75rem;
+    width: 5.25rem;
   }
 
   th.goods {
-    width: 7.25rem;
+    width: 6rem;
+  }
+
+  th.modules {
+    width: 6.5rem;
   }
 
   th.check {
-    width: 4rem;
+    width: 3.5rem;
   }
 
   th.computed {
-    width: 5rem;
+    width: 4.5rem;
+  }
+
+  td.modules-field {
+    text-align: left;
+    font-size: 0.85em;
+  }
+
+  td.modules-field mat-checkbox {
+    margin: 0;
   }
 
   td.goods-field,
