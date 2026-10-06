@@ -1,6 +1,17 @@
 export type L10nKey =
   | 'Anno 1800'
   | 'Anno 117'
+  | 'Province'
+  | 'Patron'
+  | 'Devotion'
+  | 'Events'
+  | 'Missing Fertilities'
+  | 'Aqueduct'
+  | 'Silo'
+  | 'Boosted Items'
+  | 'Discoveries'
+  | 'Fertility'
+  | 'Combined Bonuses'
   | 'About'
   | 'Default Actions'
   | 'Global Parameters'
@@ -124,6 +135,72 @@ export const localizations: Localizations = {
     De: 'Anno 117',
     Nl: 'Anno 117',
     Zh: '纪元 117',
+  },
+  'Province': {
+    En: 'Province',
+    De: 'Provinz',
+    Nl: 'Provincie',
+    Zh: '行省',
+  },
+  'Patron': {
+    En: 'Patron',
+    De: 'Schutzgottheit',
+    Nl: 'Beschermgod',
+    Zh: '守护神',
+  },
+  'Devotion': {
+    En: 'Devotion',
+    De: 'Hingabe',
+    Nl: 'Toewijding',
+    Zh: '虔诚度',
+  },
+  'Events': {
+    En: 'Events',
+    De: 'Ereignisse',
+    Nl: 'Gebeurtenissen',
+    Zh: '事件',
+  },
+  'Missing Fertilities': {
+    En: 'Missing Fertilities',
+    De: 'Fehlende Fruchtbarkeiten',
+    Nl: 'Ontbrekende vruchtbaarheden',
+    Zh: '缺少的肥力',
+  },
+  'Aqueduct': {
+    En: 'Aqueduct',
+    De: 'Aquädukt',
+    Nl: 'Aquaduct',
+    Zh: '水道',
+  },
+  'Silo': {
+    En: 'Silo',
+    De: 'Silo',
+    Nl: 'Silo',
+    Zh: '筒仓',
+  },
+  'Boosted Items': {
+    En: 'Boosted Items',
+    De: 'Verstärkte Gegenstände',
+    Nl: 'Versterkte voorwerpen',
+    Zh: '强化物品',
+  },
+  'Discoveries': {
+    En: 'Discoveries',
+    De: 'Entdeckungen',
+    Nl: 'Ontdekkingen',
+    Zh: '发现',
+  },
+  'Fertility': {
+    En: 'Fertility',
+    De: 'Fruchtbarkeit',
+    Nl: 'Vruchtbaarheid',
+    Zh: '肥力',
+  },
+  'Combined Bonuses': {
+    En: 'Combined Bonuses',
+    De: 'Kombinierte Boni',
+    Nl: 'Gecombineerde bonussen',
+    Zh: '加成叠加',
   },
   About: {
     En: 'About',

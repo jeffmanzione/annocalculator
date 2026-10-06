@@ -48,7 +48,9 @@ try {
   // Pages loaded on demand (such as the Anno 117 calculator) are separate chunks, named by content like the bundles.
   const chunks = files.filter((f) => /^chunk-[A-Z0-9]+\.js$/.test(f));
   const hashed = [...bundles, ...chunks];
-  if (!fs.readFileSync(path.join(DIST, bundles.find((f) => f.startsWith('main'))), 'utf8').includes(`"${version}"`))
+  // The version is shown in the toolbar; which file the bundler puts it in can change, so look in all of them.
+  const scripts = hashed.filter((f) => f.endsWith('.js'));
+  if (!scripts.some((f) => fs.readFileSync(path.join(DIST, f), 'utf8').includes(`"${version}"`)))
     throw new Error(`The build in ${DIST} does not contain version ${version}: rebuild.`);
 
   const previous = awsOut('s3api', 'head-object', '--bucket', BUCKET, '--key', 'index.html', '--query', 'VersionId', '--output', 'text');

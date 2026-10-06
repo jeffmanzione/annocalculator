@@ -151,6 +151,11 @@ export class WorldStore117 extends BaseWorldStore<
     });
   }
 
+  /** Replaces the researched techs. */
+  setTechs(ids: readonly number[]): void {
+    this.techs.set(SAVED_TECHS(ids));
+  }
+
   /** Marks a tech researched or not. */
   setTech(id: number, researched: boolean): void {
     this.techs.update((techs) =>

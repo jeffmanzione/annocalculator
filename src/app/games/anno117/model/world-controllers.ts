@@ -18,6 +18,12 @@ import { Island117, ProductionLine117, TradeRoute117 } from './models';
 import { regionOfSession, WorldStore117 } from './world-store-117';
 import { anno117Data } from '../game/data';
 
+/**
+ * What a list of ids reads as when nothing is set. It is one shared array, not a new [] on every read: a
+ * form control that is handed a new array each time believes the value changed and writes it back, forever.
+ */
+const NO_IDS: number[] = Object.freeze([]) as unknown as number[];
+
 /** The id a product has as a "good" in the shared calculator pieces. */
 export const goodIdOf = (product: number): GoodId => String(product);
 
@@ -65,7 +71,7 @@ export class Line117Controller {
   }
 
   get items(): number[] {
-    return this.line.items ?? [];
+    return this.line.items ?? NO_IDS;
   }
   set items(value: number[]) {
     const boosted = this.boostedItems.filter((id) => value.includes(id));
@@ -76,7 +82,7 @@ export class Line117Controller {
   }
 
   get boostedItems(): number[] {
-    return this.line.boostedItems ?? [];
+    return this.line.boostedItems ?? NO_IDS;
   }
   set boostedItems(value: number[]) {
     this.store.updateProductionLine(this.id, { boostedItems: value });
@@ -223,10 +229,10 @@ export function islandSettingsOf(
   >,
 ): IslandSettings {
   return {
-    missingFertilities: island.missingFertilities ?? [],
+    missingFertilities: island.missingFertilities ?? NO_IDS,
     patron: island.patron ?? null,
     devotion: island.devotion ?? 0,
-    effects: island.effects ?? [],
+    effects: island.effects ?? NO_IDS,
   };
 }
 
@@ -261,7 +267,7 @@ export class Island117Controller {
   }
 
   get missingFertilities(): number[] {
-    return this.island.missingFertilities ?? [];
+    return this.island.missingFertilities ?? NO_IDS;
   }
   set missingFertilities(value: number[]) {
     this.store.updateIsland(this.id, { missingFertilities: value });
@@ -284,7 +290,7 @@ export class Island117Controller {
   }
 
   get effects(): number[] {
-    return this.island.effects ?? [];
+    return this.island.effects ?? NO_IDS;
   }
   set effects(value: number[]) {
     this.store.updateIsland(this.id, { effects: value });
@@ -368,6 +374,9 @@ export class World117Controller {
 
   get techs(): number[] {
     return this.store.techs();
+  }
+  set techs(value: number[]) {
+    this.store.setTechs(value);
   }
 
   setTech(id: number, researched: boolean): void {

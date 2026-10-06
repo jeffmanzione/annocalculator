@@ -1,0 +1,177 @@
+@use 'sass:color';
+@use '../../../../theme-colors';
+@use '../../../../anno-palette' as anno;
+
+// The Anno 117 island editor: the same parchment-and-slate look as the Anno 1800 island tables.
+
+section {
+  margin: 10px 0 0 0;
+
+  &:first-child {
+    margin-top: 0;
+  }
+}
+
+.select-row {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.island-name-field {
+  padding: 4px 4px 4px 0;
+}
+
+.island-select {
+  padding: 4px;
+  min-width: 11rem;
+
+  &.wide {
+    flex: 1;
+    min-width: 14rem;
+  }
+}
+
+.devotion-field {
+  padding: 4px;
+  width: 8rem;
+}
+
+.table-scroll {
+  overflow-x: auto;
+}
+
+table.lines-table {
+  border-collapse: collapse;
+  width: 100%;
+
+  th,
+  td {
+    padding: 4px;
+    text-align: center;
+  }
+
+  th {
+    overflow-wrap: normal;
+    word-break: keep-all;
+    letter-spacing: -0.5px;
+    background: linear-gradient(to bottom, anno.$slate-light, anno.$slate);
+    color: anno.$parchment-lighter;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.45);
+    font-weight: 500;
+    height: 30px;
+  }
+
+  td {
+    background-color: color.scale(theme-colors.$table-bg-color, $lightness: -3%);
+    background-image: linear-gradient(to bottom, rgba(255, 242, 199, 0.3), rgba(255, 242, 199, 0) 45%);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 242, 199, 0.4),
+      inset 0 -1px 0 rgba(anno.$ink, 0.16);
+  }
+
+  tr:hover > td {
+    background-color: color.scale(theme-colors.$table-bg-color, $lightness: 2%);
+  }
+
+  // Fixed columns for what is a number or an icon, so that the table keeps its shape as the numbers
+  // change; the two selects share what is left and shorten their text.
+  table-layout: fixed;
+  // Narrower than this, the table scrolls sideways instead of squeezing its columns.
+  min-width: 60rem;
+
+  th.building {
+    width: 21%;
+  }
+
+  th.items {
+    width: 21%;
+  }
+
+  th.count {
+    width: 5.75rem;
+  }
+
+  th.goods {
+    width: 7.25rem;
+  }
+
+  th.check {
+    width: 4rem;
+  }
+
+  th.computed {
+    width: 5rem;
+  }
+
+  td.goods-field,
+  td.computed-field {
+    font-variant-numeric: tabular-nums;
+  }
+
+  td.computed-field {
+    white-space: nowrap;
+  }
+
+  .boosted-items {
+    display: block;
+    margin-top: 6px;
+  }
+
+  mat-form-field {
+    width: 100%;
+  }
+}
+
+mat-checkbox {
+  display: table;
+  margin: auto;
+}
+
+.extra-good {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  font-size: 0.85em;
+}
+
+// The count's arrows, themed like the dropdown arrows.
+input[aria-label='numBuildings'] {
+  appearance: textfield;
+}
+
+.count-steppers {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-right: 6px;
+}
+
+.count-step {
+  all: unset;
+  box-sizing: border-box;
+  width: 16px;
+  height: 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &::after {
+    content: '';
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+  }
+
+  &-up::after {
+    border-bottom: 6px solid anno.$ink-muted;
+  }
+
+  &-down::after {
+    border-top: 6px solid anno.$ink-muted;
+  }
+
+  &:hover::after {
+    filter: brightness(0.6);
+  }
+}

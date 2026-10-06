@@ -1,0 +1,195 @@
+@let island = controller();
+<section class="select-row">
+  <mat-form-field class="island-name-field">
+    <mat-label textLoc="Island Name"></mat-label>
+    <input matInput type="text" aria-label="name" [ngModel]="island.name" (ngModelChange)="island.name = $event" />
+  </mat-form-field>
+  <enum-select
+    class="island-select"
+    label="Province"
+    [options]="provinces"
+    [iconUrlLookupFn]="sessionIcon"
+    [displayTextTransformer]="sessionName"
+    [ngModel]="island.session"
+    (ngModelChange)="island.session = $event"></enum-select>
+  <enum-select
+    class="island-select"
+    label="Patron"
+    [options]="patronChoices"
+    [iconUrlLookupFn]="patronIcon"
+    [displayTextTransformer]="patronName"
+    [ngModel]="patronValue"
+    (ngModelChange)="setPatron($event)"></enum-select>
+  @if (island.patron) {
+    <mat-form-field class="devotion-field">
+      <mat-label textLoc="Devotion"></mat-label>
+      <input
+        matInput
+        type="number"
+        min="0"
+        step="50"
+        aria-label="devotion"
+        [ngModel]="island.devotion"
+        (ngModelChange)="setDevotion($event)" />
+    </mat-form-field>
+  }
+</section>
+<section class="select-row">
+  <enum-select
+    class="island-select wide"
+    label="Events"
+    [multiple]="true"
+    [options]="effectChoices()"
+    [iconUrlLookupFn]="effectIcon"
+    [displayTextTransformer]="effectName"
+    [ngModel]="island.effects"
+    (ngModelChange)="island.effects = $event"></enum-select>
+  <enum-select
+    class="island-select wide"
+    label="Missing Fertilities"
+    [multiple]="true"
+    [options]="fertilityChoices()"
+    [iconUrlLookupFn]="fertilityIcon"
+    [displayTextTransformer]="fertilityName"
+    [ngModel]="island.missingFertilities"
+    (ngModelChange)="island.missingFertilities = $event"></enum-select>
+</section>
+<section>
+  <ac-button
+    appearance="filled"
+    color="primary"
+    icon="add"
+    text="Add Production Line"
+    (action)="addProductionLine()"></ac-button>
+</section>
+<section class="table-scroll">
+  <table class="lines-table">
+    <thead>
+      <tr>
+        <th class="building"><span textLoc="Building"></span></th>
+        <th class="count"><span textLoc="Count"></span></th>
+        <th class="goods"><span textLoc="Inputs"></span></th>
+        <th class="goods"><span textLoc="Output"></span></th>
+        <th class="items"><span textLoc="Items"></span></th>
+        <th class="check"><span textLoc="Aqueduct"></span></th>
+        <th class="check"><span textLoc="Silo"></span></th>
+        <th class="computed"><span textLoc="Efficiency"></span></th>
+        <th class="computed"><span textLoc="Building Process Time"></span></th>
+        <th class="computed"><span textLoc="Goods per Minute"></span></th>
+        <th class="check"><span textLoc="Remove"></span></th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (line of island.productionLines; track line.id) {
+        <tr>
+          <td>
+            <enum-select
+              [options]="buildingChoices()"
+              [iconUrlLookupFn]="buildingIcon"
+              [displayTextTransformer]="buildingName"
+              [ngModel]="line.building"
+              (ngModelChange)="setBuilding(line, $event)"></enum-select>
+          </td>
+          <td class="building-count">
+            <mat-form-field>
+              <input
+                matInput
+                type="text"
+                inputmode="numeric"
+                aria-label="numBuildings"
+                [ngModel]="line.numBuildings"
+                (ngModelChange)="setNumBuildings(line, $event)" />
+              <span matSuffix class="count-steppers">
+                <button
+                  type="button"
+                  tabindex="-1"
+                  class="count-step count-step-up"
+                  aria-label="Increase count"
+                  (click)="stepNumBuildings(line, 1)"></button>
+                <button
+                  type="button"
+                  tabindex="-1"
+                  class="count-step count-step-down"
+                  aria-label="Decrease count"
+                  (click)="stepNumBuildings(line, -1)"></button>
+              </span>
+            </mat-form-field>
+          </td>
+          <td class="goods-field">
+            <enum-row
+              [values]="line.inputGoods"
+              [iconUrlLookupFn]="productIcon"
+              [displayTextTransformer]="productName"></enum-row>
+          </td>
+          <td class="goods-field">
+            <enum-row
+              [values]="[line.good]"
+              [iconUrlLookupFn]="productIcon"
+              [displayTextTransformer]="productName"></enum-row>
+            @for (extra of otherExtraGoods(line); track extra.good) {
+              <div class="extra-good">
+                <enum-row
+                  [values]="[extra.good]"
+                  [iconUrlLookupFn]="productIcon"
+                  [displayTextTransformer]="productName"></enum-row>
+                <formatted-number [value]="extra.producedPerMinute" suffix="/m"></formatted-number>
+              </div>
+            }
+          </td>
+          <td>
+            <enum-select
+              [multiple]="true"
+              [options]="itemChoices(line)"
+              [iconUrlLookupFn]="itemIcon"
+              [displayTextTransformer]="itemName"
+              [ngModel]="line.items"
+              (ngModelChange)="line.items = $event"></enum-select>
+            @if (boostableItems(line).length) {
+              <enum-select
+                class="boosted-items"
+                label="Boosted Items"
+                [multiple]="true"
+                [options]="boostableItems(line)"
+                [iconUrlLookupFn]="itemIcon"
+                [displayTextTransformer]="itemName"
+                [ngModel]="line.boostedItems"
+                (ngModelChange)="line.boostedItems = $event"></enum-select>
+            }
+          </td>
+          <td class="checkbox-field">
+            <mat-checkbox
+              aria-label="aqueduct"
+              [disabled]="!line.canHaveAqueduct"
+              [ngModel]="line.aqueduct"
+              (ngModelChange)="line.aqueduct = $event"></mat-checkbox>
+          </td>
+          <td class="checkbox-field">
+            <mat-checkbox
+              aria-label="silo"
+              [disabled]="!line.canHaveSilo"
+              [ngModel]="line.silo"
+              (ngModelChange)="line.silo = $event"></mat-checkbox>
+          </td>
+          <td class="computed-field">
+            <composite-number
+              [constituentValues]="efficiencyOf(line)"
+              [showPlusIfPositive]="true"
+              [isPercent]="true"></composite-number>
+          </td>
+          <td class="computed-field">
+            <formatted-number [value]="line.processTimeSeconds" suffix="s"></formatted-number>
+          </td>
+          <td class="computed-field">
+            <composite-number
+              [constituentValues]="producedOf(line)"
+              [showPlusIfPositive]="true"
+              suffix="/m"></composite-number>
+          </td>
+          <td class="remove-field">
+            <ac-button icon="delete" (action)="removeProductionLine(line)"></ac-button>
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</section>
