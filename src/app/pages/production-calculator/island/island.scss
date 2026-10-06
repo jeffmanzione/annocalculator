@@ -137,6 +137,10 @@ table.production-lines-table {
     }
   }
 
+  tr:hover > td {
+    background-color: color.scale(theme-colors.$table-bg-color, $lightness: 2%);
+  }
+
   // --- Production lines ---
   @include flex-columns(
     (

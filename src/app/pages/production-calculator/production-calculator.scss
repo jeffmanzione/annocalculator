@@ -151,7 +151,16 @@ anno-117-island {
 .repeatable-tech {
   @include count-stepper.count-stepper;
 
+  // Only the count-style arrows, not the browser's own that appear on hover.
   input[type='number'] {
     appearance: textfield;
+    -moz-appearance: textfield;
+
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      appearance: none;
+      margin: 0;
+    }
   }
 }
