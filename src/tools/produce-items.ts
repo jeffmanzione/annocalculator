@@ -5,8 +5,8 @@ import {
   ProductionBuilding,
   Good,
   Item,
-} from '../app/shared/game/enums';
-import { ItemInfo } from '../app/shared/game/facts';
+} from '../app/games/anno1800/game/enums';
+import { ItemInfo } from '../app/games/anno1800/game/facts';
 
 // --- Helper to map strings to Enum values ---
 function getEnumValue<T>(enumObj: T, value: string): T[keyof T] | undefined {

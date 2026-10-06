@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { EnumTooltip } from '../../../../../components/enum-tooltip/enum-tooltip';
-import { Boost } from '../../../../../shared/game/enums';
-import { BoostInfo, lookupBoostInfo } from '../../../../../shared/game/facts';
+import { Boost } from '../../../../../games/anno1800/game/enums';
+import { BoostInfo, lookupBoostInfo } from '../../../../../games/anno1800/game/facts';
 
-import { lookupBoostIconUrl } from '../../../../../shared/game/icons';
+import { lookupBoostIconUrl } from '../../../../../games/anno1800/game/icons';
 import { L10nText } from '../../../../../components/text/text';
 
 @Component({

@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { EnumTooltip } from '../../../../../components/enum-tooltip/enum-tooltip';
-import { DepartmentOfLaborPolicy } from '../../../../../shared/game/enums';
+import { DepartmentOfLaborPolicy } from '../../../../../games/anno1800/game/enums';
 
-import { lookupPolicyIconUrl } from '../../../../../shared/game/icons';
-import { lookupPolicyInfo, PolicyInfo } from '../../../../../shared/game/facts';
+import { lookupPolicyIconUrl } from '../../../../../games/anno1800/game/icons';
+import { lookupPolicyInfo, PolicyInfo } from '../../../../../games/anno1800/game/facts';
 import { L10nText } from '../../../../../components/text/text';
 
 @Component({

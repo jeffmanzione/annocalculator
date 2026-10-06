@@ -7,7 +7,7 @@ import {
   Region,
   Item,
   CulturalSet,
-} from '../game/enums';
+} from '../../games/anno1800/game/enums';
 import {
   improvedByLandReformAct,
   improvedBySkilledLaborAct,
@@ -17,14 +17,14 @@ import {
   buildingSupportsElectricity,
   lookupBoostInfo,
   lookupCulturalSetInfo,
-} from '../game/facts';
+} from '../../games/anno1800/game/facts';
 import {
   lookupBoostIconUrl,
   lookupCulturalSetIconUrl,
   lookupHaciendaFertilizerWorksIconUrl,
   lookupItemIconUrl,
   lookupPolicyIconUrl,
-} from '../game/icons';
+} from '../../games/anno1800/game/icons';
 import {
   DEFAULT_ISLAND_MODEL,
   DEFAULT_PRODUCTION_LINE_MODEL,

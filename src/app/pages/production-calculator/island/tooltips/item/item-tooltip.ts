@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { EnumTooltip } from '../../../../../components/enum-tooltip/enum-tooltip';
-import { Good, Item, Rarity } from '../../../../../shared/game/enums';
-import { ItemInfo, lookupItemInfo } from '../../../../../shared/game/facts';
+import { Good, Item, Rarity } from '../../../../../games/anno1800/game/enums';
+import { ItemInfo, lookupItemInfo } from '../../../../../games/anno1800/game/facts';
 import { CommonModule } from '@angular/common';
-import { lookupGoodIconUrl } from '../../../../../shared/game/icons';
+import { lookupGoodIconUrl } from '../../../../../games/anno1800/game/icons';
 import { L10nText } from '../../../../../components/text/text';
 import { L10nKey } from '../../../../../shared/l10n/l10n';
 

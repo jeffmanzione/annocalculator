@@ -1,12 +1,12 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { EnumTooltip } from '../../../../../components/enum-tooltip/enum-tooltip';
-import { CulturalSet, Good } from '../../../../../shared/game/enums';
+import { CulturalSet, Good } from '../../../../../games/anno1800/game/enums';
 import {
   CulturalSetInfo,
   lookupCulturalSetInfo,
-} from '../../../../../shared/game/facts';
+} from '../../../../../games/anno1800/game/facts';
 
-import { lookupGoodIconUrl } from '../../../../../shared/game/icons';
+import { lookupGoodIconUrl } from '../../../../../games/anno1800/game/icons';
 import { L10nText } from '../../../../../components/text/text';
 import { L10nKey } from '../../../../../shared/l10n/l10n';
 

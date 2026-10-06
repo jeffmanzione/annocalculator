@@ -4,7 +4,7 @@ import {
   Item,
   ProductionBuilding,
   Region,
-} from '../game/enums';
+} from '../../games/anno1800/game/enums';
 import { World } from './models';
 import { arrayEqualsAsSet, resolveInputGoods, WorldStore } from './world-store';
 

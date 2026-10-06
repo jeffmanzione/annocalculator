@@ -1,4 +1,4 @@
-import { Good } from '../../../shared/game/enums';
+import { Good } from '../../../games/anno1800/game/enums';
 import { IslandId, TradeRoute } from '../../../shared/mvc/models';
 
 /**

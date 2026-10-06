@@ -21,12 +21,12 @@ import {
   FormattedNumber,
   GREEN_RED_FONT_SPEC,
 } from '../../../components/formatted-number/formatted-number';
-import { Good } from '../../../shared/game/enums';
+import { Good } from '../../../games/anno1800/game/enums';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { EnumRow } from '../../../components/enum-row/enum-row';
-import { lookupGoodIconUrl } from '../../../shared/game/icons';
+import { lookupGoodIconUrl } from '../../../games/anno1800/game/icons';
 import { L10nText } from '../../../components/text/text';
 import {
   availableProduction as computeAvailableProduction,

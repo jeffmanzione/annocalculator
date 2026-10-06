@@ -42,7 +42,7 @@ import { EnumSelect } from '../../components/enum-select/enum-select';
 import {
   MAX_PALACE_PRESTIGE_LEVEL,
   palaceTradeUnionBonus,
-} from '../../shared/game/palace';
+} from '../../games/anno1800/game/palace';
 
 /** The form's value for "no Palace" (a select can't hold null as a choice). */
 const NO_PALACE = -1;

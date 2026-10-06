@@ -1,5 +1,5 @@
-import { ProductionBuilding, Good } from '../app/shared/game/enums';
-import { lookupProductionInfo, buildingInfo } from '../app/shared/game/facts';
+import { ProductionBuilding, Good } from '../app/games/anno1800/game/enums';
+import { lookupProductionInfo, buildingInfo } from '../app/games/anno1800/game/facts';
 
 console.log('All buildings without a production chain:');
 for (const building of Object.values(ProductionBuilding)) {

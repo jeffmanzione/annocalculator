@@ -1,4 +1,4 @@
-import { ExtraGood } from '../mvc/models';
+import { ExtraGood } from '../../../shared/mvc/models';
 import {
   ProductionBuilding,
   ProductionType,

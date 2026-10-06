@@ -1,15 +1,15 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { EnumTooltip } from '../../../../../components/enum-tooltip/enum-tooltip';
-import { Good, ProductionBuilding } from '../../../../../shared/game/enums';
+import { Good, ProductionBuilding } from '../../../../../games/anno1800/game/enums';
 import {
   ProductionInfo,
   lookupProductionInfo,
-} from '../../../../../shared/game/facts';
+} from '../../../../../games/anno1800/game/facts';
 
 import {
   lookupBuildingIconUrl,
   lookupGoodIconUrl,
-} from '../../../../../shared/game/icons';
+} from '../../../../../games/anno1800/game/icons';
 import { L10nText } from '../../../../../components/text/text';
 
 @Component({

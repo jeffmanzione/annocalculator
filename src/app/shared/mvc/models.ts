@@ -6,7 +6,7 @@ import {
   DepartmentOfLaborPolicy,
   Item,
   CulturalSet,
-} from '../game/enums';
+} from '../../games/anno1800/game/enums';
 
 // Marker interface for all models.
 export interface Model {}

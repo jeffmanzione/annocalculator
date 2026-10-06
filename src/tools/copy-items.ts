@@ -1,5 +1,5 @@
-import * as itemsJson from '../app/shared/data/items.json' with { type: 'json' };
-import { ItemInfo } from '../app/shared/game/facts';
+import * as itemsJson from '../app/games/anno1800/data/items.json' with { type: 'json' };
+import { ItemInfo } from '../app/games/anno1800/game/facts';
 import { createWriteStream, writeFile } from 'node:fs';
 import { Readable } from 'node:stream';
 import { finished } from 'node:stream/promises';

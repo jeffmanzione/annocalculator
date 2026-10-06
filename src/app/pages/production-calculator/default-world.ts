@@ -3,7 +3,7 @@ import {
   Item,
   ProductionBuilding,
   Region,
-} from '../../shared/game/enums';
+} from '../../games/anno1800/game/enums';
 import { World } from '../../shared/mvc/models';
 
 /**

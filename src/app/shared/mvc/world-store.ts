@@ -13,12 +13,12 @@ import {
   TradeRouteId,
   World,
 } from './models';
-import { Good, Item, ProductionBuilding } from '../game/enums';
-import { lookupItemInfo, lookupProductionInfo } from '../game/facts';
+import { Good, Item, ProductionBuilding } from '../../games/anno1800/game/enums';
+import { lookupItemInfo, lookupProductionInfo } from '../../games/anno1800/game/facts';
 import {
   palacePrestigeLevelForBonus,
   palaceTradeUnionBonus,
-} from '../game/palace';
+} from '../../games/anno1800/game/palace';
 
 // Helpers below were moved here from controllers.ts (now deleted), their
 // last remaining consumer being this file.

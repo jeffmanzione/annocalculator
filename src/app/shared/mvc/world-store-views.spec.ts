@@ -3,7 +3,7 @@ import {
   Good,
   Item,
   ProductionBuilding,
-} from '../game/enums';
+} from '../../games/anno1800/game/enums';
 import { defaultWorld } from '../../pages/production-calculator/default-world';
 import { WorldStore } from './world-store';
 import { StoreWorldView } from './world-store-views';

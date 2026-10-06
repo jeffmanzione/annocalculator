@@ -6,7 +6,7 @@ import {
   Item,
   ProductionBuilding,
   Region,
-} from '../game/enums';
+} from '../../games/anno1800/game/enums';
 import { World } from './models';
 import { WorldStore } from './world-store';
 import { StoreWorldView } from './world-store-views';

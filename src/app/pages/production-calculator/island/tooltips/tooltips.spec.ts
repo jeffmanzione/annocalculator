@@ -10,7 +10,7 @@ import {
   Good,
   Item,
   ProductionBuilding,
-} from '../../../../shared/game/enums';
+} from '../../../../games/anno1800/game/enums';
 import { BoostTooltip } from './boost/boost-tooltip';
 import { ProductionBuildingTooltip } from './building/building-tooltip';
 import { CulturalSetTooltip } from './cultural-set/cultural-set-tooltip';

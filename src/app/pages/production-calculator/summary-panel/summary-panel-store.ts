@@ -1,4 +1,4 @@
-import { Boost, Good, Region } from '../../../shared/game/enums';
+import { Boost, Good, Region } from '../../../games/anno1800/game/enums';
 import { IslandId } from '../../../shared/mvc/models';
 import { ReadonlyTable, Table } from '../../../../tools/table';
 

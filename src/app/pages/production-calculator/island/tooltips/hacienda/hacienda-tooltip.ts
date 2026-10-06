@@ -1,10 +1,10 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { EnumTooltip } from '../../../../../components/enum-tooltip/enum-tooltip';
-import { Boost, Good } from '../../../../../shared/game/enums';
+import { Boost, Good } from '../../../../../games/anno1800/game/enums';
 import {
   lookupGoodIconUrl,
   lookupHaciendaFertilizerWorksIconUrl,
-} from '../../../../../shared/game/icons';
+} from '../../../../../games/anno1800/game/icons';
 import { L10nKey } from '../../../../../shared/l10n/l10n';
 import { L10nText } from '../../../../../components/text/text';
 

@@ -11,14 +11,14 @@ import {
   Item,
   ProductionBuilding,
   Region,
-} from '../../../shared/game/enums';
+} from '../../../games/anno1800/game/enums';
 import {
   requiresElectricity,
   lookupAllowedBoosts,
   lookupAllowedItems,
   producesDung,
   lookupAllowedCulturalSets,
-} from '../../../shared/game/facts';
+} from '../../../games/anno1800/game/facts';
 import { NumberConstituent } from '../../../components/composite-number/composite-number';
 import { computed, Signal, signal } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';

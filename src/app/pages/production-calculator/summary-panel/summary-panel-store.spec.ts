@@ -1,4 +1,4 @@
-import { Good } from '../../../shared/game/enums';
+import { Good } from '../../../games/anno1800/game/enums';
 import { featureWorld, round, viewOf } from '../../../shared/mvc/test-worlds';
 import { World } from '../../../shared/mvc/models';
 import { defaultWorld } from '../default-world';

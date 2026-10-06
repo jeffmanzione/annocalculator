@@ -1,6 +1,6 @@
 import { provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Good, Region } from '../../../shared/game/enums';
+import { Good, Region } from '../../../games/anno1800/game/enums';
 import { GoodSummaryCell, GoodSummaryRow } from './summary-panel-store';
 import { SummaryWarning } from './summary-warning';
 

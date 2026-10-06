@@ -9,8 +9,8 @@ import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angul
 import { StoreWorldController } from '../../../shared/mvc/world-store-controllers';
 import { MatTableModule } from '@angular/material/table';
 import { MatSelectModule } from '@angular/material/select';
-import { Good } from '../../../shared/game/enums';
-import { lookupGoodIconUrl } from '../../../shared/game/icons';
+import { Good } from '../../../games/anno1800/game/enums';
+import { lookupGoodIconUrl } from '../../../games/anno1800/game/icons';
 import { EnumSelect } from '../../../components/enum-select/enum-select';
 import { CardModule } from '../../../components/card/card';
 import { TradeRoute, TradeRouteId } from '../../../shared/mvc/models';

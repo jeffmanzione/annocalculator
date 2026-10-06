@@ -33,11 +33,11 @@ import {
   Item,
   AdministrativeBuilding,
   CulturalSet,
-} from '../../../shared/game/enums';
+} from '../../../games/anno1800/game/enums';
 import {
   lookupItemInfo,
   lookupProductionInfo,
-} from '../../../shared/game/facts';
+} from '../../../games/anno1800/game/facts';
 import {
   lookupBuildingIconUrl,
   lookupGoodIconUrl,
@@ -47,7 +47,7 @@ import {
   lookupItemIconUrl,
   lookupHaciendaFertilizerWorksIconUrl,
   lookupCulturalSetIconUrl,
-} from '../../../shared/game/icons';
+} from '../../../games/anno1800/game/icons';
 import { TextFieldModule } from '@angular/cdk/text-field';
 import { AcButton } from '../../../components/button/button';
 import { EnumRow } from '../../../components/enum-row/enum-row';

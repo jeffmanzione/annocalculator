@@ -3,7 +3,7 @@ import {
   goodsToIconUrl,
   policyToImageUrl,
   regionToImageUrl,
-} from '../app/shared/game/icons';
+} from '../app/games/anno1800/game/icons';
 import { createWriteStream, writeFile } from 'node:fs';
 import { Readable } from 'node:stream';
 import { finished } from 'node:stream/promises';

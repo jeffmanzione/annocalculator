@@ -1,11 +1,11 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { EnumTooltip } from '../../../../../components/enum-tooltip/enum-tooltip';
 import { L10nText } from '../../../../../components/text/text';
-import { Good, Item } from '../../../../../shared/game/enums';
+import { Good, Item } from '../../../../../games/anno1800/game/enums';
 import {
   lookupGoodIconUrl,
   lookupItemIconUrl,
-} from '../../../../../shared/game/icons';
+} from '../../../../../games/anno1800/game/icons';
 import { InputGoodSource } from '../../../../../shared/mvc/world-store';
 
 /**
