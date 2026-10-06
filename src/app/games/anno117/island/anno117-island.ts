@@ -4,6 +4,7 @@ import {
   computed,
   inject,
   input,
+  signal,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -42,7 +43,14 @@ import {
   Line117Controller,
 } from '../model/world-controllers';
 import { Anno117Tooltip } from '../tooltips/anno117-tooltip';
+import { TooltipKind } from '../tooltips/tooltip-model';
 import { factoriesForSession, regionOfSession } from '../model/world-store-117';
+
+/** What gives an extra output. */
+interface ExtraSource {
+  source: BuffSource;
+  sourceId: number;
+}
 
 /** The value of the "no patron" choice, which a select can hold where it cannot hold null. */
 const NO_PATRON = 0;
@@ -208,16 +216,64 @@ export class Anno117Island {
     return producedConstituents(line, this.l10n_.languageSignal());
   }
 
-  readonly sourceName = (name: string | null): string => name ?? '';
+  // The same object for the same source each time, so the row showing it is not rebuilt (which would
+  // lose a tooltip being hovered) every time the numbers are worked out again.
+  private readonly sourceValues_ = new Map<string, ExtraSource>();
 
-  /** The icon lookup for an extra output's source row (the row shows the source's name). */
-  sourceIcon(extra: { source: BuffSource; sourceId: number }) {
-    const icon = this.sourceOf(extra).iconUrl ?? '';
-    return () => icon;
+  /** The value an extra output's source is shown as. */
+  sourceValue(extra: ExtraSource): ExtraSource {
+    const key = `${extra.source}:${extra.sourceId}`;
+    let value = this.sourceValues_.get(key);
+    if (!value) {
+      value = { source: extra.source, sourceId: extra.sourceId };
+      this.sourceValues_.set(key, value);
+    }
+    return value;
+  }
+
+  readonly sourceName = (extra: ExtraSource | null): string =>
+    extra ? this.sourceOf(extra).description : '';
+  readonly sourceIcon = (extra: ExtraSource | null): string =>
+    (extra && this.sourceOf(extra).iconUrl) || '';
+
+  /** Which tooltip describes the source of an extra output. */
+  sourceKind(extra: ExtraSource): TooltipKind {
+    switch (extra.source) {
+      case 'item':
+      case 'boostedItem':
+        return 'item';
+      case 'aqueduct':
+      case 'silo':
+        return 'module';
+      default:
+        return 'effect';
+    }
+  }
+
+  // --- Showing and hiding a line's extra goods table (shown by default when it has any) ---
+
+  private readonly collapsedLines_ = signal<ReadonlySet<number>>(new Set());
+
+  showExtraGoods(line: Line117Controller): boolean {
+    return (
+      line.extraGoodRows.length > 0 && !this.collapsedLines_().has(line.id)
+    );
+  }
+
+  extraGoodsIcon(line: Line117Controller): string {
+    return this.showExtraGoods(line) ? 'arrow_drop_up' : 'arrow_drop_down';
+  }
+
+  toggleExtraGoods(line: Line117Controller): void {
+    this.collapsedLines_.update((collapsed) => {
+      const next = new Set(collapsed);
+      if (!next.delete(line.id)) next.add(line.id);
+      return next;
+    });
   }
 
   /** Where an extra output comes from, with its icon, in the language shown. */
-  sourceOf(extra: { source: BuffSource; sourceId: number }) {
+  sourceOf(extra: ExtraSource) {
     return describeSource(
       extra.source,
       extra.sourceId,

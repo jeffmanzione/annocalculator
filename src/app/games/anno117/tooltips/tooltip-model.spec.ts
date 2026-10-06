@@ -1,4 +1,5 @@
 import { Language } from '../../../shared/l10n/l10n';
+import { factoriesById } from '../game/data';
 import { TooltipModel, TooltipPart, tooltipModel } from './tooltip-model';
 
 // Ids: 3174 Bakery (Roman), 2069 Wheat, 160057 the Narcissium item, 80562 Mars, 38708 Better Bellows,
@@ -114,6 +115,22 @@ describe('tooltipModel', () => {
   it("uses the game's German names", () => {
     expect(tooltipModel('good', '2069', Language.De).name).toBe('Weizen');
     expect(tooltipModel('building', 3174, Language.De).name).toBe('Bäckerei');
+  });
+
+  it('describes a silo or an aqueduct by what it gives', () => {
+    const silo = tooltipModel(
+      'module',
+      factoriesById.get(2793)!.module!,
+      Language.En,
+    );
+    expect(silo.name).toBe('Silo');
+    expect(lines(silo)).toContain('<Productivity>: +100%');
+    const aqueduct = tooltipModel(
+      'module',
+      factoriesById.get(2693)!.aqueductBuff!,
+      Language.En,
+    );
+    expect(lines(aqueduct)).toEqual(['<Productivity>: +50%']);
   });
 
   it('is empty for nothing, so the tooltip shows nothing', () => {

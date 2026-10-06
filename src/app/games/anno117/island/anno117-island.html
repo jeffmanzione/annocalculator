@@ -71,6 +71,7 @@
       <tr>
         <th class="building"><span textLoc="Building"></span></th>
         <th class="count"><span textLoc="Count"></span></th>
+        <th class="extras"><span textLoc="Extras"></span></th>
         <th class="goods"><span textLoc="Inputs"></span></th>
         <th class="goods"><span textLoc="Output"></span></th>
         <th class="items"><span textLoc="Items"></span></th>
@@ -98,6 +99,11 @@
               ariaLabel="numBuildings"
               [ngModel]="line.numBuildings"
               (ngModelChange)="setNumBuildings(line, $event)"></stepper-input>
+          </td>
+          <td class="extras-field">
+            @if (line.extraGoodRows.length) {
+              <ac-button [icon]="extraGoodsIcon(line)" (action)="toggleExtraGoods(line)"></ac-button>
+            }
           </td>
           <td class="goods-field">
             <enum-row
@@ -180,9 +186,9 @@
             <ac-button icon="delete" (action)="removeProductionLine(line)"></ac-button>
           </td>
         </tr>
-        @if (line.extraGoodRows.length) {
+        @if (showExtraGoods(line)) {
           <tr class="extra-goods-tr">
-            <td colspan="10" class="extra-goods-cell">
+            <td colspan="11" class="extra-goods-cell">
               <div class="extra-goods-outer-container">
                 <div class="extra-goods-inner-container">
                   <table class="extra-goods-table">
@@ -208,9 +214,10 @@
                           </td>
                           <td>
                             <enum-row
-                              [values]="[sourceOf(extra).description]"
-                              [iconUrlLookupFn]="sourceIcon(extra)"
-                              [displayTextTransformer]="sourceName"></enum-row>
+                              [values]="[sourceValue(extra)]"
+                              [iconUrlLookupFn]="sourceIcon"
+                              [displayTextTransformer]="sourceName"
+                              [tooltip]="sourceTooltip"></enum-row>
                           </td>
                           <td class="numeric"><formatted-number [value]="extra.amount"></formatted-number></td>
                           <td class="numeric">/</td>
@@ -248,4 +255,7 @@
 </ng-template>
 <ng-template #fertilityTooltip let-value="value">
   <anno-117-tooltip kind="fertility" [value]="value"></anno-117-tooltip>
+</ng-template>
+<ng-template #sourceTooltip let-value="value">
+  <anno-117-tooltip [kind]="sourceKind(value)" [value]="value.sourceId"></anno-117-tooltip>
 </ng-template>

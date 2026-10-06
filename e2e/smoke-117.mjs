@@ -107,6 +107,35 @@ await levelInput.fill('0');
 await levelInput.press('Tab');
 await settle();
 
+// 6c. A line with extra output (a pig farm with a silo) has an Extras button and a table whose source has a tooltip.
+{
+  const withSilo = await saved();
+  withSilo.world.islands[0].productionLines.push({ id: 900, building: 2793, numBuildings: 2, silo: true });
+  await page.evaluate(([k, v]) => localStorage.setItem(k, JSON.stringify(v)), [KEY_117, withSilo]);
+  await page.reload();
+  await page.waitForSelector('anno-117-island');
+  await settle();
+  const table = () => islands().nth(0).locator('table.extra-goods-table');
+  check('extra goods are shown by default', (await table().count()) === 1);
+  await islands().nth(0).locator('td.extras-field ac-button').click();
+  await settle();
+  check('the Extras button hides them', (await table().count()) === 0);
+  await islands().nth(0).locator('td.extras-field ac-button').click();
+  await settle();
+  check('and shows them again', (await table().count()) === 1);
+  await table().locator('tbody td').nth(1).locator('.item-container').first().hover();
+  await page.waitForTimeout(800);
+  const sourceTip = (await page.locator('.tooltip-container').allInnerTexts()).join(' ').replace(/\s+/g, ' ');
+  check('the source has a tooltip', /Silo/.test(sourceTip) && /Productivity/.test(sourceTip), sourceTip);
+  await page.mouse.move(5, 5);
+  const restored = await saved();
+  restored.world.islands[0].productionLines = restored.world.islands[0].productionLines.filter((l) => l.id !== 900);
+  await page.evaluate(([k, v]) => localStorage.setItem(k, JSON.stringify(v)), [KEY_117, restored]);
+  await page.reload();
+  await page.waitForSelector('anno-117-island');
+  await settle();
+}
+
 // 7. The language follows into the goods' names (the game's own German name).
 const data = JSON.parse(fs.readFileSync(path.resolve('src/app/games/anno117/data/anno117-data.json'), 'utf8'));
 const wheat = data.products.find((p) => p.id === 2069);

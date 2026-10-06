@@ -29,7 +29,8 @@ export type TooltipKind =
   | 'effect'
   | 'tech'
   | 'patron'
-  | 'fertility';
+  | 'fertility'
+  | 'module';
 
 /** Lists longer than this are cut short, so that a good used everywhere does not make a page-long tooltip. */
 const MAX_ROWS = 10;
@@ -386,6 +387,21 @@ function fertilityModel(id: number, language: Language): TooltipModel {
   };
 }
 
+/** An aqueduct or a silo: what it gives a building. */
+function moduleModel(id: number, language: Language): TooltipModel {
+  const module = anno117Data.modules.find((m) => m.id === id);
+  const buff = module ? undefined : buffsById.get(id);
+  const thing = module ?? buff;
+  if (!thing) return { name: '', sections: [] };
+  const buffs = module ? module.buffs.map((b) => buffsById.get(b)) : [buff];
+  const rows = buffs.flatMap((b) => (b ? buffRows(b, language) : []));
+  return {
+    name: nameIn(thing.name, language),
+    icon: iconUrl(thing.icon) || undefined,
+    sections: rows.length ? [{ rows }] : [],
+  };
+}
+
 /** What the tooltip for a building, good, item, effect, discovery, patron or fertility says, in the language shown. */
 export function tooltipModel(
   kind: TooltipKind,
@@ -409,5 +425,7 @@ export function tooltipModel(
       return patronModel(Number(value), language);
     case 'fertility':
       return fertilityModel(Number(value), language);
+    case 'module':
+      return moduleModel(Number(value), language);
   }
 }
