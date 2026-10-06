@@ -1,15 +1,12 @@
-import { Good, Item, Region } from '../../games/anno1800/game/enums';
-import { anno1800Game } from '../../games/anno1800/anno1800-game';
-import {
-  lookupItemInfo,
-  lookupProductionInfo,
-} from '../../games/anno1800/game/facts';
-import { viewOf } from '../../shared/mvc/test-worlds';
+import { Good, Item, Region } from '../game/enums';
+import { anno1800Game } from '../anno1800-game';
+import { lookupItemInfo, lookupProductionInfo } from '../game/facts';
+import { viewOf } from './test-worlds';
 import { defaultWorld } from './default-world';
 import {
   availableProduction,
   computeGoodSummaryRows,
-} from './summary-panel/summary-panel-store';
+} from '../../../pages/calculator/summary-panel/summary-panel-store';
 
 // The default world is a newcomer's first impression and what "Reset" restores,
 // so these pin the qualities that make it a good starting point.

@@ -1,4 +1,4 @@
-import { ExtraGood } from '../../../shared/mvc/models';
+import { ExtraGood1800 } from '../model/models';
 import {
   ProductionBuilding,
   ProductionType,
@@ -36,7 +36,7 @@ export interface ItemInfo {
   rarity: Rarity;
   administrativeBuilding: AdministrativeBuilding;
   targets: ProductionBuilding[];
-  extraGoods?: ExtraGood[];
+  extraGoods?: ExtraGood1800[];
   replacementGoods?: { from: Good; to: Good }[];
   providesElectricity?: boolean;
   productivityEffect?: number;
@@ -46,7 +46,7 @@ export const items: ItemInfo[] = (itemsJson as any).default as ItemInfo[];
 
 export interface BoostInfo {
   productivityEffect?: number;
-  extraGood?: ExtraGood;
+  extraGood?: ExtraGood1800;
 }
 
 const boostInfoMap = new Map<Boost, BoostInfo>([
@@ -1597,7 +1597,7 @@ export interface CulturalSetInfo {
   set: CulturalSet;
   iconUrl: string;
   targets: ProductionBuilding[];
-  extraGoods?: ExtraGood[];
+  extraGoods?: ExtraGood1800[];
   productivityEffect?: number;
 }
 
@@ -1623,7 +1623,7 @@ export function lookupAllowedCulturalSets(
 
 export interface PolicyInfo {
   productivityEffect?: number;
-  extraGood?: ExtraGood;
+  extraGood?: ExtraGood1800;
 }
 
 const policyInfoMap = new Map<DepartmentOfLaborPolicy, PolicyInfo>([

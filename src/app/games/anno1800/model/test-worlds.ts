@@ -6,10 +6,10 @@ import {
   Item,
   ProductionBuilding,
   Region,
-} from '../../games/anno1800/game/enums';
-import { World } from './models';
-import { WorldStore } from './world-store';
-import { StoreWorldView } from './world-store-views';
+} from '../game/enums';
+import { World1800 } from './models';
+import { WorldStore1800 } from './world-store-1800';
+import { World1800View } from './world-views';
 
 // Fixtures shared by the characterization specs. Only used from *.spec.ts.
 
@@ -19,7 +19,7 @@ import { StoreWorldView } from './world-store-views';
  * Fertiliser Works, and the Land Reform / Skilled Labor / Galvanic Grants acts.
  * Ids are fixed so snapshots are stable.
  */
-export const featureWorld = (): World => ({
+export const featureWorld = (): World1800 => ({
   palacePrestigeLevel: 10,
   islands: [
     {
@@ -143,8 +143,8 @@ export const featureWorld = (): World => ({
   ],
 });
 
-export const viewOf = (world: World): StoreWorldView =>
-  new StoreWorldView(WorldStore.fromWorld(world));
+export const viewOf = (world: World1800): World1800View =>
+  new World1800View(WorldStore1800.fromWorld(world));
 
 /** Round to dodge floating-point noise in snapshots. */
 export const round = (n: number): number => Math.round(n * 1e6) / 1e6;

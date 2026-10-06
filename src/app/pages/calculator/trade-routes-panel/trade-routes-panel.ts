@@ -6,14 +6,19 @@ import {
   input,
   Signal,
 } from '@angular/core';
-import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormControl,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { MatTableModule } from '@angular/material/table';
 import { MatSelectModule } from '@angular/material/select';
 import { GAME, GoodId } from '../../../games/game';
 import { L10nService } from '../../../services/l10n/l10n';
 import { EnumSelect } from '../../../components/enum-select/enum-select';
 import { CardModule } from '../../../components/card/card';
-import { TradeRouteId } from '../../../shared/mvc/models';
+import { EntityId } from '../../../shared/engine/base-world-store';
 import { AcButton } from '../../../components/button/button';
 import { L10nText } from '../../../components/text/text';
 import {
@@ -27,7 +32,7 @@ import {
 
 /** A single trade-route table row: a stable form bound to one trade route, plus its currently-valid dropdown options. */
 interface TradeRouteRow {
-  id: TradeRouteId;
+  id: EntityId;
   formGroup: FormGroup<{
     sourceIslandId: FormControl<number | null>;
     targetIslandId: FormControl<number | null>;
@@ -78,7 +83,7 @@ export class TradeRoutesPanel {
   // on every change) so in-progress edits and open dropdowns aren't reset by
   // an unrelated change elsewhere, e.g. renaming an island.
   private readonly formGroups_ = new Map<
-    TradeRouteId,
+    EntityId,
     TradeRouteRow['formGroup']
   >();
 
@@ -105,15 +110,17 @@ export class TradeRoutesPanel {
     this.world().addTradeRoute();
   }
 
-  removeTradeRouteAt(id: TradeRouteId): void {
+  removeTradeRouteAt(id: EntityId): void {
     this.world().removeTradeRoute(id);
     this.formGroups_.delete(id);
   }
 
-  readonly lookupGoodIconUrl = (good: GoodId | null): string => this.game_.goodIconUrl(good);
+  readonly lookupGoodIconUrl = (good: GoodId | null): string =>
+    this.game_.goodIconUrl(good);
 
   /** The good's name in the current language. */
-  readonly goodName = (good: GoodId | null): string => this.game_.goodName(good, this.l10n_.languageSignal());
+  readonly goodName = (good: GoodId | null): string =>
+    this.game_.goodName(good, this.l10n_.languageSignal());
 
   private rowFor_(
     tradeRoute: TradeRouteEditor,
@@ -128,7 +135,9 @@ export class TradeRoutesPanel {
     };
   }
 
-  private formGroupFor_(tradeRoute: TradeRouteEditor): TradeRouteRow['formGroup'] {
+  private formGroupFor_(
+    tradeRoute: TradeRouteEditor,
+  ): TradeRouteRow['formGroup'] {
     const existing = this.formGroups_.get(tradeRoute.id);
     if (existing) {
       return existing;
@@ -146,7 +155,7 @@ export class TradeRoutesPanel {
   }
 
   private onRowEdited_(
-    id: TradeRouteId,
+    id: EntityId,
     value: Partial<{
       sourceIslandId: number | null;
       targetIslandId: number | null;

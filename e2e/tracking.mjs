@@ -56,7 +56,7 @@ async function openPage({ initScript } = {}) {
 {
   const { context, page, requests, errors } = await openPage();
   await page.goto(`${LIVE}/anno-1800-calculator`);
-  await page.waitForSelector('island');
+  await page.waitForSelector('anno-1800-island');
   await settle(page);
   const config = await page.evaluate(() => ({ no_onload: window.goatcounter?.no_onload, endpoint: window.goatcounter?.endpoint }));
   check('the counter script is loaded on the live address', requests.some((u) => u.includes('gc.zgo.at/count.js')));
@@ -83,7 +83,7 @@ for (const [label, initScript] of [
 ]) {
   const { context, page, requests } = await openPage({ initScript });
   await page.goto(`${LIVE}/anno-1800-calculator`);
-  await page.waitForSelector('island');
+  await page.waitForSelector('anno-1800-island');
   await settle(page);
   check(`${label} is not counted`, requests.length === 0, requests.join(' '));
   await context.close();
@@ -93,7 +93,7 @@ for (const [label, initScript] of [
 {
   const { context, page, requests } = await openPage();
   await page.goto(`${server.url}/anno-1800-calculator`);
-  await page.waitForSelector('island');
+  await page.waitForSelector('anno-1800-island');
   await settle(page);
   check('a local address is not counted', requests.length === 0, requests.join(' '));
   await context.close();

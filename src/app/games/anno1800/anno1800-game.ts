@@ -2,7 +2,7 @@ import { GameDefinition } from '../game';
 import {
   SummaryIslandSource,
   SummaryProductionLineSource,
-} from '../../pages/production-calculator/summary-panel/summary-panel-store';
+} from '../../pages/calculator/summary-panel/summary-panel-store';
 import { Boost, Good, Region } from './game/enums';
 import { lookupGoodIconUrl } from './game/icons';
 
@@ -10,11 +10,11 @@ import { lookupGoodIconUrl } from './game/icons';
 const BOOST_UPKEEP_PER_BUILDING = 0.2;
 
 /** The summary's view of a line, plus what the Anno 1800 upkeep rule reads. */
-interface Anno1800Line extends SummaryProductionLineSource {
+interface Anno1800LineSource extends SummaryProductionLineSource {
   boosts: Boost[];
 }
 
-interface Anno1800Island extends SummaryIslandSource {
+interface Anno1800IslandSource extends SummaryIslandSource {
   region: Region;
 }
 
@@ -29,7 +29,7 @@ export const anno1800Game: GameDefinition = {
   goodIconUrl: (good) =>
     lookupGoodIconUrl((good as Good | null | undefined) ?? Good.Unknown),
 
-  extraConsumption(line: Anno1800Line, island: Anno1800Island) {
+  extraConsumption(line: Anno1800LineSource, island: Anno1800IslandSource) {
     const upkeep: { good: Good; perMinute: number }[] = [];
     // Silo and Fertiliser upkeep: these boosts consume a good on their own, independent of what the
     // building's production line otherwise inputs.

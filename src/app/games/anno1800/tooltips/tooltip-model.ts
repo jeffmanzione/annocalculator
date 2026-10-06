@@ -5,8 +5,8 @@ import {
   TooltipSection,
 } from '../../../components/info-tooltip/tooltip-model';
 import { L10nKey } from '../../../shared/l10n/l10n';
-import { ExtraGood } from '../../../shared/mvc/models';
-import { InputGoodSource } from '../../../shared/mvc/world-store';
+import { ExtraGood1800 } from '../model/models';
+import { InputGoodSource } from '../model/world-store-1800';
 import {
   Boost,
   CulturalSet,
@@ -54,7 +54,7 @@ const RARITY_BACKGROUNDS: Record<string, string> = {
 const goodKey = (good: Good | undefined): L10nKey =>
   (good ?? 'Extra Goods') as unknown as L10nKey;
 
-const extraGoodRow = (extra: ExtraGood): TooltipRow => ({
+const extraGoodRow = (extra: ExtraGood1800): TooltipRow => ({
   icon: extra.good ? lookupGoodIconUrl(extra.good) : undefined,
   parts: [
     { key: goodKey(extra.good) },
@@ -109,7 +109,7 @@ function effectModel(
   icon: string | undefined,
   info: {
     productivityEffect?: number;
-    extraGood?: ExtraGood;
+    extraGood?: ExtraGood1800;
   },
 ): TooltipModel {
   const rows: TooltipRow[] = [];
@@ -246,7 +246,7 @@ export function anno1800TooltipModel(
                 good: Good.Dung,
                 rateNumerator: 1,
                 rateDenominator: 3,
-              } as ExtraGood),
+              } as ExtraGood1800),
             ],
           },
         ],

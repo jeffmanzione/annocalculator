@@ -1,11 +1,11 @@
 import { GoodId } from '../../../games/game';
-import { IslandId, TradeRouteId } from '../../../shared/mvc/models';
+import { EntityId } from '../../../shared/engine/base-world-store';
 
 /** A trade route as the trade routes table edits it. */
 export interface TradeRouteEditor {
-  readonly id: TradeRouteId;
-  sourceIslandId: IslandId;
-  targetIslandId: IslandId;
+  readonly id: EntityId;
+  sourceIslandId: EntityId;
+  targetIslandId: EntityId;
   good: GoodId;
 }
 
@@ -14,7 +14,7 @@ export interface TradeRoutesWorld {
   readonly islands: readonly IslandSummary[];
   readonly tradeRoutes: readonly TradeRouteEditor[];
   addTradeRoute(): void;
-  removeTradeRoute(id: TradeRouteId): void;
+  removeTradeRoute(id: EntityId): void;
 }
 
 /**
@@ -23,7 +23,7 @@ export interface TradeRoutesWorld {
  * dropdown).
  */
 export interface IslandSummary {
-  id: IslandId;
+  id: EntityId;
   name: string;
   producedGoods: GoodId[];
 }
@@ -55,7 +55,6 @@ export function goodOptions(
   islands: IslandSummary[],
 ): GoodId[] {
   return (
-    islands.find((i) => i.id === tradeRoute.sourceIslandId)?.producedGoods ??
-    []
+    islands.find((i) => i.id === tradeRoute.sourceIslandId)?.producedGoods ?? []
   );
 }

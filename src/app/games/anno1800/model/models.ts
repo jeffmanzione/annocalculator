@@ -6,12 +6,12 @@ import {
   DepartmentOfLaborPolicy,
   Item,
   CulturalSet,
-} from '../../games/anno1800/game/enums';
+} from '../game/enums';
 
 // Marker interface for all models.
-export interface Model {}
+export interface Model1800 {}
 
-export interface ExtraGood extends Model {
+export interface ExtraGood1800 extends Model1800 {
   good?: Good;
 
   source?:
@@ -34,7 +34,7 @@ export interface ExtraGood extends Model {
   producedPerMinute?: number;
 }
 
-export interface ProductionLine extends Model {
+export interface ProductionLine1800 extends Model1800 {
   id?: ProductionLineId;
   building: ProductionBuilding;
   inputGoods?: Good[];
@@ -52,22 +52,22 @@ export type IslandId = number;
 export type TradeRouteId = number;
 export type ProductionLineId = number;
 
-export interface TradeRoute extends Model {
+export interface TradeRoute1800 extends Model1800 {
   id: TradeRouteId;
   sourceIslandId: IslandId;
   targetIslandId: IslandId;
   good: Good;
 }
 
-export interface Island extends Model {
+export interface Island1800 extends Model1800 {
   id?: IslandId;
   name: string;
   region?: Region;
-  productionLines: ProductionLine[];
+  productionLines: ProductionLine1800[];
   dolPolicy?: DepartmentOfLaborPolicy;
 }
 
-export interface World extends Model {
+export interface World1800 extends Model1800 {
   /** The Palace's prestige level; absent when there is no Palace. */
   palacePrestigeLevel?: number;
   /**
@@ -76,29 +76,29 @@ export interface World extends Model {
    * @deprecated
    */
   tradeUnionBonus?: number;
-  islands: Island[];
-  tradeRoutes: TradeRoute[];
+  islands: Island1800[];
+  tradeRoutes: TradeRoute1800[];
 }
 
-export const BASE_EXTRA_GOOD_MODEL: ExtraGood = {
+export const BASE_EXTRA_GOOD_MODEL: ExtraGood1800 = {
   good: Good.Unknown,
   rateNumerator: 1,
   rateDenominator: 1,
 };
 
-export const DEFAULT_EXTRA_GOOD_MODEL: ExtraGood = {
+export const DEFAULT_EXTRA_GOOD_MODEL: ExtraGood1800 = {
   good: Good.Unknown,
   rateNumerator: 1,
   rateDenominator: 1,
 };
 
-export const BASE_PRODUCTION_LINE_MODEL: ProductionLine = {
+export const BASE_PRODUCTION_LINE_MODEL: ProductionLine1800 = {
   building: ProductionBuilding.Unknown,
   good: Good.Unknown,
   numBuildings: 1,
 };
 
-export const DEFAULT_PRODUCTION_LINE_MODEL: ProductionLine = {
+export const DEFAULT_PRODUCTION_LINE_MODEL: ProductionLine1800 = {
   building: ProductionBuilding.Unknown,
   inputGoods: [],
   good: Good.Unknown,
@@ -111,38 +111,38 @@ export const DEFAULT_PRODUCTION_LINE_MODEL: ProductionLine = {
   culturalSets: [],
 };
 
-export const BASE_TRADE_ROUTE_MODEL: TradeRoute = {
+export const BASE_TRADE_ROUTE_MODEL: TradeRoute1800 = {
   id: -1,
   sourceIslandId: -1,
   targetIslandId: -1,
   good: Good.Unknown,
 };
 
-export const DEFAULT_TRADE_ROUTE_MODEL: TradeRoute = {
+export const DEFAULT_TRADE_ROUTE_MODEL: TradeRoute1800 = {
   id: -1,
   sourceIslandId: -1,
   targetIslandId: -1,
   good: Good.Unknown,
 };
 
-export const BASE_ISLAND_MODEL: Island = {
+export const BASE_ISLAND_MODEL: Island1800 = {
   name: 'UNNAMED_ISLAND',
   productionLines: [],
 };
 
-export const DEFAULT_ISLAND_MODEL: Island = {
+export const DEFAULT_ISLAND_MODEL: Island1800 = {
   name: '',
   region: Region.OldWorld,
   productionLines: [],
   dolPolicy: DepartmentOfLaborPolicy.None,
 };
 
-export const BASE_WORLD_MODEL: World = {
+export const BASE_WORLD_MODEL: World1800 = {
   islands: [],
   tradeRoutes: [],
 };
 
-export const DEFAULT_WORLD_MODEL: World = {
+export const DEFAULT_WORLD_MODEL: World1800 = {
   islands: [],
   tradeRoutes: [],
 };

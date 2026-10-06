@@ -88,7 +88,9 @@ export class SummaryPanel implements OnInit, AfterViewInit {
   // recompute" call needed.
   private readonly rows_ = computed(() => {
     const world = this.world();
-    return world ? computeGoodSummaryRows(world, this.game_) : new Map<GoodId, GoodSummaryRow>();
+    return world
+      ? computeGoodSummaryRows(world, this.game_)
+      : new Map<GoodId, GoodSummaryRow>();
   });
 
   constructor() {
@@ -152,10 +154,12 @@ export class SummaryPanel implements OnInit, AfterViewInit {
     this.islandTables()[this.tableData.data.indexOf(row)]?.renderRows();
   }
 
-  readonly lookupGoodIconUrl = (good: GoodId | null | undefined): string => this.game_.goodIconUrl(good);
+  readonly lookupGoodIconUrl = (good: GoodId | null | undefined): string =>
+    this.game_.goodIconUrl(good);
 
   /** The good's name in the current language (read from the language signal, so the table follows a change of language). */
-  readonly goodName = (good: GoodId | null | undefined): string => this.game_.goodName(good, this.l10n_.languageSignal());
+  readonly goodName = (good: GoodId | null | undefined): string =>
+    this.game_.goodName(good, this.l10n_.languageSignal());
 
   availableProduction(cell?: GoodSummaryCell): number {
     return computeAvailableProduction(cell);

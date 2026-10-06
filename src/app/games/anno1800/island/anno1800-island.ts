@@ -9,8 +9,8 @@ import {
   TemplateRef,
   viewChild,
 } from '@angular/core';
-import { StoreIslandController } from '../../../shared/mvc/world-store-controllers';
-import { ProductionLineId } from '../../../shared/mvc/models';
+import { Island1800Controller } from '../model/world-controllers';
+import { ProductionLineId } from '../model/models';
 import { MatTableModule } from '@angular/material/table';
 import {
   FormControl,
@@ -34,11 +34,8 @@ import {
   Item,
   AdministrativeBuilding,
   CulturalSet,
-} from '../../../games/anno1800/game/enums';
-import {
-  lookupItemInfo,
-  lookupProductionInfo,
-} from '../../../games/anno1800/game/facts';
+} from '../game/enums';
+import { lookupItemInfo, lookupProductionInfo } from '../game/facts';
 import {
   lookupBuildingIconUrl,
   lookupGoodIconUrl,
@@ -48,21 +45,21 @@ import {
   lookupItemIconUrl,
   lookupHaciendaFertilizerWorksIconUrl,
   lookupCulturalSetIconUrl,
-} from '../../../games/anno1800/game/icons';
+} from '../game/icons';
 import { TextFieldModule } from '@angular/cdk/text-field';
 import { AcButton } from '../../../components/button/button';
 import { ExtraGoodsTable } from '../../../components/extra-goods-table/extra-goods-table';
 import { StepperInput } from '../../../components/stepper-input/stepper-input';
 import { EnumRow } from '../../../components/enum-row/enum-row';
 import { TooltipDirective } from '../../../components/enum-tooltip/enum-tooltip';
-import { Anno1800Tooltip } from '../../../games/anno1800/tooltips/anno1800-tooltip';
+import { Anno1800Tooltip } from '../tooltips/anno1800-tooltip';
 import { CompositeNumber } from '../../../components/composite-number/composite-number';
-import { StoreExtraGoodView } from '../../../shared/mvc/world-store-views';
+import { ExtraGood1800View } from '../model/world-views';
 import { L10nText } from '../../../components/text/text';
-import { InputGoodSource } from '../../../shared/mvc/world-store';
+import { InputGoodSource } from '../model/world-store-1800';
 
 @Component({
-  selector: 'island',
+  selector: 'anno-1800-island',
   imports: [
     AcButton,
     Anno1800Tooltip,
@@ -83,16 +80,16 @@ import { InputGoodSource } from '../../../shared/mvc/world-store';
     TooltipDirective,
     L10nText,
   ],
-  templateUrl: './island.html',
-  styleUrl: './island.scss',
+  templateUrl: './anno1800-island.html',
+  styleUrl: './anno1800-island.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class Island implements OnInit {
+export class Anno1800Island implements OnInit {
   // Replaces ControlComponent's inherited `controller` input -- this class
   // no longer extends the Control tree (see Decision 2 in the design doc;
   // production-line.ts was migrated off it the same way, in the commit
   // just before this one).
-  controller = input.required<StoreIslandController>();
+  controller = input.required<Island1800Controller>();
 
   readonly regions = Object.values(Region).filter((r) => r != Region.Unknown);
   readonly allDolPolicies = Object.values(DepartmentOfLaborPolicy);
@@ -310,7 +307,7 @@ export class Island implements OnInit {
     return lookupCulturalSetIconUrl(set ?? CulturalSet.Unknown);
   }
 
-  extraGoodLookupIconUrlFn(extraGood: StoreExtraGoodView): (_: any) => string {
+  extraGoodLookupIconUrlFn(extraGood: ExtraGood1800View): (_: any) => string {
     switch (extraGood.sourceType) {
       case 'Boost':
       case 'ElectrifiedFarm':
@@ -363,11 +360,11 @@ export class Island implements OnInit {
 
   /** How an extra good's source is drawn: its icon and its tooltip depend on what kind of source it is. */
   readonly extraGoodSourceIcon = (
-    extraGood: StoreExtraGoodView,
+    extraGood: ExtraGood1800View,
   ): ((_: any) => string) => this.extraGoodLookupIconUrlFn(extraGood);
 
   readonly extraGoodSourceTooltip = (
-    extraGood: StoreExtraGoodView,
+    extraGood: ExtraGood1800View,
   ): TemplateRef<any> => {
     switch (extraGood.sourceType) {
       case 'Boost':

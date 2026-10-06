@@ -1,48 +1,48 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { WorldStore } from '../../shared/mvc/world-store';
-import { StoreWorldView } from '../../shared/mvc/world-store-views';
-import { StoreWorldController } from '../../shared/mvc/world-store-controllers';
-import { IslandId } from '../../shared/mvc/models';
-import { Island } from './island/island';
+import { WorldStore1800 } from './model/world-store-1800';
+import { World1800View } from './model/world-views';
+import { World1800Controller } from './model/world-controllers';
+import { IslandId } from './model/models';
+import { Anno1800Island } from './island/anno1800-island';
 import { MatDialogModule } from '@angular/material/dialog';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import {
   MAT_FORM_FIELD_DEFAULT_OPTIONS,
   MatFormFieldModule,
 } from '@angular/material/form-field';
-import { SummaryPanel } from './summary-panel/summary-panel';
-import { World } from '../../shared/mvc/models';
-import { TradeRoutesPanel } from './trade-routes-panel/trade-routes-panel';
-import { CalculatorColumn } from './calculator-column/calculator-column';
-import { CalculatorPage } from './calculator-page';
+import { SummaryPanel } from '../../pages/calculator/summary-panel/summary-panel';
+import { World1800 } from './model/models';
+import { TradeRoutesPanel } from '../../pages/calculator/trade-routes-panel/trade-routes-panel';
+import { CalculatorColumn } from '../../pages/calculator/calculator-column/calculator-column';
+import { CalculatorPage } from '../../pages/calculator/calculator-page';
 import { LocalStorageManager } from '../../services/local-storage/local-storage';
-import { defaultWorld } from './default-world';
-import { GAME } from '../../games/game';
-import { anno1800Game } from '../../games/anno1800/anno1800-game';
+import { defaultWorld } from './model/default-world';
+import { GAME } from '../game';
+import { anno1800Game } from './anno1800-game';
 import { EnumSelect } from '../../components/enum-select/enum-select';
 import {
   MAX_PALACE_PRESTIGE_LEVEL,
   palaceTradeUnionBonus,
-} from '../../games/anno1800/game/palace';
+} from './game/palace';
 
 /** The form's value for "no Palace" (a select can't hold null as a choice). */
 const NO_PALACE = -1;
 const WORLD_KEY = 'anno-1800-production-calculator-world';
 
 @Component({
-  selector: 'production-calculator-page',
+  selector: 'anno-1800-page',
   imports: [
     CalculatorColumn,
     EnumSelect,
-    Island,
+    Anno1800Island,
     MatDialogModule,
     MatFormFieldModule,
     ReactiveFormsModule,
     SummaryPanel,
     TradeRoutesPanel,
   ],
-  templateUrl: './production-calculator.html',
-  styleUrl: './production-calculator.scss',
+  templateUrl: './anno1800-page.html',
+  styleUrl: '../../pages/calculator/calculator-page.scss',
   providers: [
     { provide: GAME, useValue: anno1800Game },
     {
@@ -52,24 +52,21 @@ const WORLD_KEY = 'anno-1800-production-calculator-world';
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ProductionCalculatorPage
-  extends CalculatorPage<World>
-  implements OnInit
-{
+export class Anno1800Page extends CalculatorPage<World1800> implements OnInit {
   // The actual source of truth for the loaded world: a normalized, id-keyed
   // signal store (see world-store.ts). Constructed once per loaded world in
   // setWorld() -- import/reset/clear all go through setWorldAndReload(),
   // which reloads the page -- so this instance, and the per-id-cached
   // controllers `world` hands out, stay identity-stable for the page's
   // lifetime.
-  private store_!: WorldStore;
+  private store_!: WorldStore1800;
 
   // Write-capable view of store_, handed to <island>/<trade-routes-panel>.
-  world!: StoreWorldController;
+  world!: World1800Controller;
 
   // Read-only view of the *same* store_, for summary-panel.ts (which only
   // aggregates). It reads live store state rather than a snapshot.
-  worldSummary!: StoreWorldView;
+  worldSummary!: World1800View;
 
   formGroup?: FormGroup;
 
@@ -90,13 +87,13 @@ export class ProductionCalculatorPage
     super(storageManager, WORLD_KEY);
   }
 
-  protected override currentSave_(): World {
+  protected override currentSave_(): World1800 {
     return this.store_.toWorld();
   }
-  protected override defaultSave_(): World {
+  protected override defaultSave_(): World1800 {
     return defaultWorld;
   }
-  protected override emptySave_(): World {
+  protected override emptySave_(): World1800 {
     return { islands: [], tradeRoutes: [] };
   }
 
@@ -118,13 +115,13 @@ export class ProductionCalculatorPage
     this.persistWhenChanged_();
   }
 
-  setWorld(worldModel?: World): void {
+  setWorld(worldModel?: World1800): void {
     if (!worldModel) {
       return;
     }
-    this.store_ = WorldStore.fromWorld(worldModel);
-    this.world = new StoreWorldController(this.store_);
-    this.worldSummary = new StoreWorldView(this.store_);
+    this.store_ = WorldStore1800.fromWorld(worldModel);
+    this.world = new World1800Controller(this.store_);
+    this.worldSummary = new World1800View(this.store_);
     this.formGroup!.controls['palacePrestigeLevel'].setValue(
       this.world.palacePrestigeLevel ?? NO_PALACE,
       { emitEvent: false },

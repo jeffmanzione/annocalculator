@@ -1,5 +1,5 @@
 import { Good } from '../../../games/anno1800/game/enums';
-import { TradeRoute } from '../../../shared/mvc/models';
+import { TradeRoute1800 } from '../../../games/anno1800/model/models';
 import {
   destinationOptions,
   goodOptions,
@@ -13,7 +13,10 @@ const islands: IslandSummary[] = [
   { id: 3, name: 'Plantation Island', producedGoods: [] },
 ];
 
-const route = (sourceIslandId: number, targetIslandId: number): TradeRoute => ({
+const route = (
+  sourceIslandId: number,
+  targetIslandId: number,
+): TradeRoute1800 => ({
   id: 100,
   sourceIslandId,
   targetIslandId,

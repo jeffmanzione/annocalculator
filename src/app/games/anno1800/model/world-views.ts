@@ -1,4 +1,4 @@
-import { NumberConstituent } from '../../components/composite-number/composite-number';
+import { NumberConstituent } from '../../../components/composite-number/composite-number';
 import {
   Boost,
   Good,
@@ -7,7 +7,7 @@ import {
   Region,
   Item,
   CulturalSet,
-} from '../../games/anno1800/game/enums';
+} from '../game/enums';
 import {
   improvedByLandReformAct,
   improvedBySkilledLaborAct,
@@ -17,31 +17,31 @@ import {
   buildingSupportsElectricity,
   lookupBoostInfo,
   lookupCulturalSetInfo,
-} from '../../games/anno1800/game/facts';
+} from '../game/facts';
 import {
   lookupBoostIconUrl,
   lookupCulturalSetIconUrl,
   lookupHaciendaFertilizerWorksIconUrl,
   lookupItemIconUrl,
   lookupPolicyIconUrl,
-} from '../../games/anno1800/game/icons';
+} from '../game/icons';
 import {
   DEFAULT_ISLAND_MODEL,
   DEFAULT_PRODUCTION_LINE_MODEL,
-  Island,
-  ExtraGood,
+  Island1800,
+  ExtraGood1800,
   DEFAULT_EXTRA_GOOD_MODEL,
   IslandId,
   ProductionLineId,
-  TradeRoute,
+  TradeRoute1800,
   TradeRouteId,
 } from './models';
 import {
   InputGoodSource,
   ProductionLineEntity,
   resolveInputGoods,
-  WorldStore,
-} from './world-store';
+  WorldStore1800,
+} from './world-store-1800';
 
 /**
  * Read-only, store-backed views of the world's entities, holding the app's
@@ -57,10 +57,10 @@ import {
  * script when this file was added.)
  */
 
-export class StoreExtraGoodView implements ExtraGood {
+export class ExtraGood1800View implements ExtraGood1800 {
   constructor(
-    private readonly model: ExtraGood,
-    private readonly productionLine: StoreProductionLineView,
+    private readonly model: ExtraGood1800,
+    private readonly productionLine: Line1800View,
   ) {}
 
   get good(): Good {
@@ -119,7 +119,7 @@ export class StoreExtraGoodView implements ExtraGood {
   }
 }
 
-function extraGoodSourceIconUrl(eg: StoreExtraGoodView): string {
+function extraGoodSourceIconUrl(eg: ExtraGood1800View): string {
   switch (eg.sourceType) {
     case 'Boost':
     case 'ElectrifiedFarm':
@@ -135,9 +135,9 @@ function extraGoodSourceIconUrl(eg: StoreExtraGoodView): string {
   }
 }
 
-export class StoreProductionLineView implements ProductionLineEntity {
+export class Line1800View implements ProductionLineEntity {
   constructor(
-    protected readonly store: WorldStore,
+    protected readonly store: WorldStore1800,
     protected readonly id_: ProductionLineId,
   ) {}
 
@@ -158,8 +158,8 @@ export class StoreProductionLineView implements ProductionLineEntity {
     return this.model.islandId;
   }
 
-  get island(): StoreIslandView {
-    return new StoreIslandView(this.store, this.islandId);
+  get island(): Island1800View {
+    return new Island1800View(this.store, this.islandId);
   }
 
   get building(): ProductionBuilding {
@@ -400,12 +400,12 @@ export class StoreProductionLineView implements ProductionLineEntity {
     return this.baseBuildingProcessTimeSeconds / this.efficiency;
   }
 
-  get extraGoods(): StoreExtraGoodView[] {
+  get extraGoods(): ExtraGood1800View[] {
     const extraGoods = [];
 
     if (this.inRangeOfHaciendaFertiliserWorks) {
       extraGoods.push(
-        new StoreExtraGoodView(
+        new ExtraGood1800View(
           {
             good: Good.Dung,
             source: 'Hacienda Fertilizer Works',
@@ -427,8 +427,8 @@ export class StoreProductionLineView implements ProductionLineEntity {
     return extraGoods;
   }
 
-  get bonusExtraGoods(): StoreExtraGoodView[] {
-    const extraGoods: StoreExtraGoodView[] = [];
+  get bonusExtraGoods(): ExtraGood1800View[] {
+    const extraGoods: ExtraGood1800View[] = [];
 
     if (this.hasTradeUnion && this.inRangeOfLocalDepartment) {
       if (
@@ -437,7 +437,7 @@ export class StoreProductionLineView implements ProductionLineEntity {
       ) {
         // 1 extra good for every 2 produced.
         extraGoods.push(
-          new StoreExtraGoodView(
+          new ExtraGood1800View(
             {
               good: this.good,
               source: DepartmentOfLaborPolicy.LandReformAct,
@@ -453,7 +453,7 @@ export class StoreProductionLineView implements ProductionLineEntity {
         this.island.dolPolicy == DepartmentOfLaborPolicy.SkilledLaborAct
       ) {
         extraGoods.push(
-          new StoreExtraGoodView(
+          new ExtraGood1800View(
             {
               good: this.good,
               source: DepartmentOfLaborPolicy.SkilledLaborAct,
@@ -471,7 +471,7 @@ export class StoreProductionLineView implements ProductionLineEntity {
       const boostInfo = lookupBoostInfo(boost)!;
       if (boostInfo.extraGood) {
         extraGoods.push(
-          new StoreExtraGoodView(
+          new ExtraGood1800View(
             {
               good: this.good,
               source: boost,
@@ -487,15 +487,15 @@ export class StoreProductionLineView implements ProductionLineEntity {
     return extraGoods;
   }
 
-  get electricityExtraGoods(): StoreExtraGoodView[] {
+  get electricityExtraGoods(): ExtraGood1800View[] {
     if (!this.boosts.includes(Boost.Electricity)) {
       return [];
     }
     const productionInfo = lookupProductionInfo(this.building);
-    const extraGoods: StoreExtraGoodView[] = [];
+    const extraGoods: ExtraGood1800View[] = [];
     for (const eeg of productionInfo?.electricityExtraGoods ?? []) {
       extraGoods.push(
-        new StoreExtraGoodView(
+        new ExtraGood1800View(
           {
             good: eeg.good,
             source: Boost.Electricity,
@@ -509,12 +509,12 @@ export class StoreProductionLineView implements ProductionLineEntity {
     return extraGoods;
   }
 
-  get itemExtraGoods(): StoreExtraGoodView[] {
-    const extraGoods: StoreExtraGoodView[] = [];
+  get itemExtraGoods(): ExtraGood1800View[] {
+    const extraGoods: ExtraGood1800View[] = [];
     for (const item of this.items) {
       const itemInfo = lookupItemInfo(item);
       for (const eg of itemInfo?.extraGoods ?? []) {
-        extraGoods.push(new StoreExtraGoodView({ ...eg, source: item }, this));
+        extraGoods.push(new ExtraGood1800View({ ...eg, source: item }, this));
       }
     }
     extraGoods.sort((eg1, eg2) => {
@@ -530,13 +530,13 @@ export class StoreProductionLineView implements ProductionLineEntity {
     return extraGoods;
   }
 
-  get culturalSetExtraGoods(): StoreExtraGoodView[] {
-    const extraGoods: StoreExtraGoodView[] = [];
+  get culturalSetExtraGoods(): ExtraGood1800View[] {
+    const extraGoods: ExtraGood1800View[] = [];
     for (const set of this.culturalSets) {
       const setInfo = lookupCulturalSetInfo(set);
       for (const eg of setInfo?.extraGoods ?? []) {
         extraGoods.push(
-          new StoreExtraGoodView(
+          new ExtraGood1800View(
             { ...eg, sourceType: 'CulturalSet', source: set },
             this,
           ),
@@ -625,13 +625,13 @@ export class StoreProductionLineView implements ProductionLineEntity {
   }
 }
 
-export class StoreTradeRouteView implements TradeRoute {
+export class TradeRoute1800View implements TradeRoute1800 {
   constructor(
-    protected readonly store: WorldStore,
+    protected readonly store: WorldStore1800,
     protected readonly id_: TradeRouteId,
   ) {}
 
-  private get model(): TradeRoute {
+  private get model(): TradeRoute1800 {
     return this.store.tradeRoutes().get(this.id_)!;
   }
 
@@ -648,16 +648,16 @@ export class StoreTradeRouteView implements TradeRoute {
     return this.model.sourceIslandId;
   }
 
-  get sourceIsland(): StoreIslandView {
-    return new StoreIslandView(this.store, this.model.sourceIslandId);
+  get sourceIsland(): Island1800View {
+    return new Island1800View(this.store, this.model.sourceIslandId);
   }
 
   get targetIslandId(): IslandId {
     return this.model.targetIslandId;
   }
 
-  get targetIsland(): StoreIslandView {
-    return new StoreIslandView(this.store, this.model.targetIslandId);
+  get targetIsland(): Island1800View {
+    return new Island1800View(this.store, this.model.targetIslandId);
   }
 
   get good(): Good {
@@ -665,13 +665,13 @@ export class StoreTradeRouteView implements TradeRoute {
   }
 }
 
-export class StoreIslandView implements Island {
+export class Island1800View implements Island1800 {
   constructor(
-    protected readonly store: WorldStore,
+    protected readonly store: WorldStore1800,
     protected readonly id_: IslandId,
   ) {}
 
-  private get model(): Island {
+  private get model(): Island1800 {
     return this.store.islands().get(this.id_)!;
   }
 
@@ -693,26 +693,26 @@ export class StoreIslandView implements Island {
   }
 
   /** This island's production lines, looked up by islandId rather than a nested array -- see ProductionLineEntity in world-store.ts. */
-  get productionLines(): StoreProductionLineView[] {
+  get productionLines(): Line1800View[] {
     return [...this.store.productionLines().values()]
       .filter((pl) => pl.islandId === this.id_)
-      .map((pl) => new StoreProductionLineView(this.store, pl.id!));
+      .map((pl) => new Line1800View(this.store, pl.id!));
   }
 
   get dolPolicy(): DepartmentOfLaborPolicy {
     return this.model.dolPolicy ?? DEFAULT_ISLAND_MODEL.dolPolicy!;
   }
 
-  get outgoingTradeRoutes(): StoreTradeRouteView[] {
+  get outgoingTradeRoutes(): TradeRoute1800View[] {
     return [...this.store.tradeRoutes().values()]
       .filter((tr) => tr.sourceIslandId == this.id_)
-      .map((tr) => new StoreTradeRouteView(this.store, tr.id));
+      .map((tr) => new TradeRoute1800View(this.store, tr.id));
   }
 
-  get incomingTradeRoutes(): StoreTradeRouteView[] {
+  get incomingTradeRoutes(): TradeRoute1800View[] {
     return [...this.store.tradeRoutes().values()]
       .filter((tr) => tr.targetIslandId == this.id_)
-      .map((tr) => new StoreTradeRouteView(this.store, tr.id));
+      .map((tr) => new TradeRoute1800View(this.store, tr.id));
   }
 
   get producedGoods(): Good[] {
@@ -734,44 +734,44 @@ export class StoreIslandView implements Island {
 }
 
 /** Store-backed equivalent of WorldView -- see the module doc comment above. */
-export class StoreWorldView {
-  constructor(private readonly store: WorldStore) {}
+export class World1800View {
+  constructor(private readonly store: WorldStore1800) {}
 
   get tradeUnionBonus(): number {
     return this.store.tradeUnionBonus();
   }
 
-  get islands(): StoreIslandView[] {
+  get islands(): Island1800View[] {
     return [...this.store.islands().keys()].map(
-      (id) => new StoreIslandView(this.store, id),
+      (id) => new Island1800View(this.store, id),
     );
   }
 
-  lookupIslandById(id: IslandId): StoreIslandView {
-    return new StoreIslandView(this.store, id);
+  lookupIslandById(id: IslandId): Island1800View {
+    return new Island1800View(this.store, id);
   }
 
-  get tradeRoutes(): StoreTradeRouteView[] {
+  get tradeRoutes(): TradeRoute1800View[] {
     return [...this.store.tradeRoutes().keys()].map(
-      (id) => new StoreTradeRouteView(this.store, id),
+      (id) => new TradeRoute1800View(this.store, id),
     );
   }
 
   lookupTradeRoutesStartingFrom(
-    island: IslandId | StoreIslandView,
-  ): StoreTradeRouteView[] {
+    island: IslandId | Island1800View,
+  ): TradeRoute1800View[] {
     const id = typeof island === 'number' ? island : island.id;
     return [...this.store.tradeRoutes().values()]
       .filter((tr) => tr.sourceIslandId == id)
-      .map((tr) => new StoreTradeRouteView(this.store, tr.id));
+      .map((tr) => new TradeRoute1800View(this.store, tr.id));
   }
 
   lookupTradeRoutesEndingAt(
-    island: IslandId | StoreIslandView,
-  ): StoreTradeRouteView[] {
+    island: IslandId | Island1800View,
+  ): TradeRoute1800View[] {
     const id = typeof island === 'number' ? island : island.id;
     return [...this.store.tradeRoutes().values()]
       .filter((tr) => tr.targetIslandId == id)
-      .map((tr) => new StoreTradeRouteView(this.store, tr.id));
+      .map((tr) => new TradeRoute1800View(this.store, tr.id));
   }
 }

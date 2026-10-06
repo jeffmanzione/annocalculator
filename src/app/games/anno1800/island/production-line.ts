@@ -1,9 +1,6 @@
-import { StoreProductionLineController } from '../../../shared/mvc/world-store-controllers';
-import { InputGoodSource } from '../../../shared/mvc/world-store';
-import {
-  StoreExtraGoodView,
-  StoreProductionLineView,
-} from '../../../shared/mvc/world-store-views';
+import { Line1800Controller } from '../model/world-controllers';
+import { InputGoodSource } from '../model/world-store-1800';
+import { ExtraGood1800View, Line1800View } from '../model/world-views';
 import {
   Boost,
   CulturalSet,
@@ -11,14 +8,14 @@ import {
   Item,
   ProductionBuilding,
   Region,
-} from '../../../games/anno1800/game/enums';
+} from '../game/enums';
 import {
   requiresElectricity,
   lookupAllowedBoosts,
   lookupAllowedItems,
   producesDung,
   lookupAllowedCulturalSets,
-} from '../../../games/anno1800/game/facts';
+} from '../game/facts';
 import { NumberConstituent } from '../../../components/composite-number/composite-number';
 import { computed, Signal, signal } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
@@ -38,7 +35,7 @@ export class ProductionLineControl {
   // WorldStore's signals, so each computed() recomputes on its own when
   // anything it depends on changes (this row, its island, or the world's
   // trade-union bonus).
-  readonly extraGoodsRows: Signal<StoreExtraGoodView[]> = computed(() => {
+  readonly extraGoodsRows: Signal<ExtraGood1800View[]> = computed(() => {
     return this.controller.extraGoods;
   });
   readonly hasExtraGoods = computed(() => this.extraGoodsRows().length > 0);
@@ -98,7 +95,7 @@ export class ProductionLineControl {
     computed(() => this.controller.goodsProducedPerMinuteConstituents);
 
   constructor(
-    public readonly controller: StoreProductionLineController,
+    public readonly controller: Line1800Controller,
     private readonly notifyChanged_: () => void,
   ) {
     this.formGroup = new FormGroup({
@@ -171,7 +168,7 @@ export class ProductionLineControl {
       this.formGroup.controls['culturalSets'].getRawValue();
   }
 
-  get view(): StoreProductionLineView {
+  get view(): Line1800View {
     return this.controller;
   }
 

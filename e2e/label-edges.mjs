@@ -20,10 +20,10 @@ for (const dsf of [1, 1.25, 1.5, 1.75, 2, 3]) {
   const context = await browser.newContext({ viewport: { width: 1920, height: 1080 }, deviceScaleFactor: dsf });
   const page = await context.newPage();
   await page.goto(`${server.url}/anno-1800-calculator`);
-  await page.waitForSelector('island');
+  await page.waitForSelector('anno-1800-island');
   await settle(page);
 
-  const fields = await page.locator('island').first().locator('.mat-mdc-form-field').all();
+  const fields = await page.locator('anno-1800-island').first().locator('.mat-mdc-form-field').all();
   for (const field of fields) {
     const geom = await field.evaluate((f) => {
       const notch = f.querySelector('.mdc-notched-outline--notched .mdc-notched-outline__notch');

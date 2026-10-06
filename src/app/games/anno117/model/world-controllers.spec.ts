@@ -1,4 +1,4 @@
-import { computeGoodSummaryRows } from '../../../pages/production-calculator/summary-panel/summary-panel-store';
+import { computeGoodSummaryRows } from '../../../pages/calculator/summary-panel/summary-panel-store';
 import { anno117Game } from '../anno117-game';
 import { defaultWorld117 } from './default-world';
 import { ALBION, LATIUM, World117 } from './models';

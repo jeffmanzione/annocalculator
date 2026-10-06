@@ -21,7 +21,7 @@ let failures = 0;
 for (const width of WIDTHS) {
   const page = await browser.newPage({ viewport: { width, height: 1100 } });
   await page.goto(`${server.url}/anno-1800-calculator`);
-  await page.waitForSelector('island');
+  await page.waitForSelector('anno-1800-island');
   await settle(page);
 
   for (const language of LANGUAGES) {
@@ -33,7 +33,7 @@ for (const width of WIDTHS) {
 
     const problems = await page.evaluate(() => {
       const found = [];
-      for (const table of document.querySelectorAll('island table')) {
+      for (const table of document.querySelectorAll('anno-1800-island table')) {
         // Soft hyphens are deliberate break points, so measure the word without them.
         const measure = (th, word) => {
           const probe = document.createElement('span');
@@ -62,7 +62,7 @@ for (const width of WIDTHS) {
       }
       // A field's cream fill must be rounded on all four corners like its border,
       // or the square corners of the fill poke out beside the curve.
-      for (const wrapper of document.querySelectorAll('island .mat-mdc-text-field-wrapper')) {
+      for (const wrapper of document.querySelectorAll('anno-1800-island .mat-mdc-text-field-wrapper')) {
         const style = getComputedStyle(wrapper);
         for (const corner of ['TopLeft', 'TopRight', 'BottomRight', 'BottomLeft']) {
           if (parseFloat(style[`border${corner}Radius`]) < 4) {
@@ -80,7 +80,7 @@ for (const width of WIDTHS) {
       // plate (drawn on the label's cut-out) must be a solid, fully edged box in the
       // field's own fill, the border must run unbroken behind it with no clip
       // chopping it off, and it must stay within the field's width.
-      for (const label of document.querySelectorAll('island .mdc-floating-label--float-above')) {
+      for (const label of document.querySelectorAll('anno-1800-island .mdc-floating-label--float-above')) {
         const field = label.closest('.mat-mdc-form-field');
         const notchEl = label.closest('.mdc-notched-outline__notch');
         const name = (label.textContent || '').trim();
@@ -112,9 +112,9 @@ for (const width of WIDTHS) {
 
     // A label must not move when its field gains focus (focus thickens the border).
     const labelTop = () =>
-      page.locator('island .island-name-field .mdc-floating-label').first().evaluate((l) => l.getBoundingClientRect().top);
+      page.locator('anno-1800-island .island-name-field .mdc-floating-label').first().evaluate((l) => l.getBoundingClientRect().top);
     const restTop = await labelTop();
-    await page.locator('island .island-name-field input').first().focus();
+    await page.locator('anno-1800-island .island-name-field input').first().focus();
     await page.waitForTimeout(300);
     const focusTop = await labelTop();
     if (Math.abs(focusTop - restTop) > 0.1) problems.push(`label moves ${(focusTop - restTop).toFixed(2)}px on focus`);

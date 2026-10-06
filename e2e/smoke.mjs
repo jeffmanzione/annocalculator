@@ -21,11 +21,11 @@ const browser = await launchBrowser(chromium);
 const { page, errors } = await openPage(browser);
 
 const saved = () => savedWorld(page);
-const islands = () => page.locator('island');
+const islands = () => page.locator('anno-1800-island');
 const settle = () => settleFn(page);
 
 await page.goto(`${server.url}/anno-1800-calculator`);
-await page.waitForSelector('island');
+await page.waitForSelector('anno-1800-island');
 await settle();
 
 // 1. Boot with the default world.
@@ -41,8 +41,8 @@ const summaryRowsBefore = await page.locator('summary-panel tr.mat-mdc-row').cou
 check('summary panel renders rows', summaryRowsBefore > 0, `${summaryRowsBefore} rows`);
 
 // Tag each <island> DOM node so we can tell later whether Angular destroyed/recreated it.
-await page.evaluate(() => document.querySelectorAll('island').forEach((el, i) => (el.__marker = 'orig-' + i)));
-const markers = () => page.evaluate(() => [...document.querySelectorAll('island')].map((el) => el.__marker ?? null));
+await page.evaluate(() => document.querySelectorAll('anno-1800-island').forEach((el, i) => (el.__marker = 'orig-' + i)));
+const markers = () => page.evaluate(() => [...document.querySelectorAll('anno-1800-island')].map((el) => el.__marker ?? null));
 
 // 2. Rename island 1 -> persisted + header updates.
 const name0 = islands().nth(0).locator('input[aria-label="name"]');
@@ -238,7 +238,7 @@ check(
 // 8. Reload -> state round-trips.
 const beforeReload = await saved();
 await page.reload();
-await page.waitForSelector('island');
+await page.waitForSelector('anno-1800-island');
 await settle();
 check('reload shows persisted islands', (await islands().count()) === 2);
 check(
@@ -294,7 +294,7 @@ check('no islandId leaks into saved JSON', !raw.includes('islandId'));
 // The old address and anything unknown lead to the Anno 1800 calculator.
 for (const old of ['/calculator', '/no-such-page']) {
   await page.goto(`${server.url}${old}`);
-  await page.waitForSelector('island');
+  await page.waitForSelector('anno-1800-island');
   check(`${old} redirects to the Anno 1800 calculator`, new URL(page.url()).pathname === '/anno-1800-calculator', page.url());
 }
 

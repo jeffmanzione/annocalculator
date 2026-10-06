@@ -50,10 +50,10 @@ async function run(dist) {
     await settle();
     snaps.push([label, normalizeIds(await savedWorld(page))]);
   };
-  const island = (i) => page.locator('island').nth(i);
+  const island = (i) => page.locator('island, anno-1800-island').nth(i);
 
   await page.goto(`${server.url}/anno-1800-calculator`);
-  await page.waitForSelector('island');
+  await page.waitForSelector('island, anno-1800-island');
   await settle();
 
   await island(0).locator('input[aria-label="name"]').fill('Renamed');
@@ -116,11 +116,11 @@ async function runSeeded(dist) {
       [WORLD_KEY, seed],
     );
     await page.goto(`${server.url}/anno-1800-calculator`);
-    await page.waitForSelector('island, .island-list-section');
+    await page.waitForSelector('island, anno-1800-island, .island-list-section');
     await settleFn(page);
     snaps.push([`${path.basename(file)}: after loading`, normalizeIds(await savedWorld(page))]);
     await page.reload();
-    await page.waitForSelector('island, .island-list-section');
+    await page.waitForSelector('island, anno-1800-island, .island-list-section');
     await settleFn(page);
     snaps.push([`${path.basename(file)}: after reloading`, normalizeIds(await savedWorld(page))]);
     errors.push(...pageErrors);

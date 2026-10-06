@@ -1,15 +1,24 @@
 import { Good } from '../../../games/anno1800/game/enums';
 import { anno1800Game } from '../../../games/anno1800/anno1800-game';
-import { featureWorld, round, viewOf } from '../../../shared/mvc/test-worlds';
-import { World } from '../../../shared/mvc/models';
-import { defaultWorld } from '../default-world';
+import {
+  featureWorld,
+  round,
+  viewOf,
+} from '../../../games/anno1800/model/test-worlds';
+import { World1800 } from '../../../games/anno1800/model/models';
+import { defaultWorld } from '../../../games/anno1800/model/default-world';
 import {
   availableProduction,
   computeGoodSummaryRows,
 } from './summary-panel-store';
 
-const summarize = (world: World) =>
-  [...computeGoodSummaryRows(viewOf(structuredClone(world)), anno1800Game).values()]
+const summarize = (world: World1800) =>
+  [
+    ...computeGoodSummaryRows(
+      viewOf(structuredClone(world)),
+      anno1800Game,
+    ).values(),
+  ]
     .filter((row) => row.islandSummaries.length > 0)
     .map((row) => ({
       good: row.good,
@@ -25,8 +34,10 @@ const summarize = (world: World) =>
       })),
     }));
 
-const row = (world: World, good: Good) =>
-  computeGoodSummaryRows(viewOf(structuredClone(world)), anno1800Game).get(good)!;
+const row = (world: World1800, good: Good) =>
+  computeGoodSummaryRows(viewOf(structuredClone(world)), anno1800Game).get(
+    good,
+  )!;
 
 describe('computeGoodSummaryRows', () => {
   it('default world summary', () => {

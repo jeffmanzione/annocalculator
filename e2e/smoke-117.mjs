@@ -157,7 +157,7 @@ check('the island moves to Albion with Celtic buildings', s.world.islands[1].ses
 
 // 9. The calculators keep separate saves.
 await page.goto(`${server.url}/anno-1800-calculator`);
-await page.waitForSelector('island');
+await page.waitForSelector('anno-1800-island');
 await settle();
 check('visiting the Anno 1800 page makes its own save', (await page.evaluate((k) => localStorage.getItem(k), WORLD_KEY)) !== null);
 check('and leaves the Anno 117 one as it was', (await saved()).world.islands.length === 4);

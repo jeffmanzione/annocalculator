@@ -5,20 +5,20 @@ import {
   BASE_TRADE_ROUTE_MODEL,
   DEFAULT_ISLAND_MODEL,
   DEFAULT_PRODUCTION_LINE_MODEL,
-  Island,
+  Island1800,
   IslandId,
-  ProductionLine,
+  ProductionLine1800,
   ProductionLineId,
-  TradeRoute,
+  TradeRoute1800,
   TradeRouteId,
-  World,
+  World1800,
 } from './models';
-import { Good, Item, ProductionBuilding } from '../../games/anno1800/game/enums';
-import { lookupItemInfo, lookupProductionInfo } from '../../games/anno1800/game/facts';
+import { Good, Item, ProductionBuilding } from '../game/enums';
+import { lookupItemInfo, lookupProductionInfo } from '../game/facts';
 import {
   palacePrestigeLevelForBonus,
   palaceTradeUnionBonus,
-} from '../../games/anno1800/game/palace';
+} from '../game/palace';
 
 // Helpers below were moved here from controllers.ts (now deleted), their
 // last remaining consumer being this file.
@@ -74,7 +74,7 @@ export const resolveDuplicateReplacementGoods = (g1: Good, g2: Good): Good => {
  * `WorldStore.toWorld()` re-nests each production line under its owning
  * island's `productionLines` array and strips this field back out.
  */
-export interface ProductionLineEntity extends ProductionLine {
+export interface ProductionLineEntity extends ProductionLine1800 {
   islandId: IslandId;
 }
 
@@ -142,8 +142,8 @@ export function resolveInputGoods(
  * field, rather than deferring it to toWorld() the way default-clearing is.
  */
 function computeDerivedGoods(
-  pl: Pick<ProductionLine, 'building' | 'items'>,
-): Pick<ProductionLine, 'good' | 'inputGoods'> {
+  pl: Pick<ProductionLine1800, 'building' | 'items'>,
+): Pick<ProductionLine1800, 'good' | 'inputGoods'> {
   const productionInfo = lookupProductionInfo(pl.building);
   if (!productionInfo) {
     return { good: Good.Unknown, inputGoods: [] };
@@ -168,21 +168,21 @@ function computeDerivedGoods(
  * just-created entity) gets one assigned in `fromWorld()` (missing or negative id means
  * unassigned -- the convention the old, now-deleted controllers.ts used).
  */
-export class WorldStore {
-  readonly islands: WritableSignal<Map<IslandId, Island>>;
+export class WorldStore1800 {
+  readonly islands: WritableSignal<Map<IslandId, Island1800>>;
   readonly productionLines: WritableSignal<
     Map<ProductionLineId, ProductionLineEntity>
   >;
-  readonly tradeRoutes: WritableSignal<Map<TradeRouteId, TradeRoute>>;
+  readonly tradeRoutes: WritableSignal<Map<TradeRouteId, TradeRoute1800>>;
   /** The Palace's prestige level; null when there is no Palace. */
   readonly palacePrestigeLevel: WritableSignal<number | null>;
   /** The Trade Union bonus (a fraction) the Palace's level gives. */
   readonly tradeUnionBonus: Signal<number>;
 
   private constructor(
-    islands: Map<IslandId, Island>,
+    islands: Map<IslandId, Island1800>,
     productionLines: Map<ProductionLineId, ProductionLineEntity>,
-    tradeRoutes: Map<TradeRouteId, TradeRoute>,
+    tradeRoutes: Map<TradeRouteId, TradeRoute1800>,
     palacePrestigeLevel: number | null,
   ) {
     this.islands = signal(islands);
@@ -194,8 +194,8 @@ export class WorldStore {
     );
   }
 
-  static fromWorld(world: World): WorldStore {
-    const islands = new Map<IslandId, Island>();
+  static fromWorld(world: World1800): WorldStore1800 {
+    const islands = new Map<IslandId, Island1800>();
     const productionLines = new Map<ProductionLineId, ProductionLineEntity>();
 
     for (const islandModel of world.islands) {
@@ -230,7 +230,7 @@ export class WorldStore {
       }
     }
 
-    const tradeRoutes = new Map<TradeRouteId, TradeRoute>();
+    const tradeRoutes = new Map<TradeRouteId, TradeRoute1800>();
     for (const tradeRouteModel of world.tradeRoutes) {
       const tradeRouteId =
         tradeRouteModel.id >= 0
@@ -239,7 +239,7 @@ export class WorldStore {
       tradeRoutes.set(tradeRouteId, { ...tradeRouteModel, id: tradeRouteId });
     }
 
-    return new WorldStore(
+    return new WorldStore1800(
       islands,
       productionLines,
       tradeRoutes,
@@ -249,8 +249,8 @@ export class WorldStore {
     );
   }
 
-  toWorld(): World {
-    const productionLinesByIsland = new Map<IslandId, ProductionLine[]>();
+  toWorld(): World1800 {
+    const productionLinesByIsland = new Map<IslandId, ProductionLine1800[]>();
     for (const productionLineEntity of this.productionLines().values()) {
       const { islandId, ...productionLineModel } = productionLineEntity;
       const linesForIsland = productionLinesByIsland.get(islandId) ?? [];
@@ -258,14 +258,14 @@ export class WorldStore {
       productionLinesByIsland.set(islandId, linesForIsland);
     }
 
-    const islands: Island[] = [...this.islands().values()].map((island) =>
+    const islands: Island1800[] = [...this.islands().values()].map((island) =>
       stripIslandDefaults({
         ...island,
         productionLines: productionLinesByIsland.get(island.id!) ?? [],
       }),
     );
 
-    const world: World = {
+    const world: World1800 = {
       palacePrestigeLevel: this.palacePrestigeLevel() ?? undefined,
       islands,
       tradeRoutes: [...this.tradeRoutes().values()],
@@ -287,7 +287,7 @@ export class WorldStore {
 
   addIsland(): IslandId {
     const id = generatePseudorandomInt();
-    const island: Island = { ...structuredClone(BASE_ISLAND_MODEL), id };
+    const island: Island1800 = { ...structuredClone(BASE_ISLAND_MODEL), id };
     this.islands.update((islands) => new Map(islands).set(id, island));
     return id;
   }
@@ -323,7 +323,7 @@ export class WorldStore {
 
   updateIsland(
     id: IslandId,
-    patch: Partial<Pick<Island, 'name' | 'region' | 'dolPolicy'>>,
+    patch: Partial<Pick<Island1800, 'name' | 'region' | 'dolPolicy'>>,
   ): void {
     this.islands.update((islands) => {
       const current = islands.get(id);
@@ -358,7 +358,7 @@ export class WorldStore {
 
   updateProductionLine(
     id: ProductionLineId,
-    patch: Partial<Omit<ProductionLine, 'id'>>,
+    patch: Partial<Omit<ProductionLine1800, 'id'>>,
   ): void {
     this.productionLines.update((lines) => {
       const current = lines.get(id);
@@ -385,7 +385,7 @@ export class WorldStore {
 
   addTradeRoute(): TradeRouteId {
     const id = generatePseudorandomInt();
-    const tradeRoute: TradeRoute = {
+    const tradeRoute: TradeRoute1800 = {
       ...structuredClone(BASE_TRADE_ROUTE_MODEL),
       id,
     };
@@ -403,7 +403,7 @@ export class WorldStore {
 
   updateTradeRoute(
     id: TradeRouteId,
-    patch: Partial<Omit<TradeRoute, 'id'>>,
+    patch: Partial<Omit<TradeRoute1800, 'id'>>,
   ): void {
     this.tradeRoutes.update((routes) => {
       const current = routes.get(id);
@@ -435,7 +435,9 @@ export class WorldStore {
 // one specific `[]` instance, so a freshly-created empty array is never
 // `==` to it.
 
-function stripProductionLineDefaults(pl: ProductionLine): ProductionLine {
+function stripProductionLineDefaults(
+  pl: ProductionLine1800,
+): ProductionLine1800 {
   const result = { ...pl };
   if (arrayEqualsAsSet(result.boosts, DEFAULT_PRODUCTION_LINE_MODEL.boosts)) {
     delete result.boosts;
@@ -469,7 +471,7 @@ function stripProductionLineDefaults(pl: ProductionLine): ProductionLine {
   return result;
 }
 
-function stripIslandDefaults(island: Island): Island {
+function stripIslandDefaults(island: Island1800): Island1800 {
   const result = { ...island };
   if (result.dolPolicy == DEFAULT_ISLAND_MODEL.dolPolicy) {
     delete result.dolPolicy;
@@ -477,7 +479,7 @@ function stripIslandDefaults(island: Island): Island {
   return result;
 }
 
-function stripWorldDefaults(world: World): World {
+function stripWorldDefaults(world: World1800): World1800 {
   const result = { ...world };
   if (result.palacePrestigeLevel == null) {
     delete result.palacePrestigeLevel;

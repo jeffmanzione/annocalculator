@@ -85,8 +85,14 @@ src/
     app.*                       Root component, routes (Anno 1800, Anno 117 and About pages) and app config
     games/                      What belongs to one game (see "Two games, one app" below)
       game.ts                   The GameDefinition contract and the GAME token the shared panels use
-      anno1800/                 Anno 1800: its data, enums, rules and GameDefinition
-      anno117/                  Anno 117: its data, rules, model, store, page and island editor (loaded on demand)
+      anno1800/, anno117/       One folder per game, laid out the same way:
+        <game>-page.*           The calculator page
+        <game>-game.ts          The game's GameDefinition
+        island/                 The island editor and its production line table
+        model/                  The world's shape, its store, controllers and starter world
+        game/                   The game's rules and facts (Anno 1800: enums, facts, icons, Palace; Anno 117: data types, data, rules)
+        tooltips/               What the game's hover cards say
+        data/                   The game's data (Anno 117's is generated; see "Data tools")
     components/                 Reusable UI pieces
       app-bar/                  The toolbar: site title, page tabs, language picker, version
       button/, card/            Themed button and panel
@@ -101,21 +107,18 @@ src/
       text/                     The textLoc directive that renders localized text
     pages/
       about/                    About page
-      production-calculator/    The Anno 1800 calculator (and what both games' pages share: the left column, the save/persist logic, the summary and trade routes)
+      calculator/               What both games' calculator pages share
         calculator-column/      The page's left column: default actions, global parameters card, island list
-        calculator-page.ts      Base class for both pages: local-storage key, saving on change, copy/edit/reset/clear
-        island/                 One island: its settings and its production line table
+        calculator-page.*       Base class (local-storage key, saving on change, copy/edit/reset/clear) and the page layout styles
         summary-panel/          Totals across all islands, plus the warnings tooltip
         trade-routes-panel/     Goods moved between islands
         save-dialog/            Import / export of the whole world
-        default-world.ts        The starter world new visitors see
     services/
       l10n/                     Current language and text lookup
       local-storage/            Typed wrapper over localStorage
     shared/
       engine/                   The game-independent part of a world store (BaseWorldStore)
       l10n/                     Every translated string, keyed by its English text
-      mvc/                      The Anno 1800 world model and the store that holds it (see below)
   tools/                        One-off maintenance scripts, not part of the app (see "Data tools")
   _anno-palette.scss            The Anno colour palette
   _anno-material.scss           Angular Material theme overrides built from it
@@ -129,7 +132,7 @@ screenshots/                    Images used in this README
 
 ### Two games, one app
 
-- **Each game is a folder under `src/app/games/`** with its own data, rules and saved format. Anno 1800's lives in `games/anno1800/` (game data in `data/`, enums, facts and icons in `game/`), Anno 117's in `games/anno117/`.
+- **Each game is a folder under `src/app/games/`** with its own data, rules and saved format. Both are laid out the same way (see the tree above): Anno 1800's lives in `games/anno1800/`, Anno 117's in `games/anno117/`.
 - **`GameDefinition`** (`games/game.ts`) is what the pieces both games share ask a game for: its goods, their icons and names in the language shown, and any goods a production line uses besides its recipe (Anno 1800's Silo and Fertilizer; Anno 117's coal and silo feed). The calculator page provides its game through the `GAME` token, and the shared summary and trade-route panels read it from there.
 - **Routes.** Each game's calculator has its own address, `/anno-1800-calculator` and `/anno-117-calculator`, and is loaded only when someone opens it, so neither adds to the first download. `/calculator` (the Anno 1800 calculator's original address, which people have linked to) and any unknown address redirect to the Anno 1800 calculator.
 - **Saves are separate.** Anno 1800 keeps its original localStorage key and its bare-world JSON format exactly as before. Anno 117 uses its own key and a labelled, versioned envelope (`{ "game": "anno117", "version": 1, "world": ... }`) that is checked before it is used, so a world pasted into the wrong game is refused with a message instead of breaking the page. The language setting is shared.
@@ -147,9 +150,9 @@ The rules are pure functions in `games/anno117/game/rules.ts`, checked in `rules
 
 ### How the Anno 1800 calculator is put together
 
-- **The world** is the user's whole plan: islands, each with production lines, plus trade routes and the Palace's prestige level. Its shape is defined in `src/app/shared/mvc/models.ts`.
-- **`WorldStore`** (`world-store.ts`) is the single source of truth while the page is open. It keeps islands, production lines and trade routes in flat, id-keyed signal maps. `fromWorld()` and `toWorld()` are the load/save boundary.
-- **Controllers and views** (`world-store-controllers.ts`, `world-store-views.ts`) are what components talk to. Controllers can read and write; views are read-only and compute everything derived, such as efficiency, buildings needed and goods per minute.
+- **The world** is the user's whole plan: islands, each with production lines, plus trade routes and the Palace's prestige level. Its shape is defined in `src/app/games/anno1800/model/models.ts`.
+- **`WorldStore1800`** (`model/world-store-1800.ts`) is the single source of truth while the page is open. It keeps islands, production lines and trade routes in flat, id-keyed signal maps. `fromWorld()` and `toWorld()` are the load/save boundary.
+- **Controllers and views** (`model/world-controllers.ts`, `model/world-views.ts`) are what components talk to. Controllers can read and write; views are read-only and compute everything derived, such as efficiency, buildings needed and goods per minute.
 - **Persistence.** The world is saved to the browser's `localStorage` whenever it changes and reloaded on the next visit. Real users have saved worlds, so **anything that changes the saved shape must still load old saves** (and `fromWorld()` is where that conversion happens). For example, worlds saved with a Trade Union bonus percentage are converted to a Palace prestige level on load. Defaults are left out of what is saved, to keep it small.
 - **Localization.** All text lives in `src/app/shared/l10n/l10n.ts` as a key (the English text) mapped to English, German, Dutch and Chinese. Templates use `textLoc="Some Key"`. Adding a string means adding its key to the `L10nKey` type and all four translations.
 - **Styling.** The theme is a set of Angular Material overrides over an Anno palette (`_anno-palette.scss`, `_anno-material.scss`). Table columns size themselves from their content rather than fixed widths, so translations fit; the e2e layout check guards this.

@@ -3,7 +3,7 @@ import { Language } from '../shared/l10n/l10n';
 import {
   SummaryIslandSource,
   SummaryProductionLineSource,
-} from '../pages/production-calculator/summary-panel/summary-panel-store';
+} from '../pages/calculator/summary-panel/summary-panel-store';
 
 /** A good, by its id in a game's data (for Anno 1800 this is the good's English name). */
 export type GoodId = string;

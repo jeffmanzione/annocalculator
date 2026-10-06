@@ -18,9 +18,7 @@ export const apps: AppInfo[] = [
   {
     path: 'anno-1800-calculator',
     loadTarget: () =>
-      import('./pages/production-calculator/production-calculator').then(
-        (m) => m.ProductionCalculatorPage,
-      ),
+      import('./games/anno1800/anno1800-page').then((m) => m.Anno1800Page),
     name: 'Anno 1800',
   },
   {

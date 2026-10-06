@@ -6,14 +6,14 @@ import {
   Item,
   ProductionBuilding,
   Region,
-} from '../../games/anno1800/game/enums';
+} from '../game/enums';
 import { IslandId, ProductionLineId, TradeRouteId } from './models';
-import { WorldStore } from './world-store';
+import { WorldStore1800 } from './world-store-1800';
 import {
-  StoreIslandView,
-  StoreProductionLineView,
-  StoreTradeRouteView,
-} from './world-store-views';
+  Island1800View,
+  Line1800View,
+  TradeRoute1800View,
+} from './world-views';
 
 /**
  * Write-capable counterparts to the read-only Store*View classes in
@@ -48,7 +48,7 @@ import {
  * identity to hold for as long as the world itself is loaded.
  */
 
-export class StoreProductionLineController extends StoreProductionLineView {
+export class Line1800Controller extends Line1800View {
   override set building(value: ProductionBuilding) {
     this.store.updateProductionLine(this.id_, { building: value });
   }
@@ -115,7 +115,7 @@ export class StoreProductionLineController extends StoreProductionLineView {
   }
 }
 
-export class StoreTradeRouteController extends StoreTradeRouteView {
+export class TradeRoute1800Controller extends TradeRoute1800View {
   override set sourceIslandId(value: IslandId) {
     this.store.updateTradeRoute(this.id_, { sourceIslandId: value });
   }
@@ -138,7 +138,7 @@ export class StoreTradeRouteController extends StoreTradeRouteView {
   }
 }
 
-export class StoreIslandController extends StoreIslandView {
+export class Island1800Controller extends Island1800View {
   override set name(value: string) {
     this.store.updateIsland(this.id_, { name: value });
   }
@@ -162,7 +162,7 @@ export class StoreIslandController extends StoreIslandView {
 
   private readonly productionLineControllers_ = new Map<
     ProductionLineId,
-    StoreProductionLineController
+    Line1800Controller
   >();
 
   /**
@@ -175,7 +175,7 @@ export class StoreIslandController extends StoreIslandView {
    * productionLines map changes some way other than through this class's
    * own addProductionLine()/removeProductionLineById().
    */
-  override get productionLines(): StoreProductionLineController[] {
+  override get productionLines(): Line1800Controller[] {
     return [...this.store.productionLines().values()]
       .filter((pl) => pl.islandId === this.id_)
       .map((pl) => this.getOrCreateProductionLineController_(pl.id!));
@@ -183,16 +183,16 @@ export class StoreIslandController extends StoreIslandView {
 
   private getOrCreateProductionLineController_(
     id: ProductionLineId,
-  ): StoreProductionLineController {
+  ): Line1800Controller {
     let controller = this.productionLineControllers_.get(id);
     if (!controller) {
-      controller = new StoreProductionLineController(this.store, id);
+      controller = new Line1800Controller(this.store, id);
       this.productionLineControllers_.set(id, controller);
     }
     return controller;
   }
 
-  addProductionLine(): StoreProductionLineController {
+  addProductionLine(): Line1800Controller {
     const id = this.store.addProductionLine(this.id_);
     return this.getOrCreateProductionLineController_(id);
   }
@@ -203,8 +203,8 @@ export class StoreIslandController extends StoreIslandView {
   }
 }
 
-export class StoreWorldController {
-  constructor(private readonly store: WorldStore) {}
+export class World1800Controller {
+  constructor(private readonly store: WorldStore1800) {}
 
   get tradeUnionBonus(): number {
     return this.store.tradeUnionBonus();
@@ -218,25 +218,25 @@ export class StoreWorldController {
 
   private readonly islandControllers_ = new Map<
     IslandId,
-    StoreIslandController
+    Island1800Controller
   >();
 
-  get islands(): StoreIslandController[] {
+  get islands(): Island1800Controller[] {
     return [...this.store.islands().keys()].map((id) =>
       this.getOrCreateIslandController_(id),
     );
   }
 
-  private getOrCreateIslandController_(id: IslandId): StoreIslandController {
+  private getOrCreateIslandController_(id: IslandId): Island1800Controller {
     let controller = this.islandControllers_.get(id);
     if (!controller) {
-      controller = new StoreIslandController(this.store, id);
+      controller = new Island1800Controller(this.store, id);
       this.islandControllers_.set(id, controller);
     }
     return controller;
   }
 
-  addIsland(): StoreIslandController {
+  addIsland(): Island1800Controller {
     const id = this.store.addIsland();
     return this.getOrCreateIslandController_(id);
   }
@@ -257,10 +257,10 @@ export class StoreWorldController {
 
   private readonly tradeRouteControllers_ = new Map<
     TradeRouteId,
-    StoreTradeRouteController
+    TradeRoute1800Controller
   >();
 
-  get tradeRoutes(): StoreTradeRouteController[] {
+  get tradeRoutes(): TradeRoute1800Controller[] {
     return [...this.store.tradeRoutes().keys()].map((id) =>
       this.getOrCreateTradeRouteController_(id),
     );
@@ -268,16 +268,16 @@ export class StoreWorldController {
 
   private getOrCreateTradeRouteController_(
     id: TradeRouteId,
-  ): StoreTradeRouteController {
+  ): TradeRoute1800Controller {
     let controller = this.tradeRouteControllers_.get(id);
     if (!controller) {
-      controller = new StoreTradeRouteController(this.store, id);
+      controller = new TradeRoute1800Controller(this.store, id);
       this.tradeRouteControllers_.set(id, controller);
     }
     return controller;
   }
 
-  addTradeRoute(): StoreTradeRouteController {
+  addTradeRoute(): TradeRoute1800Controller {
     const id = this.store.addTradeRoute();
     return this.getOrCreateTradeRouteController_(id);
   }

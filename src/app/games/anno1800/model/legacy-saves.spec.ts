@@ -1,5 +1,5 @@
-import { WorldStore } from './world-store';
-import { World } from './models';
+import { WorldStore1800 } from './world-store-1800';
+import { World1800 } from './models';
 import emptyWorld from './__fixtures__/legacy-saves/empty-world.json';
 import noIds from './__fixtures__/legacy-saves/no-ids-with-trade-union-bonus.json';
 import withIds from './__fixtures__/legacy-saves/with-ids-and-explicit-defaults.json';
@@ -33,7 +33,7 @@ function normalizeIds(world: unknown): unknown {
 }
 
 const saved = (world: unknown) =>
-  WorldStore.fromWorld(structuredClone(world) as World).toWorld();
+  WorldStore1800.fromWorld(structuredClone(world) as World1800).toWorld();
 
 const cases: [string, unknown, unknown][] = [
   ['an empty world', emptyWorld, expectedEmptyWorld],

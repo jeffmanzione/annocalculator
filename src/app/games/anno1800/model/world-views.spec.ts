@@ -3,17 +3,17 @@ import {
   Good,
   Item,
   ProductionBuilding,
-} from '../../games/anno1800/game/enums';
-import { defaultWorld } from '../../pages/production-calculator/default-world';
-import { WorldStore } from './world-store';
-import { StoreWorldView } from './world-store-views';
+} from '../game/enums';
+import { defaultWorld } from './default-world';
+import { WorldStore1800 } from './world-store-1800';
+import { World1800View } from './world-views';
 import { featureWorld, round, viewOf } from './test-worlds';
 
 // Characterization tests: the snapshots pin the current behavior (bugs
 // included) of the game math; the hand-derived tests below them check rules
 // that are well understood independently of the implementation.
 
-const lineTable = (world: StoreWorldView) =>
+const lineTable = (world: World1800View) =>
   world.islands.flatMap((island) =>
     island.productionLines.map((pl) => ({
       island: island.name,
@@ -35,7 +35,7 @@ const lineTable = (world: StoreWorldView) =>
     })),
   );
 
-const islandTable = (world: StoreWorldView) =>
+const islandTable = (world: World1800View) =>
   world.islands.map((island) => ({
     island: island.name,
     producedGoods: island.producedGoods,
@@ -78,8 +78,8 @@ describe('default world', () => {
   });
 
   it('adding a Bakery adds 1.3 Bread per minute with that specialist', () => {
-    const store = WorldStore.fromWorld(structuredClone(defaultWorld));
-    const view = new StoreWorldView(store);
+    const store = WorldStore1800.fromWorld(structuredClone(defaultWorld));
+    const view = new World1800View(store);
     const bakery = () =>
       view.islands
         .find((i) => i.name === 'Crown Falls')!

@@ -1,10 +1,10 @@
 import { provideZonelessChangeDetection } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { ProductionCalculatorPage } from './production-calculator';
-import { defaultWorld } from './default-world';
-import { World } from '../../shared/mvc/models';
-import { WorldStore } from '../../shared/mvc/world-store';
-import noIds from '../../shared/mvc/__fixtures__/legacy-saves/no-ids-with-trade-union-bonus.json';
+import { Anno1800Page } from './anno1800-page';
+import { defaultWorld } from './model/default-world';
+import { World1800 } from './model/models';
+import { WorldStore1800 } from './model/world-store-1800';
+import noIds from './model/__fixtures__/legacy-saves/no-ids-with-trade-union-bonus.json';
 
 // The page is what connects the saved world to the app: which localStorage key it lives
 // under, loading it at start-up, and saving it again after every change. Users' saves sit
@@ -15,12 +15,12 @@ const open = async () => {
   TestBed.configureTestingModule({
     providers: [provideZonelessChangeDetection()],
   });
-  const fixture = TestBed.createComponent(ProductionCalculatorPage);
+  const fixture = TestBed.createComponent(Anno1800Page);
   await fixture.whenStable();
   return fixture;
 };
 
-const stored = (): World => JSON.parse(localStorage.getItem(WORLD_KEY)!);
+const stored = (): World1800 => JSON.parse(localStorage.getItem(WORLD_KEY)!);
 
 describe('ProductionCalculatorPage persistence', () => {
   beforeEach(() => localStorage.clear());
@@ -48,7 +48,7 @@ describe('ProductionCalculatorPage persistence', () => {
     expect('tradeUnionBonus' in saved).toBe(false);
     expect(saved.islands.every((island) => island.id !== undefined)).toBe(true);
     // Loading it again changes nothing.
-    expect(JSON.stringify(WorldStore.fromWorld(saved).toWorld())).toBe(
+    expect(JSON.stringify(WorldStore1800.fromWorld(saved).toWorld())).toBe(
       JSON.stringify(saved),
     );
   });

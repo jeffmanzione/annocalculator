@@ -9,10 +9,10 @@ import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { EnumSelect } from '../../components/enum-select/enum-select';
 import { StepperInput } from '../../components/stepper-input/stepper-input';
-import { CalculatorColumn } from '../../pages/production-calculator/calculator-column/calculator-column';
-import { CalculatorPage } from '../../pages/production-calculator/calculator-page';
-import { SummaryPanel } from '../../pages/production-calculator/summary-panel/summary-panel';
-import { TradeRoutesPanel } from '../../pages/production-calculator/trade-routes-panel/trade-routes-panel';
+import { CalculatorColumn } from '../../pages/calculator/calculator-column/calculator-column';
+import { CalculatorPage } from '../../pages/calculator/calculator-page';
+import { SummaryPanel } from '../../pages/calculator/summary-panel/summary-panel';
+import { TradeRoutesPanel } from '../../pages/calculator/trade-routes-panel/trade-routes-panel';
 import { L10nService } from '../../services/l10n/l10n';
 import { LocalStorageManager } from '../../services/local-storage/local-storage';
 import { GAME } from '../game';
@@ -48,7 +48,7 @@ import { MAX_TECH_LEVEL, WorldStore117 } from './model/world-store-117';
   ],
   templateUrl: './anno117-page.html',
   // The page lays out the same way as the Anno 1800 one.
-  styleUrl: '../../pages/production-calculator/production-calculator.scss',
+  styleUrl: '../../pages/calculator/calculator-page.scss',
   providers: [
     { provide: GAME, useValue: anno117Game },
     {

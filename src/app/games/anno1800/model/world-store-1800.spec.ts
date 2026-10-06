@@ -4,9 +4,13 @@ import {
   Item,
   ProductionBuilding,
   Region,
-} from '../../games/anno1800/game/enums';
-import { World } from './models';
-import { arrayEqualsAsSet, resolveInputGoods, WorldStore } from './world-store';
+} from '../game/enums';
+import { World1800 } from './models';
+import {
+  arrayEqualsAsSet,
+  resolveInputGoods,
+  WorldStore1800,
+} from './world-store-1800';
 
 const line = (overrides: object = {}) => ({
   building: ProductionBuilding.Bakery,
@@ -15,7 +19,7 @@ const line = (overrides: object = {}) => ({
   ...overrides,
 });
 
-const sampleWorld = (): World => ({
+const sampleWorld = (): World1800 => ({
   palacePrestigeLevel: 5,
   islands: [
     {
@@ -53,21 +57,21 @@ describe('arrayEqualsAsSet', () => {
 describe('WorldStore load/save', () => {
   it('round-trips a world with explicit non-default values', () => {
     const world = sampleWorld();
-    expect(WorldStore.fromWorld(structuredClone(world)).toWorld()).toEqual(
+    expect(WorldStore1800.fromWorld(structuredClone(world)).toWorld()).toEqual(
       world,
     );
   });
 
   it('round-trips an empty world', () => {
-    const world: World = { islands: [], tradeRoutes: [] };
-    expect(WorldStore.fromWorld(world).toWorld()).toEqual(world);
+    const world: World1800 = { islands: [], tradeRoutes: [] };
+    expect(WorldStore1800.fromWorld(world).toWorld()).toEqual(world);
   });
 
   it('assigns ids to legacy data that has none', () => {
     const world = sampleWorld();
     delete world.islands[0].id;
     delete world.islands[0].productionLines[0].id;
-    const saved = WorldStore.fromWorld(world).toWorld();
+    const saved = WorldStore1800.fromWorld(world).toWorld();
     expect(saved.islands[0].id).toBeGreaterThanOrEqual(0);
     expect(saved.islands[0].productionLines[0].id).toBeGreaterThanOrEqual(0);
   });
@@ -77,21 +81,21 @@ describe('WorldStore load/save', () => {
     world.islands[0].id = -1;
     world.islands[0].productionLines[0].id = -1;
     world.tradeRoutes[0].id = -1;
-    const saved = WorldStore.fromWorld(world).toWorld();
+    const saved = WorldStore1800.fromWorld(world).toWorld();
     expect(saved.islands[0].id).toBeGreaterThanOrEqual(0);
     expect(saved.islands[0].productionLines[0].id).toBeGreaterThanOrEqual(0);
     expect(saved.tradeRoutes[0].id).toBeGreaterThanOrEqual(0);
   });
 
   it('keeps production lines under their own islands', () => {
-    const saved = WorldStore.fromWorld(sampleWorld()).toWorld();
+    const saved = WorldStore1800.fromWorld(sampleWorld()).toWorld();
     expect(
       saved.islands.map((i) => i.productionLines.map((p) => p.id)),
     ).toEqual([[10], [20, 21]]);
   });
 
   it('never writes islandId into saved JSON', () => {
-    for (const island of WorldStore.fromWorld(sampleWorld()).toWorld()
+    for (const island of WorldStore1800.fromWorld(sampleWorld()).toWorld()
       .islands) {
       for (const pl of island.productionLines) {
         expect('islandId' in pl).toBe(false);
@@ -100,7 +104,7 @@ describe('WorldStore load/save', () => {
   });
 
   it('strips defaults on save, comparing arrays by content', () => {
-    const world: World = {
+    const world: World1800 = {
       islands: [
         {
           id: 1,
@@ -121,7 +125,7 @@ describe('WorldStore load/save', () => {
       ],
       tradeRoutes: [],
     };
-    const saved = WorldStore.fromWorld(world).toWorld();
+    const saved = WorldStore1800.fromWorld(world).toWorld();
     expect('palacePrestigeLevel' in saved).toBe(false);
     expect('tradeUnionBonus' in saved).toBe(false);
     expect('dolPolicy' in saved.islands[0]).toBe(false);
@@ -139,12 +143,12 @@ describe('WorldStore load/save', () => {
       id: 10,
       items: false,
     }) as never;
-    const saved = WorldStore.fromWorld(world).toWorld();
+    const saved = WorldStore1800.fromWorld(world).toWorld();
     expect('items' in saved.islands[0].productionLines[0]).toBe(false);
   });
 
   it('keeps non-default values', () => {
-    const saved = WorldStore.fromWorld(sampleWorld()).toWorld();
+    const saved = WorldStore1800.fromWorld(sampleWorld()).toWorld();
     expect(saved.palacePrestigeLevel).toBe(5);
     expect(saved.islands[0].dolPolicy).toBe(
       DepartmentOfLaborPolicy.SkilledLaborAct,
@@ -155,7 +159,7 @@ describe('WorldStore load/save', () => {
 
 describe('WorldStore mutations', () => {
   it('removeIsland removes its production lines but not trade routes', () => {
-    const store = WorldStore.fromWorld(sampleWorld());
+    const store = WorldStore1800.fromWorld(sampleWorld());
     store.removeIsland(2);
     expect([...store.islands().keys()]).toEqual([1]);
     expect([...store.productionLines().keys()]).toEqual([10]);
@@ -163,7 +167,7 @@ describe('WorldStore mutations', () => {
   });
 
   it('addIsland / addProductionLine create linked entities', () => {
-    const store = WorldStore.fromWorld(sampleWorld());
+    const store = WorldStore1800.fromWorld(sampleWorld());
     const islandId = store.addIsland();
     const lineId = store.addProductionLine(islandId);
     expect(store.islands().get(islandId)?.name).toBe('UNNAMED_ISLAND');
@@ -171,7 +175,7 @@ describe('WorldStore mutations', () => {
   });
 
   it('updates replace the Map so signal consumers see a change', () => {
-    const store = WorldStore.fromWorld(sampleWorld());
+    const store = WorldStore1800.fromWorld(sampleWorld());
     const before = store.islands();
     store.updateIsland(1, { name: 'Renamed' });
     expect(store.islands()).not.toBe(before);
@@ -180,7 +184,7 @@ describe('WorldStore mutations', () => {
 
   it('ignores updates to unknown ids', () => {
     const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
-    const store = WorldStore.fromWorld(sampleWorld());
+    const store = WorldStore1800.fromWorld(sampleWorld());
     const before = store.productionLines();
     store.updateProductionLine(999, { numBuildings: 1 });
     expect(store.productionLines()).toBe(before);
@@ -196,7 +200,7 @@ describe('WorldStore mutations', () => {
       hasTradeUnion: true,
       items: [Item.MariaMaravilla],
     }) as never;
-    const store = WorldStore.fromWorld(world);
+    const store = WorldStore1800.fromWorld(world);
     store.updateProductionLine(10, { hasTradeUnion: false });
     expect(store.productionLines().get(10)?.items).toEqual([]);
   });
@@ -209,7 +213,7 @@ describe('WorldStore mutations', () => {
         building: ProductionBuilding.CabAssemblyLine,
         hasTradeUnion: true,
       }) as never;
-      return WorldStore.fromWorld(world);
+      return WorldStore1800.fromWorld(world);
     };
 
     it('derives good and inputGoods from the building', () => {
@@ -269,7 +273,7 @@ describe('WorldStore mutations', () => {
   });
 
   it('setPalacePrestigeLevel updates the level and the bonus it gives', () => {
-    const store = WorldStore.fromWorld(sampleWorld());
+    const store = WorldStore1800.fromWorld(sampleWorld());
     store.setPalacePrestigeLevel(12);
     expect(store.toWorld().palacePrestigeLevel).toBe(12);
     expect(store.tradeUnionBonus()).toBeCloseTo(0.34);
@@ -280,9 +284,9 @@ describe('WorldStore mutations', () => {
 
   describe('worlds saved with the old Trade Union bonus', () => {
     const load = (tradeUnionBonus?: number) => {
-      const world = { ...sampleWorld(), tradeUnionBonus } as World;
+      const world = { ...sampleWorld(), tradeUnionBonus } as World1800;
       delete world.palacePrestigeLevel;
-      return WorldStore.fromWorld(world);
+      return WorldStore1800.fromWorld(world);
     };
 
     it('converts the bonus to the nearest prestige level', () => {
@@ -308,7 +312,7 @@ describe('WorldStore mutations', () => {
     });
 
     it('prefers the level when a world has both', () => {
-      const store = WorldStore.fromWorld({
+      const store = WorldStore1800.fromWorld({
         ...sampleWorld(),
         palacePrestigeLevel: 3,
         tradeUnionBonus: 0.6,
@@ -372,7 +376,7 @@ describe('resolveInputGoods', () => {
   });
 
   it('always agrees with the stored inputGoods after an edit', () => {
-    const store = WorldStore.fromWorld({
+    const store = WorldStore1800.fromWorld({
       islands: [
         {
           id: 1,

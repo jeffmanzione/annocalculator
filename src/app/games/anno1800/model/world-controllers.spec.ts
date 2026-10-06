@@ -3,12 +3,12 @@ import {
   Good,
   ProductionBuilding,
   Region,
-} from '../../games/anno1800/game/enums';
-import { World } from './models';
-import { WorldStore } from './world-store';
-import { StoreWorldController } from './world-store-controllers';
+} from '../game/enums';
+import { World1800 } from './models';
+import { WorldStore1800 } from './world-store-1800';
+import { World1800Controller } from './world-controllers';
 
-const sampleWorld = (): World => ({
+const sampleWorld = (): World1800 => ({
   islands: [
     {
       id: 1,
@@ -42,8 +42,8 @@ const sampleWorld = (): World => ({
 });
 
 const setup = () => {
-  const store = WorldStore.fromWorld(sampleWorld());
-  return { store, world: new StoreWorldController(store) };
+  const store = WorldStore1800.fromWorld(sampleWorld());
+  return { store, world: new World1800Controller(store) };
 };
 
 describe('StoreWorldController identity', () => {

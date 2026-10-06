@@ -1,10 +1,5 @@
-import {
-  Good,
-  Item,
-  ProductionBuilding,
-  Region,
-} from '../../games/anno1800/game/enums';
-import { World } from '../../shared/mvc/models';
+import { Good, Item, ProductionBuilding, Region } from '../game/enums';
+import { World1800 } from './models';
 
 /**
  * The world a first-time visitor sees, and what "reset" restores.
@@ -30,7 +25,7 @@ import { World } from '../../shared/mvc/models';
  * Cotton Mill (fed by 2 Cotton Plantations) supply 1 Fur Dealer (2 Fur
  * Coats/min).
  */
-export const defaultWorld: World = {
+export const defaultWorld: World1800 = {
   islands: [
     {
       id: 1,
