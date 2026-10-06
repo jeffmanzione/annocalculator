@@ -92,13 +92,18 @@ src/
       button/, card/            Themed button and panel
       enum-select/, enum-row/   A dropdown over enum values with icons and tooltips
       enum-tooltip/             Tooltip wrapper used by the dropdowns
+      info-tooltip/             The hover card both games use (a game describes its thing as a TooltipModel)
+      stepper-input/            A number field with up/down arrows (a line's count, a repeatable discovery's %)
+      extra-goods-table/        The table under a production line that lists its extra goods
       composite-number/         A number that explains how it was computed (hover for the breakdown)
       formatted-number/         Number formatting
       json-input/               Text box used by import/export
       text/                     The textLoc directive that renders localized text
     pages/
       about/                    About page
-      production-calculator/    The Anno 1800 calculator (and the summary and trade routes both games share)
+      production-calculator/    The Anno 1800 calculator (and what both games' pages share: the left column, the save/persist logic, the summary and trade routes)
+        calculator-column/      The page's left column: default actions, global parameters card, island list
+        calculator-page.ts      Base class for both pages: local-storage key, saving on change, copy/edit/reset/clear
         island/                 One island: its settings and its production line table
         summary-panel/          Totals across all islands, plus the warnings tooltip
         trade-routes-panel/     Goods moved between islands
