@@ -189,7 +189,9 @@ input[aria-label='numBuildings'] {
   }
 }
 
-// Extra goods, as a table under the line they belong to (like Anno 1800's).
+// Extra goods, as a table under the line they belong to, styled like Anno 1800's: the same header and
+// cells as the lines table above it (it sits inside it), a widest-share layout for the good and its
+// source, and the numbers as narrow columns.
 tr.extra-goods-tr > td.extra-goods-cell {
   padding: 0;
 }
@@ -200,48 +202,40 @@ tr.extra-goods-tr > td.extra-goods-cell {
   margin: 8px;
 }
 
-table.extra-goods-table {
-  border-collapse: collapse;
-  min-width: 70%;
-  table-layout: fixed;
+.extra-goods-inner-container {
+  min-width: 80%;
+}
 
-  th,
-  td {
-    padding: 2px 4px;
-    text-align: center;
-  }
-
-  td {
-    background: none;
-    box-shadow: none;
-  }
+table.lines-table table.extra-goods-table {
+  width: 100%;
+  min-width: 0;
 
   th {
-    height: auto;
-    font-size: 0.85em;
+    // Above the cells that scroll beneath the header, as in the Anno 1800 table.
+    z-index: 99;
   }
 
-  td.source-cell {
-    text-align: left;
+  th.extra-good-col {
+    width: 24%;
   }
 
-  .source-icon {
-    width: 22px;
-    height: 22px;
-    vertical-align: middle;
-    margin-right: 4px;
+  th.source-col {
+    width: 36%;
   }
 
   th.fraction-col,
-  th.divide-col {
-    width: 5rem;
-  }
-
-  th.divide-col {
-    width: 1.5rem;
-  }
-
+  th.divide-col,
   th.per-minute-col {
-    width: 7rem;
+    width: 1%;
+  }
+
+  td.numeric {
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+  }
+
+  th.per-minute-col,
+  td.per-minute {
+    min-width: 4.5rem;
   }
 }

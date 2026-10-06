@@ -211,6 +211,14 @@ export class Anno117Island {
     return producedConstituents(line, this.l10n_.languageSignal());
   }
 
+  readonly sourceName = (name: string | null): string => name ?? '';
+
+  /** The icon lookup for an extra output's source row (the row shows the source's name). */
+  sourceIcon(extra: { source: BuffSource; sourceId: number }) {
+    const icon = this.sourceOf(extra).iconUrl ?? '';
+    return () => icon;
+  }
+
   /** Where an extra output comes from, with its icon, in the language shown. */
   sourceOf(extra: { source: BuffSource; sourceId: number }) {
     return describeSource(
