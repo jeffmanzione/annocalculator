@@ -1,4 +1,4 @@
-import { Boost, Good, Region } from '../../../games/anno1800/game/enums';
+import { GameDefinition, GoodId } from '../../../games/game';
 import { IslandId } from '../../../shared/mvc/models';
 import { ReadonlyTable, Table } from '../../../../tools/table';
 
@@ -18,14 +18,12 @@ export interface SummaryWorldSource {
 export interface SummaryIslandSource {
   id: IslandId;
   name: string;
-  region: Region;
   productionLines: SummaryProductionLineSource[];
 }
 
 export interface SummaryProductionLineSource {
-  good: Good;
-  inputGoods: Good[];
-  boosts: Boost[];
+  good: GoodId;
+  inputGoods: GoodId[];
   numBuildings: number;
   goodsProducedPerMinute: number;
   goodsConsumedPerMinute: number;
@@ -33,20 +31,20 @@ export interface SummaryProductionLineSource {
 }
 
 export interface SummaryExtraGoodSource {
-  good: Good;
+  good: GoodId;
   producedPerMinute: number;
 }
 
 export interface SummaryTradeRouteSource {
   sourceIslandId: IslandId;
   targetIslandId: IslandId;
-  good: Good;
+  good: GoodId;
 }
 
 /** One island's production/consumption/trade numbers for a single good, shown in a GoodSummaryRow's island breakdown. */
 export interface GoodSummaryCell {
   island: SummaryIslandSource;
-  good: Good;
+  good: GoodId;
   localProductionPerMin: number;
   localConsumptionPerMin: number;
   importedPerMin: number;
@@ -62,7 +60,7 @@ export interface GoodSummaryCell {
  * something derived from the world.
  */
 export interface GoodSummaryRow {
-  good: Good;
+  good: GoodId;
   totalProductionPerMin: number;
   netProductionPerMin: number;
   islandSummaries: GoodSummaryCell[];
@@ -82,7 +80,7 @@ export function availableProduction(cell?: GoodSummaryCell): number {
   );
 }
 
-function newCell(island: SummaryIslandSource, good: Good): GoodSummaryCell {
+function newCell(island: SummaryIslandSource, good: GoodId): GoodSummaryCell {
   return {
     island,
     good,
@@ -100,11 +98,12 @@ function newCell(island: SummaryIslandSource, good: Good): GoodSummaryCell {
  */
 function computeLocalProductionAndConsumption(
   world: SummaryWorldSource,
-): Table<IslandId, Good, GoodSummaryCell> {
-  const cells = new Table<IslandId, Good, GoodSummaryCell>();
+  game: GameDefinition,
+): Table<IslandId, GoodId, GoodSummaryCell> {
+  const cells = new Table<IslandId, GoodId, GoodSummaryCell>();
   const record = (
     island: SummaryIslandSource,
-    good: Good,
+    good: GoodId,
     netProductionPerMin: number,
   ): void => {
     const cell = cells.getOrDefault(island.id, good, () =>
@@ -129,17 +128,9 @@ function computeLocalProductionAndConsumption(
       for (const ig of pl.inputGoods) {
         record(island, ig, -pl.goodsConsumedPerMinute);
       }
-      // Silo/Fertiliser upkeep: these boosts consume a good on their own,
-      // independent of what the building's production line otherwise inputs.
-      if (pl.boosts.includes(Boost.Silo)) {
-        record(
-          island,
-          island.region == Region.NewWorld ? Good.Corn : Good.Grain,
-          -0.2 * pl.numBuildings,
-        );
-      }
-      if (pl.boosts.includes(Boost.Fertiliser)) {
-        record(island, Good.Fertiliser, -0.2 * pl.numBuildings);
+      // Goods the line uses up on its own, apart from its recipe (the game says which).
+      for (const upkeep of game.extraConsumption(pl, island)) {
+        record(island, upkeep.good, -upkeep.perMinute);
       }
     }
   }
@@ -149,8 +140,8 @@ function computeLocalProductionAndConsumption(
 /** Which islands each island's trade routes can ship a given good to. */
 function groupTradeRoutesBySourceAndGood(
   world: SummaryWorldSource,
-): ReadonlyTable<IslandId, Good, IslandId[]> {
-  const trades = new Table<IslandId, Good, IslandId[]>();
+): ReadonlyTable<IslandId, GoodId, IslandId[]> {
+  const trades = new Table<IslandId, GoodId, IslandId[]>();
   for (const tr of world.tradeRoutes) {
     trades.getOrDefault(tr.sourceIslandId, tr.good, () => []).push(tr.targetIslandId);
   }
@@ -165,8 +156,8 @@ function groupTradeRoutesBySourceAndGood(
  * remaining destinations.
  */
 function distributeTrades(
-  cells: Table<IslandId, Good, GoodSummaryCell>,
-  trades: ReadonlyTable<IslandId, Good, IslandId[]>,
+  cells: Table<IslandId, GoodId, GoodSummaryCell>,
+  trades: ReadonlyTable<IslandId, GoodId, IslandId[]>,
 ): void {
   for (const [sourceIslandId, good, targetIslandIds] of trades) {
     const sourceCell = cells.get(sourceIslandId, good);
@@ -199,7 +190,7 @@ function distributeTrades(
   }
 }
 
-function newRow(good: Good): GoodSummaryRow {
+function newRow(good: GoodId): GoodSummaryRow {
   return {
     good,
     islandSummaries: [],
@@ -223,17 +214,16 @@ function hasUncoveredDeficit(
 
 /** One row per good defined in the game (even ones nobody's producing yet), aggregating each good's cells -- after trade distribution -- into world totals. */
 function aggregateRows(
-  cells: ReadonlyTable<IslandId, Good, GoodSummaryCell>,
-): Map<Good, GoodSummaryRow> {
-  const rows = new Map<Good, GoodSummaryRow>();
-  for (const good of Object.values(Good)) {
-    if (good != Good.Unknown) {
-      rows.set(good, newRow(good));
-    }
+  cells: ReadonlyTable<IslandId, GoodId, GoodSummaryCell>,
+  game: GameDefinition,
+): Map<GoodId, GoodSummaryRow> {
+  const rows = new Map<GoodId, GoodSummaryRow>();
+  for (const good of game.goods) {
+    rows.set(good, newRow(good));
   }
   cells.reduceLeft((good, goodCells) => {
-    if (good == Good.Unknown) return;
-    const row = rows.get(good)!;
+    const row = rows.get(good);
+    if (!row) return; // not a good the game lists (such as an unknown one)
     row.islandSummaries = Array.from(goodCells);
     for (const cell of row.islandSummaries) {
       row.totalProductionPerMin += cell.localProductionPerMin;
@@ -252,9 +242,9 @@ function aggregateRows(
  * how to persist UI-only state (which rows are expanded) across calls, since
  * that isn't part of the underlying data.
  */
-export function computeGoodSummaryRows(world: SummaryWorldSource): Map<Good, GoodSummaryRow> {
-  const cells = computeLocalProductionAndConsumption(world);
+export function computeGoodSummaryRows(world: SummaryWorldSource, game: GameDefinition): Map<GoodId, GoodSummaryRow> {
+  const cells = computeLocalProductionAndConsumption(world, game);
   const trades = groupTradeRoutesBySourceAndGood(world);
   distributeTrades(cells, trades);
-  return aggregateRows(cells);
+  return aggregateRows(cells, game);
 }

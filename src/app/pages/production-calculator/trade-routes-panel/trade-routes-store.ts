@@ -1,5 +1,21 @@
-import { Good } from '../../../games/anno1800/game/enums';
-import { IslandId, TradeRoute } from '../../../shared/mvc/models';
+import { GoodId } from '../../../games/game';
+import { IslandId, TradeRouteId } from '../../../shared/mvc/models';
+
+/** A trade route as the trade routes table edits it. */
+export interface TradeRouteEditor {
+  readonly id: TradeRouteId;
+  sourceIslandId: IslandId;
+  targetIslandId: IslandId;
+  good: GoodId;
+}
+
+/** What the trade routes table needs from a world: its islands and routes, and a way to add and remove routes. */
+export interface TradeRoutesWorld {
+  readonly islands: readonly IslandSummary[];
+  readonly tradeRoutes: readonly TradeRouteEditor[];
+  addTradeRoute(): void;
+  removeTradeRoute(id: TradeRouteId): void;
+}
 
 /**
  * Read-only summary of an island, as needed by the trade routes table
@@ -9,7 +25,7 @@ import { IslandId, TradeRoute } from '../../../shared/mvc/models';
 export interface IslandSummary {
   id: IslandId;
   name: string;
-  producedGoods: Good[];
+  producedGoods: GoodId[];
 }
 
 // Pure option-filtering rules for a trade-route row's dropdowns. These used
@@ -19,7 +35,7 @@ export interface IslandSummary {
 
 /** Islands selectable as a route's origin: any island but the current destination. */
 export function originOptions(
-  tradeRoute: TradeRoute,
+  tradeRoute: Pick<TradeRouteEditor, 'targetIslandId'>,
   islands: IslandSummary[],
 ): IslandSummary[] {
   return islands.filter((i) => i.id !== tradeRoute.targetIslandId);
@@ -27,7 +43,7 @@ export function originOptions(
 
 /** Islands selectable as a route's destination: any island but the current origin. */
 export function destinationOptions(
-  tradeRoute: TradeRoute,
+  tradeRoute: Pick<TradeRouteEditor, 'sourceIslandId'>,
   islands: IslandSummary[],
 ): IslandSummary[] {
   return islands.filter((i) => i.id !== tradeRoute.sourceIslandId);
@@ -35,9 +51,9 @@ export function destinationOptions(
 
 /** Goods shippable on a route: whatever its origin island currently produces. */
 export function goodOptions(
-  tradeRoute: TradeRoute,
+  tradeRoute: Pick<TradeRouteEditor, 'sourceIslandId'>,
   islands: IslandSummary[],
-): Good[] {
+): GoodId[] {
   return (
     islands.find((i) => i.id === tradeRoute.sourceIslandId)?.producedGoods ??
     []

@@ -21,12 +21,11 @@ import {
   FormattedNumber,
   GREEN_RED_FONT_SPEC,
 } from '../../../components/formatted-number/formatted-number';
-import { Good } from '../../../games/anno1800/game/enums';
+import { GAME, GoodId } from '../../../games/game';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { EnumRow } from '../../../components/enum-row/enum-row';
-import { lookupGoodIconUrl } from '../../../games/anno1800/game/icons';
 import { L10nText } from '../../../components/text/text';
 import {
   availableProduction as computeAvailableProduction,
@@ -73,6 +72,7 @@ export class SummaryPanel implements OnInit, AfterViewInit {
   ];
 
   private readonly changeDetector_ = inject(ChangeDetectorRef);
+  private readonly game_ = inject(GAME);
 
   readonly tableData = new MatTableDataSource<GoodSummaryRow>();
 
@@ -86,7 +86,7 @@ export class SummaryPanel implements OnInit, AfterViewInit {
   // recompute" call needed.
   private readonly rows_ = computed(() => {
     const world = this.world();
-    return world ? computeGoodSummaryRows(world) : new Map<Good, GoodSummaryRow>();
+    return world ? computeGoodSummaryRows(world, this.game_) : new Map<GoodId, GoodSummaryRow>();
   });
 
   constructor() {
@@ -127,7 +127,7 @@ export class SummaryPanel implements OnInit, AfterViewInit {
   }
 
   /** Replaces the table's data with a freshly computed row set, carrying forward which rows the user currently has expanded (computeGoodSummaryRows doesn't know about that -- it's UI state, not derived from the world). */
-  private applyRows_(rows: Map<Good, GoodSummaryRow>): void {
+  private applyRows_(rows: Map<GoodId, GoodSummaryRow>): void {
     const expandedGoods = new Set(
       this.tableData.data.filter((r) => r.showIslandSummary).map((r) => r.good),
     );
@@ -150,9 +150,7 @@ export class SummaryPanel implements OnInit, AfterViewInit {
     this.islandTables()[this.tableData.data.indexOf(row)]?.renderRows();
   }
 
-  lookupGoodIconUrl(good: Good | null | undefined): string {
-    return lookupGoodIconUrl(good ?? Good.Unknown);
-  }
+  readonly lookupGoodIconUrl = (good: GoodId | null | undefined): string => this.game_.goodIconUrl(good);
 
   availableProduction(cell?: GoodSummaryCell): number {
     return computeAvailableProduction(cell);

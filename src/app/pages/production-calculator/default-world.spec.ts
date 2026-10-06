@@ -1,4 +1,5 @@
 import { Good, Item, Region } from '../../games/anno1800/game/enums';
+import { anno1800Game } from '../../games/anno1800/anno1800-game';
 import { lookupItemInfo, lookupProductionInfo } from '../../games/anno1800/game/facts';
 import { viewOf } from '../../shared/mvc/test-worlds';
 import { defaultWorld } from './default-world';
@@ -11,7 +12,7 @@ import {
 // so these pin the qualities that make it a good starting point.
 describe('default world', () => {
   const summary = () =>
-    computeGoodSummaryRows(viewOf(structuredClone(defaultWorld)));
+    computeGoodSummaryRows(viewOf(structuredClone(defaultWorld)), anno1800Game);
 
   it('is in balance: no good is short anywhere, even before trade is considered overall', () => {
     for (const row of summary().values()) {

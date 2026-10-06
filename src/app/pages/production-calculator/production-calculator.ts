@@ -38,6 +38,8 @@ import { AcButton } from '../../components/button/button';
 import { L10nText } from '../../components/text/text';
 import { L10nKey } from '../../shared/l10n/l10n';
 import { defaultWorld } from './default-world';
+import { GAME } from '../../games/game';
+import { anno1800Game } from '../../games/anno1800/anno1800-game';
 import { EnumSelect } from '../../components/enum-select/enum-select';
 import {
   MAX_PALACE_PRESTIGE_LEVEL,
@@ -68,6 +70,7 @@ const WORLD_KEY = 'anno-1800-production-calculator-world';
   templateUrl: './production-calculator.html',
   styleUrl: './production-calculator.scss',
   providers: [
+    { provide: GAME, useValue: anno1800Game },
     {
       provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
       useValue: { appearance: 'outline', subscriptSizing: 'dynamic' },

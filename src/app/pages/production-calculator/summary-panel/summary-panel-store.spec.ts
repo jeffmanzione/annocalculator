@@ -1,4 +1,5 @@
 import { Good } from '../../../games/anno1800/game/enums';
+import { anno1800Game } from '../../../games/anno1800/anno1800-game';
 import { featureWorld, round, viewOf } from '../../../shared/mvc/test-worlds';
 import { World } from '../../../shared/mvc/models';
 import { defaultWorld } from '../default-world';
@@ -8,7 +9,7 @@ import {
 } from './summary-panel-store';
 
 const summarize = (world: World) =>
-  [...computeGoodSummaryRows(viewOf(structuredClone(world))).values()]
+  [...computeGoodSummaryRows(viewOf(structuredClone(world)), anno1800Game).values()]
     .filter((row) => row.islandSummaries.length > 0)
     .map((row) => ({
       good: row.good,
@@ -25,7 +26,7 @@ const summarize = (world: World) =>
     }));
 
 const row = (world: World, good: Good) =>
-  computeGoodSummaryRows(viewOf(structuredClone(world))).get(good)!;
+  computeGoodSummaryRows(viewOf(structuredClone(world)), anno1800Game).get(good)!;
 
 describe('computeGoodSummaryRows', () => {
   it('default world summary', () => {
@@ -37,7 +38,7 @@ describe('computeGoodSummaryRows', () => {
   });
 
   it('has one collapsed row per known good, produced or not', () => {
-    const rows = computeGoodSummaryRows(viewOf(featureWorld()));
+    const rows = computeGoodSummaryRows(viewOf(featureWorld()), anno1800Game);
     expect(rows.has(Good.Unknown)).toBe(false);
     expect(rows.get(Good.Gold)?.islandSummaries).toEqual([]);
     expect([...rows.values()].every((r) => !r.showIslandSummary)).toBe(true);

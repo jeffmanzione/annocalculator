@@ -2,18 +2,17 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
+  inject,
   input,
   Signal,
 } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { StoreWorldController } from '../../../shared/mvc/world-store-controllers';
 import { MatTableModule } from '@angular/material/table';
 import { MatSelectModule } from '@angular/material/select';
-import { Good } from '../../../games/anno1800/game/enums';
-import { lookupGoodIconUrl } from '../../../games/anno1800/game/icons';
+import { GAME, GoodId } from '../../../games/game';
 import { EnumSelect } from '../../../components/enum-select/enum-select';
 import { CardModule } from '../../../components/card/card';
-import { TradeRoute, TradeRouteId } from '../../../shared/mvc/models';
+import { TradeRouteId } from '../../../shared/mvc/models';
 import { AcButton } from '../../../components/button/button';
 import { L10nText } from '../../../components/text/text';
 import {
@@ -21,6 +20,8 @@ import {
   goodOptions,
   IslandSummary,
   originOptions,
+  TradeRouteEditor,
+  TradeRoutesWorld,
 } from './trade-routes-store';
 
 /** A single trade-route table row: a stable form bound to one trade route, plus its currently-valid dropdown options. */
@@ -29,11 +30,11 @@ interface TradeRouteRow {
   formGroup: FormGroup<{
     sourceIslandId: FormControl<number | null>;
     targetIslandId: FormControl<number | null>;
-    good: FormControl<Good | null>;
+    good: FormControl<GoodId | null>;
   }>;
   sourceIslandOptions: IslandSummary[];
   targetIslandOptions: IslandSummary[];
-  sourceGoodOptions: Good[];
+  sourceGoodOptions: GoodId[];
 }
 
 @Component({
@@ -67,7 +68,9 @@ export class TradeRoutesPanel {
   // from the root. (This panel used to extend ControlComponent and keep a
   // TradeRoutesStore mirror of trade routes and islands that the root had
   // to refresh via afterPushChange(); see the design doc.)
-  world = input.required<StoreWorldController>();
+  world = input.required<TradeRoutesWorld>();
+
+  private readonly game_ = inject(GAME);
 
   // Form groups are kept stable across store updates (rather than recreated
   // on every change) so in-progress edits and open dropdowns aren't reset by
@@ -105,12 +108,10 @@ export class TradeRoutesPanel {
     this.formGroups_.delete(id);
   }
 
-  lookupGoodIconUrl(good: Good | null): string {
-    return lookupGoodIconUrl(good ?? Good.Unknown);
-  }
+  readonly lookupGoodIconUrl = (good: GoodId | null): string => this.game_.goodIconUrl(good);
 
   private rowFor_(
-    tradeRoute: TradeRoute,
+    tradeRoute: TradeRouteEditor,
     islands: IslandSummary[],
   ): TradeRouteRow {
     return {
@@ -122,7 +123,7 @@ export class TradeRoutesPanel {
     };
   }
 
-  private formGroupFor_(tradeRoute: TradeRoute): TradeRouteRow['formGroup'] {
+  private formGroupFor_(tradeRoute: TradeRouteEditor): TradeRouteRow['formGroup'] {
     const existing = this.formGroups_.get(tradeRoute.id);
     if (existing) {
       return existing;
@@ -144,7 +145,7 @@ export class TradeRoutesPanel {
     value: Partial<{
       sourceIslandId: number | null;
       targetIslandId: number | null;
-      good: Good | null;
+      good: GoodId | null;
     }>,
   ): void {
     const controller = this.world().tradeRoutes.find((tr) => tr.id === id);
