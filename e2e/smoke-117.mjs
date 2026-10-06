@@ -33,6 +33,12 @@ check('does not touch the Anno 1800 save', (await page.evaluate((k) => localStor
 check('the summary shows the default numbers', /Bread[\s\S]*6\/m/.test(await summaryText()));
 check('the page title names the game', (await page.title()).includes('Anno 117'));
 
+// The efficiency explains itself on hover (the island must sit above the background logo layer to get the pointer).
+await islands().nth(0).locator('composite-number').first().hover();
+await page.waitForTimeout(700);
+check('hovering an efficiency shows where it comes from', /Base Productivity/.test(await page.locator('.tooltip-container').first().innerText().catch(() => '')));
+await page.mouse.move(5, 5);
+
 // 2. Editing: the count changes the totals and is saved.
 const count = (island, line) => islands().nth(island).locator('input[aria-label="numBuildings"]').nth(line);
 await count(0, 0).fill('6');
