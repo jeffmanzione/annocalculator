@@ -141,16 +141,6 @@
               [iconUrlLookupFn]="productIcon"
               [displayTextTransformer]="productName"
               [tooltip]="goodTooltip"></enum-row>
-            @for (extra of otherExtraGoods(line); track extra.good) {
-              <div class="extra-good">
-                <enum-row
-                  [values]="[extra.good]"
-                  [iconUrlLookupFn]="productIcon"
-                  [displayTextTransformer]="productName"
-                  [tooltip]="goodTooltip"></enum-row>
-                <formatted-number [value]="extra.producedPerMinute" suffix="/m"></formatted-number>
-              </div>
-            }
           </td>
           <td>
             <enum-select
@@ -209,6 +199,50 @@
             <ac-button icon="delete" (action)="removeProductionLine(line)"></ac-button>
           </td>
         </tr>
+        @if (line.extraGoodRows.length) {
+          <tr class="extra-goods-tr">
+            <td colspan="10" class="extra-goods-cell">
+              <div class="extra-goods-outer-container">
+                <table class="extra-goods-table">
+                  <thead>
+                    <tr>
+                      <th class="extra-good-col"><span textLoc="Extra Good"></span></th>
+                      <th class="source-col"><span textLoc="Source"></span></th>
+                      <th class="fraction-col"><span textLoc="Numerator"></span></th>
+                      <th class="divide-col">/</th>
+                      <th class="fraction-col"><span textLoc="Denominator"></span></th>
+                      <th class="per-minute-col"><span textLoc="Goods per Minute"></span></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    @for (extra of line.extraGoodRows; track $index) {
+                      <tr>
+                        <td>
+                          <enum-row
+                            [values]="[extra.good]"
+                            [iconUrlLookupFn]="productIcon"
+                            [displayTextTransformer]="productName"
+                            [tooltip]="goodTooltip"></enum-row>
+                        </td>
+                        <td class="source-cell">
+                          @let source = sourceOf(extra);
+                          @if (source.iconUrl) {
+                            <img [src]="source.iconUrl" alt="" class="source-icon" />
+                          }
+                          {{ source.description }}
+                        </td>
+                        <td><formatted-number [value]="extra.amount"></formatted-number></td>
+                        <td>/</td>
+                        <td><formatted-number [value]="extra.everyCycles"></formatted-number></td>
+                        <td><formatted-number [value]="extra.producedPerMinute" suffix="/m"></formatted-number></td>
+                      </tr>
+                    }
+                  </tbody>
+                </table>
+              </div>
+            </td>
+          </tr>
+        }
       }
     </tbody>
   </table>

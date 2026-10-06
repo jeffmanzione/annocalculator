@@ -4,6 +4,8 @@ import { factoriesById } from '../game/data';
 import {
   buffContributions,
   BuffContribution,
+  BuffSource,
+  extraOutputDetails,
   extraOutputsPerCycle,
   fertilityFactor,
   fuelPerMinute,
@@ -196,6 +198,27 @@ export class Line117Controller {
           this.numBuildings * this.cyclesPerMinutePerBuilding * perCycle,
       }),
     );
+  }
+
+  /** Each extra output with its source and rate, for the extra goods table. */
+  get extraGoodRows(): {
+    good: GoodId;
+    source: BuffSource;
+    sourceId: number;
+    amount: number;
+    everyCycles: number;
+    producedPerMinute: number;
+  }[] {
+    return extraOutputDetails(this.factory, this.contributions).map((e) => ({
+      good: goodIdOf(e.product),
+      source: e.source,
+      sourceId: e.sourceId,
+      amount: e.amount,
+      everyCycles: e.everyCycles,
+      producedPerMinute:
+        (this.numBuildings * this.cyclesPerMinutePerBuilding * e.amount) /
+        e.everyCycles,
+    }));
   }
 
   /** What the line uses besides its recipe: coal for fuel, and the silo's feed. */

@@ -126,3 +126,20 @@ anno-117-island {
   box-shadow: inset 0 1px 0 rgba(anno.$parchment-lightest, 0.6);
   padding-top: 16px;
 }
+
+// Anno 117's discoveries: the list and the level of the repeatable one, side by side.
+.discoveries-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 8px;
+
+  .discoveries-select {
+    flex: 1;
+    min-width: 12rem;
+  }
+
+  .repeatable-tech {
+    width: 11rem;
+  }
+}

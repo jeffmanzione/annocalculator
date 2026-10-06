@@ -16,7 +16,11 @@ const named = (
 });
 
 /** The name and icon of whatever gave a line a buff, in the language shown. */
-function describeSource(source: BuffSource, id: number, language: Language) {
+export function describeSource(
+  source: BuffSource,
+  id: number,
+  language: Language,
+) {
   switch (source) {
     case 'item':
     case 'boostedItem': {

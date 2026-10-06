@@ -89,7 +89,7 @@ check('summary panel updates after edit', (await page.locator('summary-panel').i
   check('a substituted input gets a glow', await inputIcons().first().evaluate((i) => i.classList.contains('glow')));
   await bakeryRow.locator('td.mat-column-inputGoods .item-container').first().hover();
   await page.waitForTimeout(800);
-  const subTip = (await page.locator('input-good-tooltip').innerText()).replace(/\s+/g, ' ');
+  const subTip = (await page.locator('anno-1800-tooltip').innerText()).replace(/\s+/g, ' ');
   check('tooltip names the good, what it replaces and the specialist', /Grain.*Replaces.*Flour.*Specialist.*Baker/.test(subTip), subTip);
   await page.mouse.move(5, 5);
   await settle();

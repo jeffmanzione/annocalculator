@@ -5,21 +5,19 @@ import {
   inject,
   input,
 } from '@angular/core';
-import { L10nText } from '../../../components/text/text';
-import { L10nKey } from '../../../shared/l10n/l10n';
+import { InfoTooltip } from '../../../components/info-tooltip/info-tooltip';
 import { L10nService } from '../../../services/l10n/l10n';
-import { TooltipKind, TooltipPart, tooltipModel } from './tooltip-model';
+import { TooltipKind, tooltipModel } from './tooltip-model';
 
 /**
  * The hover card for one of Anno 117's things: what a building makes and needs, where a good comes from
  * and goes, what an item, discovery, patron or event does, and what a fertility is for. Used as the
- * tooltip of the island editor's dropdowns and rows.
+ * tooltip of the island editor's dropdowns and rows; the shared InfoTooltip draws it.
  */
 @Component({
   selector: 'anno-117-tooltip',
-  imports: [L10nText],
-  templateUrl: './anno117-tooltip.html',
-  styleUrl: './anno117-tooltip.scss',
+  imports: [InfoTooltip],
+  template: '<info-tooltip [model]="model()"></info-tooltip>',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Anno117Tooltip {
@@ -31,8 +29,4 @@ export class Anno117Tooltip {
   readonly model = computed(() =>
     tooltipModel(this.kind(), this.value(), this.l10n_.languageSignal()),
   );
-
-  isKey(part: TooltipPart): part is { key: L10nKey } {
-    return typeof part !== 'string';
-  }
 }

@@ -1,3 +1,9 @@
+import {
+  TooltipModel,
+  TooltipPart,
+  TooltipRow,
+  TooltipSection,
+} from '../../../components/info-tooltip/tooltip-model';
 import { L10nKey, Language } from '../../../shared/l10n/l10n';
 import { iconUrl, nameIn } from '../anno117-game';
 import {
@@ -14,27 +20,7 @@ import {
 } from '../game/data';
 import { Anno117Buff, Anno117Name } from '../game/data-types';
 
-/** A piece of a tooltip line: text as it is, or a translated phrase from the app's own text. */
-export type TooltipPart = string | { key: L10nKey };
-
-export interface TooltipRow {
-  icon?: string;
-  parts: TooltipPart[];
-}
-
-export interface TooltipSection {
-  /** A heading above the rows, such as "Made By". */
-  heading?: L10nKey;
-  rows: TooltipRow[];
-}
-
-export interface TooltipModel {
-  name: string;
-  icon?: string;
-  /** A line under the name (an item's rarity). */
-  subtitle?: TooltipPart;
-  sections: TooltipSection[];
-}
+export type { TooltipModel, TooltipPart, TooltipRow, TooltipSection };
 
 export type TooltipKind =
   | 'building'

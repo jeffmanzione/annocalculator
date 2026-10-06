@@ -188,3 +188,60 @@ input[aria-label='numBuildings'] {
     filter: brightness(0.6);
   }
 }
+
+// Extra goods, as a table under the line they belong to (like Anno 1800's).
+tr.extra-goods-tr > td.extra-goods-cell {
+  padding: 0;
+}
+
+.extra-goods-outer-container {
+  display: flex;
+  justify-content: space-evenly;
+  margin: 8px;
+}
+
+table.extra-goods-table {
+  border-collapse: collapse;
+  min-width: 70%;
+  table-layout: fixed;
+
+  th,
+  td {
+    padding: 2px 4px;
+    text-align: center;
+  }
+
+  td {
+    background: none;
+    box-shadow: none;
+  }
+
+  th {
+    height: auto;
+    font-size: 0.85em;
+  }
+
+  td.source-cell {
+    text-align: left;
+  }
+
+  .source-icon {
+    width: 22px;
+    height: 22px;
+    vertical-align: middle;
+    margin-right: 4px;
+  }
+
+  th.fraction-col,
+  th.divide-col {
+    width: 5rem;
+  }
+
+  th.divide-col {
+    width: 1.5rem;
+  }
+
+  th.per-minute-col {
+    width: 7rem;
+  }
+}

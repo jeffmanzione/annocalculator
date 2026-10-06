@@ -19,7 +19,9 @@ import { EnumSelect } from '../../../components/enum-select/enum-select';
 import { FormattedNumber } from '../../../components/formatted-number/formatted-number';
 import { L10nText } from '../../../components/text/text';
 import { L10nService } from '../../../services/l10n/l10n';
+import { BuffSource } from '../game/rules';
 import {
+  describeSource,
   efficiencyConstituents,
   producedConstituents,
 } from '../efficiency-constituents';
@@ -209,11 +211,13 @@ export class Anno117Island {
     return producedConstituents(line, this.l10n_.languageSignal());
   }
 
-  /** Extra output of goods other than the line's main one (the main good's extra output is in its total). */
-  otherExtraGoods(
-    line: Line117Controller,
-  ): { good: string; producedPerMinute: number }[] {
-    return line.extraGoods.filter((extra) => extra.good !== line.good);
+  /** Where an extra output comes from, with its icon, in the language shown. */
+  sourceOf(extra: { source: BuffSource; sourceId: number }) {
+    return describeSource(
+      extra.source,
+      extra.sourceId,
+      this.l10n_.languageSignal(),
+    );
   }
 
   removeProductionLine(line: Line117Controller): void {

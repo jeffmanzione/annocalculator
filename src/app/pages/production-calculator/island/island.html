@@ -27,11 +27,7 @@
         (action)="addProductionLine()"></ac-button>
     </section>
     <section class="table-scroll">
-      <table
-        mat-table
-        class="production-lines-table"
-        [dataSource]="productionLineRows()"
-        multiTemplateDataRows>
+      <table mat-table class="production-lines-table" [dataSource]="productionLineRows()" multiTemplateDataRows>
         <ng-container matColumnDef="building">
           <th mat-header-cell *matHeaderCellDef>
             <span textLoc="Building"></span>
@@ -298,26 +294,26 @@
 }
 
 <ng-template #goodTooltip let-value="value">
-  <simple-tooltip [value]="value" [iconUrlLookupFn]="lookupGoodIconUrl"></simple-tooltip>
+  <anno-1800-tooltip kind="good" [value]="value"></anno-1800-tooltip>
 </ng-template>
 <ng-template #inputGoodTooltip let-value="value">
-  <input-good-tooltip [value]="value"></input-good-tooltip>
+  <anno-1800-tooltip kind="inputGood" [value]="value"></anno-1800-tooltip>
 </ng-template>
 <ng-template #haciendaTooltip let-value="value">
-  <hacienda-tooltip [value]="value"></hacienda-tooltip>
+  <anno-1800-tooltip kind="hacienda" [value]="value"></anno-1800-tooltip>
 </ng-template>
 <ng-template #buildingTooltip let-value="value">
-  <building-tooltip [value]="value"></building-tooltip>
+  <anno-1800-tooltip kind="building" [value]="value"></anno-1800-tooltip>
 </ng-template>
 <ng-template #boostTooltip let-value="value">
-  <boost-tooltip [value]="value"></boost-tooltip>
+  <anno-1800-tooltip kind="boost" [value]="value"></anno-1800-tooltip>
 </ng-template>
 <ng-template #policyTooltip let-value="value">
-  <policy-tooltip [value]="value"></policy-tooltip>
+  <anno-1800-tooltip kind="policy" [value]="value"></anno-1800-tooltip>
 </ng-template>
 <ng-template #itemTooltip let-value="value">
-  <item-tooltip [value]="value"></item-tooltip>
+  <anno-1800-tooltip kind="item" [value]="value"></anno-1800-tooltip>
 </ng-template>
 <ng-template #culturalSetTooltip let-value="value">
-  <cultural-set-tooltip [value]="value" [displayValueTransform]="transformCulturalSetName"></cultural-set-tooltip>
+  <anno-1800-tooltip kind="culturalSet" [value]="value"></anno-1800-tooltip>
 </ng-template>

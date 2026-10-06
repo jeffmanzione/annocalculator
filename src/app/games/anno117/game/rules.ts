@@ -246,6 +246,31 @@ export function extraOutputsPerCycle(
   return [...totals].map(([product, perCycle]) => ({ product, perCycle }));
 }
 
+/** Each extra output a building has, with what gives it (for listing them one by one). */
+export function extraOutputDetails(
+  factory: Anno117Factory,
+  contributions: readonly BuffContribution[],
+): {
+  product: number;
+  amount: number;
+  everyCycles: number;
+  source: BuffSource;
+  sourceId: number;
+}[] {
+  return contributions
+    .filter((c) => c.scaling > 0)
+    .flatMap((c) =>
+      (c.buff.additionalOutputs ?? []).map((extra) => ({
+        // Product 0 means more of what the building makes.
+        product: extra.product || factory.outputs[0].product,
+        amount: extra.amount,
+        everyCycles: extra.everyCycles,
+        source: c.source,
+        sourceId: c.sourceId,
+      })),
+    );
+}
+
 /**
  * Coal a building burns per minute: one unit lasts `fuelProductionTime` seconds, longer with fuel
  * saving buffs. (The community calculator derives this slightly differently, scaling with the cycle

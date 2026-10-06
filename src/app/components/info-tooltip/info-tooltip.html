@@ -1,9 +1,9 @@
 @let tip = model();
 @if (tip.name) {
   <div class="tooltip-container">
-    <div class="tooltip-inner-container">
+    <div class="tooltip-inner-container" [style.background-color]="tip.background">
       @if (tip.icon) {
-        <img [src]="tip.icon" [alt]="tip.name" class="icon-big" />
+        <img [src]="tip.icon" [alt]="tip.name" class="icon-big" [class.glow]="tip.iconGlow" />
       }
       <div class="name">{{ tip.name }}</div>
       @if (tip.subtitle) {

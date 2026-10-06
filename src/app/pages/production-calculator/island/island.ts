@@ -51,48 +51,32 @@ import {
 import { TextFieldModule } from '@angular/cdk/text-field';
 import { AcButton } from '../../../components/button/button';
 import { EnumRow } from '../../../components/enum-row/enum-row';
-import { ItemTooltip } from './tooltips/item/item-tooltip';
-import {
-  SimpleTooltip,
-  TooltipDirective,
-} from '../../../components/enum-tooltip/enum-tooltip';
+import { TooltipDirective } from '../../../components/enum-tooltip/enum-tooltip';
+import { Anno1800Tooltip } from '../../../games/anno1800/tooltips/anno1800-tooltip';
 import { CompositeNumber } from '../../../components/composite-number/composite-number';
 import { StoreExtraGoodView } from '../../../shared/mvc/world-store-views';
-import { BoostTooltip } from './tooltips/boost/boost-tooltip';
-import { ProductionBuildingTooltip } from './tooltips/building/building-tooltip';
-import { CulturalSetTooltip } from './tooltips/cultural-set/cultural-set-tooltip';
 import { L10nText } from '../../../components/text/text';
-import { PolicyTooltip } from './tooltips/policy/policy-tooltip';
-import { HaciendaTooltip } from './tooltips/hacienda/hacienda-tooltip';
-import { InputGoodTooltip } from './tooltips/input-good/input-good-tooltip';
 import { InputGoodSource } from '../../../shared/mvc/world-store';
 
 @Component({
   selector: 'island',
   imports: [
     AcButton,
+    Anno1800Tooltip,
     CompositeNumber,
     EnumRow,
     EnumSelect,
     FormattedNumber,
     FormsModule,
-    ItemTooltip,
     MatCheckboxModule,
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
     MatTableModule,
     ReactiveFormsModule,
-    SimpleTooltip,
     TextFieldModule,
     TooltipDirective,
-    BoostTooltip,
-    ProductionBuildingTooltip,
-    CulturalSetTooltip,
     L10nText,
-    PolicyTooltip,
-    HaciendaTooltip,
-    InputGoodTooltip,
   ],
   templateUrl: './island.html',
   styleUrl: './island.scss',

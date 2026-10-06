@@ -12,29 +12,31 @@
       <card class="global-parameters-card">
         <card-title><span textLoc="Global Parameters"></span></card-title>
         <card-content>
-          <enum-select
-            class="discoveries-select"
-            label="Discoveries"
-            [multiple]="true"
-            [options]="techChoices"
-            [iconUrlLookupFn]="techIcon"
-            [displayTextTransformer]="techName"
-            [tooltip]="techTooltip"
-            [ngModel]="world.oneTimeTechs"
-            (ngModelChange)="setTechs($event)"></enum-select>
-          @for (tech of repeatableTechs; track tech.id) {
-            <mat-form-field class="repeatable-tech">
-              <mat-label>{{ techName(tech.id) }}</mat-label>
-              <input
-                matInput
-                type="number"
-                min="0"
-                [max]="maxTechLevel"
-                [attr.aria-label]="'repeatable-tech-' + tech.id"
-                [ngModel]="world.techLevel(tech.id)"
-                (ngModelChange)="setTechLevel(tech.id, $event)" />
-            </mat-form-field>
-          }
+          <div class="discoveries-row">
+            <enum-select
+              class="discoveries-select"
+              label="Discoveries"
+              [multiple]="true"
+              [options]="techChoices"
+              [iconUrlLookupFn]="techIcon"
+              [displayTextTransformer]="techName"
+              [tooltip]="techTooltip"
+              [ngModel]="world.oneTimeTechs"
+              (ngModelChange)="setTechs($event)"></enum-select>
+            @for (tech of repeatableTechs; track tech.id) {
+              <mat-form-field class="repeatable-tech">
+                <mat-label>{{ techName(tech.id) }}</mat-label>
+                <input
+                  matInput
+                  type="number"
+                  min="0"
+                  [max]="maxTechLevel"
+                  [attr.aria-label]="'repeatable-tech-' + tech.id"
+                  [ngModel]="world.techLevel(tech.id)"
+                  (ngModelChange)="setTechLevel(tech.id, $event)" />
+              </mat-form-field>
+            }
+          </div>
         </card-content>
       </card>
     </section>
