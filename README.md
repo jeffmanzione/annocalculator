@@ -51,6 +51,14 @@ The summary shows total and net production of every good across all your islands
 
 ![The summary of goods and the trade routes between islands](https://github.com/jeffmanzione/annocalculator/blob/main/screenshots/summary.png 'Summary and trade routes')
 
+### Anno 117: Pax Romana
+
+The second tab plans Latium and Albion the same way: set an island's province, patron and devotion, switch on aqueducts and silos, place items and research discoveries. Hover an efficiency to see where it comes from.
+
+![The Anno 117 calculator with three islands, discoveries, a patron, aqueducts and a silo](https://github.com/jeffmanzione/annocalculator/blob/main/screenshots/anno117_whole.jpg 'The Anno 117 calculator')
+
+![Tooltip showing a Pig Farm's 220%: base productivity, a silo and Mars's Armamentum](https://github.com/jeffmanzione/annocalculator/blob/main/screenshots/anno117_efficiency.png 'Anno 117 efficiency breakdown')
+
 ### In your language
 
 English, German, Dutch and Chinese.
