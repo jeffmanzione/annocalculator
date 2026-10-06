@@ -45,30 +45,7 @@
             <span textLoc="Count"></span>
           </th>
           <td mat-cell *matCellDef="let element" [formGroup]="element.formGroup" class="building-count">
-            <mat-form-field>
-              <input
-                matInput
-                type="number"
-                inputmode="numeric"
-                min="0"
-                step="1"
-                formControlName="numBuildings"
-                aria-label="numBuildings" />
-              <span matSuffix class="count-steppers">
-                <button
-                  type="button"
-                  tabindex="-1"
-                  class="count-step count-step-up"
-                  aria-label="Increase count"
-                  (click)="element.stepNumBuildings(1)"></button>
-                <button
-                  type="button"
-                  tabindex="-1"
-                  class="count-step count-step-down"
-                  aria-label="Decrease count"
-                  (click)="element.stepNumBuildings(-1)"></button>
-              </span>
-            </mat-form-field>
+            <stepper-input formControlName="numBuildings" ariaLabel="numBuildings"></stepper-input>
           </td>
         </ng-container>
         <ng-container matColumnDef="expandExtraGoods">

@@ -94,29 +94,10 @@
               (ngModelChange)="setBuilding(line, $event)"></enum-select>
           </td>
           <td class="building-count">
-            <mat-form-field>
-              <input
-                matInput
-                type="text"
-                inputmode="numeric"
-                aria-label="numBuildings"
-                [ngModel]="line.numBuildings"
-                (ngModelChange)="setNumBuildings(line, $event)" />
-              <span matSuffix class="count-steppers">
-                <button
-                  type="button"
-                  tabindex="-1"
-                  class="count-step count-step-up"
-                  aria-label="Increase count"
-                  (click)="stepNumBuildings(line, 1)"></button>
-                <button
-                  type="button"
-                  tabindex="-1"
-                  class="count-step count-step-down"
-                  aria-label="Decrease count"
-                  (click)="stepNumBuildings(line, -1)"></button>
-              </span>
-            </mat-form-field>
+            <stepper-input
+              ariaLabel="numBuildings"
+              [ngModel]="line.numBuildings"
+              (ngModelChange)="setNumBuildings(line, $event)"></stepper-input>
           </td>
           <td class="goods-field">
             <enum-row

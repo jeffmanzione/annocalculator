@@ -17,6 +17,7 @@ import {
 import { EnumRow } from '../../../components/enum-row/enum-row';
 import { EnumSelect } from '../../../components/enum-select/enum-select';
 import { FormattedNumber } from '../../../components/formatted-number/formatted-number';
+import { StepperInput } from '../../../components/stepper-input/stepper-input';
 import { L10nText } from '../../../components/text/text';
 import { L10nService } from '../../../services/l10n/l10n';
 import { BuffSource } from '../game/rules';
@@ -87,6 +88,7 @@ interface Named {
     MatCheckboxModule,
     MatFormFieldModule,
     MatInputModule,
+    StepperInput,
   ],
   templateUrl: './anno117-island.html',
   styleUrl: './anno117-island.scss',
@@ -188,13 +190,8 @@ export class Anno117Island {
     this.controller().devotion = Number(value);
   }
 
-  setNumBuildings(line: Line117Controller, value: string | number): void {
-    const count = Number.parseInt(String(value), 10);
-    line.numBuildings = Number.isNaN(count) ? 0 : count;
-  }
-
-  stepNumBuildings(line: Line117Controller, delta: number): void {
-    line.numBuildings = line.numBuildings + delta;
+  setNumBuildings(line: Line117Controller, count: number | null): void {
+    line.numBuildings = count ?? 0;
   }
 
   setBuilding(line: Line117Controller, building: number): void {

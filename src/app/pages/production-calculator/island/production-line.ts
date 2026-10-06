@@ -327,13 +327,6 @@ export class ProductionLineControl {
     this.updateFormStates_();
   }
 
-  /** Raises or lowers the building count by `delta`, never below zero. */
-  stepNumBuildings(delta: number): void {
-    const control = this.formGroup.controls['numBuildings'];
-    const current = Number.parseInt(control.getRawValue());
-    control.setValue(Math.max(0, (Number.isNaN(current) ? 0 : current) + delta));
-  }
-
   toggleShowExtraGoods(): void {
     this.showExtraGoodsRequested_.update((shown) => !shown);
   }

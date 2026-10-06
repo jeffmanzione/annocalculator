@@ -1,0 +1,36 @@
+<mat-form-field>
+  @if (label()) {
+    <mat-label>{{ label() }}</mat-label>
+  }
+  <input
+    #field
+    matInput
+    type="number"
+    inputmode="numeric"
+    [attr.min]="min()"
+    [attr.max]="max()"
+    [step]="step()"
+    [attr.aria-label]="ariaLabel()"
+    [value]="value() ?? ''"
+    [disabled]="disabled()"
+    (input)="onInput($event)"
+    (change)="onChange($event)"
+    (blur)="onTouched()" />
+  @if (suffix()) {
+    <span matTextSuffix>{{ suffix() }}</span>
+  }
+  <span matSuffix class="count-steppers">
+    <button
+      type="button"
+      tabindex="-1"
+      class="count-step count-step-up"
+      aria-label="Increase count"
+      (click)="stepBy(1)"></button>
+    <button
+      type="button"
+      tabindex="-1"
+      class="count-step count-step-down"
+      aria-label="Decrease count"
+      (click)="stepBy(-1)"></button>
+  </span>
+</mat-form-field>

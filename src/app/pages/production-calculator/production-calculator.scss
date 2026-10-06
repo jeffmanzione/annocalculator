@@ -1,5 +1,4 @@
 @use '../../../anno-palette' as anno;
-@use '../../../count-stepper';
 :host {
   display: flex;
   flex-direction: row;
@@ -144,23 +143,5 @@ anno-117-island {
 
   .repeatable-tech {
     width: 11rem;
-  }
-}
-
-// The arrows of Anno 117's repeatable discovery, the same as the production line's count.
-.repeatable-tech {
-  @include count-stepper.count-stepper;
-
-  // Only the count-style arrows, not the browser's own that appear on hover.
-  input[type='number'] {
-    appearance: textfield;
-    -moz-appearance: textfield;
-
-    &::-webkit-outer-spin-button,
-    &::-webkit-inner-spin-button {
-      -webkit-appearance: none;
-      appearance: none;
-      margin: 0;
-    }
   }
 }

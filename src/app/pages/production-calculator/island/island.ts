@@ -50,6 +50,7 @@ import {
 } from '../../../games/anno1800/game/icons';
 import { TextFieldModule } from '@angular/cdk/text-field';
 import { AcButton } from '../../../components/button/button';
+import { StepperInput } from '../../../components/stepper-input/stepper-input';
 import { EnumRow } from '../../../components/enum-row/enum-row';
 import { TooltipDirective } from '../../../components/enum-tooltip/enum-tooltip';
 import { Anno1800Tooltip } from '../../../games/anno1800/tooltips/anno1800-tooltip';
@@ -74,6 +75,7 @@ import { InputGoodSource } from '../../../shared/mvc/world-store';
     MatSelectModule,
     MatTableModule,
     ReactiveFormsModule,
+    StepperInput,
     TextFieldModule,
     TooltipDirective,
     L10nText,

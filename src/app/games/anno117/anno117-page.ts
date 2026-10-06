@@ -14,16 +14,13 @@ import {
   MatDialogModule,
 } from '@angular/material/dialog';
 import { MatExpansionModule } from '@angular/material/expansion';
-import {
-  MAT_FORM_FIELD_DEFAULT_OPTIONS,
-  MatFormFieldModule,
-} from '@angular/material/form-field';
+import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { AcButton } from '../../components/button/button';
 import { CardModule } from '../../components/card/card';
 import { EnumSelect } from '../../components/enum-select/enum-select';
+import { StepperInput } from '../../components/stepper-input/stepper-input';
 import { L10nText } from '../../components/text/text';
 import {
   SaveData,
@@ -67,9 +64,8 @@ import { MAX_TECH_LEVEL, WorldStore117 } from './model/world-store-117';
     L10nText,
     MatDialogModule,
     MatExpansionModule,
-    MatFormFieldModule,
     MatIconModule,
-    MatInputModule,
+    StepperInput,
     MatSnackBarModule,
     SummaryPanel,
     TradeRoutesPanel,
@@ -182,20 +178,9 @@ export class Anno117Page implements OnInit {
     return this.world.techLevel(id) * this.techStep(id);
   }
 
-  /** Raises or lowers a repeatable discovery by one level (one step of its percentage). */
-  stepTechLevel(id: number, delta: number): void {
-    this.world.setTechLevel(id, this.world.techLevel(id) + delta);
-  }
-
-  /** Sets the level from a percentage typed in; anything between two steps is cut down to the step below. */
-  setTechPercent(id: number, input: HTMLInputElement): void {
-    const percent = Number.parseFloat(input.value);
-    const level = Math.floor(
-      (Number.isNaN(percent) ? 0 : percent) / this.techStep(id),
-    );
-    this.world.setTechLevel(id, level);
-    // Show what was kept, even when it is the same level as before (so the typed 17 reads 15 again).
-    input.value = String(this.techPercent(id));
+  /** Sets the level from a percentage (already cut down to a step by the field). */
+  setTechPercent(id: number, percent: number | null): void {
+    this.world.setTechLevel(id, Math.floor((percent ?? 0) / this.techStep(id)));
   }
 
   addIsland(): void {

@@ -1,0 +1,33 @@
+@use 'sass:color';
+@use 'theme-colors';
+@use 'anno-palette' as anno;
+
+// How the cells of a calculator table look in both games: a slate header band and parchment cells.
+// Include it inside the table's selector.
+@mixin anno-table-cells {
+  th,
+  td {
+    padding: 4px;
+    text-align: center;
+  }
+
+  // Headers wrap between words only (a word is never split), so a column's minimum width is its longest
+  // header word in the current language. German compounds carry soft hyphens, and `keep-all` stops
+  // Chinese headers from breaking between any two characters (orphaning a single one).
+  th {
+    overflow-wrap: normal;
+    word-break: keep-all;
+    letter-spacing: -0.5px;
+    background: linear-gradient(to bottom, anno.$slate-light, anno.$slate);
+    color: anno.$parchment-lighter;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.45);
+  }
+
+  td {
+    background-color: color.scale(theme-colors.$table-bg-color, $lightness: -3%);
+    background-image: linear-gradient(to bottom, rgba(255, 242, 199, 0.3), rgba(255, 242, 199, 0) 45%);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 242, 199, 0.4),
+      inset 0 -1px 0 rgba(anno.$ink, 0.16);
+  }
+}

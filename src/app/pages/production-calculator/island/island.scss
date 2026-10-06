@@ -2,6 +2,7 @@
 @use '@angular/material' as mat;
 @use '../../../../theme-colors';
 @use '../../../../anno-palette' as anno;
+@use '../../../../anno-table';
 
 :host {
   @include mat.table-overrides(
@@ -102,32 +103,9 @@ table.production-lines-table {
     display: table-header-group;
   }
 
-  th,
-  td {
-    padding: 4px;
-    text-align: center;
-  }
-
-  // Headers wrap between words only (a word is never split), so a column's
-  // minimum width is its longest header word in the current language. German
-  // compounds carry soft hyphens, and `keep-all` stops Chinese headers from
-  // breaking between any two characters (orphaning a single one).
-  th {
-    overflow-wrap: normal;
-    word-break: keep-all;
-    letter-spacing: -0.5px;
-    background: linear-gradient(to bottom, anno.$slate-light, anno.$slate);
-    color: anno.$parchment-lighter;
-    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.45);
-  }
+  @include anno-table.anno-table-cells;
 
   td {
-    background-color: color.scale(theme-colors.$table-bg-color, $lightness: -3%);
-    background-image: linear-gradient(to bottom, rgba(255, 242, 199, 0.3), rgba(255, 242, 199, 0) 45%);
-    box-shadow:
-      inset 0 1px 0 rgba(255, 242, 199, 0.4),
-      inset 0 -1px 0 rgba(anno.$ink, 0.16);
-
     &.extra-goods-row {
       padding: 0;
     }
@@ -135,10 +113,6 @@ table.production-lines-table {
     &.production-line-row {
       border-bottom: none;
     }
-  }
-
-  tr:hover > td {
-    background-color: color.scale(theme-colors.$table-bg-color, $lightness: 2%);
   }
 
   // --- Production lines ---
@@ -185,55 +159,6 @@ table.production-lines-table {
     width: 5rem;
     min-width: 5rem;
     max-width: 5rem;
-  }
-
-  // Up/down arrows stacked beside the count, themed like the dropdown arrows
-  // (the browser's own spinner paints a white box over the parchment).
-  input[aria-label='numBuildings'] {
-    appearance: textfield;
-    -moz-appearance: textfield;
-
-    &::-webkit-inner-spin-button,
-    &::-webkit-outer-spin-button {
-      -webkit-appearance: none;
-      margin: 0;
-    }
-  }
-
-  .count-steppers {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding-right: 6px;
-  }
-
-  .count-step {
-    all: unset;
-    box-sizing: border-box;
-    width: 16px;
-    height: 12px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    &::after {
-      content: '';
-      border-left: 5px solid transparent;
-      border-right: 5px solid transparent;
-    }
-
-    &-up::after {
-      border-bottom: 6px solid anno.$ink-muted;
-    }
-
-    &-down::after {
-      border-top: 6px solid anno.$ink-muted;
-    }
-
-    &:hover::after {
-      filter: brightness(0.6);
-    }
   }
 
   // --- Extra goods (nested table) ---

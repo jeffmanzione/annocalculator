@@ -1,0 +1,24 @@
+@use '../../../count-stepper';
+
+:host {
+  display: block;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+// The up and down arrows are the stepper's own (the browser's spinner paints a white box over the parchment).
+input {
+  appearance: textfield;
+  -moz-appearance: textfield;
+
+  &::-webkit-inner-spin-button,
+  &::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    appearance: none;
+    margin: 0;
+  }
+}
+
+@include count-stepper.count-stepper;

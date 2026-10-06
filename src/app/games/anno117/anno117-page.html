@@ -24,33 +24,16 @@
               [ngModel]="world.oneTimeTechs"
               (ngModelChange)="setTechs($event)"></enum-select>
             @for (tech of repeatableTechs; track tech.id) {
-              <mat-form-field class="repeatable-tech">
-                <mat-label>{{ techName(tech.id) }}</mat-label>
-                <input
-                  matInput
-                  type="number"
-                  min="0"
-                  [step]="techStep(tech.id)"
-                  [max]="maxTechLevel * techStep(tech.id)"
-                  [attr.aria-label]="'repeatable-tech-' + tech.id"
-                  [value]="techPercent(tech.id)"
-                  (change)="setTechPercent(tech.id, $any($event.target))" />
-                <span matTextSuffix>%</span>
-                <span matSuffix class="count-steppers">
-                  <button
-                    type="button"
-                    tabindex="-1"
-                    class="count-step count-step-up"
-                    aria-label="Increase"
-                    (click)="stepTechLevel(tech.id, 1)"></button>
-                  <button
-                    type="button"
-                    tabindex="-1"
-                    class="count-step count-step-down"
-                    aria-label="Decrease"
-                    (click)="stepTechLevel(tech.id, -1)"></button>
-                </span>
-              </mat-form-field>
+              <stepper-input
+                class="repeatable-tech"
+                commit="change"
+                suffix="%"
+                [label]="techName(tech.id)"
+                [ariaLabel]="'repeatable-tech-' + tech.id"
+                [step]="techStep(tech.id)"
+                [max]="maxTechLevel * techStep(tech.id)"
+                [ngModel]="techPercent(tech.id)"
+                (ngModelChange)="setTechPercent(tech.id, $event)"></stepper-input>
             }
           </div>
         </card-content>
