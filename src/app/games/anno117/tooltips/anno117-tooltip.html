@@ -1,0 +1,43 @@
+@let tip = model();
+@if (tip.name) {
+  <div class="tooltip-container">
+    <div class="tooltip-inner-container">
+      @if (tip.icon) {
+        <img [src]="tip.icon" [alt]="tip.name" class="icon-big" />
+      }
+      <div class="name">{{ tip.name }}</div>
+      @if (tip.subtitle) {
+        <div class="subtitle">
+          @if (isKey(tip.subtitle)) {
+            <span [textLoc]="tip.subtitle.key"></span>
+          } @else {
+            {{ tip.subtitle }}
+          }
+        </div>
+      }
+      @for (section of tip.sections; track $index) {
+        <div class="section">
+          @if (section.heading) {
+            <div class="heading"><span [textLoc]="section.heading"></span></div>
+          }
+          @for (row of section.rows; track $index) {
+            <div class="row">
+              @if (row.icon) {
+                <img [src]="row.icon" alt="" class="icon-small" />
+              }
+              <span>
+                @for (part of row.parts; track $index) {
+                  @if (isKey(part)) {
+                    <span [textLoc]="part.key"></span>
+                  } @else {
+                    {{ part }}
+                  }
+                }
+              </span>
+            </div>
+          }
+        </div>
+      }
+    </div>
+  </div>
+}

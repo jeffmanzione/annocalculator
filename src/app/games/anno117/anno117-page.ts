@@ -47,6 +47,7 @@ import {
   worldFromSave,
 } from './model/models';
 import { World117Controller } from './model/world-controllers';
+import { Anno117Tooltip } from './tooltips/anno117-tooltip';
 import { WorldStore117 } from './model/world-store-117';
 
 /** The Anno 117 calculator page: the same layout as the Anno 1800 one, with Anno 117's islands and rules. */
@@ -54,6 +55,7 @@ import { WorldStore117 } from './model/world-store-117';
   selector: 'anno-117-page',
   imports: [
     AcButton,
+    Anno117Tooltip,
     Anno117Island,
     CardModule,
     EnumSelect,

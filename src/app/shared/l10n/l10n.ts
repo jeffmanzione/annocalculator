@@ -8,6 +8,17 @@ export type L10nKey =
   | 'Missing Fertilities'
   | 'Aqueduct'
   | 'Modules'
+  | 'Workforce'
+  | 'Fuel'
+  | 'Fuel Duration'
+  | 'Affects'
+  | 'Cycles'
+  | 'Every'
+  | 'Made By'
+  | 'Used By'
+  | 'Extra Output'
+  | 'Mythic'
+  | 'Unique'
   | 'Silo'
   | 'Boosted Items'
   | 'Discoveries'
@@ -169,6 +180,72 @@ export const localizations: Localizations = {
     De: 'Fehlende Fruchtbarkeiten',
     Nl: 'Ontbrekende vruchtbaarheden',
     Zh: '缺少的肥力',
+  },
+  Workforce: {
+    En: 'Workforce',
+    De: 'Arbeitskräfte',
+    Nl: 'Arbeidskrachten',
+    Zh: '劳动力',
+  },
+  Fuel: {
+    En: 'Fuel',
+    De: 'Brennstoff',
+    Nl: 'Brandstof',
+    Zh: '燃料',
+  },
+  'Fuel Duration': {
+    En: 'Fuel Duration',
+    De: 'Brenndauer',
+    Nl: 'Brandduur',
+    Zh: '燃料持续时间',
+  },
+  Affects: {
+    En: 'Affects',
+    De: 'Wirkt auf',
+    Nl: 'Werkt op',
+    Zh: '作用于',
+  },
+  Cycles: {
+    En: 'cycles',
+    De: 'Zyklen',
+    Nl: 'cycli',
+    Zh: '周期',
+  },
+  Every: {
+    En: 'every',
+    De: 'alle',
+    Nl: 'elke',
+    Zh: '每',
+  },
+  'Made By': {
+    En: 'Made By',
+    De: 'Hergestellt von',
+    Nl: 'Gemaakt door',
+    Zh: '生产于',
+  },
+  'Used By': {
+    En: 'Used By',
+    De: 'Verwendet von',
+    Nl: 'Gebruikt door',
+    Zh: '用于',
+  },
+  'Extra Output': {
+    En: 'Extra Output',
+    De: 'Zusätzliche Produktion',
+    Nl: 'Extra productie',
+    Zh: '额外产出',
+  },
+  Mythic: {
+    En: 'Mythic',
+    De: 'Mythisch',
+    Nl: 'Mythisch',
+    Zh: '神话',
+  },
+  Unique: {
+    En: 'Unique',
+    De: 'Einzigartig',
+    Nl: 'Uniek',
+    Zh: '独特',
   },
   Modules: {
     En: 'Modules',

@@ -19,6 +19,7 @@
             [options]="techChoices"
             [iconUrlLookupFn]="techIcon"
             [displayTextTransformer]="techName"
+            [tooltip]="techTooltip"
             [ngModel]="world.techs"
             (ngModelChange)="setTechs($event)"></enum-select>
         </card-content>
@@ -56,3 +57,6 @@
     <trade-routes-panel [world]="world"></trade-routes-panel>
   }
 </div>
+<ng-template #techTooltip let-value="value">
+  <anno-117-tooltip kind="tech" [value]="value"></anno-117-tooltip>
+</ng-template>

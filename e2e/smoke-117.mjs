@@ -39,6 +39,23 @@ await page.waitForTimeout(700);
 check('hovering an efficiency shows where it comes from', /Base Productivity/.test(await page.locator('.tooltip-container').first().innerText().catch(() => '')));
 await page.mouse.move(5, 5);
 
+// Buildings and goods explain themselves on hover too.
+{
+  const hoverText = async (locator, text) => {
+    await locator.hover();
+    await page.waitForTimeout(700);
+    const shown = await page.locator('.tooltip-container').allInnerTexts();
+    await page.mouse.move(5, 5);
+    await page.waitForTimeout(200);
+    return shown.some((s) => text.test(s)) ? true : shown.join(' | ').replace(/\s+/g, ' ').slice(0, 200);
+  };
+  const roma = islands().nth(1);
+  const building = await hoverText(roma.locator('tbody tr').nth(1).locator('enum-select .item-container').first(), /Bakery[\s\S]*Inputs[\s\S]*Flour[\s\S]*Output[\s\S]*Bread/);
+  check('hovering a building shows what it makes and needs', building === true, String(building));
+  const good = await hoverText(roma.locator('tbody tr').nth(1).locator('td.goods-field').nth(1).locator('.item-container').first(), /Bread[\s\S]*Made By[\s\S]*Bakery/);
+  check('hovering a good shows where it is made', good === true, String(good));
+}
+
 // 2. Editing: the count changes the totals and is saved.
 const count = (island, line) => islands().nth(island).locator('input[aria-label="numBuildings"]').nth(line);
 await count(0, 0).fill('6');

@@ -18,6 +18,7 @@
     [options]="patronChoices"
     [iconUrlLookupFn]="patronIcon"
     [displayTextTransformer]="patronName"
+    [tooltip]="patronTooltip"
     [ngModel]="patronValue"
     (ngModelChange)="setPatron($event)"></enum-select>
   @if (island.patron) {
@@ -42,6 +43,7 @@
     [options]="effectChoices()"
     [iconUrlLookupFn]="effectIcon"
     [displayTextTransformer]="effectName"
+    [tooltip]="effectTooltip"
     [ngModel]="island.effects"
     (ngModelChange)="island.effects = $event"></enum-select>
   <enum-select
@@ -51,6 +53,7 @@
     [options]="fertilityChoices()"
     [iconUrlLookupFn]="fertilityIcon"
     [displayTextTransformer]="fertilityName"
+    [tooltip]="fertilityTooltip"
     [ngModel]="island.missingFertilities"
     (ngModelChange)="island.missingFertilities = $event"></enum-select>
 </section>
@@ -86,6 +89,7 @@
               [options]="buildingChoices()"
               [iconUrlLookupFn]="buildingIcon"
               [displayTextTransformer]="buildingName"
+              [tooltip]="buildingTooltip"
               [ngModel]="line.building"
               (ngModelChange)="setBuilding(line, $event)"></enum-select>
           </td>
@@ -118,19 +122,22 @@
             <enum-row
               [values]="line.inputGoods"
               [iconUrlLookupFn]="productIcon"
-              [displayTextTransformer]="productName"></enum-row>
+              [displayTextTransformer]="productName"
+              [tooltip]="goodTooltip"></enum-row>
           </td>
           <td class="goods-field">
             <enum-row
               [values]="[line.good]"
               [iconUrlLookupFn]="productIcon"
-              [displayTextTransformer]="productName"></enum-row>
+              [displayTextTransformer]="productName"
+              [tooltip]="goodTooltip"></enum-row>
             @for (extra of otherExtraGoods(line); track extra.good) {
               <div class="extra-good">
                 <enum-row
                   [values]="[extra.good]"
                   [iconUrlLookupFn]="productIcon"
-                  [displayTextTransformer]="productName"></enum-row>
+                  [displayTextTransformer]="productName"
+                  [tooltip]="goodTooltip"></enum-row>
                 <formatted-number [value]="extra.producedPerMinute" suffix="/m"></formatted-number>
               </div>
             }
@@ -141,6 +148,7 @@
               [options]="itemChoices(line)"
               [iconUrlLookupFn]="itemIcon"
               [displayTextTransformer]="itemName"
+              [tooltip]="itemTooltip"
               [ngModel]="line.items"
               (ngModelChange)="line.items = $event"></enum-select>
             @if (boostableItems(line).length) {
@@ -151,6 +159,7 @@
                 [options]="boostableItems(line)"
                 [iconUrlLookupFn]="itemIcon"
                 [displayTextTransformer]="itemName"
+                [tooltip]="itemTooltip"
                 [ngModel]="line.boostedItems"
                 (ngModelChange)="line.boostedItems = $event"></enum-select>
             }
@@ -194,3 +203,21 @@
     </tbody>
   </table>
 </section>
+<ng-template #goodTooltip let-value="value">
+  <anno-117-tooltip kind="good" [value]="value"></anno-117-tooltip>
+</ng-template>
+<ng-template #buildingTooltip let-value="value">
+  <anno-117-tooltip kind="building" [value]="value"></anno-117-tooltip>
+</ng-template>
+<ng-template #itemTooltip let-value="value">
+  <anno-117-tooltip kind="item" [value]="value"></anno-117-tooltip>
+</ng-template>
+<ng-template #patronTooltip let-value="value">
+  <anno-117-tooltip kind="patron" [value]="value"></anno-117-tooltip>
+</ng-template>
+<ng-template #effectTooltip let-value="value">
+  <anno-117-tooltip kind="effect" [value]="value"></anno-117-tooltip>
+</ng-template>
+<ng-template #fertilityTooltip let-value="value">
+  <anno-117-tooltip kind="fertility" [value]="value"></anno-117-tooltip>
+</ng-template>

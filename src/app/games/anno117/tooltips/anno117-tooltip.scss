@@ -1,0 +1,60 @@
+// Same card as the Anno 1800 tooltips.
+.tooltip-container {
+  width: 300px;
+  padding: 12px;
+  background-color: var(--anno-parchment-lighter, white);
+  border: 1px solid rgba(74, 47, 18, 0.55);
+  box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.33);
+}
+
+.tooltip-inner-container {
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  border: solid 1px;
+}
+
+.icon-big {
+  width: 48px;
+  margin: auto;
+}
+
+.icon-small {
+  width: 22px;
+  height: 22px;
+  margin-right: 6px;
+  flex: none;
+}
+
+.name {
+  font-size: 16px;
+  font-weight: 500;
+  margin: 8px auto 2px auto;
+  text-align: center;
+  letter-spacing: -0.25px;
+}
+
+.subtitle {
+  font-size: 12px;
+  text-align: center;
+  opacity: 0.8;
+}
+
+.section {
+  margin-top: 8px;
+  padding-top: 6px;
+  border-top: 1px solid rgba(74, 47, 18, 0.25);
+  font-size: 12px;
+  letter-spacing: -0.25px;
+}
+
+.heading {
+  font-weight: 700;
+  margin-bottom: 2px;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  margin: 2px 0;
+}

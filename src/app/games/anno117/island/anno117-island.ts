@@ -38,6 +38,7 @@ import {
   Island117Controller,
   Line117Controller,
 } from '../model/world-controllers';
+import { Anno117Tooltip } from '../tooltips/anno117-tooltip';
 import { factoriesForSession, regionOfSession } from '../model/world-store-117';
 
 /** The value of the "no patron" choice, which a select can hold where it cannot hold null. */
@@ -74,6 +75,7 @@ interface Named {
   selector: 'anno-117-island',
   imports: [
     AcButton,
+    Anno117Tooltip,
     CompositeNumber,
     EnumRow,
     EnumSelect,
