@@ -1,0 +1,53 @@
+{
+  "palacePrestigeLevel": 12,
+  "islands": [
+    {
+      "id": 101,
+      "name": "Crown Falls",
+      "region": "Cape Trelawney",
+      "dolPolicy": "None",
+      "productionLines": [
+        {
+          "id": 1001,
+          "building": "Flour Mill",
+          "inputGoods": ["Grain"],
+          "good": "Flour",
+          "numBuildings": 2,
+          "hasTradeUnion": true,
+          "items": ["Burrstone"],
+          "inRangeOfLocalDepartment": false,
+          "inRangeOfHaciendaFertiliserWorks": false,
+          "boosts": [],
+          "culturalSets": []
+        },
+        {
+          "id": 1002,
+          "building": "Bakery",
+          "inputGoods": ["Flour"],
+          "good": "Bread",
+          "numBuildings": 4,
+          "hasTradeUnion": true,
+          "items": ["Fine Cake Decorator", "Baker"]
+        }
+      ]
+    },
+    {
+      "id": 102,
+      "name": "Farm Island",
+      "region": "Old World",
+      "dolPolicy": "Land Reform Act",
+      "productionLines": [
+        {
+          "id": 1003,
+          "building": "Grain Farm",
+          "good": "Grain",
+          "numBuildings": 9,
+          "hasTradeUnion": true,
+          "items": ["Cropper"],
+          "inRangeOfLocalDepartment": true
+        }
+      ]
+    }
+  ],
+  "tradeRoutes": [{ "id": 201, "sourceIslandId": 102, "targetIslandId": 101, "good": "Grain" }]
+}

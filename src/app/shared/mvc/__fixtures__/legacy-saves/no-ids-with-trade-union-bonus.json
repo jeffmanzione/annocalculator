@@ -1,0 +1,43 @@
+{
+  "tradeUnionBonus": 0.3,
+  "islands": [
+    {
+      "name": "Old Isle",
+      "region": "Old World",
+      "dolPolicy": "Skilled Labor Act",
+      "productionLines": [
+        {
+          "building": "Grain Farm",
+          "good": "Grain",
+          "numBuildings": 5,
+          "boosts": ["Tractor Barn"],
+          "hasTradeUnion": true,
+          "items": ["Cropper"],
+          "inRangeOfLocalDepartment": true
+        },
+        {
+          "building": "Flour Mill",
+          "inputGoods": ["Grain"],
+          "good": "Flour",
+          "numBuildings": 2,
+          "hasTradeUnion": false,
+          "boosts": [],
+          "items": []
+        }
+      ]
+    },
+    {
+      "name": "Second Isle",
+      "region": "Cape Trelawney",
+      "productionLines": [
+        {
+          "building": "Bakery",
+          "inputGoods": ["Flour"],
+          "good": "Bread",
+          "numBuildings": 3
+        }
+      ]
+    }
+  ],
+  "tradeRoutes": []
+}

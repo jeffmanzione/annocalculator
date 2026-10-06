@@ -1,0 +1,53 @@
+{
+  "palacePrestigeLevel": 10,
+  "islands": [
+    {
+      "name": "Old Isle",
+      "region": "Old World",
+      "dolPolicy": "Skilled Labor Act",
+      "id": "#0",
+      "productionLines": [
+        {
+          "building": "Grain Farm",
+          "good": "Grain",
+          "numBuildings": 5,
+          "boosts": [
+            "Tractor Barn"
+          ],
+          "hasTradeUnion": true,
+          "items": [
+            "Cropper"
+          ],
+          "inRangeOfLocalDepartment": true,
+          "id": "#1"
+        },
+        {
+          "building": "Flour Mill",
+          "inputGoods": [
+            "Grain"
+          ],
+          "good": "Flour",
+          "numBuildings": 2,
+          "id": "#2"
+        }
+      ]
+    },
+    {
+      "name": "Second Isle",
+      "region": "Cape Trelawney",
+      "id": "#3",
+      "productionLines": [
+        {
+          "building": "Bakery",
+          "inputGoods": [
+            "Flour"
+          ],
+          "good": "Bread",
+          "numBuildings": 3,
+          "id": "#4"
+        }
+      ]
+    }
+  ],
+  "tradeRoutes": []
+}

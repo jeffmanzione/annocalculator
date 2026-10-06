@@ -75,7 +75,16 @@ Serves the built app to the browser as `https://annocalculator.com` (the only ad
 npm run e2e:diff -- path/to/baseline/browser path/to/candidate/browser
 ```
 
-Runs the same 14-step edit sequence (renames, a building count, toggling a trade union, changing a region, adding an island and a production line, editing/adding/removing trade routes, removing an island, the trade-union bonus) against both builds, and deep-diffs the saved world after every step. Ids are pseudorandom, so they're replaced with labels in first-seen order before comparing. Exits 1 if any step differs or either build logs an error.
+Runs the same 15-step edit sequence (renames, a building count, toggling a trade union, changing a region, adding an island and a production line, editing/adding/removing trade routes, removing an island, the Palace prestige level) against both builds, and deep-diffs the saved world after every step. Ids are pseudorandom, so they're replaced with labels in first-seen order before comparing. Exits 1 if any step differs or either build logs an error. Key order counts: the saved text must match, not just the values.
+
+To check that worlds saved by older versions still load and save the same, add `--seed <file>` (repeatable). Each file is put in localStorage before the app first loads, and the saved JSON after loading and after a reload is compared between the builds. Ready-made old saves are in `src/app/shared/mvc/__fixtures__/legacy-saves/`:
+
+```sh
+F=src/app/shared/mvc/__fixtures__/legacy-saves
+npm run e2e:diff -- path/to/baseline/browser dist/annocalculator/browser --seed $F/no-ids-with-trade-union-bonus.json --seed $F/with-ids-and-explicit-defaults.json --seed $F/empty-world.json
+```
+
+To get a baseline build to compare against, copy a known-good `dist/annocalculator/browser` somewhere outside the repo (a copy outside the standard layout skips the stale-build check), or build an older commit in a `git worktree`.
 
 A convenient way to get a baseline build of `main` without disturbing your checkout:
 
