@@ -11,7 +11,9 @@ const lines = (model: TooltipModel): string[] =>
     ...(s.heading ? [`# ${s.heading}`] : []),
     ...s.rows.map((r) =>
       r.parts
-        .map((p: TooltipPart) => (typeof p === 'string' ? p : `<${p.key}>`))
+        .map((p: TooltipPart) =>
+          typeof p === 'string' ? p : 'key' in p ? `<${p.key}>` : '',
+        )
         .join(''),
     ),
   ]);

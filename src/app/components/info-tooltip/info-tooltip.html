@@ -29,6 +29,8 @@
                 @for (part of row.parts; track $index) {
                   @if (isKey(part)) {
                     <span [textLoc]="part.key"></span>
+                  } @else if (isIcon(part)) {
+                    <img [src]="part.icon" alt="" class="icon-inline" />
                   } @else {
                     {{ part }}
                   }

@@ -150,8 +150,13 @@ function itemModel(value: Item): TooltipModel {
       ...section((info.extraGoods ?? []).map(extraGoodRow)),
       ...section(
         (info.replacementGoods ?? []).map(({ from, to }) => ({
-          icon: lookupGoodIconUrl(from),
-          parts: [{ key: goodKey(from) }, ' → ', { key: goodKey(to) }],
+          parts: [
+            { icon: lookupGoodIconUrl(from) },
+            { key: goodKey(from) },
+            ' → ',
+            { icon: lookupGoodIconUrl(to) },
+            { key: goodKey(to) },
+          ],
         })),
         'Replaces',
       ),

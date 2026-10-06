@@ -1,7 +1,12 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { L10nKey } from '../../shared/l10n/l10n';
 import { L10nText } from '../text/text';
-import { TooltipModel, TooltipPart } from './tooltip-model';
+import {
+  isIconPart,
+  isKeyPart,
+  TooltipModel,
+  TooltipPart,
+} from './tooltip-model';
 
 /**
  * The hover card both games use: an icon, a name, and sections of lines (each with an optional icon and
@@ -18,6 +23,10 @@ export class InfoTooltip {
   model = input.required<TooltipModel>();
 
   isKey(part: TooltipPart): part is { key: L10nKey } {
-    return typeof part !== 'string';
+    return isKeyPart(part);
+  }
+
+  isIcon(part: TooltipPart): part is { icon: string } {
+    return isIconPart(part);
   }
 }

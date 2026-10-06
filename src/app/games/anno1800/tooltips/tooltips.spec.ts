@@ -23,7 +23,9 @@ const lines = (model: TooltipModel): string[] =>
     ...(s.heading ? [`# ${s.heading}`] : []),
     ...s.rows.map((r) =>
       r.parts
-        .map((p: TooltipPart) => (typeof p === 'string' ? p : `<${p.key}>`))
+        .map((p: TooltipPart) =>
+          typeof p === 'string' ? p : 'key' in p ? `<${p.key}>` : '',
+        )
         .join(''),
     ),
   ]);
@@ -126,6 +128,18 @@ describe('Anno 1800 tooltips', () => {
       const text = lines(model).join();
       expect(text).toContain('80%');
       expect(text).toContain('<Potatoes>: 1 / 8');
+    });
+
+    it('shows both goods of a replacement with their icons', () => {
+      const model = anno1800TooltipModel('item', Item.Baker);
+      const replaces = model.sections.find((s) => s.heading === 'Replaces')!;
+      expect(replaces.rows.length).toBeGreaterThan(0);
+      expect(
+        replaces.rows[0].parts.filter(
+          (p) => typeof p === 'object' && 'icon' in p,
+        ),
+      ).toHaveLength(2);
+      expect(lines(model).join()).toContain('<Flour> → <Grain>');
     });
 
     it('says when an item provides electricity', () => {

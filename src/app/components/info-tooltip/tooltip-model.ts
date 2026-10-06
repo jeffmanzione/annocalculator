@@ -1,7 +1,13 @@
 import { L10nKey } from '../../shared/l10n/l10n';
 
-/** A piece of a tooltip line: text as it is, or a translated phrase from the app's own text. */
-export type TooltipPart = string | { key: L10nKey };
+/** A piece of a tooltip line: text as it is, a translated phrase from the app's own text, or a small icon. */
+export type TooltipPart = string | { key: L10nKey } | { icon: string };
+
+export const isKeyPart = (part: TooltipPart): part is { key: L10nKey } =>
+  typeof part === 'object' && 'key' in part;
+
+export const isIconPart = (part: TooltipPart): part is { icon: string } =>
+  typeof part === 'object' && 'icon' in part;
 
 export interface TooltipRow {
   icon?: string;

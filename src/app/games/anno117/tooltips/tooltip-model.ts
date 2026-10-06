@@ -81,10 +81,18 @@ export function buffRows(
     const fromProduct = productsById.get(from);
     const toProduct = to ? productsById.get(to) : undefined;
     rows.push({
-      icon: toProduct ? iconUrl(toProduct.icon) : iconUrl(fromProduct?.icon),
       parts: [
         { key: 'Replaces' },
-        `: ${nameIn(fromProduct?.name, language)} → ${toProduct ? nameIn(toProduct.name, language) : '–'}`,
+        ': ',
+        { icon: iconUrl(fromProduct?.icon) },
+        nameIn(fromProduct?.name, language),
+        ' → ',
+        ...(toProduct
+          ? [
+              { icon: iconUrl(toProduct.icon) },
+              nameIn(toProduct.name, language),
+            ]
+          : ['–']),
       ],
     });
   }
