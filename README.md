@@ -1,6 +1,6 @@
 # AnnoCalculator.com
 
-A web-based production calculator for **Anno 1800** that helps players model and optimize their supply chains—including all the complicated boosts, trade union items, and extra goods modifiers.
+A web-based production calculator for **Anno 1800** and **Anno 117: Pax Romana** that helps players model and optimize their supply chains—including all the complicated boosts, items and extra goods modifiers. Each game has its own tab with its own rules, and its own saved plan.
 
 Built with ❤️ by a fan who got tired of using spreadsheets.
 
@@ -16,6 +16,7 @@ Visit the tool here: [https://AnnoCalculator.com](https://AnnoCalculator.com)
 - 🔁 **Input Substitution** — Specialists that swap an input good (Grain for Flour, for example) are marked with a glow and explained in a tooltip
 - 🧮 **Real-time Calculations** — Instant feedback as you tweak settings
 - 🧱 **Multi-Island Support** — Plan across the Old World, Cape Trelawney and the New World, and balance production with trade routes
+- 🏛️ **Anno 117: Pax Romana** — The same planning for Latium and Albion: aqueducts, silos, fuel, items and boosted items, discoveries, patron deities and events, and fertilities an island may lack
 - 💾 **JSON Import/Export** — Save your setups or share them with others; your plan is also kept in your browser automatically
 - 🌍 **Four Languages** — English, German, Dutch and Chinese
 - 🎨 **Anno-styled UI** — Parchment, brass and slate, drawn with original CSS and SVG
@@ -73,7 +74,11 @@ English, German, Dutch and Chinese.
 ```
 src/
   app/
-    app.*                       Root component, routes (Calculator and About pages) and app config
+    app.*                       Root component, routes (Anno 1800, Anno 117 and About pages) and app config
+    games/                      What belongs to one game (see "Two games, one app" below)
+      game.ts                   The GameDefinition contract and the GAME token the shared panels use
+      anno1800/                 Anno 1800: its data, enums, rules and GameDefinition
+      anno117/                  Anno 117: its data, rules, model, store, page and island editor (loaded on demand)
     components/                 Reusable UI pieces
       app-bar/                  The toolbar: site title, page tabs, language picker, version
       button/, card/            Themed button and panel
@@ -85,7 +90,7 @@ src/
       text/                     The textLoc directive that renders localized text
     pages/
       about/                    About page
-      production-calculator/    The calculator
+      production-calculator/    The Anno 1800 calculator (and the summary and trade routes both games share)
         island/                 One island: its settings and its production line table
         summary-panel/          Totals across all islands, plus the warnings tooltip
         trade-routes-panel/     Goods moved between islands
@@ -95,10 +100,9 @@ src/
       l10n/                     Current language and text lookup
       local-storage/            Typed wrapper over localStorage
     shared/
-      data/                     Game data as JSON: goods, boosts, items, cultural sets, policies, regions
-      game/                     Typed views of that data (enums, facts, icon lookups) and the Palace rules
+      engine/                   The game-independent part of a world store (BaseWorldStore)
       l10n/                     Every translated string, keyed by its English text
-      mvc/                      The world model and the store that holds it (see below)
+      mvc/                      The Anno 1800 world model and the store that holds it (see below)
   tools/                        One-off maintenance scripts, not part of the app (see "Data tools")
   _anno-palette.scss            The Anno colour palette
   _anno-material.scss           Angular Material theme overrides built from it
@@ -110,7 +114,25 @@ docs/reference/                 Design reference images
 screenshots/                    Images used in this README
 ```
 
-### How the calculator is put together
+### Two games, one app
+
+- **Each game is a folder under `src/app/games/`** with its own data, rules and saved format. Anno 1800's lives in `games/anno1800/` (game data in `data/`, enums, facts and icons in `game/`), Anno 117's in `games/anno117/`.
+- **`GameDefinition`** (`games/game.ts`) is what the pieces both games share ask a game for: its goods, their icons and names in the language shown, and any goods a production line uses besides its recipe (Anno 1800's Silo and Fertilizer; Anno 117's coal and silo feed). The calculator page provides its game through the `GAME` token, and the shared summary and trade-route panels read it from there.
+- **Routes.** `/calculator` is Anno 1800 (kept at the address it always had, so existing links and saves work); `/anno-117` is Anno 117 and is loaded only when someone opens it, so it adds nothing to the first download.
+- **Saves are separate.** Anno 1800 keeps its original localStorage key and its bare-world JSON format exactly as before. Anno 117 uses its own key and a labelled, versioned envelope (`{ "game": "anno117", "version": 1, "world": ... }`) that is checked before it is used, so a world pasted into the wrong game is refused with a message instead of breaking the page. The language setting is shared.
+- **`BaseWorldStore`** (`shared/engine/`) holds what any game's store needs: islands, lines and trade routes in id-keyed signal maps. Anno 117's store (`games/anno117/model/world-store-117.ts`) is built on it. Anno 1800's store predates it and has not been moved onto it, to leave a well-tested store alone.
+
+### How Anno 117's numbers work
+
+The rules are pure functions in `games/anno117/game/rules.ts`, checked in `rules.spec.ts` against numbers worked out by hand from the game data:
+
+- **Productivity** = fertility × (100 + base bonuses) × (100 + productivity bonuses) / 10000. A building makes `60 / cycle time × productivity` cycles a minute.
+- **Where bonuses come from:** items on the line (and their boosted form), the aqueduct, the silo, researched discoveries, the island's patron (an effect scaled by the devotion milestone reached), and events switched on for the island.
+- **Fertility.** A building that needs a fertility the island lacks gets nothing, unless a discovery provides part of it.
+- **Inputs and outputs.** Items can swap an input; some buffs add an extra output every few cycles (the silo's extra animal every third cycle).
+- **Fuel.** Buildings that burn coal use one per 120 seconds, longer with fuel-saving buffs. The community calculator the data comes from works this out slightly differently (it scales with the cycle time); this is the one rule whose game behaviour has not been confirmed, so check it against the game.
+
+### How the Anno 1800 calculator is put together
 
 - **The world** is the user's whole plan: islands, each with production lines, plus trade routes and the Palace's prestige level. Its shape is defined in `src/app/shared/mvc/models.ts`.
 - **`WorldStore`** (`world-store.ts`) is the single source of truth while the page is open. It keeps islands, production lines and trade routes in flat, id-keyed signal maps. `fromWorld()` and `toWorld()` are the load/save boundary.
@@ -162,6 +184,7 @@ npx ng build --configuration development
 npm run e2e:smoke                          # does the app still work end to end?
 npm run e2e:layout                         # do the tables and field labels fit in every language and width?
 npm run e2e:label-edges                    # do field label plates show both edges at different display scales?
+npm run e2e:smoke-117                      # does the Anno 117 calculator work, and leave the Anno 1800 save alone?
 npm run e2e:tracking                       # is the visit counting wired up (without sending any visits)?
 ```
 
@@ -179,7 +202,9 @@ Format only the files you touched; running it over whole folders can reformat un
 
 ### Data tools
 
-`src/tools/` holds scripts that were used to build the game data in `src/app/shared/data` and the icons in `public/icons` (for example `copy-items.ts` downloads item icons, and `produce-items.ts` turns raw item data into `items.json`). They are not part of the app or its build. Run one with `npx tsx src/tools/<script>.ts` from the repository root; most read local JSON files and some download from the web, so read a script before running it.
+`src/tools/` holds scripts that were used to build the Anno 1800 game data in `src/app/games/anno1800/data` and the icons in `public/icons` (for example `copy-items.ts` downloads item icons, and `produce-items.ts` turns raw item data into `items.json`). They are not part of the app or its build. Run one with `npx tsx src/tools/<script>.ts` from the repository root; most read local JSON files and some download from the web, so read a script before running it.
+
+**Anno 117's data is generated.** `src/tools/anno117/convert-params.ts` builds `src/app/games/anno117/data/anno117-data.json` and the icons in `public/icons/anno117/` from the community Anno 117 calculator's `params.js`, keeping only what a production calculator uses. See [`NOTICE.md`](src/app/games/anno117/data/NOTICE.md) there for how to regenerate it after a game patch, and for the credits and licenses (the game's names, icons and values are © Ubisoft). `src/app/games/anno117/game/data.spec.ts` checks that a regeneration did not leave anything pointing at something that is missing.
 
 ## 📦 Building for Production
 
@@ -341,6 +366,10 @@ If you spot a bug or have an idea for a new feature:
 3. Or just email/message me—I'm always open to feedback!
 
 For a pull request: branch from `main`, keep the change focused, add or update tests, run `npm test -- --watch=false` and the relevant `e2e:*` scripts, and format the files you touched with Prettier. If you change what is saved in the browser, make sure worlds saved by the previous version still load.
+
+## 🙏 Credits
+
+The Anno 117 game data comes from the community Anno 117 calculator by NiHoel and the [anno-mods](https://github.com/anno-mods/anno-117-calculator) project, which extracted it from the game (code under the MIT License; the game's names, icons and values belong to Ubisoft). Thank you to everyone who built and shared it.
 
 ## 📄 License
 
