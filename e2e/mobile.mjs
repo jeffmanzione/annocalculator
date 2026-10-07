@@ -82,6 +82,24 @@ for (const [name, route, selector, island] of [
   await page.waitForTimeout(300);
   check(`${name}: the Summary tab shows only the summary`, (await visibleCount(page, 'summary-panel')) === 1 && (await visibleCount(page, island)) === 0 && (await visibleCount(page, 'trade-routes-panel')) === 0);
   check(`${name}: the summary has rows, not an empty panel`, (await visibleCount(page, 'summary-panel tr.mat-mdc-row')) > 0);
+  // A tap anywhere on a good's row shows its islands, and again hides them; the arrow is not cut off.
+  const arrow = await page.evaluate(() => {
+    const button = document.querySelector('summary-panel td.mat-column-show-islands button').getBoundingClientRect();
+    const cell = document.querySelector('summary-panel td.mat-column-show-islands').getBoundingClientRect();
+    return { left: button.left - cell.left, right: cell.right - button.right };
+  });
+  check(`${name}: the arrow of a summary row is not cut off`, arrow.left >= -0.5 && arrow.right >= -0.5, JSON.stringify(arrow));
+  await page.locator('summary-panel td.good-name').first().tap();
+  await page.waitForTimeout(300);
+  check(`${name}: tapping a summary row shows its islands`, (await visibleCount(page, 'summary-panel .island-summary-row')) === 1);
+  await page.locator('summary-panel td.good-name').first().tap();
+  await page.waitForTimeout(300);
+  check(`${name}: and tapping it again hides them`, (await visibleCount(page, 'summary-panel .island-summary-row')) === 0);
+  await page.locator('summary-panel td.mat-column-show-islands button').first().tap();
+  await page.waitForTimeout(300);
+  check(`${name}: the arrow opens a row once, not twice`, (await visibleCount(page, 'summary-panel .island-summary-row')) === 1);
+  await page.locator('summary-panel td.mat-column-show-islands button').first().tap();
+  await page.waitForTimeout(300);
   await page.getByRole('tab', { name: 'Trade Routes' }).tap();
   await page.waitForTimeout(300);
   check(`${name}: the Trade Routes tab shows only the routes`, (await visibleCount(page, 'trade-routes-panel')) === 1 && (await visibleCount(page, 'summary-panel')) === 0);

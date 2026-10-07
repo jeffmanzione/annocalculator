@@ -1,3 +1,4 @@
+import { isMobileWidth } from '../../../shared/mobile';
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
@@ -144,6 +145,20 @@ export class SummaryPanel implements OnInit, AfterViewInit {
     }));
     this.table()?.renderRows();
     this.changeDetector_.markForCheck();
+  }
+
+  /**
+   * On a phone a tap anywhere on a good's row shows or hides its islands (the small arrow is hard to hit). The arrow
+   * and the warning keep doing their own thing. A desktop window has only the arrow.
+   */
+  onRowClick(row: GoodSummaryRow, event: Event): void {
+    if (!isMobileWidth()) {
+      return;
+    }
+    if ((event.target as HTMLElement).closest('button, summary-warning')) {
+      return;
+    }
+    this.toggleIslandSummary(row);
   }
 
   toggleIslandSummary(row: GoodSummaryRow): void {

@@ -115,4 +115,56 @@ table.summary-table {
     height: auto;
     overflow: visible;
   }
+
+  // A tap anywhere on a row opens it.
+  .summary-row {
+    cursor: pointer;
+  }
+
+  // The numbers take the room they need and the good's name the rest, instead of every column a share.
+  table.summary-table td.mat-column-total-production-per-min,
+  table.summary-table td.mat-column-net-production-per-min {
+    width: 1%;
+    max-width: none;
+    white-space: nowrap;
+    padding: 0 6px;
+  }
+
+  table.summary-table th.mat-column-total-production-per-min,
+  table.summary-table th.mat-column-net-production-per-min {
+    width: 1%;
+    max-width: none;
+    padding: 4px 6px;
+  }
+
+  table.summary-table td.good-name {
+    width: auto;
+    max-width: none;
+  }
+
+  table.summary-table enum-row {
+    padding-left: 0;
+    margin: 0;
+  }
+
+  // The islands of a good: a table too wide for the screen scrolls sideways in its own box.
+  .island-summary-row {
+    width: 100%;
+    overflow-x: auto;
+  }
+
+  table.summary-table table.island-summary-table {
+    width: auto;
+    min-width: 460px;
+  }
+
+  // The arrow's column is as wide as the (bigger) arrow, so that it is not cut off.
+  table.summary-table th.mat-column-show-islands,
+  table.summary-table td.mat-column-show-islands {
+    width: 44px;
+    min-width: 44px;
+    max-width: 44px;
+    padding: 0;
+    overflow: visible;
+  }
 }
