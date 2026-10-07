@@ -1,12 +1,24 @@
 import { Clipboard } from '@angular/cdk/clipboard';
-import { effect, inject, Injector } from '@angular/core';
+import { effect, inject, Injector, Provider } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
+import { GAME, GameDefinition } from '../../games/game';
+import { EntityId } from '../../shared/engine/base-world-store';
 import {
   LocalStorageManager,
   StorageItem,
 } from '../../services/local-storage/local-storage';
 import { DefaultAction } from './calculator-column/calculator-column';
 import { SaveData, SaveDialog } from './save-dialog/save-dialog';
+
+/** What a calculator page provides to what it contains: the game, and how form fields look. */
+export const calculatorProviders = (game: GameDefinition): Provider[] => [
+  { provide: GAME, useValue: game },
+  {
+    provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
+    useValue: { appearance: 'outline', subscriptSizing: 'dynamic' },
+  },
+];
 
 /**
  * What both games' calculator pages do the same way with their saved world: keep it in the browser's
@@ -52,6 +64,20 @@ export abstract class CalculatorPage<Save extends object> {
     this.worldStorage_ = storageManager.lookupObjectItem(storageKey);
   }
 
+  /** The page's world controller, which the island list adds and removes islands through. */
+  abstract world: {
+    addIsland(): unknown;
+    removeIsland(id: EntityId): void;
+  };
+
+  addIsland(): void {
+    this.world.addIsland();
+  }
+
+  removeIsland(id: EntityId): void {
+    this.world.removeIsland(id);
+  }
+
   /** The world as it is saved now. */
   protected abstract currentSave_(): Save;
   protected abstract defaultSave_(): Save;
@@ -64,6 +90,20 @@ export abstract class CalculatorPage<Save extends object> {
 
   /** Called when what was typed into the editor was not accepted (nothing is stored then). */
   protected rejectSave_(_error: unknown): void {}
+
+  /** The saved world, or the starter world for a first visit or if what is stored cannot be read. */
+  protected loadSave_(): Save {
+    try {
+      const stored = this.worldStorage_.get();
+      if (stored) return this.readSave_(stored);
+    } catch (error) {
+      console.warn(
+        'The saved world could not be read; starting from the default world.',
+        error,
+      );
+    }
+    return this.defaultSave_();
+  }
 
   /**
    * Saves the world whenever anything in it changes, and once on load (which writes an older save in its

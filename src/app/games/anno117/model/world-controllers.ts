@@ -1,3 +1,7 @@
+import {
+  BaseWorldController,
+  IslandLineControllers,
+} from '../../../shared/engine/base-controllers';
 import { GoodId } from '../../game';
 import { Anno117Factory } from '../game/data-types';
 import { factoriesById } from '../game/data';
@@ -260,12 +264,18 @@ export function islandSettingsOf(
 }
 
 export class Island117Controller {
-  private readonly lineControllers_ = new Map<number, Line117Controller>();
+  private readonly lines_: IslandLineControllers<Line117Controller>;
 
   constructor(
     private readonly store: WorldStore117,
     readonly id: number,
-  ) {}
+  ) {
+    this.lines_ = new IslandLineControllers(
+      store,
+      id,
+      (lineId) => new Line117Controller(store, lineId),
+    );
+  }
 
   private get island() {
     return this.store.islands().get(this.id)!;
@@ -320,27 +330,19 @@ export class Island117Controller {
   }
 
   get productionLines(): Line117Controller[] {
-    return [...this.store.productionLines().values()]
-      .filter((line) => line.islandId === this.id)
-      .map((line) => this.lineController(line.id));
+    return this.lines_.list();
   }
 
   lineController(id: number): Line117Controller {
-    let controller = this.lineControllers_.get(id);
-    if (!controller) {
-      controller = new Line117Controller(this.store, id);
-      this.lineControllers_.set(id, controller);
-    }
-    return controller;
+    return this.lines_.get(id);
   }
 
-  addProductionLine(): number {
-    return this.store.addProductionLine(this.id);
+  addProductionLine(): Line117Controller {
+    return this.lines_.add();
   }
 
   removeProductionLine(id: number): void {
-    this.store.removeProductionLine(id);
-    this.lineControllers_.delete(id);
+    this.lines_.remove(id);
   }
 
   /** Everything the island makes, for the goods a trade route can carry. */
@@ -386,14 +388,20 @@ export class TradeRoute117Controller {
   }
 }
 
-export class World117Controller {
-  private readonly islandControllers_ = new Map<number, Island117Controller>();
-  private readonly routeControllers_ = new Map<
-    number,
-    TradeRoute117Controller
-  >();
+export class World117Controller extends BaseWorldController<
+  WorldStore117,
+  Island117Controller,
+  TradeRoute117Controller
+> {
+  protected override createIslandController(id: number): Island117Controller {
+    return new Island117Controller(this.store, id);
+  }
 
-  constructor(private readonly store: WorldStore117) {}
+  protected override createTradeRouteController(
+    id: number,
+  ): TradeRoute117Controller {
+    return new TradeRoute117Controller(this.store, id);
+  }
 
   get techs(): number[] {
     return this.store.techs();
@@ -419,50 +427,6 @@ export class World117Controller {
 
   setTech(id: number, researched: boolean): void {
     this.store.setTech(id, researched);
-  }
-
-  get islands(): Island117Controller[] {
-    return [...this.store.islands().keys()].map((id) =>
-      this.islandController(id),
-    );
-  }
-
-  islandController(id: number): Island117Controller {
-    let controller = this.islandControllers_.get(id);
-    if (!controller) {
-      controller = new Island117Controller(this.store, id);
-      this.islandControllers_.set(id, controller);
-    }
-    return controller;
-  }
-
-  addIsland(): number {
-    return this.store.addIsland();
-  }
-
-  removeIsland(id: number): void {
-    this.store.removeIsland(id);
-    this.islandControllers_.delete(id);
-  }
-
-  get tradeRoutes(): TradeRoute117Controller[] {
-    return [...this.store.tradeRoutes().keys()].map((id) => {
-      let controller = this.routeControllers_.get(id);
-      if (!controller) {
-        controller = new TradeRoute117Controller(this.store, id);
-        this.routeControllers_.set(id, controller);
-      }
-      return controller;
-    });
-  }
-
-  addTradeRoute(): number {
-    return this.store.addTradeRoute();
-  }
-
-  removeTradeRoute(id: number): void {
-    this.store.removeTradeRoute(id);
-    this.routeControllers_.delete(id);
   }
 }
 

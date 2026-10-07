@@ -142,7 +142,7 @@ describe('Island117Controller', () => {
     const { controller } = open(defaultWorld117);
     const island = controller.islands[1];
     const first = island.productionLines[0];
-    const id = island.addProductionLine();
+    const id = island.addProductionLine().id;
     expect(island.productionLines.length).toBe(4);
     expect(island.productionLines[0]).toBe(first);
     island.removeProductionLine(id);

@@ -266,7 +266,7 @@ export class Anno1800Island implements OnInit {
       next.delete(el.controller.id);
       return next;
     });
-    this.controller().removeProductionLineById(el.controller.id);
+    this.controller().removeProductionLine(el.controller.id);
     this.notifyChanged_();
   }
 

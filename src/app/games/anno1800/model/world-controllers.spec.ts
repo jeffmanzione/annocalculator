@@ -135,9 +135,9 @@ describe('StoreWorldController writes', () => {
     expect(island.productionLines[0]).toBe(pl);
   });
 
-  it('removeProductionLineById drops the line', () => {
+  it('removeProductionLine drops the line', () => {
     const { world, store } = setup();
-    world.islands[0].removeProductionLineById(10);
+    world.islands[0].removeProductionLine(10);
     expect([...store.productionLines().keys()]).toEqual([11]);
     expect(world.islands[0].productionLines.map((p) => p.id)).toEqual([11]);
   });

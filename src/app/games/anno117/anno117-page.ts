@@ -5,17 +5,18 @@ import {
   OnInit,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { EnumSelect } from '../../components/enum-select/enum-select';
 import { StepperInput } from '../../components/stepper-input/stepper-input';
 import { CalculatorColumn } from '../../pages/calculator/calculator-column/calculator-column';
-import { CalculatorPage } from '../../pages/calculator/calculator-page';
+import {
+  CalculatorPage,
+  calculatorProviders,
+} from '../../pages/calculator/calculator-page';
 import { SummaryPanel } from '../../pages/calculator/summary-panel/summary-panel';
 import { TradeRoutesPanel } from '../../pages/calculator/trade-routes-panel/trade-routes-panel';
 import { L10nService } from '../../services/l10n/l10n';
 import { LocalStorageManager } from '../../services/local-storage/local-storage';
-import { GAME } from '../game';
 import { anno117Game, iconUrl, nameIn } from './anno117-game';
 import { anno117Data, buffsById, effectsById, techsById } from './game/data';
 import { Anno117Island } from './island/anno117-island';
@@ -24,7 +25,6 @@ import {
   InvalidSaveError,
   Save117,
   saveOf,
-  World117,
   WORLD_KEY_117,
   worldFromSave,
 } from './model/models';
@@ -49,13 +49,7 @@ import { MAX_TECH_LEVEL, WorldStore117 } from './model/world-store-117';
   templateUrl: './anno117-page.html',
   // The page lays out the same way as the Anno 1800 one.
   styleUrl: '../../pages/calculator/calculator-page.scss',
-  providers: [
-    { provide: GAME, useValue: anno117Game },
-    {
-      provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
-      useValue: { appearance: 'outline', subscriptSizing: 'dynamic' },
-    },
-  ],
+  providers: calculatorProviders(anno117Game),
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Anno117Page extends CalculatorPage<Save117> implements OnInit {
@@ -106,23 +100,9 @@ export class Anno117Page extends CalculatorPage<Save117> implements OnInit {
     iconUrl(id ? techsById.get(id)?.icon : undefined);
 
   ngOnInit(): void {
-    this.store_ = WorldStore117.fromWorld(this.loadWorld_());
+    this.store_ = WorldStore117.fromWorld(worldFromSave(this.loadSave_()));
     this.world = new World117Controller(this.store_);
     this.persistWhenChanged_();
-  }
-
-  /** The saved world, or the starter world for a first visit or if what is stored cannot be read. */
-  private loadWorld_(): World117 {
-    try {
-      const stored = this.worldStorage_.get();
-      if (stored) return worldFromSave(stored);
-    } catch (error) {
-      console.warn(
-        'The saved Anno 117 world could not be read; starting from the default world.',
-        error,
-      );
-    }
-    return defaultWorld117;
   }
 
   setTechs(ids: number[]): void {
@@ -143,13 +123,5 @@ export class Anno117Page extends CalculatorPage<Save117> implements OnInit {
   /** Sets the level from a percentage (already cut down to a step by the field). */
   setTechPercent(id: number, percent: number | null): void {
     this.world.setTechLevel(id, Math.floor((percent ?? 0) / this.techStep(id)));
-  }
-
-  addIsland(): void {
-    this.world.addIsland();
-  }
-
-  removeIsland(id: number): void {
-    this.world.removeIsland(id);
   }
 }

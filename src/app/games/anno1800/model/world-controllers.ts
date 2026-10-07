@@ -1,4 +1,8 @@
 import {
+  BaseWorldController,
+  IslandLineControllers,
+} from '../../../shared/engine/base-controllers';
+import {
   Boost,
   CulturalSet,
   DepartmentOfLaborPolicy,
@@ -160,51 +164,52 @@ export class Island1800Controller extends Island1800View {
     return super.dolPolicy;
   }
 
-  private readonly productionLineControllers_ = new Map<
-    ProductionLineId,
-    Line1800Controller
-  >();
+  private readonly lines_: IslandLineControllers<Line1800Controller>;
 
-  /**
-   * Overrides StoreIslandView.productionLines (which returns fresh
-   * StoreProductionLineView instances on every read) to return the same
-   * cached StoreProductionLineController instance for a given id across
-   * calls, for the identity-stability reason explained in this file's
-   * module doc comment. Still reads the current membership fresh from the
-   * store on every call, so this stays correct even if the store's
-   * productionLines map changes some way other than through this class's
-   * own addProductionLine()/removeProductionLineById().
-   */
-  override get productionLines(): Line1800Controller[] {
-    return [...this.store.productionLines().values()]
-      .filter((pl) => pl.islandId === this.id_)
-      .map((pl) => this.getOrCreateProductionLineController_(pl.id!));
+  constructor(store: WorldStore1800, id: IslandId) {
+    super(store, id);
+    this.lines_ = new IslandLineControllers(
+      store,
+      id,
+      (lineId) => new Line1800Controller(store, lineId),
+    );
   }
 
-  private getOrCreateProductionLineController_(
-    id: ProductionLineId,
-  ): Line1800Controller {
-    let controller = this.productionLineControllers_.get(id);
-    if (!controller) {
-      controller = new Line1800Controller(this.store, id);
-      this.productionLineControllers_.set(id, controller);
-    }
-    return controller;
+  /**
+   * Overrides Island1800View.productionLines (which returns fresh Line1800View instances on every read) to
+   * return the same cached Line1800Controller for a given id across calls, for the identity-stability
+   * reason explained in this file's module doc comment. It still reads the current membership from the
+   * store each time.
+   */
+  override get productionLines(): Line1800Controller[] {
+    return this.lines_.list();
   }
 
   addProductionLine(): Line1800Controller {
-    const id = this.store.addProductionLine(this.id_);
-    return this.getOrCreateProductionLineController_(id);
+    return this.lines_.add();
   }
 
-  removeProductionLineById(id: ProductionLineId): void {
-    this.store.removeProductionLine(id);
-    this.productionLineControllers_.delete(id);
+  removeProductionLine(id: ProductionLineId): void {
+    this.lines_.remove(id);
   }
 }
 
-export class World1800Controller {
-  constructor(private readonly store: WorldStore1800) {}
+export class World1800Controller extends BaseWorldController<
+  WorldStore1800,
+  Island1800Controller,
+  TradeRoute1800Controller
+> {
+  protected override createIslandController(
+    id: IslandId,
+  ): Island1800Controller {
+    return new Island1800Controller(this.store, id);
+  }
+
+  protected override createTradeRouteController(
+    id: TradeRouteId,
+  ): TradeRoute1800Controller {
+    return new TradeRoute1800Controller(this.store, id);
+  }
 
   get tradeUnionBonus(): number {
     return this.store.tradeUnionBonus();
@@ -214,76 +219,5 @@ export class World1800Controller {
   }
   set palacePrestigeLevel(value: number | null) {
     this.store.setPalacePrestigeLevel(value);
-  }
-
-  private readonly islandControllers_ = new Map<
-    IslandId,
-    Island1800Controller
-  >();
-
-  get islands(): Island1800Controller[] {
-    return [...this.store.islands().keys()].map((id) =>
-      this.getOrCreateIslandController_(id),
-    );
-  }
-
-  private getOrCreateIslandController_(id: IslandId): Island1800Controller {
-    let controller = this.islandControllers_.get(id);
-    if (!controller) {
-      controller = new Island1800Controller(this.store, id);
-      this.islandControllers_.set(id, controller);
-    }
-    return controller;
-  }
-
-  addIsland(): Island1800Controller {
-    const id = this.store.addIsland();
-    return this.getOrCreateIslandController_(id);
-  }
-
-  removeIsland(id: IslandId): void {
-    // Capture which production lines belonged to this island before
-    // removeIsland() deletes them from the store, so their cached
-    // controllers (held by the StoreIslandController being removed, which
-    // is about to become unreachable from here anyway) can be dropped too
-    // rather than left to accumulate.
-    const island = this.islandControllers_.get(id);
-    island?.productionLines.forEach((pl) =>
-      island.removeProductionLineById(pl.id),
-    );
-    this.store.removeIsland(id);
-    this.islandControllers_.delete(id);
-  }
-
-  private readonly tradeRouteControllers_ = new Map<
-    TradeRouteId,
-    TradeRoute1800Controller
-  >();
-
-  get tradeRoutes(): TradeRoute1800Controller[] {
-    return [...this.store.tradeRoutes().keys()].map((id) =>
-      this.getOrCreateTradeRouteController_(id),
-    );
-  }
-
-  private getOrCreateTradeRouteController_(
-    id: TradeRouteId,
-  ): TradeRoute1800Controller {
-    let controller = this.tradeRouteControllers_.get(id);
-    if (!controller) {
-      controller = new TradeRoute1800Controller(this.store, id);
-      this.tradeRouteControllers_.set(id, controller);
-    }
-    return controller;
-  }
-
-  addTradeRoute(): TradeRoute1800Controller {
-    const id = this.store.addTradeRoute();
-    return this.getOrCreateTradeRouteController_(id);
-  }
-
-  removeTradeRoute(id: TradeRouteId): void {
-    this.store.removeTradeRoute(id);
-    this.tradeRouteControllers_.delete(id);
   }
 }

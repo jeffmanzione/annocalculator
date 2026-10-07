@@ -2,22 +2,20 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { WorldStore1800 } from './model/world-store-1800';
 import { World1800View } from './model/world-views';
 import { World1800Controller } from './model/world-controllers';
-import { IslandId } from './model/models';
 import { Anno1800Island } from './island/anno1800-island';
 import { MatDialogModule } from '@angular/material/dialog';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import {
-  MAT_FORM_FIELD_DEFAULT_OPTIONS,
-  MatFormFieldModule,
-} from '@angular/material/form-field';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { SummaryPanel } from '../../pages/calculator/summary-panel/summary-panel';
 import { World1800 } from './model/models';
 import { TradeRoutesPanel } from '../../pages/calculator/trade-routes-panel/trade-routes-panel';
 import { CalculatorColumn } from '../../pages/calculator/calculator-column/calculator-column';
-import { CalculatorPage } from '../../pages/calculator/calculator-page';
+import {
+  CalculatorPage,
+  calculatorProviders,
+} from '../../pages/calculator/calculator-page';
 import { LocalStorageManager } from '../../services/local-storage/local-storage';
 import { defaultWorld } from './model/default-world';
-import { GAME } from '../game';
 import { anno1800Game } from './anno1800-game';
 import { EnumSelect } from '../../components/enum-select/enum-select';
 import {
@@ -43,13 +41,7 @@ const WORLD_KEY = 'anno-1800-production-calculator-world';
   ],
   templateUrl: './anno1800-page.html',
   styleUrl: '../../pages/calculator/calculator-page.scss',
-  providers: [
-    { provide: GAME, useValue: anno1800Game },
-    {
-      provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
-      useValue: { appearance: 'outline', subscriptSizing: 'dynamic' },
-    },
-  ],
+  providers: calculatorProviders(anno1800Game),
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Anno1800Page extends CalculatorPage<World1800> implements OnInit {
@@ -107,7 +99,7 @@ export class Anno1800Page extends CalculatorPage<World1800> implements OnInit {
           ? null
           : value.palacePrestigeLevel;
     });
-    this.setWorld(this.worldStorage_.get() ?? defaultWorld);
+    this.setWorld(this.loadSave_());
 
     // Created here rather than in the constructor because store_ only exists once setWorld() has run.
     // The store is never replaced for the life of the page (import/reset/clear all reload the page), so
@@ -126,13 +118,5 @@ export class Anno1800Page extends CalculatorPage<World1800> implements OnInit {
       this.world.palacePrestigeLevel ?? NO_PALACE,
       { emitEvent: false },
     );
-  }
-
-  addIsland(): void {
-    this.world.addIsland();
-  }
-
-  removeIsland(id: IslandId): void {
-    this.world.removeIsland(id);
   }
 }
