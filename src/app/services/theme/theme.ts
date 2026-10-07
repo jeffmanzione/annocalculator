@@ -1,10 +1,13 @@
 import { effect, inject, Injectable, signal } from '@angular/core';
 import { LocalStorageManager } from '../local-storage/local-storage';
 
-/** The looks the app can have: Anno 1800's parchment, or Anno 117's marble. */
+/** The looks the app can have: Anno 1800's parchment, or Anno 117's marble (the default). */
 export type Theme = 'anno1800' | 'anno117';
 
-export const themes: readonly Theme[] = ['anno1800', 'anno117'];
+export const DEFAULT_THEME: Theme = 'anno117';
+
+// Newest game first, as in the page tabs.
+export const themes: readonly Theme[] = ['anno117', 'anno1800'];
 
 /** Where the choice is kept. index.html reads the same key before the app starts, to avoid a flash of the other look. */
 export const THEME_KEY = 'ANNOCALCULATOR_THEME';
@@ -35,6 +38,6 @@ export class ThemeService {
 
   private initialTheme_(): Theme {
     const stored = this.storage_.get();
-    return isTheme(stored) ? stored : 'anno1800';
+    return isTheme(stored) ? stored : DEFAULT_THEME;
   }
 }

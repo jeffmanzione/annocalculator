@@ -1,3 +1,4 @@
+import { WORLD_KEY_117 } from '../../../services/local-storage/world-keys';
 // The Anno 117 calculator's world, as it is saved. Ids are the game's own ids (see game/data-types.ts).
 
 export interface ProductionLine117 {
@@ -55,7 +56,7 @@ export interface Save117 {
 export const LATIUM = 3245;
 export const ALBION = 6627;
 
-export const WORLD_KEY_117 = 'anno-117-production-calculator-world';
+export { WORLD_KEY_117 };
 
 export class InvalidSaveError extends Error {}
 

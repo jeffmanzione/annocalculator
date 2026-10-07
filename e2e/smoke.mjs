@@ -295,28 +295,36 @@ check('no islandId leaks into saved JSON', !raw.includes('islandId'));
 {
   const theme = () => page.evaluate(() => document.documentElement.dataset.theme);
   const plate = () => page.evaluate(() => getComputedStyle(document.documentElement).getPropertyValue('--anno-plate').trim());
-  check('the Anno 1800 theme is the default', (await theme()) === 'anno1800');
+  check('the Anno 117 theme is the default', (await theme()) === 'anno117');
   const before = await plate();
-  await page.locator('mat-toolbar mat-select').first().click();
-  await page.getByRole('option', { name: 'Anno 117', exact: true }).click();
-  await settle();
-  check('choosing the Anno 117 theme puts it on the page', (await theme()) === 'anno117');
-  check('and changes the colors', (await plate()) !== before, `${before} -> ${await plate()}`);
-  check('and is saved', (await page.evaluate(() => localStorage.getItem('ANNOCALCULATOR_THEME'))) === 'anno117');
-  await page.reload();
-  await page.waitForSelector('anno-1800-island');
-  check('and is still the theme after a reload', (await theme()) === 'anno117');
   await page.locator('mat-toolbar mat-select').first().click();
   await page.getByRole('option', { name: 'Anno 1800', exact: true }).click();
   await settle();
-  check('and can be changed back', (await theme()) === 'anno1800' && (await plate()) === before);
+  check('choosing the Anno 1800 theme puts it on the page', (await theme()) === 'anno1800');
+  check('and changes the colors', (await plate()) !== before, `${before} -> ${await plate()}`);
+  check('and is saved', (await page.evaluate(() => localStorage.getItem('ANNOCALCULATOR_THEME'))) === 'anno1800');
+  await page.reload();
+  await page.waitForSelector('anno-1800-island');
+  check('and is still the theme after a reload', (await theme()) === 'anno1800');
+  await page.locator('mat-toolbar mat-select').first().click();
+  await page.getByRole('option', { name: 'Anno 117', exact: true }).click();
+  await settle();
+  check('and can be changed back', (await theme()) === 'anno117' && (await plate()) === before);
 }
 
-// The old address and anything unknown lead to the Anno 1800 calculator.
+// The old address and anything unknown lead to the Anno 1800 calculator for someone who has only used that
+// one (there is a saved Anno 1800 world here and no Anno 117 one), and to the Anno 117 calculator for
+// everyone else, such as a new visitor.
 for (const old of ['/calculator', '/no-such-page']) {
   await page.goto(`${server.url}${old}`);
   await page.waitForSelector('anno-1800-island');
-  check(`${old} redirects to the Anno 1800 calculator`, new URL(page.url()).pathname === '/anno-1800-calculator', page.url());
+  check(`${old} redirects to the Anno 1800 calculator for someone who only has an Anno 1800 world`, new URL(page.url()).pathname === '/anno-1800-calculator', page.url());
+}
+await page.evaluate(() => localStorage.clear());
+for (const old of ['/calculator', '/no-such-page', '/']) {
+  await page.goto(`${server.url}${old}`);
+  await page.waitForSelector('anno-117-island');
+  check(`${old} redirects a new visitor to the Anno 117 calculator`, new URL(page.url()).pathname === '/anno-117-calculator', page.url());
 }
 
 check('no console/page errors', errors.length === 0, errors.slice(0, 5).join(' | '));

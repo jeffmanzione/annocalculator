@@ -15,6 +15,7 @@ import {
   calculatorProviders,
 } from '../../pages/calculator/calculator-page';
 import { LocalStorageManager } from '../../services/local-storage/local-storage';
+import { WORLD_KEY_1800 } from '../../services/local-storage/world-keys';
 import { defaultWorld } from './model/default-world';
 import { anno1800Game } from './anno1800-game';
 import { EnumSelect } from '../../components/enum-select/enum-select';
@@ -25,7 +26,6 @@ import {
 
 /** The form's value for "no Palace" (a select can't hold null as a choice). */
 const NO_PALACE = -1;
-const WORLD_KEY = 'anno-1800-production-calculator-world';
 
 @Component({
   selector: 'anno-1800-page',
@@ -76,7 +76,7 @@ export class Anno1800Page extends CalculatorPage<World1800> implements OnInit {
       : `${level} (+${Math.round(palaceTradeUnionBonus(level) * 100)}%)`;
 
   constructor(storageManager: LocalStorageManager) {
-    super(storageManager, WORLD_KEY);
+    super(storageManager, WORLD_KEY_1800);
   }
 
   protected override currentSave_(): World1800 {
