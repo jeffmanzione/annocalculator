@@ -1,0 +1,126 @@
+@use 'sass:color';
+@use 'sass:map';
+
+// The two looks the app can have, as plain maps of named colors. `emit-vars` writes one of them out as
+// CSS custom properties (`--anno-<name>`), which is what lets the theme change while the app runs: the
+// rest of the styles refer to `var(--anno-...)` through the names in `_anno-palette.scss`.
+//
+// These are original CSS values (no game artwork is used or shipped).
+
+// Anno 1800: sampled from the in-game Statistics screens -- aged parchment panels, a dark vignette, a dark
+// olive title plate, brown ink, slate-blue selection bars and green accents.
+$anno1800: (
+  // Parchment
+  parchment: #dcbc82,
+  // main panel / card rows
+  parchment-light: #e9cd96,
+  // active tab, raised surfaces
+  parchment-lighter: #efdcb0,
+  // buttons, tooltips, toasts
+  parchment-lightest: #f6ead0,
+  // text fields
+  parchment-dark: #cdac77,
+  // idle tabs, table headers
+  parchment-shade: #b79662,
+  // tab outlines, borders
+  parchment-deep: #a07f4d,
+  // strong borders
+  parchment-mid: #c7a76c,
+  // between the page's lit middle and its edge
+  // Vignette (page edges)
+  vignette-mid: #8c744c,
+  vignette-edge: #655135,
+  vignette-dark: #342a22,
+  // Title plate / dark chrome
+  plate: #332b19,
+  plate-light: #4a3f26,
+  plate-dark: #28220f,
+  plate-text: #fff2c7,
+  brass: #a8884a,
+  // thin trim around the plate
+  // Ink
+  ink: #4a2f12,
+  // body text
+  ink-strong: #392c15,
+  // headings
+  ink-muted: #7a5e35,
+  // secondary text
+  // Selection / emphasis
+  slate: #515969,
+  // selected rows, header bars, primary buttons
+  slate-light: #6b7388,
+  slate-dark: #3b424e,
+  'green': #55af25,
+  // positive values, progress, checkboxes
+  green-dark: #3e8f1c,
+  'red': #b0372c,
+  // A warm light for the lit edges of raised things
+  highlight: #fff2c7,
+  // Fonts (loaded from Google Fonts in index.html)
+  font-display: ('Gelasio', Georgia, 'Times New Roman', serif),
+  font-body: ('Lora', Georgia, 'Times New Roman', serif),
+  // The faint pattern behind panels
+  logo: url(/anno_1800_logo.png)
+);
+
+// Anno 117: Roman -- pale marble and travertine, a dark wine-purple plate, gold trim, near-black ink and
+// terracotta red for the selection bars and primary buttons.
+$anno117: (
+  parchment: #d8d0be,
+  parchment-light: #e6dfd0,
+  parchment-lighter: #efe9dc,
+  parchment-lightest: #f8f4ea,
+  parchment-dark: #c5bba6,
+  parchment-shade: #ab9f87,
+  parchment-deep: #8d8268,
+  parchment-mid: #bfb49b,
+  vignette-mid: #7b7260,
+  vignette-edge: #544d3f,
+  vignette-dark: #2a2620,
+  plate: #3a2230,
+  plate-light: #52303f,
+  plate-dark: #261520,
+  plate-text: #f6e9c8,
+  brass: #b8954a,
+  ink: #2e2822,
+  ink-strong: #211c17,
+  ink-muted: #6a5f52,
+  slate: #8c3b33,
+  slate-light: #a64d43,
+  slate-dark: #6b2b25,
+  'green': #5a8a2e,
+  green-dark: #46701f,
+  'red': #a8322a,
+  highlight: #fff6e0,
+  font-display: ('Cinzel', 'Gelasio', Georgia, 'Times New Roman', serif),
+  font-body: ('Lora', Georgia, 'Times New Roman', serif),
+  logo: url(/anno_117_logo.png)
+);
+
+$themes: (
+  anno1800: $anno1800,
+  anno117: $anno117,
+);
+
+/// The colors worked out from a theme's own: shades of the table color and the scrollbar.
+@function derived($theme) {
+  $table: map.get($theme, parchment-light);
+  $thumb: map.get($theme, parchment-deep);
+  @return (
+    table-cell: color.scale($table, $lightness: -3%),
+    table-hover: color.scale($table, $lightness: 2%),
+    scrollbar-hover: color.scale($thumb, $lightness: -15%)
+  );
+}
+
+/// Writes a theme out as custom properties.
+@mixin emit-vars($theme) {
+  @each $name, $value in map.merge($theme, derived($theme)) {
+    --anno-#{$name}: #{$value};
+  }
+}
+
+/// A theme's color by name, as a real color (for what Sass must compute with, such as Material's palettes).
+@function color-of($theme, $name) {
+  @return map.get($theme, $name);
+}

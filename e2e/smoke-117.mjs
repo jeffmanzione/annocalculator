@@ -146,13 +146,13 @@ await settle();
 // 7. The language follows into the goods' names (the game's own German name).
 const data = JSON.parse(fs.readFileSync(path.resolve('src/app/games/anno117/data/anno117-data.json'), 'utf8'));
 const wheat = data.products.find((p) => p.id === 2069);
-await page.locator('mat-toolbar mat-select').click();
+await page.locator('mat-toolbar mat-select').last().click();
 await page.getByRole('option', { name: 'De', exact: true }).click();
 await settle();
 check('goods are named in German', (await summaryText()).includes(wheat.name.de ?? wheat.name.en), wheat.name.de);
 
 // 8. Moving an island to the other province swaps its buildings for that province's.
-await page.locator('mat-toolbar mat-select').click();
+await page.locator('mat-toolbar mat-select').last().click();
 await page.getByRole('option', { name: 'En', exact: true }).click();
 await settle();
 await islands().nth(1).locator('enum-select').nth(0).click();

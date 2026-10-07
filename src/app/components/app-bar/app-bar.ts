@@ -10,6 +10,7 @@ import { L10nText } from '../text/text';
 import { MatSelectModule } from '@angular/material/select';
 import { Language, languages } from '../../shared/l10n/l10n';
 import { L10nService } from '../../services/l10n/l10n';
+import { Theme, themes, ThemeService } from '../../services/theme/theme';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { version } from '../../../../package.json';
 
@@ -54,6 +55,19 @@ export class AppBar {
 
   private readonly l10Service_ = inject(L10nService);
   readonly language = this.l10Service_.languageSignal;
+
+  private readonly themeService_ = inject(ThemeService);
+  readonly theme = this.themeService_.themeSignal;
+  readonly themes = themes;
+
+  updateTheme(theme: Theme): void {
+    this.themeService_.setTheme(theme);
+  }
+
+  /** The name a theme is shown under: the game it is dressed after. */
+  themeName(theme: Theme): 'Anno 1800' | 'Anno 117' {
+    return theme === 'anno117' ? 'Anno 117' : 'Anno 1800';
+  }
 
   updateLanguage(lang: Language): void {
     this.l10Service_.setLanguage(lang);

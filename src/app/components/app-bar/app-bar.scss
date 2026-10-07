@@ -11,11 +11,11 @@
       standard-height: 56px,
     )
   );
-  background: linear-gradient(to bottom, anno.$plate-light, anno.$plate 55%, #28220f);
+  background: linear-gradient(to bottom, anno.$plate-light, anno.$plate 55%, anno.$plate-dark);
   border-bottom: 2px solid anno.$brass;
   box-shadow:
     0 4px 14px rgba(0, 0, 0, 0.5),
-    inset 0 1px 0 rgba(255, 242, 199, 0.14);
+    inset 0 1px 0 anno.alpha(anno.$highlight, 0.14);
   position: relative;
 
   // A fine inner brass line, like the bevel on the game's title plate.
@@ -23,7 +23,7 @@
     content: '';
     position: absolute;
     inset: 3px 3px 0 3px;
-    border: 1px solid rgba(anno.$brass, 0.28);
+    border: 1px solid anno.alpha(anno.$brass, 0.28);
     border-bottom: none;
     border-radius: 3px 3px 0 0;
     pointer-events: none;
@@ -34,7 +34,7 @@
   position: absolute;
   width: 100%;
   height: 100%;
-  background-image: url(/anno_1800_logo.png);
+  background-image: anno.$logo;
   background-size: contain;
   opacity: 7%;
   filter: invert(100%);
@@ -85,8 +85,8 @@ button {
 }
 
 .toolbar-item:not(.toolbar-item-selected):hover {
-  background: rgba(255, 242, 199, 0.1);
-  border-color: rgba(anno.$brass, 0.55);
+  background: anno.alpha(anno.$highlight, 0.1);
+  border-color: anno.alpha(anno.$brass, 0.55);
 }
 
 .toolbar-item-selected {
@@ -102,10 +102,17 @@ button {
   font-family: anno.$font-display;
   font-size: 12px;
   letter-spacing: 0.4px;
-  color: rgba(anno.$plate-text, 0.6);
+  color: anno.alpha(anno.$plate-text, 0.6);
   text-shadow: 0 1px 1px rgba(0, 0, 0, 0.7);
   user-select: text;
   white-space: nowrap;
+}
+
+.theme-option {
+  text-wrap: nowrap;
+  color: anno.$ink;
+  font-weight: 700;
+  font-size: 13px;
 }
 
 .lang-option {
@@ -120,6 +127,12 @@ button {
   mat-form-field {
     width: 100px;
     margin: auto 0 auto auto;
+  }
+
+  // The theme's name ("Anno 1800") is longer than a language's.
+  mat-form-field.theme-field {
+    width: 120px;
+    margin-right: 8px;
   }
 
   mat-select {

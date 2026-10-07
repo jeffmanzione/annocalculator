@@ -14,8 +14,8 @@
   border: 1px solid anno.$brass;
   border-radius: 3px;
   box-shadow:
-    inset 0 1px 0 rgba(255, 242, 199, 0.18),
-    0 1px 2px rgba(anno.$vignette-dark, 0.4);
+    inset 0 1px 0 anno.alpha(anno.$highlight, 0.18),
+    0 1px 2px anno.alpha(anno.$vignette-dark, 0.4);
 
   .warning-icon {
     @include mat.icon-overrides(
@@ -37,7 +37,7 @@
   width: max-content;
   max-width: 260px;
   background-color: anno.$parchment-lighter;
-  border: 1px solid rgba(anno.$ink, 0.55);
+  border: 1px solid anno.alpha(anno.$ink, 0.55);
   -webkit-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.33);
   box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.33);
   font-size: 12px;
@@ -69,11 +69,11 @@
       padding: 2px 8px;
       text-align: right;
       white-space: nowrap;
-      background-color: color.scale(theme-colors.$table-bg-color, $lightness: -3%);
-      background-image: linear-gradient(to bottom, rgba(255, 242, 199, 0.3), rgba(255, 242, 199, 0) 45%);
+      background-color: anno.$table-cell;
+      background-image: linear-gradient(to bottom, anno.alpha(anno.$highlight, 0.3), anno.alpha(anno.$highlight, 0) 45%);
       box-shadow:
-        inset 0 1px 0 rgba(255, 242, 199, 0.4),
-        inset 0 -1px 0 rgba(anno.$ink, 0.16);
+        inset 0 1px 0 anno.alpha(anno.$highlight, 0.4),
+        inset 0 -1px 0 anno.alpha(anno.$ink, 0.16);
     }
 
     // The island column, header included, is left-aligned over the names.

@@ -1,3 +1,4 @@
+@use '../../../anno-palette' as anno;
 mat-card {
   height: 100%;
 
@@ -6,7 +7,7 @@ mat-card {
     position: absolute;
     width: 100%;
     height: 100%;
-    background-image: url(/anno_1800_logo.png);
+    background-image: anno.$logo;
     background-size: 300px;
     background-repeat: space;
     opacity: 5%;
@@ -14,22 +15,22 @@ mat-card {
 
   // The "Default Actions" card: a darker, weathered parchment.
   &.accent {
-    background-color: rgba(183, 150, 98, 0.45);
-    border-color: rgba(74, 47, 18, 0.5);
+    background-color: anno.alpha(anno.$parchment-shade, 0.45);
+    border-color: anno.alpha(anno.$ink, 0.5);
   }
 
   // Parchment panels: a thin ink border and a soft inner glow, like a card
   // laid on the page.
-  border: 1px solid rgba(74, 47, 18, 0.35);
+  border: 1px solid anno.alpha(anno.$ink, 0.35);
   box-shadow:
-    inset 0 0 18px rgba(239, 220, 176, 0.35),
-    0 1px 3px rgba(52, 42, 34, 0.35);
+    inset 0 0 18px anno.alpha(anno.$parchment-lighter, 0.35),
+    0 1px 3px anno.alpha(anno.$vignette-dark, 0.35);
 
   mat-card-header {
     z-index: 1;
 
     mat-card-title.accent {
-      text-shadow: 0 1px 0 rgba(255, 242, 199, 0.6);
+      text-shadow: 0 1px 0 anno.alpha(anno.$highlight, 0.6);
     }
   }
 

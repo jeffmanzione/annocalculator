@@ -11,7 +11,7 @@ div {
     padding: 8px;
     color: anno.$ink;
     background-color: anno.$parchment-lightest;
-    border: 1px solid rgba(anno.$ink, 0.45);
+    border: 1px solid anno.alpha(anno.$ink, 0.45);
     border-radius: 3px;
   }
 }

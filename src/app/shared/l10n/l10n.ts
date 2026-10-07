@@ -1,6 +1,7 @@
 export type L10nKey =
   | 'Anno 1800'
   | 'Anno 117'
+  | 'Theme'
   | 'Province'
   | 'Patron'
   | 'Devotion'
@@ -144,6 +145,12 @@ export const localizations: Localizations = {
     De: 'Anno 1800',
     Nl: 'Anno 1800',
     Zh: '纪元 1800',
+  },
+  Theme: {
+    En: 'Theme',
+    De: 'Design',
+    Nl: 'Thema',
+    Zh: '主题',
   },
   'Anno 117': {
     En: 'Anno 117',

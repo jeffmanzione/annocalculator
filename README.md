@@ -117,11 +117,13 @@ src/
     services/
       l10n/                     Current language and text lookup
       local-storage/            Typed wrapper over localStorage
+      theme/                    The look the visitor chose (Anno 1800 parchment or Anno 117 marble), kept in the browser
     shared/
       engine/                   The game-independent parts of a world: the store (BaseWorldStore) and its controllers (BaseWorldController, ControllerCache)
       l10n/                     Every translated string, keyed by its English text
   tools/                        One-off maintenance scripts, not part of the app (see "Data tools")
-  _anno-palette.scss            The Anno colour palette
+  _anno-themes.scss             The colours and fonts of each theme; they become CSS custom properties
+  _anno-palette.scss            Names for those colours that component styles use (they follow the chosen theme)
   _anno-material.scss           Angular Material theme overrides built from it
   styles.scss                   Global styles
 public/                         Static files copied as-is: logo, fonts, and the game icons

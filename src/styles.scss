@@ -3,6 +3,7 @@
 @use 'theme-colors';
 @use 'anno-palette' as anno;
 @use 'anno-material' as anno-material;
+@use 'anno-themes' as themes;
 
 @font-face {
   font-family: Elizabeth;
@@ -15,25 +16,16 @@
 @include mat.all-component-typographies(anno-material.$typography);
 @include anno-material.component-overrides;
 
-// Shared design tokens, for component styles that want a custom property
-// instead of importing the palette.
+// The colors and fonts, as custom properties that the rest of the styles refer to (see _anno-palette.scss).
+// Anno 1800's are the default; choosing the Anno 117 theme puts data-theme="anno117" on the page, which
+// replaces them and gives Angular Material's components their colors for it.
 :root {
-  --anno-parchment: #{anno.$parchment};
-  --anno-parchment-light: #{anno.$parchment-light};
-  --anno-parchment-lighter: #{anno.$parchment-lighter};
-  --anno-parchment-dark: #{anno.$parchment-dark};
-  --anno-parchment-shade: #{anno.$parchment-shade};
-  --anno-parchment-deep: #{anno.$parchment-deep};
-  --anno-plate: #{anno.$plate};
-  --anno-plate-text: #{anno.$plate-text};
-  --anno-brass: #{anno.$brass};
-  --anno-ink: #{anno.$ink};
-  --anno-ink-strong: #{anno.$ink-strong};
-  --anno-ink-muted: #{anno.$ink-muted};
-  --anno-slate: #{anno.$slate};
-  --anno-green: #{anno.$green};
-  --anno-font-display: #{anno.$font-display};
-  --anno-font-body: #{anno.$font-body};
+  @include themes.emit-vars(themes.$anno1800);
+}
+
+:root[data-theme='anno117'] {
+  @include themes.emit-vars(themes.$anno117);
+  @include mat.all-component-colors(anno-material.$theme-117);
 }
 
 ::-webkit-scrollbar {
@@ -94,8 +86,8 @@ h4,
   padding-bottom: 5px;
   // A rule that fades out to the right, with a light edge below it.
   background:
-    linear-gradient(to right, rgba(anno.$ink, 0.6), rgba(anno.$ink, 0.05)) bottom / 100% 1px no-repeat,
-    linear-gradient(to right, rgba(anno.$parchment-lightest, 0.7), transparent) bottom -1px / 100% 1px no-repeat;
+    linear-gradient(to right, anno.alpha(anno.$ink, 0.6), anno.alpha(anno.$ink, 0.05)) bottom / 100% 1px no-repeat,
+    linear-gradient(to right, anno.alpha(anno.$parchment-lightest, 0.7), transparent) bottom -1px / 100% 1px no-repeat;
 }
 
 .mat-expansion-panel-header-title {
@@ -107,11 +99,11 @@ h4,
 // Buttons: the game's raised look -- a lit top edge, a darker rim, and a
 // press that sinks.
 .mdc-button--unelevated.mat-mdc-unelevated-button:not(:disabled) {
-  background-image: linear-gradient(to bottom, rgba(255, 242, 199, 0.22), rgba(0, 0, 0, 0.12));
+  background-image: linear-gradient(to bottom, anno.alpha(anno.$highlight, 0.22), rgba(0, 0, 0, 0.12));
   box-shadow:
-    inset 0 1px 0 rgba(255, 242, 199, 0.35),
-    inset 0 0 0 1px rgba(anno.$plate, 0.55),
-    0 1px 2px rgba(anno.$vignette-dark, 0.45);
+    inset 0 1px 0 anno.alpha(anno.$highlight, 0.35),
+    inset 0 0 0 1px anno.alpha(anno.$plate, 0.55),
+    0 1px 2px anno.alpha(anno.$vignette-dark, 0.45);
 
   &:hover {
     filter: brightness(1.14);
@@ -121,7 +113,7 @@ h4,
     filter: brightness(0.9);
     box-shadow:
       inset 0 2px 4px rgba(0, 0, 0, 0.4),
-      inset 0 0 0 1px rgba(anno.$plate, 0.55);
+      inset 0 0 0 1px anno.alpha(anno.$plate, 0.55);
   }
 }
 
@@ -151,7 +143,7 @@ a:focus-visible,
 
 // A table row lights up under the pointer, like the game's list cards.
 tr.mat-mdc-row:hover > td.mat-mdc-cell {
-  background-color: color.scale(theme-colors.$table-bg-color, $lightness: 2%);
+  background-color: anno.$table-hover;
 }
 
 // A floating label straddles the top edge of its field, so its upper half sat on
@@ -242,7 +234,7 @@ table {
 
   tr {
     box-sizing: border-box;
-    border-bottom: 1px solid rgba(anno.$ink, 0.18);
+    border-bottom: 1px solid anno.alpha(anno.$ink, 0.18);
   }
 }
 
@@ -254,13 +246,13 @@ body {
   color: anno.$ink;
   background-color: anno.$vignette-edge;
   background-image:
-    linear-gradient(to bottom, rgba(anno.$vignette-dark, 0.7), transparent 150px),
+    linear-gradient(to bottom, anno.alpha(anno.$vignette-dark, 0.7), transparent 150px),
     url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .32 0 0 0 0 .2 0 0 0 0 .08 0 0 0 .2 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E"),
     radial-gradient(
       ellipse 90% 80% at 50% 38%,
       anno.$parchment-light 0%,
       anno.$parchment 40%,
-      #c7a76c 64%,
+      anno.$parchment-mid 64%,
       anno.$vignette-mid 90%,
       anno.$vignette-edge 100%
     );

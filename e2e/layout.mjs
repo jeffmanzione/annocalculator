@@ -15,18 +15,22 @@ const browser = await launchBrowser(chromium);
 const WIDTHS = [1440, 1600, 1920, 2560];
 // Display names as shown in the language dropdown.
 const LANGUAGES = ['EN', 'De', 'Nl', '中文'];
+// Both looks the app can have: the Anno 117 one sets its headings in a wider display font.
+const THEMES = ['anno1800', 'anno117'];
+const COMBOS = WIDTHS.flatMap((w) => THEMES.map((t) => [w, t]));
 
 let failures = 0;
 
-for (const width of WIDTHS) {
+for (const [width, theme] of COMBOS) {
   const page = await browser.newPage({ viewport: { width, height: 1100 } });
+  await page.addInitScript((t) => localStorage.setItem('ANNOCALCULATOR_THEME', t), theme);
   await page.goto(`${server.url}/anno-1800-calculator`);
   await page.waitForSelector('anno-1800-island');
   await settle(page);
 
   for (const language of LANGUAGES) {
     if (language !== 'EN') {
-      await page.locator('mat-toolbar mat-select').click();
+      await page.locator('mat-toolbar mat-select').last().click();
       await page.getByRole('option', { name: language, exact: true }).click();
       await settle(page);
     }
@@ -122,7 +126,7 @@ for (const width of WIDTHS) {
 
     const ok = problems.length === 0;
     console.log(
-      `${ok ? 'PASS' : 'FAIL'}  ${String(width).padEnd(4)} ${language.padEnd(2)}${ok ? '' : '  -- ' + problems.join('; ')}`,
+      `${ok ? 'PASS' : 'FAIL'}  ${String(width).padEnd(4)} ${language.padEnd(2)} (${theme})${ok ? '' : '  -- ' + problems.join('; ')}`,
     );
     if (!ok) failures++;
   }
@@ -131,15 +135,16 @@ for (const width of WIDTHS) {
 
 // The Anno 117 page: no header word wider than its column, no value clipped, and the island's table
 // fits the panel without scrolling sideways, in every language.
-for (const width of WIDTHS) {
+for (const [width, theme] of COMBOS) {
   const page = await browser.newPage({ viewport: { width, height: 1100 } });
+  await page.addInitScript((t) => localStorage.setItem('ANNOCALCULATOR_THEME', t), theme);
   await page.goto(`${server.url}/anno-117-calculator`);
   await page.waitForSelector('anno-117-island');
   await settle(page);
 
   for (const language of LANGUAGES) {
     if (language !== 'EN') {
-      await page.locator('mat-toolbar mat-select').click();
+      await page.locator('mat-toolbar mat-select').last().click();
       await page.getByRole('option', { name: language, exact: true }).click();
       await settle(page);
     }
@@ -175,7 +180,7 @@ for (const width of WIDTHS) {
       return [...new Set(found)];
     });
     const ok = problems.length === 0;
-    console.log(`${ok ? 'PASS' : 'FAIL'}  ${String(width).padEnd(4)} ${language.padEnd(2)} (Anno 117)${ok ? '' : '  -- ' + problems.join('; ')}`);
+    console.log(`${ok ? 'PASS' : 'FAIL'}  ${String(width).padEnd(4)} ${language.padEnd(2)} (Anno 117, ${theme})${ok ? '' : '  -- ' + problems.join('; ')}`);
     if (!ok) failures++;
   }
   await page.close();

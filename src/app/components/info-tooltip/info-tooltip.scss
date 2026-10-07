@@ -1,8 +1,9 @@
+@use '../../../anno-palette' as anno;
 .tooltip-container {
   width: 300px;
   padding: 12px;
   background-color: var(--anno-parchment-lighter, white);
-  border: 1px solid rgba(74, 47, 18, 0.55);
+  border: 1px solid anno.alpha(anno.$ink, 0.55);
   box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.33);
 }
 
@@ -55,7 +56,7 @@
 .section {
   margin-top: 8px;
   padding-top: 6px;
-  border-top: 1px solid rgba(74, 47, 18, 0.25);
+  border-top: 1px solid anno.alpha(anno.$ink, 0.25);
   font-size: 12px;
   letter-spacing: -0.25px;
 }

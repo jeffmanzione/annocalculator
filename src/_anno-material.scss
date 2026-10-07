@@ -1,6 +1,9 @@
 // Angular Material palettes and typography for the Anno 1800-inspired look.
+@use 'sass:color';
+@use 'sass:map';
 @use '@angular/material' as mat;
 @use 'anno-palette' as anno;
+@use 'anno-themes' as themes;
 
 // Slate blue: the game's selected-row / header-bar color.
 $slate-palette: (
@@ -9,9 +12,9 @@ $slate-palette: (
   200: #aab0be,
   300: #8a91a3,
   400: #6b7388,
-  500: anno.$slate,
+  500: #515969,
   600: #474f5d,
-  700: anno.$slate-dark,
+  700: #3b424e,
   800: #2f353f,
   900: #23272f,
   A100: #c8cfe3,
@@ -43,8 +46,8 @@ $green-palette: (
   200: #a8d88b,
   300: #84c75e,
   400: #6abc3d,
-  500: anno.$green,
-  600: anno.$green-dark,
+  500: #55af25,
+  600: #3e8f1c,
   700: #327617,
   800: #275d12,
   900: #1a400b,
@@ -70,9 +73,43 @@ $green-palette: (
   ),
 );
 
-$primary: mat.m2-define-palette($slate-palette);
-$accent: mat.m2-define-palette($green-palette, 600, 400, 800);
-$warn: mat.m2-define-palette(mat.$m2-red-palette);
+// A palette for Angular Material from a base color, one lighter and one darker, for the themes that have no
+// hand-tuned ramp (Anno 1800's slate and green above were tuned by eye).
+@function ramp($base, $light, $dark) {
+  $on-light: rgba(0, 0, 0, 0.87);
+  @return (
+    50: color.mix(white, $base, 90%),
+    100: color.mix(white, $base, 80%),
+    200: color.mix(white, $base, 60%),
+    300: color.mix(white, $base, 40%),
+    400: $light,
+    500: $base,
+    600: color.mix(black, $base, 12%),
+    700: $dark,
+    800: color.mix(black, $dark, 25%),
+    900: color.mix(black, $dark, 45%),
+    A100: color.mix(white, $base, 70%),
+    A200: color.mix(white, $base, 50%),
+    A400: $light,
+    A700: $dark,
+    contrast: (
+      50: $on-light,
+      100: $on-light,
+      200: $on-light,
+      300: $on-light,
+      400: white,
+      500: white,
+      600: white,
+      700: white,
+      800: white,
+      900: white,
+      A100: $on-light,
+      A200: $on-light,
+      A400: white,
+      A700: white,
+    )
+  );
+}
 
 $body-level: mat.m2-define-typography-level(
   $font-family: anno.$font-body,
@@ -90,16 +127,38 @@ $typography: mat.m2-define-typography-config(
   $body-2: $body-level,
 );
 
-$theme: mat.m2-define-light-theme(
-  (
-    color: (
-      primary: $primary,
-      accent: $accent,
-      warn: $warn,
-    ),
-    typography: $typography,
-    density: -5,
-  )
+@function light-theme($primary-palette, $accent-palette, $accent-default, $accent-lighter, $accent-darker) {
+  @return mat.m2-define-light-theme(
+    (
+      color: (
+        primary: mat.m2-define-palette($primary-palette),
+        accent: mat.m2-define-palette($accent-palette, $accent-default, $accent-lighter, $accent-darker),
+        warn: mat.m2-define-palette(mat.$m2-red-palette),
+      ),
+      typography: $typography,
+      density: -5,
+    )
+  );
+}
+
+// Anno 1800's theme: the colors, the type and the density.
+$theme: light-theme($slate-palette, $green-palette, 600, 400, 800);
+
+// Anno 117's: only its colors differ (they are applied under [data-theme='anno117']).
+$theme-117: light-theme(
+  ramp(
+    themes.color-of(themes.$anno117, slate),
+    themes.color-of(themes.$anno117, slate-light),
+    themes.color-of(themes.$anno117, slate-dark)
+  ),
+  ramp(
+    themes.color-of(themes.$anno117, 'green'),
+    #7aa84f,
+    themes.color-of(themes.$anno117, green-dark)
+  ),
+  600,
+  400,
+  800
 );
 
 // Component-level overrides, applied on top of the theme in styles.scss.
@@ -107,7 +166,7 @@ $theme: mat.m2-define-light-theme(
   // Text fields and selects: inset parchment fields with ink borders.
   @include mat.form-field-overrides(
     (
-      outlined-outline-color: rgba(anno.$ink, 0.45),
+      outlined-outline-color: anno.alpha(anno.$ink, 0.45),
       outlined-hover-outline-color: anno.$ink,
       outlined-focus-outline-color: anno.$slate,
       // Labels: dark ink, a little larger and bold, so they stay readable
@@ -119,17 +178,17 @@ $theme: mat.m2-define-light-theme(
       outlined-label-text-populated-size: 11px,
       outlined-label-text-weight: 700,
       outlined-input-text-color: anno.$ink,
-      outlined-disabled-input-text-color: rgba(anno.$ink, 0.65),
-      outlined-disabled-outline-color: rgba(anno.$ink, 0.2),
-      outlined-disabled-label-text-color: rgba(anno.$ink, 0.65),
+      outlined-disabled-input-text-color: anno.alpha(anno.$ink, 0.65),
+      outlined-disabled-outline-color: anno.alpha(anno.$ink, 0.2),
+      outlined-disabled-label-text-color: anno.alpha(anno.$ink, 0.65),
     )
   );
 
   @include mat.select-overrides(
     (
       enabled-trigger-text-color: anno.$ink,
-      disabled-trigger-text-color: rgba(anno.$ink, 0.65),
-      placeholder-text-color: rgba(anno.$ink, 0.75),
+      disabled-trigger-text-color: anno.alpha(anno.$ink, 0.65),
+      placeholder-text-color: anno.alpha(anno.$ink, 0.75),
       enabled-arrow-color: anno.$ink-muted,
       focused-arrow-color: anno.$slate,
       panel-background-color: anno.$parchment-lighter,
@@ -140,9 +199,9 @@ $theme: mat.m2-define-light-theme(
     (
       label-text-color: anno.$ink,
       selected-state-label-text-color: anno.$ink-strong,
-      selected-state-layer-color: rgba(anno.$slate, 0.18),
-      hover-state-layer-color: rgba(anno.$parchment-deep, 0.35),
-      focus-state-layer-color: rgba(anno.$parchment-deep, 0.45),
+      selected-state-layer-color: anno.alpha(anno.$slate, 0.18),
+      hover-state-layer-color: anno.alpha(anno.$parchment-deep, 0.35),
+      focus-state-layer-color: anno.alpha(anno.$parchment-deep, 0.45),
     )
   );
 
@@ -154,7 +213,7 @@ $theme: mat.m2-define-light-theme(
       selected-hover-icon-color: anno.$green-dark,
       selected-focus-icon-color: anno.$green-dark,
       selected-checkmark-color: white,
-      disabled-unselected-icon-color: rgba(anno.$ink, 0.3),
+      disabled-unselected-icon-color: anno.alpha(anno.$ink, 0.3),
       label-text-color: anno.$ink,
     )
   );
@@ -162,7 +221,7 @@ $theme: mat.m2-define-light-theme(
   // Panels: translucent parchment so the page grain shows through.
   @include mat.card-overrides(
     (
-      elevated-container-color: rgba(anno.$parchment-lighter, 0.45),
+      elevated-container-color: anno.alpha(anno.$parchment-lighter, 0.45),
       elevated-container-shape: 3px,
       subtitle-text-color: anno.$ink-muted,
       title-text-font: anno.$font-display,
@@ -174,14 +233,14 @@ $theme: mat.m2-define-light-theme(
 
   @include mat.expansion-overrides(
     (
-      container-background-color: rgba(anno.$parchment-lighter, 0.45),
+      container-background-color: anno.alpha(anno.$parchment-lighter, 0.45),
       container-text-color: anno.$ink,
       container-shape: 3px,
       header-text-color: anno.$ink-strong,
       header-description-color: anno.$ink-muted,
       header-indicator-color: anno.$ink-muted,
-      header-hover-state-layer-color: rgba(anno.$parchment-deep, 0.25),
-      header-focus-state-layer-color: rgba(anno.$parchment-deep, 0.3),
+      header-hover-state-layer-color: anno.alpha(anno.$parchment-deep, 0.25),
+      header-focus-state-layer-color: anno.alpha(anno.$parchment-deep, 0.3),
     )
   );
 

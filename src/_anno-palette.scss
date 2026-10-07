@@ -1,42 +1,61 @@
-// Colors for the Anno 1800-inspired look, sampled from the in-game Statistics
-// screens: aged parchment panels, a dark vignette, a dark olive title plate,
-// brown ink, slate-blue selection bars and green accents.
-//
-// These are original CSS values (no game artwork is used or shipped).
+@use 'sass:math';
+
+// Names for the app's colors, for the component styles to use. They are not colors but references to
+// CSS custom properties, which `_anno-themes.scss` sets for the theme in use (`:root` for Anno 1800,
+// `[data-theme='anno117']` for Anno 117), so the look can change while the app runs. Because they are not
+// colors, Sass cannot do arithmetic on them: use `alpha()` for a see-through version of one.
+
+@function token($name) {
+  @return var(--anno-#{$name});
+}
+
+/// A color at a fraction of its strength, the rest see-through (the CSS equivalent of `rgba($color, $a)`).
+@function alpha($color, $fraction) {
+  @return color-mix(in srgb, #{$color} #{math.div(round($fraction * 10000), 100) * 1%}, transparent);
+}
 
 // --- Parchment ---
-$parchment: #dcbc82; // main panel / card rows
-$parchment-light: #e9cd96; // active tab, raised surfaces
-$parchment-lighter: #efdcb0; // buttons, tooltips, toasts
-$parchment-lightest: #f6ead0; // text fields
-$parchment-dark: #cdac77; // idle tabs, table headers
-$parchment-shade: #b79662; // tab outlines, borders
-$parchment-deep: #a07f4d; // strong borders
+$parchment: token(parchment);
+$parchment-light: token(parchment-light);
+$parchment-lighter: token(parchment-lighter);
+$parchment-lightest: token(parchment-lightest);
+$parchment-dark: token(parchment-dark);
+$parchment-shade: token(parchment-shade);
+$parchment-deep: token(parchment-deep);
+$parchment-mid: token(parchment-mid);
 
 // --- Vignette (page edges) ---
-$vignette-mid: #8c744c;
-$vignette-edge: #655135;
-$vignette-dark: #342a22;
+$vignette-mid: token(vignette-mid);
+$vignette-edge: token(vignette-edge);
+$vignette-dark: token(vignette-dark);
 
 // --- Title plate / dark chrome ---
-$plate: #332b19;
-$plate-light: #4a3f26;
-$plate-text: #fff2c7;
-$brass: #a8884a; // thin trim around the plate
+$plate: token(plate);
+$plate-light: token(plate-light);
+$plate-dark: token(plate-dark);
+$plate-text: token(plate-text);
+$brass: token(brass);
 
 // --- Ink ---
-$ink: #4a2f12; // body text
-$ink-strong: #392c15; // headings
-$ink-muted: #7a5e35; // secondary text
+$ink: token(ink);
+$ink-strong: token(ink-strong);
+$ink-muted: token(ink-muted);
 
 // --- Selection / emphasis ---
-$slate: #515969; // selected rows, header bars, primary buttons
-$slate-light: #6b7388;
-$slate-dark: #3b424e;
-$green: #55af25; // positive values, progress, checkboxes
-$green-dark: #3e8f1c;
-$red: #b0372c;
+$slate: token(slate);
+$slate-light: token(slate-light);
+$slate-dark: token(slate-dark);
+$green: token('green');
+$green-dark: token(green-dark);
+$red: token('red');
+$highlight: token(highlight);
+
+// --- Derived ---
+$table-cell: token(table-cell);
+$table-hover: token(table-hover);
+$scrollbar-hover: token(scrollbar-hover);
 
 // --- Fonts (loaded from Google Fonts in index.html) ---
-$font-display: 'Gelasio', Georgia, 'Times New Roman', serif;
-$font-body: 'Lora', Georgia, 'Times New Roman', serif;
+$font-display: token(font-display);
+$font-body: token(font-body);
+$logo: token(logo);

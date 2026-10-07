@@ -11,6 +11,18 @@
         </button>
       </div>
     }
+    <mat-form-field class="theme-field">
+      <mat-select aria-label="Theme" [value]="theme()" (valueChange)="updateTheme($event)">
+        <mat-select-trigger>
+          <div class="theme-option"><span [textLoc]="themeName(theme())"></span></div>
+        </mat-select-trigger>
+        @for (option of themes; track option) {
+          <mat-option [value]="option">
+            <div class="theme-option"><span [textLoc]="themeName(option)"></span></div>
+          </mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
     <mat-form-field>
       <mat-select [value]="language()" (valueChange)="updateLanguage($event)">
         <mat-select-trigger>

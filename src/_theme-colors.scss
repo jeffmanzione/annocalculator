@@ -215,6 +215,6 @@ $table-bg-color: anno.$parchment-light;
 
 $scrollbar-width: 7px;
 $scrollbar-border-radius: 6px;
-$scrollbar-background-color: rgba(52, 42, 34, 0.25);
+$scrollbar-background-color: anno.alpha(anno.$vignette-dark, 0.25);
 $scrollbar-thumb-color: anno.$parchment-deep;
-$scrollbar-thumb-hover-color: color.scale($scrollbar-thumb-color, $lightness: -15%);
+$scrollbar-thumb-hover-color: anno.$scrollbar-hover;

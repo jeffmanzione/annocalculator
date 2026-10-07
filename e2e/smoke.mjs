@@ -291,6 +291,27 @@ check(
 const raw = JSON.stringify(s);
 check('no islandId leaks into saved JSON', !raw.includes('islandId'));
 
+// The theme can be changed, is remembered, and is on the page before the app starts (no flash of the other look).
+{
+  const theme = () => page.evaluate(() => document.documentElement.dataset.theme);
+  const plate = () => page.evaluate(() => getComputedStyle(document.documentElement).getPropertyValue('--anno-plate').trim());
+  check('the Anno 1800 theme is the default', (await theme()) === 'anno1800');
+  const before = await plate();
+  await page.locator('mat-toolbar mat-select').first().click();
+  await page.getByRole('option', { name: 'Anno 117', exact: true }).click();
+  await settle();
+  check('choosing the Anno 117 theme puts it on the page', (await theme()) === 'anno117');
+  check('and changes the colors', (await plate()) !== before, `${before} -> ${await plate()}`);
+  check('and is saved', (await page.evaluate(() => localStorage.getItem('ANNOCALCULATOR_THEME'))) === 'anno117');
+  await page.reload();
+  await page.waitForSelector('anno-1800-island');
+  check('and is still the theme after a reload', (await theme()) === 'anno117');
+  await page.locator('mat-toolbar mat-select').first().click();
+  await page.getByRole('option', { name: 'Anno 1800', exact: true }).click();
+  await settle();
+  check('and can be changed back', (await theme()) === 'anno1800' && (await plate()) === before);
+}
+
 // The old address and anything unknown lead to the Anno 1800 calculator.
 for (const old of ['/calculator', '/no-such-page']) {
   await page.goto(`${server.url}${old}`);
