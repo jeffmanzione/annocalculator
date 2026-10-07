@@ -3,6 +3,7 @@
   #trigger="cdkOverlayOrigin"
   (mouseenter)="showTooltipAt()"
   (mouseleave)="hideTooltipAt()"
+  (click)="toggleTooltip()"
   class="container">
   <formatted-number
     [value]="value()"
@@ -17,6 +18,7 @@
   cdkConnectedOverlay
   [cdkConnectedOverlayOrigin]="trigger"
   [cdkConnectedOverlayOpen]="showTooltip"
+  (overlayOutsideClick)="hideOnOutsideTap()"
   (detach)="hideTooltipAt()">
   <div class="tooltip-container">
     <div class="total">

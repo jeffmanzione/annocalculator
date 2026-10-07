@@ -5,12 +5,14 @@ import {
   ChangeDetectorRef,
   Component,
   computed,
+  ElementRef,
   inject,
   input,
   TemplateRef,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { L10nKey } from '../../shared/l10n/l10n';
+import { isTouchDevice } from '../../shared/mobile';
 import { L10nText } from '../text/text';
 
 @Component({
@@ -22,6 +24,7 @@ import { L10nText } from '../text/text';
 })
 export class EnumRow<T> implements AfterViewChecked {
   changeDetectorRef = inject(ChangeDetectorRef);
+  private readonly element_ = inject<ElementRef<HTMLElement>>(ElementRef);
 
   tooltip = input<TemplateRef<any> | null | undefined>(null);
   values = input<(T | null)[]>([]);
@@ -82,7 +85,39 @@ export class EnumRow<T> implements AfterViewChecked {
     }
   }
 
+  /**
+   * On a touch screen, where nothing hovers: a tap shows a value's tooltip, and another tap anywhere hides it. Not
+   * for a row inside a dropdown, where a tap opens the dropdown or picks an option.
+   */
+  toggleTooltipAt(index: number): void {
+    if (!isTouchDevice() || this.isInsideSelect_()) {
+      return;
+    }
+    const value = this.showValues()[index];
+    const show = !value.shouldShowOverlay;
+    this.hideAllTooltips();
+    if (show) {
+      value.shouldShowOverlay = true;
+      this.changeDetectorRef.detectChanges();
+    }
+  }
+
+  /** A tap outside the tooltip closes it (on a touch screen; a mouse closes it by leaving). */
+  hideOnOutsideTap(index: number): void {
+    if (isTouchDevice()) {
+      this.hideTooltipAt(index);
+    }
+  }
+
+  private isInsideSelect_(): boolean {
+    return !!this.element_.nativeElement.closest('mat-select, mat-option');
+  }
+
   showTooltipAt(index: number): void {
+    if (isTouchDevice()) {
+      // A tap also reports a mouse entering, a moment late: the tap has already handled it.
+      return;
+    }
     this.showTimeoutId_ = setTimeout(() => {
       this.showValues()[index].shouldShowOverlay = true;
       this.showTimeoutId_ = undefined;

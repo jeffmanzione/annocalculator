@@ -279,4 +279,19 @@ body {
     min-height: 100dvh;
     background-attachment: scroll;
   }
+
+  // Fingers need bigger targets than the compact density the desktop uses.
+  :root {
+    @include mat.form-field-overrides((container-height: 44px));
+    @include mat.icon-button-overrides((state-layer-size: 44px));
+    @include mat.checkbox-overrides((state-layer-size: 40px));
+    @include mat.button-overrides((filled-container-height: 44px, text-container-height: 44px));
+  }
+
+  // The compact density sets an icon button's size outright.
+  .mat-mdc-icon-button.mat-mdc-button-base {
+    width: 44px;
+    height: 44px;
+    padding: 10px;
+  }
 }

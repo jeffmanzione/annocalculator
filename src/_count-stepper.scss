@@ -1,4 +1,5 @@
 @use 'anno-palette' as anno;
+@use 'mobile';
 
 // The up and down arrows beside a number input (see the production line's Count), themed like the
 // dropdown arrows. Put them in a `<span matSuffix class="count-steppers">` after the input.
@@ -36,6 +37,14 @@
 
     &:hover::after {
       filter: brightness(0.6);
+    }
+  }
+
+  // Bigger to hit with a finger.
+  @include mobile.mobile {
+    .count-step {
+      width: 32px;
+      height: 20px;
     }
   }
 }

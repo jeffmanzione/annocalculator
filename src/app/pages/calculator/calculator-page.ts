@@ -135,6 +135,9 @@ export abstract class CalculatorPage<Save extends object> {
       data: { obj: this.currentSave_() },
       width: '600px',
       height: '700px',
+      // On a phone the dialog is the screen's size at most.
+      maxWidth: '95vw',
+      maxHeight: '95vh',
     };
     this.matDialog_
       .open(SaveDialog, config)

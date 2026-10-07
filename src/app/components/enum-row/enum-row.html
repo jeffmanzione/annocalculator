@@ -4,7 +4,8 @@
     #trigger="cdkOverlayOrigin"
     class="item-container"
     (mouseenter)="showTooltipAt($index)"
-    (mouseleave)="hideTooltipAt($index)">
+    (mouseleave)="hideTooltipAt($index)"
+    (click)="toggleTooltipAt($index)">
     @if (iconUrlLookupFn()(valueContainer.value)) {
       <img
         [src]="iconUrlLookupFn()(valueContainer.value)"
@@ -26,6 +27,7 @@
       cdkConnectedOverlay
       [cdkConnectedOverlayOrigin]="trigger"
       [cdkConnectedOverlayOpen]="valueContainer.shouldShowOverlay"
+      (overlayOutsideClick)="hideOnOutsideTap($index)"
       (detach)="hideTooltipAt($index)">
       <ng-container *ngTemplateOutlet="tooltip(); context: { value: valueContainer.value }"></ng-container>
     </ng-template>

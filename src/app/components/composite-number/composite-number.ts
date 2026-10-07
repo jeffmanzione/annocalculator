@@ -16,6 +16,7 @@ import { OverlayModule } from '@angular/cdk/overlay';
 import { MatIcon } from '@angular/material/icon';
 import { L10nKey } from '../../shared/l10n/l10n';
 import { L10nText } from '../text/text';
+import { isTouchDevice } from '../../shared/mobile';
 import { L10nService } from '../../services/l10n/l10n';
 
 export interface NumberConstituent {
@@ -85,7 +86,25 @@ export class CompositeNumber {
     this.changeDetectorRef.detectChanges();
   }
 
+  /** On a touch screen, where nothing hovers, a tap shows the breakdown and another tap anywhere hides it. */
+  toggleTooltip(): void {
+    if (!isTouchDevice()) {
+      return;
+    }
+    this.showTooltip = !this.showTooltip;
+    this.changeDetectorRef.detectChanges();
+  }
+
+  hideOnOutsideTap(): void {
+    if (isTouchDevice()) {
+      this.hideTooltipAt();
+    }
+  }
+
   showTooltipAt(): void {
+    if (isTouchDevice()) {
+      return;
+    }
     this.showTimeoutId_ = setTimeout(() => {
       this.showTooltip = true;
       this.showTimeoutId_ = undefined;

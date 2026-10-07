@@ -13,6 +13,7 @@
     "e2e:label-edges": "node e2e/label-edges.mjs",
     "e2e:tracking": "node e2e/tracking.mjs",
     "e2e:smoke-117": "node e2e/smoke-117.mjs",
+    "e2e:mobile": "node e2e/mobile.mjs",
     "e2e:diff": "node e2e/diff.mjs",
     "deploy": "node scripts/deploy.mjs"
   },

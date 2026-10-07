@@ -1,4 +1,5 @@
 @use '../../../anno-table';
+@use '../../../mobile';
 
 // Columns share the width the way the production lines table's selects do: the good and its source take
 // their percentage and cut their text short, the numbers take what they need.
@@ -58,5 +59,35 @@ table {
 
   td.per-minute {
     font-variant-numeric: tabular-nums;
+  }
+}
+
+// On a phone the table fits the card it is in: no side margins, columns that may be narrower.
+@include mobile.mobile {
+  .outer-container {
+    margin: 0;
+  }
+
+  .inner-container {
+    min-width: 0;
+    width: 100%;
+  }
+
+  table {
+    th,
+    td {
+      padding: 2px;
+    }
+
+    th.good,
+    th.source {
+      min-width: 0;
+      width: auto;
+    }
+
+    th.per-minute,
+    td.per-minute {
+      min-width: 0;
+    }
   }
 }

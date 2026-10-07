@@ -99,6 +99,7 @@ src/
       enum-select/, enum-row/   A dropdown over enum values with icons and tooltips
       enum-tooltip/             Tooltip wrapper used by the dropdowns
       info-tooltip/             The hover card both games use (a game describes its thing as a TooltipModel)
+      mobile-section-tabs/      The switch between the islands, the summary and the trade routes (shown on a phone only)
       stepper-input/            A number field with up/down arrows (a line's count, a repeatable discovery's %)
       extra-goods-table/        The table under a production line that lists its extra goods
       island-editor/            What both island editors share: the settings row, the Add Production Line button, the scrolling table area
@@ -122,6 +123,7 @@ src/
       engine/                   The game-independent parts of a world: the store (BaseWorldStore) and its controllers (BaseWorldController, ControllerCache)
       l10n/                     Every translated string, keyed by its English text
   tools/                        One-off maintenance scripts, not part of the app (see "Data tools")
+  _mobile.scss                  Where the phone layout starts (windows under 900px wide); all of its styles sit inside it
   _anno-themes.scss             The colours and fonts of each theme; they become CSS custom properties
   _anno-palette.scss            Names for those colours that component styles use (they follow the chosen theme)
   _anno-material.scss           Angular Material theme overrides built from it
@@ -159,6 +161,15 @@ The rules are pure functions in `games/anno117/game/rules.ts`, checked in `rules
 - **Persistence.** The world is saved to the browser's `localStorage` whenever it changes and reloaded on the next visit. Real users have saved worlds, so **anything that changes the saved shape must still load old saves** (and `fromWorld()` is where that conversion happens). For example, worlds saved with a Trade Union bonus percentage are converted to a Palace prestige level on load. Defaults are left out of what is saved, to keep it small.
 - **Localization.** All text lives in `src/app/shared/l10n/l10n.ts` as a key (the English text) mapped to English, German, Dutch and Chinese. Templates use `textLoc="Some Key"`. Adding a string means adding its key to the `L10nKey` type and all four translations.
 - **Styling.** The theme is a set of Angular Material overrides over an Anno palette (`_anno-palette.scss`, `_anno-material.scss`). Table columns size themselves from their content rather than fixed widths, so translations fit; the e2e layout check guards this.
+
+### Phones
+
+Phones (windows under 900px wide) get their own layout; a desktop window looks exactly as it did before it existed. Everything for phones sits inside the `mobile` mixin of `src/_mobile.scss`, so it cannot reach a wider window.
+
+- The toolbar becomes three short rows, and the page shows one part at a time (Islands, Summary or Trade Routes), chosen with a bar of tabs that stays at the top.
+- Each production line is a card with labelled fields instead of a row of a wide table (the same cards for both games). The labels are hidden on a desktop.
+- A finger cannot hover: a tap shows a tooltip, and a tap elsewhere hides it. Targets are made bigger.
+- `e2e/mobile.mjs` (`npm run e2e:mobile`) checks that a phone-sized window never scrolls sideways, that the tabs, cards and tooltips work, and that targets are big enough. `e2e/desktop-shots.mjs` proves the desktop is untouched: take its screenshots before a change and after it, then compare.
 
 ## 🛠️ Development
 
