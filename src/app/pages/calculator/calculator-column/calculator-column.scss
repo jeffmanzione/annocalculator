@@ -1,4 +1,5 @@
 @use '../../../../anno-palette' as anno;
+@use '../../../../mobile';
 
 .global-parameters-section {
   padding-bottom: 16px;
@@ -80,4 +81,30 @@ mat-panel-description {
   border-top: 2px solid anno.alpha(anno.$ink, 0.35);
   box-shadow: inset 0 1px 0 anno.alpha(anno.$parchment-lightest, 0.6);
   padding-top: 16px;
+}
+
+@include mobile.mobile {
+  // The page scrolls, not the island list inside it.
+  .island-list-section {
+    height: auto;
+    overflow: visible;
+  }
+
+  mat-accordion {
+    position: static;
+  }
+
+  // The two cards above the islands, one under the other.
+  .global-parameters-section {
+    flex-direction: column;
+
+    card {
+      margin-right: 0;
+      margin-bottom: 12px;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
 }

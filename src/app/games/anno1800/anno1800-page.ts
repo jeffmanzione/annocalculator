@@ -18,6 +18,7 @@ import { LocalStorageManager } from '../../services/local-storage/local-storage'
 import { WORLD_KEY_1800 } from '../../services/local-storage/world-keys';
 import { defaultWorld } from './model/default-world';
 import { anno1800Game } from './anno1800-game';
+import { MobileSectionTabs } from '../../components/mobile-section-tabs/mobile-section-tabs';
 import { EnumSelect } from '../../components/enum-select/enum-select';
 import {
   MAX_PALACE_PRESTIGE_LEVEL,
@@ -30,6 +31,7 @@ const NO_PALACE = -1;
 @Component({
   selector: 'anno-1800-page',
   imports: [
+    MobileSectionTabs,
     CalculatorColumn,
     EnumSelect,
     Anno1800Island,

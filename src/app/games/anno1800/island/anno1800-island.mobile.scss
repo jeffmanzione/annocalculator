@@ -1,0 +1,170 @@
+@use '../../../../anno-palette' as anno;
+@use '../../../../mobile';
+
+// The labels a phone's cards need; the table's header row has them on a desktop.
+.mobile-label {
+  display: none;
+}
+
+// On a phone each production line is a card instead of a row of a wide table (the same cards as Anno 117's):
+// the building and its remove button on top, then the count and extras, the goods, the boosts, the items, the
+// checkboxes, and the numbers the line works out to.
+@include mobile.mobile {
+  .island-name-field,
+  .island-select {
+    flex: 1 1 100%;
+    width: auto;
+    min-width: 0;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .mobile-label {
+    display: block;
+    margin-bottom: 3px;
+    font-size: 11px;
+    font-weight: 700;
+    color: anno.$ink-muted;
+  }
+
+  table.production-lines-table,
+  table.production-lines-table tbody {
+    display: block;
+    width: 100%;
+    min-width: 0;
+  }
+
+  table.production-lines-table thead,
+  table.production-lines-table tr.mat-mdc-header-row {
+    display: none;
+  }
+
+  table.production-lines-table tr.production-line-row {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px 8px;
+    align-items: start;
+    height: auto;
+    padding: 10px;
+    margin-bottom: 12px;
+    border: 1px solid anno.alpha(anno.$ink, 0.3);
+    border-radius: 6px;
+    background: anno.$table-cell;
+    box-shadow: 0 1px 3px anno.alpha(anno.$vignette-dark, 0.25);
+  }
+
+  // Every cell: a block of its own, without the column widths a desktop table gives it.
+  table.production-lines-table td.mat-mdc-cell {
+    display: block;
+    width: auto;
+    min-width: 0;
+    max-width: none;
+    padding: 0;
+    text-align: left;
+    white-space: normal;
+    background: none;
+    box-shadow: none;
+    border: none;
+  }
+
+  table.production-lines-table td.mat-column-building {
+    grid-column: 1 / 3;
+    grid-row: 1;
+  }
+
+  table.production-lines-table td.mat-column-remove {
+    grid-column: 3;
+    grid-row: 1;
+    justify-self: end;
+  }
+
+  table.production-lines-table td.mat-column-numBuildings {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  table.production-lines-table td.mat-column-expandExtraGoods {
+    grid-column: 2;
+    grid-row: 2;
+  }
+
+  table.production-lines-table td.mat-column-inputGoods {
+    grid-column: 1 / 3;
+    grid-row: 3;
+  }
+
+  table.production-lines-table td.mat-column-good {
+    grid-column: 3;
+    grid-row: 3;
+  }
+
+  table.production-lines-table td.mat-column-boosts {
+    grid-column: 1 / 3;
+    grid-row: 4;
+  }
+
+  table.production-lines-table td.mat-column-hasTradeUnion {
+    grid-column: 3;
+    grid-row: 4;
+  }
+
+  table.production-lines-table td.mat-column-items {
+    grid-column: 1 / -1;
+    grid-row: 5;
+  }
+
+  table.production-lines-table td.mat-column-culturalSets {
+    grid-column: 1 / -1;
+    grid-row: 6;
+  }
+
+  table.production-lines-table td.mat-column-inRangeOfLocalDepartment {
+    grid-column: 1;
+    grid-row: 7;
+  }
+
+  table.production-lines-table td.mat-column-inRangeOfHaciendaFertiliserWorks {
+    grid-column: 2;
+    grid-row: 7;
+  }
+
+  table.production-lines-table td.mat-column-efficiency,
+  table.production-lines-table td.mat-column-buildingProcessTimeSeconds,
+  table.production-lines-table td.mat-column-goodsProducedPerMinute {
+    grid-row: 8;
+  }
+
+  table.production-lines-table td.mat-column-efficiency {
+    grid-column: 1;
+  }
+
+  table.production-lines-table td.mat-column-buildingProcessTimeSeconds {
+    grid-column: 2;
+  }
+
+  table.production-lines-table td.mat-column-goodsProducedPerMinute {
+    grid-column: 3;
+  }
+
+  // The extra goods table is the continuation of the line's card.
+  table.production-lines-table tr.extra-good-table-row {
+    display: block;
+    height: auto;
+    margin-top: -8px;
+    padding: 6px;
+    margin-bottom: 12px;
+    border: 1px solid anno.alpha(anno.$ink, 0.3);
+    border-radius: 6px;
+    background: anno.$table-cell;
+  }
+
+  table.production-lines-table tr.extra-good-table-row:not(:has(extra-goods-table)) {
+    display: none;
+  }
+
+  enum-select,
+  stepper-input {
+    display: block;
+    width: 100%;
+  }
+}

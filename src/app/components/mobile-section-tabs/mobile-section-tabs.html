@@ -1,0 +1,13 @@
+<nav class="tabs" role="tablist">
+  @for (option of sections; track option.id) {
+    <button
+      type="button"
+      role="tab"
+      class="tab"
+      [class.selected]="section() === option.id"
+      [attr.aria-selected]="section() === option.id"
+      (click)="section.set(option.id)">
+      <span [textLoc]="option.label"></span>
+    </button>
+  }
+</nav>

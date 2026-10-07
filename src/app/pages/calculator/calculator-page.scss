@@ -1,3 +1,5 @@
+@use '../../../mobile';
+
 // Layout shared by both games' calculator pages: the left column (a calculator-column, with its own
 // styles) beside the right column with the summary and the trade routes.
 :host {
@@ -67,5 +69,52 @@ anno-117-island {
 
   .repeatable-tech {
     width: 11rem;
+  }
+}
+
+// On a phone the page is a single column, and shows one of its parts at a time (see MobileSectionTabs).
+@include mobile.mobile {
+  :host {
+    display: block;
+    height: auto;
+  }
+
+  .column {
+    padding-right: 0;
+  }
+
+  .left-column {
+    display: block;
+  }
+
+  .right-column {
+    display: block;
+    max-width: none;
+    width: auto;
+
+    summary-panel {
+      display: block;
+      padding-bottom: 12px;
+    }
+
+    trade-routes-panel {
+      display: block;
+    }
+  }
+
+  .mobile-hidden {
+    display: none !important;
+  }
+
+  .palace-select {
+    width: 100%;
+  }
+
+  .discoveries-row {
+    .discoveries-select,
+    .repeatable-tech {
+      flex: 1 1 100%;
+      width: 100%;
+    }
   }
 }

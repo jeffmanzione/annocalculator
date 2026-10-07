@@ -1,5 +1,5 @@
 import { Clipboard } from '@angular/cdk/clipboard';
-import { effect, inject, Injector, Provider } from '@angular/core';
+import { effect, inject, Injector, Provider, signal } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { GAME, GameDefinition } from '../../games/game';
@@ -8,6 +8,7 @@ import {
   LocalStorageManager,
   StorageItem,
 } from '../../services/local-storage/local-storage';
+import { MobileSection } from '../../components/mobile-section-tabs/mobile-section-tabs';
 import { DefaultAction } from './calculator-column/calculator-column';
 import { SaveData, SaveDialog } from './save-dialog/save-dialog';
 
@@ -51,6 +52,9 @@ export abstract class CalculatorPage<Save extends object> {
       tooltip: 'Completely clear the inputs.',
     },
   ];
+
+  /** On a phone, which part of the page is shown (the islands, the summary or the trade routes). */
+  readonly mobileSection = signal<MobileSection>('plan');
 
   protected readonly injector_ = inject(Injector);
   protected readonly worldStorage_: StorageItem<Save>;

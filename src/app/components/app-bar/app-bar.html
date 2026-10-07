@@ -4,6 +4,7 @@
     <button mat-button class="toolbar-title toolbar-text-shadow" (click)="navigateTo('/')">
       {{ website }}
     </button>
+    <div class="toolbar-break toolbar-break-top"></div>
     @for (app of apps; track app) {
       <div class="toolbar-item toolbar-text-shadow" [ngClass]="isCurrentApp(app) ? 'toolbar-item-selected' : ''">
         <button mat-button [disabled]="isCurrentApp(app)" (click)="navigateTo(app)">
@@ -11,6 +12,7 @@
         </button>
       </div>
     }
+    <div class="toolbar-break toolbar-break-tabs"></div>
     <div class="theme-picker">
       <span id="theme-label" class="theme-label toolbar-text-shadow" textLoc="Theme"></span>
       <mat-form-field class="theme-field">
@@ -26,7 +28,7 @@
         </mat-select>
       </mat-form-field>
     </div>
-    <mat-form-field>
+    <mat-form-field class="language-field">
       <mat-select [value]="language()" (valueChange)="updateLanguage($event)">
         <mat-select-trigger>
           <div class="lang-option">{{ langDisplayName(language()) }}</div>

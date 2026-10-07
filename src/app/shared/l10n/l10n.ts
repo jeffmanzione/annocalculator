@@ -28,6 +28,7 @@ export type L10nKey =
   | 'About'
   | 'Default Actions'
   | 'Global Parameters'
+  | 'Islands'
   | 'Summary'
   | 'Trade Routes'
   | 'Add Production Line'
@@ -313,6 +314,12 @@ export const localizations: Localizations = {
     De: 'Globale Parameter',
     Nl: 'Algemene parameters',
     Zh: '全局参数',
+  },
+  Islands: {
+    En: 'Islands',
+    De: 'Inseln',
+    Nl: 'Eilanden',
+    Zh: '岛屿',
   },
   Summary: {
     En: 'Summary',

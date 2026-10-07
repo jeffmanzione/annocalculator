@@ -2,6 +2,7 @@
 @use '../../../../theme-colors';
 @use '../../../../anno-palette' as anno;
 @use '../../../../anno-table';
+@use '../../../../mobile';
 
 // The Anno 117 island editor: the same parchment-and-slate look as the Anno 1800 island tables.
 
@@ -122,4 +123,140 @@ mat-checkbox {
 // The extra goods table fills its row.
 tr.extra-goods-tr > td.extra-goods-cell {
   padding: 0;
+}
+
+// The labels a phone's cards need; the table's header row has them on a desktop.
+.mobile-label {
+  display: none;
+}
+
+// On a phone each production line is a card instead of a row of a wide table: the building and its remove
+// button on top, then the count, extras and modules, the goods, the items, and the numbers it works out to.
+@include mobile.mobile {
+  .island-name-field,
+  .island-select,
+  .devotion-field {
+    flex: 1 1 100%;
+    width: auto;
+    min-width: 0;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .row-break {
+    display: none;
+  }
+
+  table.lines-table,
+  table.lines-table tbody {
+    display: block;
+    min-width: 0;
+    width: 100%;
+  }
+
+  table.lines-table thead {
+    display: none;
+  }
+
+  table.lines-table tr {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px 8px;
+    align-items: start;
+    padding: 10px;
+    margin-bottom: 12px;
+    border: 1px solid anno.alpha(anno.$ink, 0.3);
+    border-radius: 6px;
+    background: anno.$table-cell;
+    box-shadow: 0 1px 3px anno.alpha(anno.$vignette-dark, 0.25);
+  }
+
+  table.lines-table td {
+    display: block;
+    min-width: 0;
+    padding: 0;
+    text-align: left;
+    background: none;
+    box-shadow: none;
+  }
+
+  .mobile-label {
+    display: block;
+    margin-bottom: 3px;
+    font-size: 11px;
+    font-weight: 700;
+    color: anno.$ink-muted;
+  }
+
+  table.lines-table td.m-building {
+    grid-column: 1 / 3;
+    grid-row: 1;
+  }
+
+  table.lines-table td.m-remove {
+    grid-column: 3;
+    grid-row: 1;
+    justify-self: end;
+  }
+
+  table.lines-table td.m-count {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  table.lines-table td.m-extras {
+    grid-column: 2;
+    grid-row: 2;
+  }
+
+  table.lines-table td.m-modules {
+    grid-column: 3;
+    grid-row: 2;
+  }
+
+  table.lines-table td.m-inputs {
+    grid-column: 1 / 3;
+    grid-row: 3;
+  }
+
+  table.lines-table td.m-output {
+    grid-column: 3;
+    grid-row: 3;
+  }
+
+  table.lines-table td.m-items {
+    grid-column: 1 / -1;
+    grid-row: 4;
+  }
+
+  table.lines-table td.m-stat {
+    grid-row: 5;
+    white-space: normal;
+  }
+
+  table.lines-table td.goods-field {
+    text-align: left;
+  }
+
+  // The extra goods table is the continuation of the line's card.
+  table.lines-table tr.extra-goods-tr {
+    display: block;
+    margin-top: -8px;
+    padding: 6px;
+  }
+
+  table.lines-table tr.extra-goods-tr > td {
+    display: block;
+  }
+
+  enum-select,
+  stepper-input {
+    display: block;
+    width: 100%;
+  }
+
+  td.modules-field mat-checkbox {
+    margin: 0 0 2px;
+    display: block;
+  }
 }

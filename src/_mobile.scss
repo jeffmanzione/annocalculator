@@ -1,0 +1,17 @@
+// Where the phone layout takes over. Everything made for phones sits inside `mobile` (or `touch`), so a
+// desktop window looks exactly as it does without them. The same width is in app/shared/mobile.ts, for the
+// few things that script has to know about.
+$mobile-max-width: 899.98px;
+
+@mixin mobile {
+  @media (max-width: $mobile-max-width) {
+    @content;
+  }
+}
+
+// A device whose main pointer is a finger: bigger targets, no hover.
+@mixin touch {
+  @media (pointer: coarse) {
+    @content;
+  }
+}

@@ -6,6 +6,7 @@ import {
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { MobileSectionTabs } from '../../components/mobile-section-tabs/mobile-section-tabs';
 import { EnumSelect } from '../../components/enum-select/enum-select';
 import { StepperInput } from '../../components/stepper-input/stepper-input';
 import { CalculatorColumn } from '../../pages/calculator/calculator-column/calculator-column';
@@ -36,6 +37,7 @@ import { MAX_TECH_LEVEL, WorldStore117 } from './model/world-store-117';
 @Component({
   selector: 'anno-117-page',
   imports: [
+    MobileSectionTabs,
     Anno117Tooltip,
     Anno117Island,
     CalculatorColumn,

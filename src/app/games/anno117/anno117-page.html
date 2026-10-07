@@ -1,6 +1,8 @@
 @if (world) {
+  <mobile-section-tabs [(section)]="mobileSection"></mobile-section-tabs>
   <calculator-column
     class="column left-column"
+    [class.mobile-hidden]="mobileSection() !== 'plan'"
     [actions]="defaultActions"
     [islands]="world.islands"
     [islandTemplate]="islandEditor"
@@ -32,8 +34,8 @@
     </div>
   </calculator-column>
   <div class="column right-column">
-    <summary-panel [world]="world"></summary-panel>
-    <trade-routes-panel [world]="world"></trade-routes-panel>
+    <summary-panel [class.mobile-hidden]="mobileSection() !== 'summary'" [world]="world"></summary-panel>
+    <trade-routes-panel [class.mobile-hidden]="mobileSection() !== 'trade'" [world]="world"></trade-routes-panel>
   </div>
 }
 <ng-template #islandEditor let-island>

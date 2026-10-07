@@ -1,5 +1,6 @@
 @use '@angular/material' as mat;
 @use '../../../anno-palette' as anno;
+@use '../../../mobile';
 
 // The game's dark olive title plate, trimmed in brass. The nav links are its
 // tabs: the current one is a raised parchment tab that opens into the page.
@@ -170,5 +171,91 @@ button {
     border-radius: 8px;
     box-sizing: border-box;
     font-size: 18px;
+  }
+}
+
+// Not a part of the bar: only a place for a line to break on a phone.
+.toolbar-break {
+  display: none;
+}
+
+// On a phone the bar is three short rows instead of one long one: the title, then the theme and language,
+// then the pages as tabs. It scrolls away with the page (see app.scss) rather than taking the screen's top.
+@include mobile.mobile {
+  .toolbar {
+    @include mat.toolbar-overrides((standard-height: auto));
+    height: auto;
+    padding: 0;
+  }
+
+  .toolbar-items {
+    flex-wrap: wrap;
+    align-items: center;
+    row-gap: 6px;
+    padding: 8px 8px 0;
+    box-sizing: border-box;
+  }
+
+  .toolbar-title {
+    order: 1;
+    flex: 1 1 auto;
+    margin-right: 0;
+    padding: 0;
+    text-align: left;
+    font-size: 19px;
+  }
+
+  .app-version {
+    order: 2;
+    margin: 0 4px;
+  }
+
+  .toolbar-break {
+    display: block;
+    flex-basis: 100%;
+    height: 0;
+  }
+
+  .toolbar-break-top {
+    order: 3;
+  }
+
+  .theme-picker {
+    order: 4;
+    margin: 0 8px 0 0;
+    flex: 1 1 auto;
+    justify-content: flex-end;
+  }
+
+  .language-field {
+    order: 5;
+  }
+
+  .toolbar-break-tabs {
+    order: 6;
+  }
+
+  .toolbar-item {
+    order: 7;
+    flex: 1 1 0;
+    min-width: 0;
+    height: 44px;
+    margin: 0 2px -2px;
+    display: flex;
+
+    button {
+      flex: 1;
+      padding: 0 4px;
+      min-width: 0;
+    }
+  }
+
+  .toolbar-item-selected {
+    height: 46px;
+  }
+
+  :host ::ng-deep .toolbar-item .mdc-button__label {
+    font-size: 14px;
+    white-space: nowrap;
   }
 }

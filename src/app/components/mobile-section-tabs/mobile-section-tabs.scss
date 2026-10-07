@@ -1,0 +1,59 @@
+@use '../../../mobile';
+@use '../../../anno-palette' as anno;
+
+// Not on the page at all, except on a phone.
+:host {
+  display: none;
+}
+
+@include mobile.mobile {
+  :host {
+    display: block;
+    // Stays at the top of the screen while the page scrolls beneath it.
+    position: sticky;
+    top: 0;
+    z-index: 900;
+    margin: 0 -8px 10px;
+    padding: 6px 8px;
+    background: linear-gradient(to bottom, anno.$plate-light, anno.$plate);
+    border-bottom: 2px solid anno.$brass;
+    box-shadow: 0 3px 8px anno.alpha(anno.$vignette-dark, 0.45);
+  }
+
+  .tabs {
+    display: flex;
+    gap: 6px;
+  }
+
+  .tab {
+    all: unset;
+    box-sizing: border-box;
+    flex: 1;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    border: 1px solid transparent;
+    border-radius: 5px;
+    padding: 0 6px;
+    font-family: anno.$font-display;
+    font-size: 14px;
+    font-weight: 700;
+    color: anno.$parchment-light;
+    cursor: pointer;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.7);
+
+    &.selected {
+      background: linear-gradient(to bottom, anno.$parchment-lighter, anno.$parchment-light);
+      border-color: anno.$brass;
+      color: anno.$ink-strong;
+      text-shadow: none;
+    }
+
+    &:focus-visible {
+      outline: 2px solid anno.$brass;
+      outline-offset: 2px;
+    }
+  }
+}

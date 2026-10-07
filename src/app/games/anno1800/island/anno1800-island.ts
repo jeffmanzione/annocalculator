@@ -83,7 +83,7 @@ import { InputGoodSource } from '../model/world-store-1800';
     L10nText,
   ],
   templateUrl: './anno1800-island.html',
-  styleUrl: './anno1800-island.scss',
+  styleUrls: ['./anno1800-island.scss', './anno1800-island.mobile.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Anno1800Island implements OnInit {
