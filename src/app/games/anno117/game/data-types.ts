@@ -10,9 +10,9 @@ export interface Anno117Name {
 }
 
 /** The two provinces of the base game. */
-export type Anno117Region = 'Roman' | 'Celtic';
+type Anno117Region = 'Roman' | 'Celtic';
 
-export interface Anno117Session {
+interface Anno117Session {
   id: number;
   name: Anno117Name;
   icon?: string;
@@ -26,7 +26,7 @@ export interface Anno117Product {
   abstract?: true;
 }
 
-export interface Anno117Amount {
+interface Anno117Amount {
   product: number;
   amount: number;
 }
@@ -88,7 +88,7 @@ export interface Anno117Buff {
   workforceMaintenancePercent?: number;
 }
 
-export type Anno117EffectSource =
+type Anno117EffectSource =
   | 'tech'
   | 'island-event'
   | 'session-event'

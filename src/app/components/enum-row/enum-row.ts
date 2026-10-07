@@ -23,7 +23,7 @@ import { L10nText } from '../text/text';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EnumRow<T> implements AfterViewChecked {
-  changeDetectorRef = inject(ChangeDetectorRef);
+  private readonly changeDetectorRef_ = inject(ChangeDetectorRef);
   private readonly element_ = inject<ElementRef<HTMLElement>>(ElementRef);
 
   tooltip = input<TemplateRef<any> | null | undefined>(null);
@@ -38,21 +38,21 @@ export class EnumRow<T> implements AfterViewChecked {
   /** Marks values whose icon should get a glow, e.g. a substituted input good. */
   iconGlowFn = input<(_: T | null) => boolean>(() => false);
 
-  showValues = computed(() =>
+  readonly showValues = computed(() =>
     this.values().map((v) => ({ value: v, shouldShowOverlay: false })),
   );
 
   /** The timeout ID of any current timer set to show the tooltip */
   private showTimeoutId_: ReturnType<typeof setTimeout> | undefined;
 
-  displayTextForValue(value: T | null): string {
+  protected displayTextForValue(value: T | null): string {
     if (!this.displayTextTransformer()) {
       return value as string;
     }
     return this.displayTextTransformer()!(value);
   }
 
-  hasTooltip = false;
+  protected hasTooltip = false;
 
   hideTooltipAt(index: number): void {
     if (this.showTimeoutId_ != null) {
@@ -64,7 +64,7 @@ export class EnumRow<T> implements AfterViewChecked {
       return;
     }
     this.showValues()[index].shouldShowOverlay = false;
-    this.changeDetectorRef.detectChanges();
+    this.changeDetectorRef_.detectChanges();
   }
 
   /** Hides every tooltip and cancels any pending one, e.g. when the row's host closes. */
@@ -81,7 +81,7 @@ export class EnumRow<T> implements AfterViewChecked {
       }
     }
     if (changed) {
-      this.changeDetectorRef.detectChanges();
+      this.changeDetectorRef_.detectChanges();
     }
   }
 
@@ -89,7 +89,7 @@ export class EnumRow<T> implements AfterViewChecked {
    * On a touch screen, where nothing hovers: a tap shows a value's tooltip, and another tap anywhere hides it. Not
    * for a row inside a dropdown, where a tap opens the dropdown or picks an option.
    */
-  toggleTooltipAt(index: number): void {
+  protected toggleTooltipAt(index: number): void {
     if (!isTouchDevice() || this.isInsideSelect_()) {
       return;
     }
@@ -98,7 +98,7 @@ export class EnumRow<T> implements AfterViewChecked {
     this.hideAllTooltips();
     if (show) {
       value.shouldShowOverlay = true;
-      this.changeDetectorRef.detectChanges();
+      this.changeDetectorRef_.detectChanges();
     }
   }
 
@@ -121,7 +121,7 @@ export class EnumRow<T> implements AfterViewChecked {
     this.showTimeoutId_ = setTimeout(() => {
       this.showValues()[index].shouldShowOverlay = true;
       this.showTimeoutId_ = undefined;
-      this.changeDetectorRef.detectChanges();
+      this.changeDetectorRef_.detectChanges();
     }, 500);
   }
 

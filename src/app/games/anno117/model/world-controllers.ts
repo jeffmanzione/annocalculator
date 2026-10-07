@@ -31,7 +31,7 @@ import { anno117Data } from '../game/data';
 const NO_IDS: number[] = Object.freeze([]) as unknown as number[];
 
 /** The id a product has as a "good" in the shared calculator pieces. */
-export const goodIdOf = (product: number): GoodId => String(product);
+const goodIdOf = (product: number): GoodId => String(product);
 
 /**
  * Read and write access to a world kept in a WorldStore117, one class per kind of entity (as in the
@@ -42,7 +42,7 @@ export const goodIdOf = (product: number): GoodId => String(product);
 
 export class Line117Controller {
   constructor(
-    protected readonly store: WorldStore117,
+    private readonly store: WorldStore117,
     readonly id: number,
   ) {}
 
@@ -122,7 +122,7 @@ export class Line117Controller {
 
   // --- What it works out to ---
 
-  get lineSettings(): LineSettings {
+  private get lineSettings_(): LineSettings {
     return {
       building: this.line.building,
       items: this.items,
@@ -143,7 +143,7 @@ export class Line117Controller {
   /** Every buff acting on the line, with where it comes from. */
   get contributions(): BuffContribution[] {
     return buffContributions(
-      this.lineSettings,
+      this.lineSettings_,
       this.islandSettings,
       this.worldSettings,
     );
@@ -229,7 +229,7 @@ export class Line117Controller {
   get extraConsumption(): { good: GoodId; perMinute: number }[] {
     const fuel =
       fuelPerMinute(this.factory, this.contributions) * this.numBuildings;
-    const module = moduleInputsPerMinute(this.lineSettings, this.factory).map(
+    const module = moduleInputsPerMinute(this.lineSettings_, this.factory).map(
       ({ product, perMinute }) => ({
         good: goodIdOf(product),
         perMinute: perMinute * this.numBuildings,
@@ -249,7 +249,7 @@ export class Line117Controller {
   }
 }
 
-export function islandSettingsOf(
+function islandSettingsOf(
   island: Pick<
     Island117,
     'missingFertilities' | 'patron' | 'devotion' | 'effects'
@@ -352,7 +352,7 @@ export class Island117Controller {
   }
 }
 
-export class TradeRoute117Controller {
+class TradeRoute117Controller {
   constructor(
     private readonly store: WorldStore117,
     readonly id: number,

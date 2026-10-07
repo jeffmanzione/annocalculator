@@ -56,8 +56,8 @@ export abstract class CalculatorPage<Save extends object> {
   /** On a phone, which part of the page is shown (the islands, the summary or the trade routes). */
   readonly mobileSection = signal<MobileSection>('plan');
 
-  protected readonly injector_ = inject(Injector);
-  protected readonly worldStorage_: StorageItem<Save>;
+  private readonly injector_ = inject(Injector);
+  private readonly worldStorage_: StorageItem<Save>;
   private readonly matDialog_ = inject(MatDialog);
   private readonly clipboard_ = inject(Clipboard);
 
@@ -120,7 +120,7 @@ export abstract class CalculatorPage<Save extends object> {
     });
   }
 
-  protected setSaveAndReload_(save: Save): void {
+  private setSaveAndReload_(save: Save): void {
     if (!save) return;
     this.worldStorage_.set(save);
     globalThis.location.reload();

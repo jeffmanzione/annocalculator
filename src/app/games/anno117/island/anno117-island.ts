@@ -128,35 +128,35 @@ export class Anno117Island {
       id ? iconUrl(lookup.get(id)?.icon) : '';
   }
 
-  readonly sessionName = this.nameOf_(sessionsById);
-  readonly sessionIcon = this.iconOf_(sessionsById);
-  readonly patronName = this.nameOf_(patronsById);
-  readonly patronIcon = this.iconOf_(patronsById);
-  readonly effectName = this.nameOf_(effectsById);
-  readonly effectIcon = this.iconOf_(effectsById);
-  readonly fertilityName = this.nameOf_(fertilitiesById);
-  readonly fertilityIcon = this.iconOf_(fertilitiesById);
-  readonly buildingName = this.nameOf_(factoriesById);
-  readonly buildingIcon = this.iconOf_(factoriesById);
-  readonly itemName = this.nameOf_(itemsById);
-  readonly itemIcon = this.iconOf_(itemsById);
+  protected readonly sessionName = this.nameOf_(sessionsById);
+  protected readonly sessionIcon = this.iconOf_(sessionsById);
+  protected readonly patronName = this.nameOf_(patronsById);
+  protected readonly patronIcon = this.iconOf_(patronsById);
+  protected readonly effectName = this.nameOf_(effectsById);
+  protected readonly effectIcon = this.iconOf_(effectsById);
+  protected readonly fertilityName = this.nameOf_(fertilitiesById);
+  protected readonly fertilityIcon = this.iconOf_(fertilitiesById);
+  protected readonly buildingName = this.nameOf_(factoriesById);
+  protected readonly buildingIcon = this.iconOf_(factoriesById);
+  protected readonly itemName = this.nameOf_(itemsById);
+  protected readonly itemIcon = this.iconOf_(itemsById);
 
-  readonly productName = (good: string | null | undefined): string =>
+  protected readonly productName = (good: string | null | undefined): string =>
     good
       ? nameIn(
           productsById.get(Number(good))?.name,
           this.l10n_.languageSignal(),
         )
       : 'None';
-  readonly productIcon = (good: string | null | undefined): string =>
+  protected readonly productIcon = (good: string | null | undefined): string =>
     good ? iconUrl(productsById.get(Number(good))?.icon) : '';
 
   // --- Choices ---
 
-  readonly provinces = anno117Data.sessions.map((s) => s.id);
-  readonly patronChoices = [NO_PATRON, ...anno117Data.patrons.map((p) => p.id)];
+  protected readonly provinces = anno117Data.sessions.map((s) => s.id);
+  protected readonly patronChoices = [NO_PATRON, ...anno117Data.patrons.map((p) => p.id)];
 
-  readonly effectChoices = computed(() => {
+  protected readonly effectChoices = computed(() => {
     const region = this.controller().region;
     const factoriesInRegion = new Set(
       anno117Data.factories
@@ -171,56 +171,56 @@ export class Anno117Island {
       .map((e) => e.id);
   });
 
-  readonly fertilityChoices = computed(() => {
+  protected readonly fertilityChoices = computed(() => {
     const region = this.controller().region;
     return anno117Data.fertilities
       .filter((f) => f.regions.length === 0 || f.regions.includes(region))
       .map((f) => f.id);
   });
 
-  readonly buildingChoices = computed(() =>
+  protected readonly buildingChoices = computed(() =>
     factoriesForSession(this.controller().session).map((f) => f.id),
   );
 
 
-  itemChoices(line: Line117Controller): number[] {
+  protected itemChoices(line: Line117Controller): number[] {
     return itemsByBuilding.get(line.building) ?? [];
   }
 
   /** The items on a line that have a stronger, boosted form. */
-  boostableItems(line: Line117Controller): number[] {
+  protected boostableItems(line: Line117Controller): number[] {
     return line.items.filter((id) => itemsById.get(id)?.boostBuffs?.length);
   }
 
   // --- Editing ---
 
-  get patronValue(): number {
+  protected get patronValue(): number {
     return this.controller().patron ?? NO_PATRON;
   }
 
-  setPatron(value: number): void {
+  protected setPatron(value: number): void {
     this.controller().patron = value === NO_PATRON ? null : value;
   }
 
-  setDevotion(value: string | number): void {
+  protected setDevotion(value: string | number): void {
     this.controller().devotion = Number(value);
   }
 
-  setNumBuildings(line: Line117Controller, count: number | null): void {
+  protected setNumBuildings(line: Line117Controller, count: number | null): void {
     line.numBuildings = count ?? 0;
   }
 
-  setBuilding(line: Line117Controller, building: number): void {
+  protected setBuilding(line: Line117Controller, building: number): void {
     line.building = building;
   }
 
   // --- What a line works out to ---
 
-  efficiencyOf(line: Line117Controller): NumberConstituent[] {
+  protected efficiencyOf(line: Line117Controller): NumberConstituent[] {
     return efficiencyConstituents(line, this.l10n_.languageSignal());
   }
 
-  producedOf(line: Line117Controller): NumberConstituent[] {
+  protected producedOf(line: Line117Controller): NumberConstituent[] {
     return producedConstituents(line, this.l10n_.languageSignal());
   }
 
@@ -229,7 +229,7 @@ export class Anno117Island {
   private readonly sourceValues_ = new Map<string, ExtraSource>();
 
   /** The value an extra output's source is shown as. */
-  sourceValue(extra: ExtraSource): ExtraSource {
+  private sourceValue_(extra: ExtraSource): ExtraSource {
     const key = `${extra.source}:${extra.sourceId}`;
     let value = this.sourceValues_.get(key);
     if (!value) {
@@ -240,21 +240,21 @@ export class Anno117Island {
   }
 
   readonly sourceName = (extra: ExtraSource | null): string =>
-    extra ? this.sourceOf(extra).description : '';
+    extra ? this.sourceOf_(extra).description : '';
   readonly sourceIcon = (extra: ExtraSource | null): string =>
-    (extra && this.sourceOf(extra).iconUrl) || '';
+    (extra && this.sourceOf_(extra).iconUrl) || '';
 
   // How the extra goods table draws a row's source.
-  readonly sourceIconOf = () => this.sourceIcon;
+  protected readonly sourceIconOf = () => this.sourceIcon;
   private readonly sourceTooltip_ =
     viewChild.required<TemplateRef<any>>('sourceTooltip');
-  readonly sourceTooltipOf = () => this.sourceTooltip_();
+  protected readonly sourceTooltipOf = () => this.sourceTooltip_();
 
   /** A line's extra output as rows for the extra goods table. */
   extraGoodsRows(line: Line117Controller): ExtraGoodsRow[] {
     return line.extraGoodRows.map((extra) => ({
       good: extra.good,
-      source: this.sourceValue(extra),
+      source: this.sourceValue_(extra),
       rateNumerator: extra.amount,
       rateDenominator: extra.everyCycles,
       producedPerMinute: extra.producedPerMinute,
@@ -262,7 +262,7 @@ export class Anno117Island {
   }
 
   /** Which tooltip describes the source of an extra output. */
-  sourceKind(extra: ExtraSource): TooltipKind {
+  protected sourceKind(extra: ExtraSource): TooltipKind {
     switch (extra.source) {
       case 'item':
       case 'boostedItem':
@@ -285,11 +285,11 @@ export class Anno117Island {
     );
   }
 
-  extraGoodsIcon(line: Line117Controller): string {
+  protected extraGoodsIcon(line: Line117Controller): string {
     return this.showExtraGoods(line) ? 'arrow_drop_up' : 'arrow_drop_down';
   }
 
-  toggleExtraGoods(line: Line117Controller): void {
+  protected toggleExtraGoods(line: Line117Controller): void {
     this.collapsedLines_.update((collapsed) => {
       const next = new Set(collapsed);
       if (!next.delete(line.id)) next.add(line.id);
@@ -298,7 +298,7 @@ export class Anno117Island {
   }
 
   /** Where an extra output comes from, with its icon, in the language shown. */
-  sourceOf(extra: ExtraSource) {
+  private sourceOf_(extra: ExtraSource) {
     return describeSource(
       extra.source,
       extra.sourceId,

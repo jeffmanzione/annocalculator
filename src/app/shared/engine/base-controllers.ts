@@ -6,7 +6,7 @@ type AnyStore = BaseWorldStore<any, any, any>;
  * One controller object per id, created when first asked for and kept until dropped. Components get the
  * same controller for the same thing every time, which keeps what they bind to stable between updates.
  */
-export class ControllerCache<C> {
+class ControllerCache<C> {
   private readonly controllers_ = new Map<EntityId, C>();
 
   constructor(private readonly create_: (id: EntityId) => C) {}

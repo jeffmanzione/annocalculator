@@ -88,17 +88,19 @@ export class Anno117Page extends CalculatorPage<Save117> implements OnInit {
 
   // --- Choices for the discoveries ---
 
-  readonly techChoices = anno117Data.techs
+  protected readonly techChoices = anno117Data.techs
     .filter((t) => !t.repeatable)
     .map((t) => t.id);
-  readonly repeatableTechs = anno117Data.techs.filter((t) => t.repeatable);
-  readonly maxTechLevel = MAX_TECH_LEVEL;
-  readonly techName = (id: number | null): string =>
+  protected readonly repeatableTechs = anno117Data.techs.filter(
+    (t) => t.repeatable,
+  );
+  protected readonly maxTechLevel = MAX_TECH_LEVEL;
+  protected readonly techName = (id: number | null): string =>
     nameIn(
       id ? techsById.get(id)?.name : undefined,
       this.l10n_.languageSignal(),
     );
-  readonly techIcon = (id: number | null): string =>
+  protected readonly techIcon = (id: number | null): string =>
     iconUrl(id ? techsById.get(id)?.icon : undefined);
 
   ngOnInit(): void {
@@ -107,23 +109,23 @@ export class Anno117Page extends CalculatorPage<Save117> implements OnInit {
     this.persistWhenChanged_();
   }
 
-  setTechs(ids: number[]): void {
+  protected setTechs(ids: number[]): void {
     this.world.oneTimeTechs = ids;
   }
 
   /** What one level of a repeatable discovery adds, in percent (Beneath Bedrock: 5). */
-  techStep(id: number): number {
+  protected techStep(id: number): number {
     const effect = effectsById.get(techsById.get(id)?.effects[0] ?? 0);
     return buffsById.get(effect?.buffs[0] ?? 0)?.productivity || 1;
   }
 
   /** The bonus a repeatable discovery gives at its level, in percent. */
-  techPercent(id: number): number {
+  protected techPercent(id: number): number {
     return this.world.techLevel(id) * this.techStep(id);
   }
 
   /** Sets the level from a percentage (already cut down to a step by the field). */
-  setTechPercent(id: number, percent: number | null): void {
+  protected setTechPercent(id: number, percent: number | null): void {
     this.world.setTechLevel(id, Math.floor((percent ?? 0) / this.techStep(id)));
   }
 }

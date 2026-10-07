@@ -60,7 +60,7 @@ interface TradeRouteRow {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TradeRoutesPanel {
-  readonly displayColumns = [
+  protected readonly displayColumns = [
     'sourceIslandId',
     'targetIslandId',
     'good',
@@ -104,13 +104,13 @@ export class TradeRoutesPanel {
 
   // Keeps each row's DOM (and so any open dropdown) in place when rows()
   // produces fresh row objects for the same trade routes.
-  readonly trackRowById = (_: number, row: TradeRouteRow) => row.id;
+  protected readonly trackRowById = (_: number, row: TradeRouteRow) => row.id;
 
-  addTradeRoute(): void {
+  protected addTradeRoute(): void {
     this.world().addTradeRoute();
   }
 
-  removeTradeRouteAt(id: EntityId): void {
+  protected removeTradeRouteAt(id: EntityId): void {
     this.world().removeTradeRoute(id);
     this.formGroups_.delete(id);
   }

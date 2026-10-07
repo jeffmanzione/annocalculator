@@ -21,7 +21,7 @@ export interface DefaultAction {
 }
 
 /** What the column needs to know about an island to list it. */
-export interface ListedIsland {
+interface ListedIsland {
   id: number;
   name: string;
 }

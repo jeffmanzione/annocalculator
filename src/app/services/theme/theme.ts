@@ -4,7 +4,7 @@ import { LocalStorageManager } from '../local-storage/local-storage';
 /** The looks the app can have: Anno 1800's parchment, or Anno 117's marble (the default). */
 export type Theme = 'anno1800' | 'anno117';
 
-export const DEFAULT_THEME: Theme = 'anno117';
+const DEFAULT_THEME: Theme = 'anno117';
 
 // Newest game first, as in the page tabs.
 export const themes: readonly Theme[] = ['anno117', 'anno1800'];

@@ -57,14 +57,14 @@ import { SummaryWarning } from './summary-warning';
 })
 export class SummaryPanel implements OnInit, AfterViewInit {
   readonly colorSpec = GREEN_RED_FONT_SPEC;
-  readonly outerColumns = [
+  protected readonly outerColumns = [
     'good',
     'show-islands',
     'total-production-per-min',
     'net-production-per-min',
   ];
 
-  readonly innerColumns = [
+  protected readonly innerColumns = [
     'island',
     'local-production-per-min',
     'local-consumption-per-min',
@@ -77,12 +77,12 @@ export class SummaryPanel implements OnInit, AfterViewInit {
   private readonly game_ = inject(GAME);
   private readonly l10n_ = inject(L10nService);
 
-  readonly tableData = new MatTableDataSource<GoodSummaryRow>();
+  protected readonly tableData = new MatTableDataSource<GoodSummaryRow>();
 
   world = input<SummaryWorldSource>();
   table = viewChild.required(MatTable<GoodSummaryRow>);
   sort = viewChild.required(MatSort);
-  islandTables = viewChildren(MatTable<GoodSummaryCell>);
+  private readonly islandTables_ = viewChildren(MatTable<GoodSummaryCell>);
 
   // world() reads WorldStore's signals, so rows_ recomputes on its own
   // whenever anything it depends on changes -- no external "please
@@ -151,7 +151,7 @@ export class SummaryPanel implements OnInit, AfterViewInit {
    * On a phone a tap anywhere on a good's row shows or hides its islands (the small arrow is hard to hit). The arrow
    * and the warning keep doing their own thing. A desktop window has only the arrow.
    */
-  onRowClick(row: GoodSummaryRow, event: Event): void {
+  protected onRowClick(row: GoodSummaryRow, event: Event): void {
     if (!isMobileWidth()) {
       return;
     }
@@ -161,12 +161,12 @@ export class SummaryPanel implements OnInit, AfterViewInit {
     this.toggleIslandSummary(row);
   }
 
-  toggleIslandSummary(row: GoodSummaryRow): void {
+  protected toggleIslandSummary(row: GoodSummaryRow): void {
     row.showIslandSummary = !row.showIslandSummary;
     row.showIslandSummaryIcon = row.showIslandSummary
       ? 'arrow_drop_up'
       : 'arrow_drop_down';
-    this.islandTables()[this.tableData.data.indexOf(row)]?.renderRows();
+    this.islandTables_()[this.tableData.data.indexOf(row)]?.renderRows();
   }
 
   readonly lookupGoodIconUrl = (good: GoodId | null | undefined): string =>

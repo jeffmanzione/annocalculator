@@ -16,29 +16,29 @@ import { MatInputModule } from '@angular/material/input';
 export class JsonInput<T> {
   value = model<T>();
 
-  textArea = viewChild<ElementRef<HTMLTextAreaElement>>('input');
+  private readonly textArea_ = viewChild<ElementRef<HTMLTextAreaElement>>('input');
 
   errorMessage: string = '';
 
   constructor() {
     effect(() => {
-      if (this.textArea()) {
+      if (this.textArea_()) {
         this.convertObjectToJsonString_();
       }
     });
   }
 
   private convertObjectToJsonString_(): void {
-    this.textArea()!.nativeElement.value = JSON.stringify(
+    this.textArea_()!.nativeElement.value = JSON.stringify(
       this.value(),
       /*replacer=*/ null,
       /*spaces=*/ 2,
     );
   }
 
-  updateModel(): void {
+  protected updateModel(): void {
     try {
-      const jsonText = this.textArea()!.nativeElement.value;
+      const jsonText = this.textArea_()!.nativeElement.value;
       this.value.set(JSON.parse(jsonText) as T);
       this.errorMessage = '';
     } catch (e) {

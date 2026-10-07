@@ -17,19 +17,19 @@ import * as regionsJson from '../data/regions.json' with { type: 'json' };
 // I can finally let go of that pent up gas.
 const defaultIconUrl = '/icons/others/Sir_Archibald_Blake.png';
 
-export const goodsToIconUrl = new Map<Good, string>(
+const goodsToIconUrl = new Map<Good, string>(
   (goodsJson as any).default as [Good, string][],
 );
 
-export const boostTypeToImageUrl = new Map<Boost, string>(
+const boostTypeToImageUrl = new Map<Boost, string>(
   (boostsJson as any).default as [Boost, string][],
 );
 
-export const regionToImageUrl = new Map<Region, string>(
+const regionToImageUrl = new Map<Region, string>(
   (regionsJson as any).default as [Region, string][],
 );
 
-export const policyToImageUrl = new Map<DepartmentOfLaborPolicy, string>(
+const policyToImageUrl = new Map<DepartmentOfLaborPolicy, string>(
   (policiesJson as any).default as [DepartmentOfLaborPolicy, string][],
 );
 

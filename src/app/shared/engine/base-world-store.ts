@@ -26,7 +26,7 @@ export type StoredIsland<I> = Omit<I, 'productionLines' | 'id'> & {
   id: EntityId;
 };
 
-export function generateId(): EntityId {
+function generateId(): EntityId {
   return Math.floor(Math.random() * (Number.MAX_SAFE_INTEGER + 1)); // NOSONAR - Pseudorandomness is sufficient
 }
 

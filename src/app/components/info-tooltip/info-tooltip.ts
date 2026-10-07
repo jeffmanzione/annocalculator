@@ -22,11 +22,11 @@ import {
 export class InfoTooltip {
   model = input.required<TooltipModel>();
 
-  isKey(part: TooltipPart): part is { key: L10nKey } {
+  protected isKey(part: TooltipPart): part is { key: L10nKey } {
     return isKeyPart(part);
   }
 
-  isIcon(part: TooltipPart): part is { icon: string } {
+  protected isIcon(part: TooltipPart): part is { icon: string } {
     return isIconPart(part);
   }
 }

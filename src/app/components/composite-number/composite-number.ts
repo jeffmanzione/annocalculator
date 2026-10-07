@@ -33,7 +33,7 @@ export interface NumberConstituent {
  * or as a percentage) when rendered. Keeping numbers and units as data, rather
  * than a finished string, is what lets the line follow the language.
  */
-export type DetailToken =
+type DetailToken =
   | string
   | { value: number; unit?: L10nKey; isPercent?: boolean };
 
@@ -45,16 +45,16 @@ export type DetailToken =
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CompositeNumber {
-  changeDetectorRef = inject(ChangeDetectorRef);
+  private readonly changeDetectorRef_ = inject(ChangeDetectorRef);
   private readonly l10nService_ = inject(L10nService);
 
   constituentValues = input<NumberConstituent[]>([]);
-  value = computed(() =>
+  readonly value = computed(() =>
     this.constituentValues().reduce((a, v) => a + v.value, 0),
   );
 
   /** Each constituent's detail line rendered in the current language, by index. */
-  detailTexts = computed(() => {
+  protected readonly detailTexts = computed(() => {
     const language = this.l10nService_.languageSignal();
     const locale = this.l10nService_.localeSignal();
     return this.constituentValues().map((c) =>
@@ -83,7 +83,7 @@ export class CompositeNumber {
       return;
     }
     this.showTooltip = false;
-    this.changeDetectorRef.detectChanges();
+    this.changeDetectorRef_.detectChanges();
   }
 
   /** On a touch screen, where nothing hovers, a tap shows the breakdown and another tap anywhere hides it. */
@@ -92,7 +92,7 @@ export class CompositeNumber {
       return;
     }
     this.showTooltip = !this.showTooltip;
-    this.changeDetectorRef.detectChanges();
+    this.changeDetectorRef_.detectChanges();
   }
 
   hideOnOutsideTap(): void {
@@ -108,7 +108,7 @@ export class CompositeNumber {
     this.showTimeoutId_ = setTimeout(() => {
       this.showTooltip = true;
       this.showTimeoutId_ = undefined;
-      this.changeDetectorRef.detectChanges();
+      this.changeDetectorRef_.detectChanges();
     }, 500);
   }
 

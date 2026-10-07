@@ -119,7 +119,7 @@ export class Line1800Controller extends Line1800View {
   }
 }
 
-export class TradeRoute1800Controller extends TradeRoute1800View {
+class TradeRoute1800Controller extends TradeRoute1800View {
   override set sourceIslandId(value: IslandId) {
     this.store.updateTradeRoute(this.id_, { sourceIslandId: value });
   }

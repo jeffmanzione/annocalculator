@@ -110,14 +110,16 @@ export class ExtraGood1800View implements ExtraGood1800 {
     return this.productionLine.buildingProcessTimeSeconds;
   }
 
-  get producedPerMinutePerBuilding(): number {
+  private get producedPerMinutePerBuilding_(): number {
     return this.sourceType === 'ElectrifiedFarm'
       ? this.model.producedPerMinute!
       : (60 / this.processTimeSeconds) * this.rate;
   }
 
   get producedPerMinute(): number {
-    return this.productionLine.numBuildings * this.producedPerMinutePerBuilding;
+    return (
+      this.productionLine.numBuildings * this.producedPerMinutePerBuilding_
+    );
   }
 }
 
@@ -204,7 +206,7 @@ export class Line1800View implements ProductionLineEntity {
     return this.model.items ?? DEFAULT_PRODUCTION_LINE_MODEL.items!;
   }
 
-  get itemProductivityBonus(): number {
+  private get itemProductivityBonus_(): number {
     return (
       this.model.items
         ?.map((item) => (lookupItemInfo(item)?.productivityEffect ?? 0) / 100)
@@ -212,7 +214,7 @@ export class Line1800View implements ProductionLineEntity {
     );
   }
 
-  get culturalSetProductivityBonus(): number {
+  private get culturalSetProductivityBonus_(): number {
     return (
       this.model.culturalSets
         ?.map(
@@ -278,15 +280,15 @@ export class Line1800View implements ProductionLineEntity {
       ) {
         efficiency += this.store.tradeUnionBonus();
       }
-      efficiency += this.itemProductivityBonus;
+      efficiency += this.itemProductivityBonus_;
     }
 
-    efficiency += this.culturalSetProductivityBonus;
+    efficiency += this.culturalSetProductivityBonus_;
 
     return efficiency;
   }
 
-  get affectedByGalvanicGrants(): boolean {
+  private get affectedByGalvanicGrants_(): boolean {
     return (
       this.inRangeOfLocalDepartment &&
       this.island.dolPolicy == DepartmentOfLaborPolicy.GalvanicGrantsAct
@@ -335,7 +337,7 @@ export class Line1800View implements ProductionLineEntity {
         description: 'Electricity',
         iconUrl: lookupBoostIconUrl(Boost.Electricity),
       });
-      if (this.affectedByGalvanicGrants) {
+      if (this.affectedByGalvanicGrants_) {
         constituents.push({
           value: 0.5,
           description: DepartmentOfLaborPolicy.GalvanicGrantsAct,
@@ -394,12 +396,12 @@ export class Line1800View implements ProductionLineEntity {
   }
 
   /** The building's process time before efficiency is applied. */
-  get baseBuildingProcessTimeSeconds(): number {
+  private get baseBuildingProcessTimeSeconds_(): number {
     return lookupProductionInfo(this.building)?.processingTimeSeconds ?? 0;
   }
 
   get buildingProcessTimeSeconds(): number {
-    return this.baseBuildingProcessTimeSeconds / this.efficiency;
+    return this.baseBuildingProcessTimeSeconds_ / this.efficiency;
   }
 
   get extraGoods(): ExtraGood1800View[] {
@@ -421,15 +423,15 @@ export class Line1800View implements ProductionLineEntity {
     }
 
     extraGoods.push(
-      ...this.electricityExtraGoods,
-      ...this.bonusExtraGoods,
-      ...this.itemExtraGoods,
-      ...this.culturalSetExtraGoods,
+      ...this.electricityExtraGoods_,
+      ...this.bonusExtraGoods_,
+      ...this.itemExtraGoods_,
+      ...this.culturalSetExtraGoods_,
     );
     return extraGoods;
   }
 
-  get bonusExtraGoods(): ExtraGood1800View[] {
+  private get bonusExtraGoods_(): ExtraGood1800View[] {
     const extraGoods: ExtraGood1800View[] = [];
 
     if (this.hasTradeUnion && this.inRangeOfLocalDepartment) {
@@ -489,7 +491,7 @@ export class Line1800View implements ProductionLineEntity {
     return extraGoods;
   }
 
-  get electricityExtraGoods(): ExtraGood1800View[] {
+  private get electricityExtraGoods_(): ExtraGood1800View[] {
     if (!this.boosts.includes(Boost.Electricity)) {
       return [];
     }
@@ -511,7 +513,7 @@ export class Line1800View implements ProductionLineEntity {
     return extraGoods;
   }
 
-  get itemExtraGoods(): ExtraGood1800View[] {
+  private get itemExtraGoods_(): ExtraGood1800View[] {
     const extraGoods: ExtraGood1800View[] = [];
     for (const item of this.items) {
       const itemInfo = lookupItemInfo(item);
@@ -532,7 +534,7 @@ export class Line1800View implements ProductionLineEntity {
     return extraGoods;
   }
 
-  get culturalSetExtraGoods(): ExtraGood1800View[] {
+  private get culturalSetExtraGoods_(): ExtraGood1800View[] {
     const extraGoods: ExtraGood1800View[] = [];
     for (const set of this.culturalSets) {
       const setInfo = lookupCulturalSetInfo(set);
@@ -573,7 +575,7 @@ export class Line1800View implements ProductionLineEntity {
   get goodsProducedPerMinuteConstituents(): NumberConstituent[] {
     return producedPerMinuteConstituents({
       numBuildings: this.numBuildings,
-      baseProcessTimeSeconds: this.baseBuildingProcessTimeSeconds,
+      baseProcessTimeSeconds: this.baseBuildingProcessTimeSeconds_,
       efficiency: this.efficiency,
       baseProducedPerMinute: this.goodsProducedPerMinute,
       extras: this.extraGoods

@@ -8,7 +8,7 @@ import { filter } from 'rxjs';
  * counts are on the dashboard at https://<GOATCOUNTER_CODE>.goatcounter.com.
  */
 export const GOATCOUNTER_CODE = 'annocalculator';
-export const GOATCOUNTER_SCRIPT_URL = 'https://gc.zgo.at/count.js';
+const GOATCOUNTER_SCRIPT_URL = 'https://gc.zgo.at/count.js';
 const TRACKED_HOST = 'annocalculator.com';
 
 /** The slice of `window` and `navigator` the tracker uses (so tests can fake it). */

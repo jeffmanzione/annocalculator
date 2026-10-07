@@ -37,7 +37,7 @@ export interface StorageItem<T> {
   set(value: T): void;
 }
 
-export interface StorageItemConverter<T> {
+interface StorageItemConverter<T> {
   convertItemToStorage(value: T): string;
   convertStorageToItem(value: string): T;
 }

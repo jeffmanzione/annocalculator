@@ -9,7 +9,7 @@ import {
 } from '../game/enums';
 
 // Marker interface for all models.
-export interface Model1800 {}
+interface Model1800 {}
 
 export interface ExtraGood1800 extends Model1800 {
   good?: Good;

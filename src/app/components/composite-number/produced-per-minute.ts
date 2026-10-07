@@ -1,7 +1,7 @@
 import { NumberConstituent } from './composite-number';
 
 /** One extra amount of the line's own good, at a rate of numerator / denominator of its base output. */
-export interface ExtraProduction {
+interface ExtraProduction {
   /** What gives it (an item, a boost, a silo ...). */
   description: string;
   iconUrl?: string;

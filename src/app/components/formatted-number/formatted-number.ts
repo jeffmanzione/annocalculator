@@ -9,7 +9,7 @@ import { L10nText } from '../text/text';
 import { L10nKey } from '../../shared/l10n/l10n';
 import { L10nService } from '../../services/l10n/l10n';
 
-export interface FontSpec {
+interface FontSpec {
   color?: string;
   style?: string;
   weight?: string;
@@ -44,35 +44,35 @@ export class FormattedNumber {
   zeroOverride = input<string>();
   showPlusIfPositive = input<boolean>(false);
 
-  computedFormat = computed(
+  private readonly computedFormat_ = computed(
     () => this.format() ?? (this.isPercent() ? '1.0-0' : '1.0-1'),
   );
 
-  color = computed(() => {
+  readonly color = computed(() => {
     if (!this.formatFontSpec()) {
       return undefined;
     }
-    const fontSpec = this.deriveFontSpec();
+    const fontSpec = this.deriveFontSpec_();
     return fontSpec?.color;
   });
 
-  style = computed(() => {
+  readonly style = computed(() => {
     if (!this.formatFontSpec()) {
       return undefined;
     }
-    const fontSpec = this.deriveFontSpec();
+    const fontSpec = this.deriveFontSpec_();
     return fontSpec?.style;
   });
 
-  weight = computed(() => {
+  protected readonly weight = computed(() => {
     if (!this.formatFontSpec()) {
       return undefined;
     }
-    const fontSpec = this.deriveFontSpec();
+    const fontSpec = this.deriveFontSpec_();
     return fontSpec?.weight;
   });
 
-  deriveFontSpec = computed(() => {
+  private readonly deriveFontSpec_ = computed(() => {
     if (!this.formatFontSpec()) {
       return undefined;
     }
@@ -84,20 +84,20 @@ export class FormattedNumber {
     return this.formatFontSpec()!.default;
   });
 
-  formattedValue = computed(() => {
+  protected readonly formattedValue = computed(() => {
     const strValue = this.isPercent()
       ? this.formatAsPercent_()
       : this.formatAsNumber_();
     return `${this.numberPrefix_()}${strValue}`;
   });
 
-  suffixAsLoc = computed(() => this.suffix() as L10nKey);
+  protected readonly suffixAsLoc = computed(() => this.suffix() as L10nKey);
 
   private formatAsPercent_(): string {
     return formatPercent(
       this.value(),
       this.l10nService_.localeSignal(),
-      this.computedFormat(),
+      this.computedFormat_(),
     );
   }
 
@@ -105,7 +105,7 @@ export class FormattedNumber {
     return formatNumber(
       this.value(),
       this.l10nService_.localeSignal(),
-      this.computedFormat(),
+      this.computedFormat_(),
     );
   }
 

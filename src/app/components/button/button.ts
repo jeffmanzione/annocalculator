@@ -20,13 +20,13 @@ export class AcButton {
   action = output<Event>();
 
   private readonly l10nService_ = inject(L10nService);
-  readonly tooltipText = computed(() => {
+  protected readonly tooltipText = computed(() => {
     this.l10nService_.languageSignal(); // Re-localize when the language changes.
     const tooltip = this.tooltip();
     return tooltip ? this.l10nService_.lookupLocalizedText(tooltip) : '';
   });
 
-  onClick(event: Event): void {
+  protected onClick(event: Event): void {
     this.action.emit(event);
   }
 }

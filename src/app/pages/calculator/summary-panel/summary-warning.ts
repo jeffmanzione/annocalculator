@@ -40,7 +40,7 @@ export class SummaryWarning {
   readonly colorSpec = GREEN_RED_FONT_SPEC;
   // Gold on the dark plate (see summary-warning.scss): high contrast on
   // parchment, in the same family as the title plate.
-  readonly warningColorSpec: FormatFontSpec = {
+  protected readonly warningColorSpec: FormatFontSpec = {
     default: { color: '#ffd66b', weight: 'bold' },
   };
 

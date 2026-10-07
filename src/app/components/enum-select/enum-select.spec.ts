@@ -123,7 +123,10 @@ describe('EnumSelect', () => {
 
   it('does not hide tooltips when the panel opens', async () => {
     const { host, select } = await setup();
-    const spy = vi.spyOn(host.select(), 'onOpenedChange');
+    const spy = vi.spyOn(
+      host.select() as unknown as { onOpenedChange(opened: boolean): void },
+      'onOpenedChange',
+    );
     await select.open();
     expect(spy).toHaveBeenCalledWith(true);
     const rows = (

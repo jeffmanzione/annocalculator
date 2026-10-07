@@ -46,26 +46,26 @@ export class EnumSelect<T> implements ControlValueAccessor {
 
   private readonly changeDetectorRef_ = inject(ChangeDetectorRef);
   private readonly l10nService_ = inject(L10nService);
-  readonly noneText = computed(() => {
+  protected readonly noneText = computed(() => {
     this.l10nService_.languageSignal(); // Re-localize when the language changes.
     return this.l10nService_.lookupLocalizedText('None');
   });
 
   value = signal<T[] | T | null>(null);
 
-  valueAsArray = computed<(T | null)[]>(() => {
+  protected readonly valueAsArray = computed<(T | null)[]>(() => {
     return (
       Array.isArray(this.value()) ? this.value() : [this.value()]
     ) as (T | null)[];
   });
 
-  valuesNotExemptFromLimit = computed(
+  protected readonly valuesNotExemptFromLimit = computed(
     () =>
       this.valueAsArray().filter((v) => !this.valueIsExemptFromLimit()(v as T))
         .length,
   );
 
-  isDisabled = false;
+  protected isDisabled = false;
   onChange: any = (_: T) => {};
   onTouched: any = () => {};
 
@@ -92,7 +92,7 @@ export class EnumSelect<T> implements ControlValueAccessor {
    * Tooltips are hidden by mouseleave, which never fires for an option whose
    * element goes away with the closing panel, so hide them explicitly.
    */
-  onOpenedChange(opened: boolean): void {
+  protected onOpenedChange(opened: boolean): void {
     if (!opened) {
       this.rows_().forEach((row) => row.hideAllTooltips());
     }

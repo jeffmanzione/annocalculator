@@ -3,7 +3,7 @@
  * that grows with the Palace's prestige level: +10% at level 0 and 2% more per
  * level, up to +60% at level 25.
  */
-export const MIN_PALACE_PRESTIGE_LEVEL = 0;
+const MIN_PALACE_PRESTIGE_LEVEL = 0;
 export const MAX_PALACE_PRESTIGE_LEVEL = 25;
 const BASE_BONUS_PERCENT = 10;
 const BONUS_PERCENT_PER_LEVEL = 2;

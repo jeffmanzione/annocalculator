@@ -91,28 +91,34 @@ export class Anno1800Island implements OnInit {
   // just before this one).
   controller = input.required<Island1800Controller>();
 
-  readonly regions = Object.values(Region).filter((r) => r != Region.Unknown);
-  readonly allDolPolicies = Object.values(DepartmentOfLaborPolicy);
+  protected readonly regions = Object.values(Region).filter(
+    (r) => r != Region.Unknown,
+  );
+  private readonly allDolPolicies_ = Object.values(DepartmentOfLaborPolicy);
   readonly goods = Object.values(Good).filter((g) => g != Good.Unknown);
 
   // Region-dependent option lists. controller().region reads WorldStore's
   // signals, so these recompute on their own when the region changes.
-  readonly productionBuildings: Signal<ProductionBuilding[]> = computed(() => {
-    const region = this.controller().region;
-    return Object.values(ProductionBuilding).filter(
-      (pb) =>
-        (lookupProductionInfo(pb)?.allowedRegions?.indexOf(region) ?? -1) != -1,
-    );
-  });
+  protected readonly productionBuildings: Signal<ProductionBuilding[]> =
+    computed(() => {
+      const region = this.controller().region;
+      return Object.values(ProductionBuilding).filter(
+        (pb) =>
+          (lookupProductionInfo(pb)?.allowedRegions?.indexOf(region) ?? -1) !=
+          -1,
+      );
+    });
 
-  readonly dolPolicies: Signal<DepartmentOfLaborPolicy[]> = computed(() => {
-    const region = this.controller().region;
-    return region == Region.OldWorld || region == Region.CapeTrelawney
-      ? this.allDolPolicies
-      : [DepartmentOfLaborPolicy.None];
-  });
+  protected readonly dolPolicies: Signal<DepartmentOfLaborPolicy[]> = computed(
+    () => {
+      const region = this.controller().region;
+      return region == Region.OldWorld || region == Region.CapeTrelawney
+        ? this.allDolPolicies_
+        : [DepartmentOfLaborPolicy.None];
+    },
+  );
 
-  get productionLineColumns(): string[] {
+  protected get productionLineColumns(): string[] {
     const columns = [
       'building',
       'numBuildings',
@@ -147,9 +153,8 @@ export class Anno1800Island implements OnInit {
     new Map<ProductionLineId, ProductionLineControl>(),
   );
 
-  readonly productionLineRows: Signal<ProductionLineControl[]> = computed(() =>
-    Array.from(this.productionLines_().values()),
-  );
+  protected readonly productionLineRows: Signal<ProductionLineControl[]> =
+    computed(() => Array.from(this.productionLines_().values()));
 
   get multipleSelectLimit(): number {
     return this.controller().dolPolicy ==
@@ -264,44 +269,50 @@ export class Anno1800Island implements OnInit {
     this.notifyChanged_();
   }
 
-  lookupBuildingIconUrl(building: ProductionBuilding | null): string {
+  protected lookupBuildingIconUrl(building: ProductionBuilding | null): string {
     return lookupBuildingIconUrl(building ?? ProductionBuilding.Unknown);
   }
 
   // Inputs are shown from their InputGoodSource so a substituted good can be
   // marked and explained; these adapt that to enum-row's per-value callbacks.
-  readonly lookupInputGoodIconUrl = (source: InputGoodSource | null): string =>
-    lookupGoodIconUrl(source?.good ?? Good.Unknown);
-  readonly inputGoodName = (source: InputGoodSource | null): string =>
+  protected readonly lookupInputGoodIconUrl = (
+    source: InputGoodSource | null,
+  ): string => lookupGoodIconUrl(source?.good ?? Good.Unknown);
+  protected readonly inputGoodName = (source: InputGoodSource | null): string =>
     source?.good ?? '';
-  readonly isSubstitutedInput = (source: InputGoodSource | null): boolean =>
-    !!source?.replaces;
+  protected readonly isSubstitutedInput = (
+    source: InputGoodSource | null,
+  ): boolean => !!source?.replaces;
 
   lookupGoodIconUrl(good: Good | null): string {
     return lookupGoodIconUrl(good ?? Good.Unknown);
   }
 
-  lookupBoostIconUrl(boost: Boost | null): string {
+  protected lookupBoostIconUrl(boost: Boost | null): string {
     return lookupBoostIconUrl(boost ?? Boost.None);
   }
 
-  lookupItemIconUrl(item: Item | null): string {
+  protected lookupItemIconUrl(item: Item | null): string {
     return lookupItemIconUrl(item ?? Item.Unknown);
   }
 
-  lookupRegionIconUrl(region: Region | null): string {
+  protected lookupRegionIconUrl(region: Region | null): string {
     return lookupRegionIconUrl(region ?? Region.Unknown);
   }
 
-  lookupPolicyIconUrl(policy: DepartmentOfLaborPolicy | null): string {
+  protected lookupPolicyIconUrl(
+    policy: DepartmentOfLaborPolicy | null,
+  ): string {
     return lookupPolicyIconUrl(policy ?? DepartmentOfLaborPolicy.None);
   }
 
-  lookupCulturalSetIconUrl(set: CulturalSet | null): string {
+  protected lookupCulturalSetIconUrl(set: CulturalSet | null): string {
     return lookupCulturalSetIconUrl(set ?? CulturalSet.Unknown);
   }
 
-  extraGoodLookupIconUrlFn(extraGood: ExtraGood1800View): (_: any) => string {
+  private extraGoodLookupIconUrlFn_(
+    extraGood: ExtraGood1800View,
+  ): (_: any) => string {
     switch (extraGood.sourceType) {
       case 'Boost':
       case 'ElectrifiedFarm':
@@ -317,7 +328,7 @@ export class Anno1800Island implements OnInit {
     }
   }
 
-  isHarborItem(item: Item): boolean {
+  protected isHarborItem(item: Item): boolean {
     if (!item || item == Item.Unknown) {
       return false;
     }
@@ -353,11 +364,11 @@ export class Anno1800Island implements OnInit {
     viewChild.required<TemplateRef<any>>('culturalSetTooltip');
 
   /** How an extra good's source is drawn: its icon and its tooltip depend on what kind of source it is. */
-  readonly extraGoodSourceIcon = (
+  protected readonly extraGoodSourceIcon = (
     extraGood: ExtraGood1800View,
-  ): ((_: any) => string) => this.extraGoodLookupIconUrlFn(extraGood);
+  ): ((_: any) => string) => this.extraGoodLookupIconUrlFn_(extraGood);
 
-  readonly extraGoodSourceTooltip = (
+  protected readonly extraGoodSourceTooltip = (
     extraGood: ExtraGood1800View,
   ): TemplateRef<any> => {
     switch (extraGood.sourceType) {
@@ -375,7 +386,7 @@ export class Anno1800Island implements OnInit {
     }
   };
 
-  transformCulturalSetName(value: CulturalSet | null): string {
+  protected transformCulturalSetName(value: CulturalSet | null): string {
     if (!value) {
       return 'NULL';
     }

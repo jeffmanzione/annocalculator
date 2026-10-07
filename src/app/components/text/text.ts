@@ -19,7 +19,7 @@ export class L10nText {
 
   textLoc = input.required<L10nKey>();
 
-  localizedText = computed(() => {
+  protected readonly localizedText = computed(() => {
     this.languageSignal_(); // Do not remove; makes text update when langauge changes.
     return this.l10nService_.lookupLocalizedText(this.textLoc());
   });

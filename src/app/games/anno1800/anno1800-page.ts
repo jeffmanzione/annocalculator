@@ -60,19 +60,19 @@ export class Anno1800Page extends CalculatorPage<World1800> implements OnInit {
 
   // Read-only view of the *same* store_, for summary-panel.ts (which only
   // aggregates). It reads live store state rather than a snapshot.
-  worldSummary!: World1800View;
+  protected worldSummary!: World1800View;
 
   formGroup?: FormGroup;
 
-  readonly palacePrestigeLevels = [
+  protected readonly palacePrestigeLevels = [
     NO_PALACE,
     ...Array.from({ length: MAX_PALACE_PRESTIGE_LEVEL + 1 }, (_, i) => i),
   ];
 
-  readonly lookupPalaceIconUrl = () => '/icons/others/palace.png';
+  protected readonly lookupPalaceIconUrl = () => '/icons/others/palace.png';
 
   /** E.g. "10 (+30%)": the level and the Trade Union bonus it gives. */
-  readonly palaceLevelText = (level: number | null): string =>
+  protected readonly palaceLevelText = (level: number | null): string =>
     level == null || level === NO_PALACE
       ? 'None'
       : `${level} (+${Math.round(palaceTradeUnionBonus(level) * 100)}%)`;
@@ -101,7 +101,7 @@ export class Anno1800Page extends CalculatorPage<World1800> implements OnInit {
           ? null
           : value.palacePrestigeLevel;
     });
-    this.setWorld(this.loadSave_());
+    this.setWorld_(this.loadSave_());
 
     // Created here rather than in the constructor because store_ only exists once setWorld() has run.
     // The store is never replaced for the life of the page (import/reset/clear all reload the page), so
@@ -109,7 +109,7 @@ export class Anno1800Page extends CalculatorPage<World1800> implements OnInit {
     this.persistWhenChanged_();
   }
 
-  setWorld(worldModel?: World1800): void {
+  private setWorld_(worldModel?: World1800): void {
     if (!worldModel) {
       return;
     }

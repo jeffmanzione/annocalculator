@@ -131,11 +131,11 @@ export enum Language {
 
 export const languages = Object.values(Language);
 
-export type Localization = {
+type Localization = {
   [key in Language]: string;
 };
 
-export type Localizations = {
+type Localizations = {
   [key in L10nKey]: Localization;
 };
 

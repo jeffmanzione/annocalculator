@@ -30,12 +30,12 @@ export interface SummaryProductionLineSource {
   extraGoods: SummaryExtraGoodSource[];
 }
 
-export interface SummaryExtraGoodSource {
+interface SummaryExtraGoodSource {
   good: GoodId;
   producedPerMinute: number;
 }
 
-export interface SummaryTradeRouteSource {
+interface SummaryTradeRouteSource {
   sourceIslandId: EntityId;
   targetIslandId: EntityId;
   good: GoodId;

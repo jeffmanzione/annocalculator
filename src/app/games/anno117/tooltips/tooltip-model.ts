@@ -49,7 +49,7 @@ const named = (
 });
 
 /** What a buff does to the buildings it applies to, one line for each thing. */
-export function buffRows(
+function buffRows(
   buff: Anno117Buff,
   language: Language,
   /** How strongly the buff acts (a patron's effect is written for 1 and scaled by its devotion milestone). */

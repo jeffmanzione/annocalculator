@@ -37,7 +37,7 @@ export class L10nService {
   });
 
   /** The BCP 47 tag for the current language, e.g. for the page's `lang`. */
-  readonly languageTagSignal = computed(() => {
+  private readonly languageTagSignal_ = computed(() => {
     switch (this.languageSignal()) {
       case Language.En:
         return 'en';
@@ -54,7 +54,7 @@ export class L10nService {
     // Keep the document's language in step with the UI language: it drives
     // screen readers, hyphenation and per-language styling (`:lang(zh)`).
     effect(() => {
-      document.documentElement.lang = this.languageTagSignal();
+      document.documentElement.lang = this.languageTagSignal_();
     });
   }
 

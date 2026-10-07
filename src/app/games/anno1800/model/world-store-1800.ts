@@ -48,7 +48,7 @@ export function arrayEqualsAsSet<T>(
   return setA.size === setB.size && [...setA].every((x) => setB.has(x));
 }
 
-export const resolveDuplicateReplacementGoods = (g1: Good, g2: Good): Good => {
+const resolveDuplicateReplacementGoods = (g1: Good, g2: Good): Good => {
   // Prefer Susanna the Steam Engineer (switches input from Steam Motors to
   // Filaments) over Maria Maravilla (switches input from Steam Motors to
   // Motors) because Filaments are much much easier to produce.

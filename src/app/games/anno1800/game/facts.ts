@@ -14,12 +14,12 @@ import {
 import * as itemsJson from '../data/items.json';
 import * as cultureJson from '../data/culture.json';
 
-export interface ElectrictyExtraGood {
+interface ElectrictyExtraGood {
   good: Good;
   processingTimeSeconds: number;
 }
 
-export interface ProductionInfo {
+interface ProductionInfo {
   building: ProductionBuilding;
   processingTimeSeconds: number;
   productionType: ProductionType;
@@ -30,7 +30,7 @@ export interface ProductionInfo {
   electricityExtraGoods?: ElectrictyExtraGood[];
 }
 
-export interface ItemInfo {
+interface ItemInfo {
   item: Item;
   iconUrl: string;
   rarity: Rarity;
@@ -42,9 +42,9 @@ export interface ItemInfo {
   productivityEffect?: number;
 }
 
-export const items: ItemInfo[] = (itemsJson as any).default as ItemInfo[];
+const items: ItemInfo[] = (itemsJson as any).default as ItemInfo[];
 
-export interface BoostInfo {
+interface BoostInfo {
   productivityEffect?: number;
   extraGood?: ExtraGood1800;
 }
@@ -104,7 +104,7 @@ export const improvedBySkilledLaborAct = new Set<ProductionBuilding>([
   ProductionBuilding.ChemicalPlantLacquer,
 ]);
 
-export const dungProducingBuildings = new Set<ProductionBuilding>([
+const dungProducingBuildings = new Set<ProductionBuilding>([
   ProductionBuilding.AlpacaFarm,
   ProductionBuilding.CattleFarmNewWorld,
   ProductionBuilding.NanduFarm,
@@ -1593,7 +1593,7 @@ const builingsToInfo = new Map<ProductionBuilding, ProductionInfo>(
 
 const itemToInfo = new Map<Item, ItemInfo>(items.map((i) => [i.item, i]));
 
-export interface CulturalSetInfo {
+interface CulturalSetInfo {
   set: CulturalSet;
   iconUrl: string;
   targets: ProductionBuilding[];
@@ -1601,7 +1601,7 @@ export interface CulturalSetInfo {
   productivityEffect?: number;
 }
 
-export const cultures: CulturalSetInfo[] = (cultureJson as any)
+const cultures: CulturalSetInfo[] = (cultureJson as any)
   .default as CulturalSetInfo[];
 
 const cultureToInfo = new Map<CulturalSet, CulturalSetInfo>(
@@ -1621,7 +1621,7 @@ export function lookupAllowedCulturalSets(
     .map((set) => set.set);
 }
 
-export interface PolicyInfo {
+interface PolicyInfo {
   productivityEffect?: number;
   extraGood?: ExtraGood1800;
 }

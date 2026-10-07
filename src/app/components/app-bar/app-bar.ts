@@ -36,8 +36,8 @@ import { version } from '../../../../package.json';
 })
 export class AppBar {
   /** The release number, from package.json (bumped on each release branch). */
-  readonly version = version;
-  readonly langauges = languages;
+  protected readonly version = version;
+  protected readonly langauges = languages;
   readonly router = inject(Router);
 
   // router.url isn't reactive: without this, the bar would not re-render once a
@@ -50,38 +50,38 @@ export class AppBar {
     ),
     { initialValue: this.router.url },
   );
-  readonly website = WEBSITE_NAME;
-  readonly apps = apps.filter(isNotRedirect);
+  protected readonly website = WEBSITE_NAME;
+  protected readonly apps = apps.filter(isNotRedirect);
 
   private readonly l10Service_ = inject(L10nService);
-  readonly language = this.l10Service_.languageSignal;
+  protected readonly language = this.l10Service_.languageSignal;
 
   private readonly themeService_ = inject(ThemeService);
-  readonly theme = this.themeService_.themeSignal;
-  readonly themes = themes;
+  protected readonly theme = this.themeService_.themeSignal;
+  protected readonly themes = themes;
 
-  updateTheme(theme: Theme): void {
+  protected updateTheme(theme: Theme): void {
     this.themeService_.setTheme(theme);
   }
 
   /** The name a theme is shown under: the game it is dressed after. */
-  themeName(theme: Theme): 'Anno 1800' | 'Anno 117' {
+  protected themeName(theme: Theme): 'Anno 1800' | 'Anno 117' {
     return theme === 'anno117' ? 'Anno 117' : 'Anno 1800';
   }
 
-  updateLanguage(lang: Language): void {
+  protected updateLanguage(lang: Language): void {
     this.l10Service_.setLanguage(lang);
   }
 
-  isCurrentApp(app: AppInfo): boolean {
+  protected isCurrentApp(app: AppInfo): boolean {
     return '/' + app.path == this.currentUrl_();
   }
 
-  navigateTo(app: AppInfo | string): void {
+  protected navigateTo(app: AppInfo | string): void {
     this.router.navigateByUrl(typeof app === 'string' ? app : app.path);
   }
 
-  langDisplayName(lang: Language): string {
+  protected langDisplayName(lang: Language): string {
     if (lang === Language.Zh) return '中文';
     return lang;
   }
