@@ -1,32 +1,25 @@
 @if (controller()) {
   <ng-container [formGroup]="formGroup!">
-    <section class="select-row">
-      <mat-form-field class="island-name-field">
-        <mat-label textLoc="Island Name"></mat-label>
-        <input matInput type="text" formControlName="name" aria-label="name" />
-      </mat-form-field>
-      <enum-select
-        class="island-select"
-        formControlName="region"
-        label="Session"
-        [options]="regions"
-        [iconUrlLookupFn]="lookupRegionIconUrl"></enum-select>
-      <enum-select
-        class="island-select"
-        formControlName="dolPolicy"
-        label="Department Policy"
-        [options]="dolPolicies()"
-        [iconUrlLookupFn]="lookupPolicyIconUrl"></enum-select>
-    </section>
-    <section>
-      <ac-button
-        appearance="filled"
-        color="primary"
-        icon="add"
-        text="Add Production Line"
-        (action)="addProductionLine()"></ac-button>
-    </section>
-    <section class="table-scroll">
+    <island-editor (addLine)="addProductionLine()">
+      <ng-container ngProjectAs="[settings]">
+        <mat-form-field class="island-name-field">
+          <mat-label textLoc="Island Name"></mat-label>
+          <input matInput type="text" formControlName="name" aria-label="name" />
+        </mat-form-field>
+        <enum-select
+          class="island-select"
+          formControlName="region"
+          label="Session"
+          [options]="regions"
+          [iconUrlLookupFn]="lookupRegionIconUrl"></enum-select>
+        <enum-select
+          class="island-select"
+          formControlName="dolPolicy"
+          label="Department Policy"
+          [options]="dolPolicies()"
+          [iconUrlLookupFn]="lookupPolicyIconUrl"></enum-select>
+      </ng-container>
+
       <table mat-table class="production-lines-table" [dataSource]="productionLineRows()" multiTemplateDataRows>
         <ng-container matColumnDef="building">
           <th mat-header-cell *matHeaderCellDef>
@@ -204,7 +197,7 @@
         <tr mat-row *matRowDef="let row; columns: productionLineColumns" class="production-line-row"></tr>
         <tr mat-row *matRowDef="let row; columns: ['extraGoods']" class="extra-good-table-row"></tr>
       </table>
-    </section>
+    </island-editor>
   </ng-container>
 }
 

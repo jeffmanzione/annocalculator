@@ -21,6 +21,7 @@ import {
   ExtraGoodsRow,
   ExtraGoodsTable,
 } from '../../../components/extra-goods-table/extra-goods-table';
+import { IslandEditor } from '../../../components/island-editor/island-editor';
 import { EnumRow } from '../../../components/enum-row/enum-row';
 import { EnumSelect } from '../../../components/enum-select/enum-select';
 import { FormattedNumber } from '../../../components/formatted-number/formatted-number';
@@ -91,6 +92,7 @@ interface Named {
 @Component({
   selector: 'anno-117-island',
   imports: [
+    IslandEditor,
     AcButton,
     Anno117Tooltip,
     CompositeNumber,

@@ -69,10 +69,6 @@ $flex-min-width: 5.5rem;
   }
 }
 
-.table-scroll {
-  overflow-x: auto;
-}
-
 table.production-lines-table {
   border-collapse: collapse;
   display: table;
@@ -149,14 +145,6 @@ table.production-lines-table {
   height: 0;
 }
 
-section {
-  margin: 10px 0 0 0;
-
-  &:first-child {
-    margin-top: 0;
-  }
-}
-
 mat-checkbox {
   display: table;
   margin: auto;
@@ -164,10 +152,6 @@ mat-checkbox {
 
 .island-name-field {
   padding: 4px 4px 4px 0;
-}
-
-.select-row {
-  display: flex;
 }
 
 .island-select {

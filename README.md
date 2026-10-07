@@ -101,6 +101,7 @@ src/
       info-tooltip/             The hover card both games use (a game describes its thing as a TooltipModel)
       stepper-input/            A number field with up/down arrows (a line's count, a repeatable discovery's %)
       extra-goods-table/        The table under a production line that lists its extra goods
+      island-editor/            What both island editors share: the settings row, the Add Production Line button, the scrolling table area
       composite-number/         A number that explains how it was computed (hover for the breakdown)
       formatted-number/         Number formatting
       json-input/               Text box used by import/export
@@ -117,7 +118,7 @@ src/
       l10n/                     Current language and text lookup
       local-storage/            Typed wrapper over localStorage
     shared/
-      engine/                   The game-independent part of a world store (BaseWorldStore)
+      engine/                   The game-independent parts of a world: the store (BaseWorldStore) and its controllers (BaseWorldController, ControllerCache)
       l10n/                     Every translated string, keyed by its English text
   tools/                        One-off maintenance scripts, not part of the app (see "Data tools")
   _anno-palette.scss            The Anno colour palette
@@ -136,7 +137,7 @@ screenshots/                    Images used in this README
 - **`GameDefinition`** (`games/game.ts`) is what the pieces both games share ask a game for: its goods, their icons and names in the language shown, and any goods a production line uses besides its recipe (Anno 1800's Silo and Fertilizer; Anno 117's coal and silo feed). The calculator page provides its game through the `GAME` token, and the shared summary and trade-route panels read it from there.
 - **Routes.** Each game's calculator has its own address, `/anno-1800-calculator` and `/anno-117-calculator`, and is loaded only when someone opens it, so neither adds to the first download. `/calculator` (the Anno 1800 calculator's original address, which people have linked to) and any unknown address redirect to the Anno 1800 calculator.
 - **Saves are separate.** Anno 1800 keeps its original localStorage key and its bare-world JSON format exactly as before. Anno 117 uses its own key and a labelled, versioned envelope (`{ "game": "anno117", "version": 1, "world": ... }`) that is checked before it is used, so a world pasted into the wrong game is refused with a message instead of breaking the page. The language setting is shared.
-- **`BaseWorldStore`** (`shared/engine/`) holds what any game's store needs: islands, lines and trade routes in id-keyed signal maps. Anno 117's store (`games/anno117/model/world-store-117.ts`) is built on it. Anno 1800's store predates it and has not been moved onto it, to leave a well-tested store alone.
+- **`BaseWorldStore`** (`shared/engine/`) holds what any game's store needs: islands, lines and trade routes in id-keyed signal maps. Anno 117's store (`games/anno117/model/world-store-117.ts`) is built on it. Anno 1800's store (`games/anno1800/model/world-store-1800.ts`) is built on it too, and the two games' world controllers share a base class (`shared/engine/base-controllers.ts`).
 
 ### How Anno 117's numbers work
 

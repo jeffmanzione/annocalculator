@@ -50,6 +50,7 @@ import { TextFieldModule } from '@angular/cdk/text-field';
 import { AcButton } from '../../../components/button/button';
 import { ExtraGoodsTable } from '../../../components/extra-goods-table/extra-goods-table';
 import { StepperInput } from '../../../components/stepper-input/stepper-input';
+import { IslandEditor } from '../../../components/island-editor/island-editor';
 import { EnumRow } from '../../../components/enum-row/enum-row';
 import { TooltipDirective } from '../../../components/enum-tooltip/enum-tooltip';
 import { Anno1800Tooltip } from '../tooltips/anno1800-tooltip';
@@ -61,6 +62,7 @@ import { InputGoodSource } from '../model/world-store-1800';
 @Component({
   selector: 'anno-1800-island',
   imports: [
+    IslandEditor,
     AcButton,
     Anno1800Tooltip,
     CompositeNumber,

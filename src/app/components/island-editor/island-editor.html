@@ -1,0 +1,14 @@
+<section class="select-row">
+  <ng-content select="[settings]"></ng-content>
+</section>
+<section>
+  <ac-button
+    appearance="filled"
+    color="primary"
+    icon="add"
+    text="Add Production Line"
+    (action)="addLine.emit()"></ac-button>
+</section>
+<section class="table-scroll">
+  <ng-content></ng-content>
+</section>

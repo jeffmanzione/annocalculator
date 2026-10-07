@@ -1,71 +1,63 @@
 @let island = controller();
-<section class="select-row">
-  <mat-form-field class="island-name-field">
-    <mat-label textLoc="Island Name"></mat-label>
-    <input matInput type="text" aria-label="name" [ngModel]="island.name" (ngModelChange)="island.name = $event" />
-  </mat-form-field>
-  <enum-select
-    class="island-select"
-    label="Province"
-    [options]="provinces"
-    [iconUrlLookupFn]="sessionIcon"
-    [displayTextTransformer]="sessionName"
-    [ngModel]="island.session"
-    (ngModelChange)="island.session = $event"></enum-select>
-  <enum-select
-    class="island-select"
-    label="Patron"
-    [options]="patronChoices"
-    [iconUrlLookupFn]="patronIcon"
-    [displayTextTransformer]="patronName"
-    [tooltip]="patronTooltip"
-    [ngModel]="patronValue"
-    (ngModelChange)="setPatron($event)"></enum-select>
-  @if (island.patron) {
-    <mat-form-field class="devotion-field">
-      <mat-label textLoc="Devotion"></mat-label>
-      <input
-        matInput
-        type="number"
-        min="0"
-        step="50"
-        aria-label="devotion"
-        [ngModel]="island.devotion"
-        (ngModelChange)="setDevotion($event)" />
+<island-editor (addLine)="addProductionLine()">
+  <ng-container ngProjectAs="[settings]">
+    <mat-form-field class="island-name-field">
+      <mat-label textLoc="Island Name"></mat-label>
+      <input matInput type="text" aria-label="name" [ngModel]="island.name" (ngModelChange)="island.name = $event" />
     </mat-form-field>
-  }
-</section>
-<section class="select-row">
-  <enum-select
-    class="island-select wide"
-    label="Events"
-    [multiple]="true"
-    [options]="effectChoices()"
-    [iconUrlLookupFn]="effectIcon"
-    [displayTextTransformer]="effectName"
-    [tooltip]="effectTooltip"
-    [ngModel]="island.effects"
-    (ngModelChange)="island.effects = $event"></enum-select>
-  <enum-select
-    class="island-select wide"
-    label="Missing Fertilities"
-    [multiple]="true"
-    [options]="fertilityChoices()"
-    [iconUrlLookupFn]="fertilityIcon"
-    [displayTextTransformer]="fertilityName"
-    [tooltip]="fertilityTooltip"
-    [ngModel]="island.missingFertilities"
-    (ngModelChange)="island.missingFertilities = $event"></enum-select>
-</section>
-<section>
-  <ac-button
-    appearance="filled"
-    color="primary"
-    icon="add"
-    text="Add Production Line"
-    (action)="addProductionLine()"></ac-button>
-</section>
-<section class="table-scroll">
+    <enum-select
+      class="island-select"
+      label="Province"
+      [options]="provinces"
+      [iconUrlLookupFn]="sessionIcon"
+      [displayTextTransformer]="sessionName"
+      [ngModel]="island.session"
+      (ngModelChange)="island.session = $event"></enum-select>
+    <enum-select
+      class="island-select"
+      label="Patron"
+      [options]="patronChoices"
+      [iconUrlLookupFn]="patronIcon"
+      [displayTextTransformer]="patronName"
+      [tooltip]="patronTooltip"
+      [ngModel]="patronValue"
+      (ngModelChange)="setPatron($event)"></enum-select>
+    @if (island.patron) {
+      <mat-form-field class="devotion-field">
+        <mat-label textLoc="Devotion"></mat-label>
+        <input
+          matInput
+          type="number"
+          min="0"
+          step="50"
+          aria-label="devotion"
+          [ngModel]="island.devotion"
+          (ngModelChange)="setDevotion($event)" />
+      </mat-form-field>
+    }
+    <div class="row-break"></div>
+    <enum-select
+      class="island-select wide"
+      label="Events"
+      [multiple]="true"
+      [options]="effectChoices()"
+      [iconUrlLookupFn]="effectIcon"
+      [displayTextTransformer]="effectName"
+      [tooltip]="effectTooltip"
+      [ngModel]="island.effects"
+      (ngModelChange)="island.effects = $event"></enum-select>
+    <enum-select
+      class="island-select wide"
+      label="Missing Fertilities"
+      [multiple]="true"
+      [options]="fertilityChoices()"
+      [iconUrlLookupFn]="fertilityIcon"
+      [displayTextTransformer]="fertilityName"
+      [tooltip]="fertilityTooltip"
+      [ngModel]="island.missingFertilities"
+      (ngModelChange)="island.missingFertilities = $event"></enum-select>
+  </ng-container>
+
   <table class="lines-table">
     <thead>
       <tr>
@@ -203,7 +195,7 @@
       }
     </tbody>
   </table>
-</section>
+</island-editor>
 <ng-template #goodTooltip let-value="value">
   <anno-117-tooltip kind="good" [value]="value"></anno-117-tooltip>
 </ng-template>
