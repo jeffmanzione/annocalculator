@@ -2,6 +2,7 @@
 @use '@angular/material' as mat;
 @use '../../../../theme-colors';
 @use '../../../../anno-palette' as anno;
+@use '../../../../mobile';
 
 :host {
   @include mat.table-overrides(
@@ -105,5 +106,13 @@ table.summary-table {
 
   .island-summary-table-row {
     height: 0;
+  }
+}
+
+// On a phone the panel is as tall as its rows, rather than filling the window and scrolling inside.
+@include mobile.mobile {
+  .table-container {
+    height: auto;
+    overflow: visible;
   }
 }

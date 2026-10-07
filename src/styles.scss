@@ -3,6 +3,7 @@
 @use 'theme-colors';
 @use 'anno-palette' as anno;
 @use 'anno-material' as anno-material;
+@use 'mobile';
 @use 'anno-themes' as themes;
 
 @font-face {
@@ -264,4 +265,18 @@ body {
       header-headline-size: 10.5px,
     )
   );
+}
+
+// On a phone the page is as long as its content and the document scrolls, so the paper behind it is as long
+// too (a background fixed to the window is not supported by phone browsers).
+@include mobile.mobile {
+  html {
+    height: auto;
+  }
+
+  body {
+    height: auto;
+    min-height: 100dvh;
+    background-attachment: scroll;
+  }
 }

@@ -2,6 +2,7 @@
 @use '@angular/material' as mat;
 @use '../../../../theme-colors';
 @use '../../../../anno-palette' as anno;
+@use '../../../../mobile';
 
 // Don't cut off text.
 :host ::ng-deep {
@@ -82,4 +83,75 @@ table {
 .add-trade-route-button {
   display: flex;
   margin-bottom: 8px;
+}
+
+.mobile-label {
+  display: none;
+}
+
+// On a phone the panel is as tall as its rows, and each route is a small card: the origin and the
+// destination side by side, then the good and the remove button.
+@include mobile.mobile {
+  .table-container {
+    height: auto;
+    overflow: visible;
+  }
+
+  .mobile-label {
+    display: block;
+    margin-bottom: 3px;
+    font-size: 11px;
+    font-weight: 700;
+    color: anno.$ink-muted;
+  }
+
+  table.mat-mdc-table,
+  table.mat-mdc-table tbody {
+    display: block;
+    width: 100%;
+    background: none;
+  }
+
+  table.mat-mdc-table tr.mat-mdc-header-row {
+    display: none;
+  }
+
+  table.mat-mdc-table tr.mat-mdc-row {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+    align-items: end;
+    height: auto;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid anno.alpha(anno.$ink, 0.3);
+    border-radius: 6px;
+    background: anno.$table-cell;
+  }
+
+  table.mat-mdc-table td.mat-mdc-cell {
+    display: block;
+    width: auto;
+    max-width: none;
+    min-width: 0;
+    padding: 0;
+    text-align: left;
+    background: none;
+    box-shadow: none;
+    border: none;
+  }
+
+  table.mat-mdc-table td.mat-column-good {
+    grid-column: 1;
+  }
+
+  table.mat-mdc-table td.mat-column-remove {
+    grid-column: 2;
+    justify-self: end;
+  }
+
+  enum-select {
+    display: block;
+    width: 100%;
+  }
 }
