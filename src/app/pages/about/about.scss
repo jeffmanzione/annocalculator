@@ -11,6 +11,9 @@
 
 .logo {
   display: block;
+  // Both logos' files are the same size, so the page does not move with the theme.
+  width: 420px;
+  max-width: 100%;
   margin: 0 auto 64px auto;
 }
 

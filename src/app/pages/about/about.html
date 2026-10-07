@@ -1,8 +1,10 @@
 <div class="outer-container">
   <div class="inner-container">
-    <img alt="Anno 1800 Logo" src="anno_1800_logo.png" class="logo" />
+    <img [alt]="logo().alt" [src]="logo().src" class="logo" />
     <section class="disclaimer">
-      <strong><span textLoc="About Disclaimer Label"></span></strong>&ngsp;<span textLoc="About Disclaimer Text"></span>
+      <strong><span textLoc="About Disclaimer Label"></span></strong>
+      &ngsp;
+      <span textLoc="About Disclaimer Text"></span>
     </section>
     <section>
       <h2>
@@ -63,7 +65,11 @@
         <span textLoc="About Feedback Heading"></span>
       </h2>
       <p>
-        <span textLoc="About Feedback Intro"></span>&ngsp;<a href="https://github.com/jeffmanzione/annocalculator/issues/new" textLoc="About Feedback Link"></a>&ngsp;<span textLoc="About Feedback Outro"></span>
+        <span textLoc="About Feedback Intro"></span>
+        &ngsp;
+        <a href="https://github.com/jeffmanzione/annocalculator/issues/new" textLoc="About Feedback Link"></a>
+        &ngsp;
+        <span textLoc="About Feedback Outro"></span>
       </p>
     </section>
   </div>

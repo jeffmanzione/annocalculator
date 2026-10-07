@@ -108,6 +108,24 @@ button {
   white-space: nowrap;
 }
 
+.theme-picker {
+  // The theme and language pickers sit together at the right edge: this one takes the free space to its left.
+  margin-left: auto;
+  margin-right: 8px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  align-self: center;
+}
+
+.theme-label {
+  font-family: anno.$font-display;
+  font-size: 12px;
+  letter-spacing: 0.4px;
+  color: anno.$plate-text;
+  white-space: nowrap;
+}
+
 .theme-option {
   text-wrap: nowrap;
   color: anno.$ink;
@@ -126,13 +144,13 @@ button {
 :host ::ng-deep {
   mat-form-field {
     width: 100px;
-    margin: auto 0 auto auto;
+    margin: auto 0;
   }
 
   // The theme's name ("Anno 1800") is longer than a language's.
   mat-form-field.theme-field {
     width: 120px;
-    margin-right: 8px;
+    margin: auto 0;
   }
 
   mat-select {
