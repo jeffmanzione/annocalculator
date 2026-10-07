@@ -285,6 +285,8 @@ body {
     @include mat.form-field-overrides(
       (
         container-height: 44px,
+        // Half of what the height has over the 24px of a value, so that the value stays in the middle.
+        container-vertical-padding: 10px,
       )
     );
     @include mat.icon-button-overrides(
