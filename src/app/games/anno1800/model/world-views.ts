@@ -1,3 +1,4 @@
+import { StoredIsland } from '../../../shared/engine/base-world-store';
 import { NumberConstituent } from '../../../components/composite-number/composite-number';
 import {
   Boost,
@@ -671,7 +672,7 @@ export class Island1800View implements Island1800 {
     protected readonly id_: IslandId,
   ) {}
 
-  private get model(): Island1800 {
+  private get model(): StoredIsland<Island1800> {
     return this.store.islands().get(this.id_)!;
   }
 

@@ -1,16 +1,20 @@
 import { computed, Signal, signal, WritableSignal } from '@angular/core';
 import {
+  BaseWorldStore,
+  flattenWorld,
+  nestWorld,
+  StoredIsland,
+  StoredLine,
+} from '../../../shared/engine/base-world-store';
+import {
   BASE_ISLAND_MODEL,
   BASE_PRODUCTION_LINE_MODEL,
   BASE_TRADE_ROUTE_MODEL,
   DEFAULT_ISLAND_MODEL,
   DEFAULT_PRODUCTION_LINE_MODEL,
   Island1800,
-  IslandId,
   ProductionLine1800,
-  ProductionLineId,
   TradeRoute1800,
-  TradeRouteId,
   World1800,
 } from './models';
 import { Good, Item, ProductionBuilding } from '../game/enums';
@@ -44,13 +48,6 @@ export function arrayEqualsAsSet<T>(
   return setA.size === setB.size && [...setA].every((x) => setB.has(x));
 }
 
-export function generatePseudorandomInt(): number {
-  // Ensure min and max are integers
-  const [min, max] = [0, Number.MAX_SAFE_INTEGER];
-  // Generate a random number between min (inclusive) and max (inclusive)
-  return Math.floor(Math.random() * (max - min + 1)) + min; // NOSONAR - Pseudorandomness is sufficient
-}
-
 export const resolveDuplicateReplacementGoods = (g1: Good, g2: Good): Good => {
   // Prefer Susanna the Steam Engineer (switches input from Steam Motors to
   // Filaments) over Maria Maravilla (switches input from Steam Motors to
@@ -62,21 +59,11 @@ export const resolveDuplicateReplacementGoods = (g1: Good, g2: Good): Good => {
 };
 
 /**
- * A ProductionLine as held in the normalized store: the same shape as the
- * saved model, plus the id of the island it belongs to. This is the store's
- * replacement for `Island.productionLines[]` membership (see Decision 1 in
- * `domain-layer-signals-redesign.md`): rather than an island embedding its
- * production lines, each production line points at its island by id, so any
- * entity can be looked up independently without a manually-threaded parent
- * pointer.
- *
- * `islandId` is a store-internal field, not part of the saved JSON format --
- * `WorldStore.toWorld()` re-nests each production line under its owning
- * island's `productionLines` array and strips this field back out.
+ * A ProductionLine as held in the normalized store: the same shape as the saved model, plus the id of
+ * the island it belongs to (a store-internal field that is not part of the saved JSON; `toWorld()`
+ * nests each line back under its island and strips it).
  */
-export interface ProductionLineEntity extends ProductionLine1800 {
-  islandId: IslandId;
-}
+export type ProductionLineEntity = StoredLine<ProductionLine1800>;
 
 /**
  * One input good of a production line, with how it came to be that good. An
@@ -156,38 +143,29 @@ function computeDerivedGoods(
 }
 
 /**
- * Normalized, id-keyed signal store for a `World`: flat `Map`s instead of
- * one nested tree. This is the app's source of truth for the loaded world
- * (production-calculator.ts builds one per page load). `fromWorld()`/
- * `toWorld()` are the load/save boundary, and must
- * round-trip existing saved data losslessly: the app's real users have
- * un-versioned, un-validated `JSON.stringify`/`JSON.parse` data sitting in
- * their browsers' `localStorage` today (see `local-storage.ts`), so this is
- * a hard correctness requirement, not just a nice-to-have. Note that an
- * island/production-line/trade-route with no id yet (older saved data, or a
- * just-created entity) gets one assigned in `fromWorld()` (missing or negative id means
- * unassigned -- the convention the old, now-deleted controllers.ts used).
+ * The Anno 1800 world store: the game-independent islands, lines and trade routes of BaseWorldStore, plus
+ * the Palace's prestige level and the rules that run when a line changes. `fromWorld()`/`toWorld()` are
+ * the load/save boundary and must round-trip existing saved data losslessly: real users have
+ * un-versioned, un-validated JSON in their browsers' `localStorage`. An island, line or trade route
+ * with no id yet (older saved data, or one just created) gets one in `fromWorld()`.
  */
-export class WorldStore1800 {
-  readonly islands: WritableSignal<Map<IslandId, Island1800>>;
-  readonly productionLines: WritableSignal<
-    Map<ProductionLineId, ProductionLineEntity>
-  >;
-  readonly tradeRoutes: WritableSignal<Map<TradeRouteId, TradeRoute1800>>;
+export class WorldStore1800 extends BaseWorldStore<
+  Island1800,
+  ProductionLine1800,
+  TradeRoute1800
+> {
   /** The Palace's prestige level; null when there is no Palace. */
   readonly palacePrestigeLevel: WritableSignal<number | null>;
   /** The Trade Union bonus (a fraction) the Palace's level gives. */
   readonly tradeUnionBonus: Signal<number>;
 
   private constructor(
-    islands: Map<IslandId, Island1800>,
-    productionLines: Map<ProductionLineId, ProductionLineEntity>,
-    tradeRoutes: Map<TradeRouteId, TradeRoute1800>,
+    flat: ReturnType<
+      typeof flattenWorld<Island1800, ProductionLine1800, TradeRoute1800>
+    >,
     palacePrestigeLevel: number | null,
   ) {
-    this.islands = signal(islands);
-    this.productionLines = signal(productionLines);
-    this.tradeRoutes = signal(tradeRoutes);
+    super(flat.islands, flat.productionLines, flat.tradeRoutes);
     this.palacePrestigeLevel = signal(palacePrestigeLevel);
     this.tradeUnionBonus = computed(() =>
       palaceTradeUnionBonus(this.palacePrestigeLevel()),
@@ -195,54 +173,11 @@ export class WorldStore1800 {
   }
 
   static fromWorld(world: World1800): WorldStore1800 {
-    const islands = new Map<IslandId, Island1800>();
-    const productionLines = new Map<ProductionLineId, ProductionLineEntity>();
-
-    for (const islandModel of world.islands) {
-      const islandId =
-        islandModel.id != null && islandModel.id >= 0
-          ? islandModel.id
-          : generatePseudorandomInt();
-
-      const { productionLines: rawProductionLines, ...islandRest } =
-        islandModel;
-      // The embedded productionLines array is intentionally not carried
-      // over onto the store's Island entry -- membership now lives on the
-      // ProductionLineEntity side (islandId), and toWorld() re-derives this
-      // array from the productionLines map at save time. Leaving a stale
-      // copy here would let the two get out of sync.
-      islands.set(islandId, {
-        ...islandRest,
-        id: islandId,
-        productionLines: [],
-      });
-
-      for (const productionLineModel of rawProductionLines) {
-        const productionLineId =
-          productionLineModel.id != null && productionLineModel.id >= 0
-            ? productionLineModel.id
-            : generatePseudorandomInt();
-        productionLines.set(productionLineId, {
-          ...productionLineModel,
-          id: productionLineId,
-          islandId,
-        });
-      }
-    }
-
-    const tradeRoutes = new Map<TradeRouteId, TradeRoute1800>();
-    for (const tradeRouteModel of world.tradeRoutes) {
-      const tradeRouteId =
-        tradeRouteModel.id >= 0
-          ? tradeRouteModel.id
-          : generatePseudorandomInt();
-      tradeRoutes.set(tradeRouteId, { ...tradeRouteModel, id: tradeRouteId });
-    }
-
     return new WorldStore1800(
-      islands,
-      productionLines,
-      tradeRoutes,
+      flattenWorld<Island1800, ProductionLine1800, TradeRoute1800>(
+        world.islands,
+        world.tradeRoutes,
+      ),
       // Worlds saved before the Palace level existed stored the bonus itself.
       world.palacePrestigeLevel ??
         palacePrestigeLevelForBonus(world.tradeUnionBonus ?? 0),
@@ -250,171 +185,52 @@ export class WorldStore1800 {
   }
 
   toWorld(): World1800 {
-    const productionLinesByIsland = new Map<IslandId, ProductionLine1800[]>();
-    for (const productionLineEntity of this.productionLines().values()) {
-      const { islandId, ...productionLineModel } = productionLineEntity;
-      const linesForIsland = productionLinesByIsland.get(islandId) ?? [];
-      linesForIsland.push(stripProductionLineDefaults(productionLineModel));
-      productionLinesByIsland.set(islandId, linesForIsland);
-    }
-
-    const islands: Island1800[] = [...this.islands().values()].map((island) =>
-      stripIslandDefaults({
-        ...island,
-        productionLines: productionLinesByIsland.get(island.id!) ?? [],
-      }),
-    );
-
-    const world: World1800 = {
+    const islands = nestWorld<Island1800, ProductionLine1800>(
+      this.islands().values(),
+      this.productionLines().values(),
+      stripProductionLineDefaults,
+    ).map((island) => stripIslandDefaults(island as unknown as Island1800));
+    return stripWorldDefaults({
       palacePrestigeLevel: this.palacePrestigeLevel() ?? undefined,
       islands,
       tradeRoutes: [...this.tradeRoutes().values()],
-    };
-    return stripWorldDefaults(world);
-  }
-
-  // --- Mutation API ---
-  //
-  // Unlike the old Controller setters (controllers.ts), these don't clear a
-  // field the moment it's set to its default -- that minimization now
-  // happens once, in toWorld() above, at export/save time (see
-  // stripIslandDefaults/stripProductionLineDefaults/stripWorldDefaults
-  // below). In memory, the store just holds whatever was set. The one
-  // exception is computeDerivedGoods() above: `good`/`inputGoods` are real
-  // derived state read elsewhere before any save happens, not an export
-  // nicety, so updateProductionLine() recomputes them eagerly, exactly
-  // like the old building/items setters did.
-
-  addIsland(): IslandId {
-    const id = generatePseudorandomInt();
-    const island: Island1800 = { ...structuredClone(BASE_ISLAND_MODEL), id };
-    this.islands.update((islands) => new Map(islands).set(id, island));
-    return id;
-  }
-
-  removeIsland(id: IslandId): void {
-    this.islands.update((islands) => {
-      const next = new Map(islands);
-      next.delete(id);
-      return next;
-    });
-    // Production lines are stored flat (keyed by their own id, not nested
-    // under their island), so removing an island doesn't implicitly take
-    // its production lines with it the way splicing a nested array used
-    // to -- clean them up explicitly here, or they'd become orphaned
-    // entries pointing at an islandId that no longer exists. Matches the
-    // old behavior's net effect (removing an island removed its production
-    // lines too), just via an explicit step instead of a side effect of
-    // nesting.
-    //
-    // Trade routes referencing this island are deliberately left alone,
-    // matching the old code's behavior (WorldController.removeIslandAt()
-    // never touched tradeRoutes either) -- not a fix to make here.
-    this.productionLines.update((lines) => {
-      const next = new Map(lines);
-      for (const [lineId, line] of next) {
-        if (line.islandId === id) {
-          next.delete(lineId);
-        }
-      }
-      return next;
     });
   }
 
-  updateIsland(
-    id: IslandId,
-    patch: Partial<Pick<Island1800, 'name' | 'region' | 'dolPolicy'>>,
-  ): void {
-    this.islands.update((islands) => {
-      const current = islands.get(id);
-      if (!current) {
-        console.warn(`Invalid island id. Was ${id}.`);
-        return islands;
-      }
-      const next = new Map(islands);
-      next.set(id, { ...current, ...patch });
-      return next;
-    });
+  // Defaults are not cleared when a field is set: that happens once, in toWorld(), at save time (see
+  // the strip functions below). The exception is a line's `good` and `inputGoods`, which are real
+  // derived state read before any save, so they are recomputed as soon as the building or items change.
+
+  protected override newIsland(): Omit<StoredIsland<Island1800>, 'id'> {
+    // Like a saved island, a new one carries an (empty) productionLines key, which keeps the order of
+    // its keys in the saved JSON what it has always been.
+    return structuredClone(BASE_ISLAND_MODEL) as unknown as Omit<
+      StoredIsland<Island1800>,
+      'id'
+    >;
   }
 
-  addProductionLine(islandId: IslandId): ProductionLineId {
-    const id = generatePseudorandomInt();
-    const line: ProductionLineEntity = {
-      ...structuredClone(BASE_PRODUCTION_LINE_MODEL),
-      id,
-      islandId,
-    };
-    this.productionLines.update((lines) => new Map(lines).set(id, line));
-    return id;
+  protected override newProductionLine(): ProductionLine1800 {
+    return structuredClone(BASE_PRODUCTION_LINE_MODEL);
   }
 
-  removeProductionLine(id: ProductionLineId): void {
-    this.productionLines.update((lines) => {
-      const next = new Map(lines);
-      next.delete(id);
-      return next;
-    });
+  protected override newTradeRoute(): Omit<TradeRoute1800, 'id'> {
+    return structuredClone(BASE_TRADE_ROUTE_MODEL);
   }
 
-  updateProductionLine(
-    id: ProductionLineId,
-    patch: Partial<Omit<ProductionLine1800, 'id'>>,
-  ): void {
-    this.productionLines.update((lines) => {
-      const current = lines.get(id);
-      if (!current) {
-        console.warn(`Invalid productionLine id. Was ${id}.`);
-        return lines;
-      }
-      let updated: ProductionLineEntity = { ...current, ...patch };
-      // Ported from ProductionLineController.hasTradeUnion's setter: items
-      // can only be slotted in a trade union, so turning it off clears any
-      // selected items right away rather than leaving them in the model
-      // pointing at a now-unreachable UI state.
-      if (patch.hasTradeUnion === false) {
-        updated = { ...updated, items: [] };
-      }
-      if ('building' in patch || 'items' in patch) {
-        updated = { ...updated, ...computeDerivedGoods(updated) };
-      }
-      const next = new Map(lines);
-      next.set(id, updated);
-      return next;
-    });
-  }
-
-  addTradeRoute(): TradeRouteId {
-    const id = generatePseudorandomInt();
-    const tradeRoute: TradeRoute1800 = {
-      ...structuredClone(BASE_TRADE_ROUTE_MODEL),
-      id,
-    };
-    this.tradeRoutes.update((routes) => new Map(routes).set(id, tradeRoute));
-    return id;
-  }
-
-  removeTradeRoute(id: TradeRouteId): void {
-    this.tradeRoutes.update((routes) => {
-      const next = new Map(routes);
-      next.delete(id);
-      return next;
-    });
-  }
-
-  updateTradeRoute(
-    id: TradeRouteId,
-    patch: Partial<Omit<TradeRoute1800, 'id'>>,
-  ): void {
-    this.tradeRoutes.update((routes) => {
-      const current = routes.get(id);
-      if (!current) {
-        console.warn(`Invalid tradeRoute id. Was ${id}.`);
-        return routes;
-      }
-      const next = new Map(routes);
-      next.set(id, { ...current, ...patch });
-      return next;
-    });
+  protected override onProductionLineUpdated(
+    updated: ProductionLineEntity,
+    patch: Partial<ProductionLine1800>,
+  ): ProductionLineEntity {
+    // Items can only be slotted in a trade union, so turning it off clears any selected items right
+    // away rather than leaving them in the model pointing at a now-unreachable UI state.
+    if (patch.hasTradeUnion === false) {
+      updated = { ...updated, items: [] };
+    }
+    if ('building' in patch || 'items' in patch) {
+      updated = { ...updated, ...computeDerivedGoods(updated) };
+    }
+    return updated;
   }
 
   setPalacePrestigeLevel(value: number | null): void {
