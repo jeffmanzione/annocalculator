@@ -113,7 +113,6 @@ src/
       app-bar/                  The toolbar: site title, page tabs, language picker, version
       button/, card/            Themed button and panel
       enum-select/, enum-row/   A dropdown over enum values with icons and tooltips
-      enum-tooltip/             Tooltip wrapper used by the dropdowns
       info-tooltip/             The hover card both games use (a game describes its thing as a TooltipModel)
       mobile-section-tabs/      The switch between the islands, the summary and the trade routes (shown on a phone only)
       stepper-input/            A number field with up/down arrows (a line's count, a repeatable discovery's %)

@@ -79,10 +79,6 @@ export abstract class BaseWorldController<S extends AnyStore, IC, TC> {
     return [...this.store.islands().keys()].map((id) => this.islands_.get(id));
   }
 
-  islandController(id: EntityId): IC {
-    return this.islands_.get(id);
-  }
-
   addIsland(): IC {
     return this.islands_.get(this.store.addIsland());
   }

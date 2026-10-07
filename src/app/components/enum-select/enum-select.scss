@@ -13,35 +13,12 @@
   width: 100%;
 }
 
-.selected-option {
-  display: contents;
-}
-
 .option {
   display: flex;
 }
 
 .icon {
   width: 24px;
-}
-
-.selected-text {
-  padding-left: 6px;
-  margin: auto 0;
-  min-width: 0;
-  letter-spacing: -0.25px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.option-text {
-  padding-left: 6px;
-  margin: auto 0;
-  min-width: 0;
-  letter-spacing: -0.25px;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 .placeholder {

@@ -333,10 +333,6 @@ export class Island117Controller {
     return this.lines_.list();
   }
 
-  lineController(id: number): Line117Controller {
-    return this.lines_.get(id);
-  }
-
   addProductionLine(): Line117Controller {
     return this.lines_.add();
   }

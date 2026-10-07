@@ -626,16 +626,8 @@ export class TradeRoute1800View implements TradeRoute1800 {
     return this.model.sourceIslandId;
   }
 
-  get sourceIsland(): Island1800View {
-    return new Island1800View(this.store, this.model.sourceIslandId);
-  }
-
   get targetIslandId(): IslandId {
     return this.model.targetIslandId;
-  }
-
-  get targetIsland(): Island1800View {
-    return new Island1800View(this.store, this.model.targetIslandId);
   }
 
   get good(): Good {
@@ -681,18 +673,6 @@ export class Island1800View implements Island1800 {
     return this.model.dolPolicy ?? DEFAULT_ISLAND_MODEL.dolPolicy!;
   }
 
-  get outgoingTradeRoutes(): TradeRoute1800View[] {
-    return [...this.store.tradeRoutes().values()]
-      .filter((tr) => tr.sourceIslandId == this.id_)
-      .map((tr) => new TradeRoute1800View(this.store, tr.id));
-  }
-
-  get incomingTradeRoutes(): TradeRoute1800View[] {
-    return [...this.store.tradeRoutes().values()]
-      .filter((tr) => tr.targetIslandId == this.id_)
-      .map((tr) => new TradeRoute1800View(this.store, tr.id));
-  }
-
   get producedGoods(): Good[] {
     const productionLines = [...this.store.productionLines().values()].filter(
       (pl) => pl.islandId === this.id_,
@@ -725,31 +705,9 @@ export class World1800View {
     );
   }
 
-  lookupIslandById(id: IslandId): Island1800View {
-    return new Island1800View(this.store, id);
-  }
-
   get tradeRoutes(): TradeRoute1800View[] {
     return [...this.store.tradeRoutes().keys()].map(
       (id) => new TradeRoute1800View(this.store, id),
     );
-  }
-
-  lookupTradeRoutesStartingFrom(
-    island: IslandId | Island1800View,
-  ): TradeRoute1800View[] {
-    const id = typeof island === 'number' ? island : island.id;
-    return [...this.store.tradeRoutes().values()]
-      .filter((tr) => tr.sourceIslandId == id)
-      .map((tr) => new TradeRoute1800View(this.store, tr.id));
-  }
-
-  lookupTradeRoutesEndingAt(
-    island: IslandId | Island1800View,
-  ): TradeRoute1800View[] {
-    const id = typeof island === 'number' ? island : island.id;
-    return [...this.store.tradeRoutes().values()]
-      .filter((tr) => tr.targetIslandId == id)
-      .map((tr) => new TradeRoute1800View(this.store, tr.id));
   }
 }

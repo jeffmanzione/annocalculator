@@ -52,7 +52,6 @@ import { ExtraGoodsTable } from '../../../components/extra-goods-table/extra-goo
 import { StepperInput } from '../../../components/stepper-input/stepper-input';
 import { IslandEditor } from '../../../components/island-editor/island-editor';
 import { EnumRow } from '../../../components/enum-row/enum-row';
-import { TooltipDirective } from '../../../components/enum-tooltip/enum-tooltip';
 import { Anno1800Tooltip } from '../tooltips/anno1800-tooltip';
 import { CompositeNumber } from '../../../components/composite-number/composite-number';
 import { ExtraGood1800View } from '../model/world-views';
@@ -79,7 +78,6 @@ import { InputGoodSource } from '../model/world-store-1800';
     ReactiveFormsModule,
     StepperInput,
     TextFieldModule,
-    TooltipDirective,
     L10nText,
   ],
   templateUrl: './anno1800-island.html',
@@ -158,12 +156,6 @@ export class Anno1800Island implements OnInit {
       DepartmentOfLaborPolicy.UnionSubsidiesAct
       ? 4
       : 3;
-  }
-
-  get inRangeHeader(): string {
-    return this.controller().region == Region.NewWorld
-      ? 'Fert Works'
-      : 'Local Dept';
   }
 
   ngOnInit(): void {

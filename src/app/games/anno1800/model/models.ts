@@ -80,12 +80,6 @@ export interface World1800 extends Model1800 {
   tradeRoutes: TradeRoute1800[];
 }
 
-export const BASE_EXTRA_GOOD_MODEL: ExtraGood1800 = {
-  good: Good.Unknown,
-  rateNumerator: 1,
-  rateDenominator: 1,
-};
-
 export const DEFAULT_EXTRA_GOOD_MODEL: ExtraGood1800 = {
   good: Good.Unknown,
   rateNumerator: 1,
@@ -118,13 +112,6 @@ export const BASE_TRADE_ROUTE_MODEL: TradeRoute1800 = {
   good: Good.Unknown,
 };
 
-export const DEFAULT_TRADE_ROUTE_MODEL: TradeRoute1800 = {
-  id: -1,
-  sourceIslandId: -1,
-  targetIslandId: -1,
-  good: Good.Unknown,
-};
-
 export const BASE_ISLAND_MODEL: Island1800 = {
   name: 'UNNAMED_ISLAND',
   productionLines: [],
@@ -135,14 +122,4 @@ export const DEFAULT_ISLAND_MODEL: Island1800 = {
   region: Region.OldWorld,
   productionLines: [],
   dolPolicy: DepartmentOfLaborPolicy.None,
-};
-
-export const BASE_WORLD_MODEL: World1800 = {
-  islands: [],
-  tradeRoutes: [],
-};
-
-export const DEFAULT_WORLD_MODEL: World1800 = {
-  islands: [],
-  tradeRoutes: [],
 };

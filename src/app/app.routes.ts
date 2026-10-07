@@ -83,10 +83,6 @@ function convertToRoute(app: AppInfo): Route {
   };
 }
 
-export function isRedirect(app: AppInfo): boolean {
-  return app.redirectTo !== undefined;
-}
-
 export function isNotRedirect(app: AppInfo): boolean {
   return app.redirectTo === undefined;
 }

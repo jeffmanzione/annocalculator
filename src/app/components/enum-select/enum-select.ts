@@ -14,7 +14,6 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { EnumRow } from '../enum-row/enum-row';
 
-import { EnumTooltip } from '../enum-tooltip/enum-tooltip';
 import { L10nText } from '../text/text';
 import { L10nKey } from '../../shared/l10n/l10n';
 import { L10nService } from '../../services/l10n/l10n';
@@ -33,7 +32,7 @@ import { L10nService } from '../../services/l10n/l10n';
   ],
 })
 export class EnumSelect<T> implements ControlValueAccessor {
-  tooltip = input<TemplateRef<EnumTooltip<T>> | null>(null);
+  tooltip = input<TemplateRef<any> | null>(null);
   label = input<L10nKey>();
   options = input.required<T[]>();
   iconUrlLookupFn = input<(_: T | null) => string>((_: T | null) => '');
@@ -97,13 +96,5 @@ export class EnumSelect<T> implements ControlValueAccessor {
     if (!opened) {
       this.rows_().forEach((row) => row.hideAllTooltips());
     }
-  }
-
-  shouldDisableOption(option: T): boolean {
-    return (
-      this.multiple() &&
-      this.valueAsArray().length >= this.multipleSelectLimit() &&
-      !this.valueAsArray().includes(option)
-    );
   }
 }

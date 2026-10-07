@@ -77,7 +77,6 @@ export type L10nKey =
   | 'Uncovered Deficit Explanation'
   | 'Provides Electricity'
   | 'Yes'
-  | 'No'
   | 'Productivity'
   | 'Base Productivity'
   | 'Common'
@@ -608,12 +607,6 @@ export const localizations: Localizations = {
     De: 'Ja',
     Nl: 'Ja',
     Zh: '是',
-  },
-  No: {
-    En: 'No',
-    De: 'Nein',
-    Nl: 'Nee',
-    Zh: '否',
   },
   Productivity: {
     En: 'Productivity',

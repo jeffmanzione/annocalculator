@@ -129,8 +129,3 @@ export class EnumRow<T> implements AfterViewChecked {
     this.hasTooltip = !!this.tooltip();
   }
 }
-
-interface ShowValue<T> {
-  value: T | null;
-  shouldShowOverlay: boolean;
-}

@@ -19,10 +19,6 @@ import { L10nText } from '../../../components/text/text';
 export class SaveDialog<T> {
   private readonly data_ = inject<SaveData<T>>(MAT_DIALOG_DATA);
   readonly obj = model(this.data_.obj);
-
-  updateObject(newObj: T): void {
-    this.data_.obj = newObj;
-  }
 }
 
 export interface SaveData<T> {

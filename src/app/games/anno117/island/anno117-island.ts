@@ -51,7 +51,7 @@ import {
 } from '../model/world-controllers';
 import { Anno117Tooltip } from '../tooltips/anno117-tooltip';
 import { TooltipKind } from '../tooltips/tooltip-model';
-import { factoriesForSession, regionOfSession } from '../model/world-store-117';
+import { factoriesForSession } from '../model/world-store-117';
 
 /** What gives an extra output. */
 interface ExtraSource {
@@ -182,7 +182,6 @@ export class Anno117Island {
     factoriesForSession(this.controller().session).map((f) => f.id),
   );
 
-  readonly regionOf = regionOfSession;
 
   itemChoices(line: Line117Controller): number[] {
     return itemsByBuilding.get(line.building) ?? [];
