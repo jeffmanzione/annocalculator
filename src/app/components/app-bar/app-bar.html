@@ -11,8 +11,8 @@
         </button>
       </div>
     }
-    <div class="theme-picker toolbar-text-shadow">
-      <span id="theme-label" class="theme-label" textLoc="Theme"></span>
+    <div class="theme-picker">
+      <span id="theme-label" class="theme-label toolbar-text-shadow" textLoc="Theme"></span>
       <mat-form-field class="theme-field">
         <mat-select aria-labelledby="theme-label" [value]="theme()" (valueChange)="updateTheme($event)">
           <mat-select-trigger>
