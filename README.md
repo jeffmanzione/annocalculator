@@ -11,37 +11,53 @@ Visit the tool here: [https://AnnoCalculator.com](https://AnnoCalculator.com)
 ## 🚀 Features
 
 - 📦 **Production Planning** — Calculate how many buildings you need for each good, with every boost, item, cultural set and policy applied
-- 🏛️ **Palace and Trade Union** — Set the Palace's prestige level to apply its Trade Union productivity bonus to every line that has a Trade Union
-- 🛠️ **Bonus Simulation** — Stack production boosts, items, cultural sets and extra goods; see exactly where an efficiency figure comes from in its tooltip
-- 🔁 **Input Substitution** — Specialists that swap an input good (Grain for Flour, for example) are marked with a glow and explained in a tooltip
-- 🧮 **Real-time Calculations** — Instant feedback as you tweak settings
-- 🧱 **Multi-Island Support** — Plan across the Old World, Cape Trelawney and the New World, and balance production with trade routes
-- 🏛️ **Anno 117: Pax Romana** — The same planning for Latium and Albion: aqueducts, silos, fuel, items and boosted items, discoveries, patron deities and events, and fertilities an island may lack
-- 💾 **JSON Import/Export** — Save your setups or share them with others; your plan is also kept in your browser automatically
+- 🏛️ **Anno 117: Pax Romana** — Plan Latium and Albion: aqueducts, silos (and the extra goods they make), fuel, items and their boosted forms, discoveries (including the repeatable Beneath Bedrock, in 5% steps), patron deities with devotion, events, and fertilities an island may lack
+- 🧱 **Anno 1800** — The Old World, Cape Trelawney, the New World and Enbesa, with the Palace's prestige level applying its Trade Union bonus to every line that has one
+- 🛠️ **Bonus Simulation** — Stack boosts, items, cultural sets and extra goods; in Anno 117 a boosted item replaces its plain effect, exactly as in the game
+- 🔍 **Every Number Explained** — Hover (or tap) an efficiency or a goods-per-minute figure to see each bonus that adds up to it, with the arithmetic, in both games
+- 🧮 **Extra Goods** — A table under each production line lists what else it makes and from what (a silo's extra pig every third cycle, a specialist's chocolate), with its rate
+- 🔁 **Input Substitution** — Items and specialists that swap an input good show both goods with their icons, and the substituted input glows
+- 🌐 **Multi-Island Planning** — Balance production across islands with trade routes; the summary shows total and net production of every good and flags shortfalls
+- 🎨 **Two Themes** — Anno 117's marble and wine (the default) or Anno 1800's parchment and brass, one click in the toolbar; your choice is remembered
+- 📱 **Works on Your Phone** — A layout made for narrow screens: the page shows the islands, the summary or the trade routes one at a time, each production line is a card, tooltips open on a tap and targets are made for fingers. On a computer nothing changes
+- 💾 **JSON Import/Export** — Save your setups or share them with others; your plan is also kept in your browser automatically, separately for each game
 - 🌍 **Four Languages** — English, German, Dutch and Chinese
-- 🎨 **Anno-styled UI** — Parchment, brass and slate, drawn with original CSS and SVG
 
 ## 🖼️ Screenshots
 
-![The calculator with three islands, the Palace prestige level, the summary and trade routes](https://github.com/jeffmanzione/annocalculator/blob/main/screenshots/whole_app.jpg 'The whole app')
+![The Anno 117 calculator with three islands: discoveries, a patron, aqueducts, a silo with its extra goods, the summary and trade routes](https://github.com/jeffmanzione/annocalculator/blob/main/screenshots/anno117_whole.jpg 'The Anno 117 calculator')
 
-### Plan each island
+### Two games, two looks
+
+Each game has its own tab, its own rules and its own saved plan. Choose the look in the toolbar: Anno 117's marble and wine, or Anno 1800's parchment and brass. Either look works with either calculator.
+
+|                                                                Anno 117 theme (default)                                                                 |                                                                       Anno 1800 theme                                                                        |
+| :-----------------------------------------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------------------------------------------: |
+| ![The Anno 117 calculator in its marble theme](https://github.com/jeffmanzione/annocalculator/blob/main/screenshots/theme_anno117.jpg 'Anno 117 theme') | ![The Anno 117 calculator in the parchment theme](https://github.com/jeffmanzione/annocalculator/blob/main/screenshots/theme_anno1800.jpg 'Anno 1800 theme') |
+
+![The Anno 1800 calculator with three islands, the Palace prestige level, the summary and trade routes](https://github.com/jeffmanzione/annocalculator/blob/main/screenshots/whole_app.jpg 'The Anno 1800 calculator')
+
+### See where every number comes from
+
+Hover an efficiency or a goods-per-minute figure (tap it on a phone). The breakdown lists each bonus, and for goods per minute the base output with the arithmetic and what each extra of the same good adds, such as a silo. Both games work this way.
+
+|                                                                                   Anno 117 efficiency                                                                                    |                                                                                        Anno 117 goods per minute                                                                                         |
+| :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
+| ![A Pig Farm's 260%: base productivity, a silo and Mars's Armamentum](https://github.com/jeffmanzione/annocalculator/blob/main/screenshots/anno117_efficiency.png 'Anno 117 efficiency') | ![A Pig Farm's 13.9 a minute: its base production and what the silo adds](https://github.com/jeffmanzione/annocalculator/blob/main/screenshots/anno117_goods_per_minute.png 'Anno 117 goods per minute') |
+
+|                                                                                         Anno 1800 efficiency                                                                                         |                                                                            Palace prestige level                                                                             |
+| :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
+| ![Tooltip listing base productivity, the Palace Trade Union bonus and an item](https://github.com/jeffmanzione/annocalculator/blob/main/screenshots/efficiency_breakdown.png 'Efficiency breakdown') | ![The Palace prestige level dropdown with each level's bonus](https://github.com/jeffmanzione/annocalculator/blob/main/screenshots/palace_level.png 'Palace prestige level') |
+
+### Plan each island (Anno 1800)
 
 Add production lines, pick boosts, items and cultural sets, and read the efficiency, process time and output of every line. Extra goods (like the Fine Cake Decorator's chocolate) are listed under the line that produces them.
 
 ![An island with its production lines and a substituted input explained](https://github.com/jeffmanzione/annocalculator/blob/main/screenshots/island_editor.png 'Island editor')
 
-### See where every number comes from
-
-Hover the info icon next to an efficiency to see each bonus that adds up to it, including the Palace's Trade Union bonus. Pick the Palace's prestige level once in the global parameters and it applies everywhere.
-
-|                                                                                         Efficiency breakdown                                                                                         |                                                                            Palace prestige level                                                                             |
-| :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
-| ![Tooltip listing base productivity, the Palace Trade Union bonus and an item](https://github.com/jeffmanzione/annocalculator/blob/main/screenshots/efficiency_breakdown.png 'Efficiency breakdown') | ![The Palace prestige level dropdown with each level's bonus](https://github.com/jeffmanzione/annocalculator/blob/main/screenshots/palace_level.png 'Palace prestige level') |
-
 ### Specialists that swap inputs
 
-When a specialist substitutes an input good, the good glows and its tooltip says what it replaces and which specialist does it.
+When a specialist substitutes an input good, the good glows and its tooltip says what it replaces and which specialist does it, with both goods' icons.
 
 ![A glowing Grain input with a tooltip: replaces Flour, specialist Baker](https://github.com/jeffmanzione/annocalculator/blob/main/screenshots/substituted_input.png 'A substituted input')
 
@@ -51,13 +67,13 @@ The summary shows total and net production of every good across all your islands
 
 ![The summary of goods and the trade routes between islands](https://github.com/jeffmanzione/annocalculator/blob/main/screenshots/summary.png 'Summary and trade routes')
 
-### Anno 117: Pax Romana
+### On your phone
 
-The second tab plans Latium and Albion the same way: set an island's province, patron and devotion, switch on aqueducts and silos, place items and research discoveries. Hover an efficiency to see where it comes from.
+On a narrow screen the page shows one part at a time (Islands, Summary or Trade Routes), each production line is a labelled card with its extra goods beneath it, a tap opens a tooltip, and a tap on a good in the summary opens its islands.
 
-![The Anno 117 calculator with three islands, discoveries, a patron, aqueducts and a silo](https://github.com/jeffmanzione/annocalculator/blob/main/screenshots/anno117_whole.jpg 'The Anno 117 calculator')
-
-![Tooltip showing a Pig Farm's 220%: base productivity, a silo and Mars's Armamentum](https://github.com/jeffmanzione/annocalculator/blob/main/screenshots/anno117_efficiency.png 'Anno 117 efficiency breakdown')
+|                                                                       The islands                                                                        |                                                                          A production line                                                                           |                                                                   A tap shows the breakdown                                                                   |                                                                            The summary                                                                            |
+| :------------------------------------------------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------------------------------------------: |
+| ![The top of the Anno 117 page on a phone](https://github.com/jeffmanzione/annocalculator/blob/main/screenshots/mobile_top.jpg 'The islands on a phone') | ![A production line as a card, with its extra goods](https://github.com/jeffmanzione/annocalculator/blob/main/screenshots/mobile_cards.jpg 'A production line card') | ![A tooltip opened by a tap](https://github.com/jeffmanzione/annocalculator/blob/main/screenshots/mobile_tooltip.jpg 'A tap shows where a number comes from') | ![The summary on a phone, with one good opened](https://github.com/jeffmanzione/annocalculator/blob/main/screenshots/mobile_summary.jpg 'The summary on a phone') |
 
 ### In your language
 
@@ -70,7 +86,7 @@ English, German, Dutch and Chinese.
 ## 🧑‍💻 Tech Stack
 
 - [Angular](https://angular.dev/) 22 — Standalone components, signals, zoneless change detection, `OnPush`
-- [Angular Material](https://material.angular.dev/) — Form controls and tables, restyled with an Anno 1800 theme
+- [Angular Material](https://material.angular.dev/) — Form controls and tables, restyled with two Anno themes (the colours are CSS custom properties, so the theme can change while the app runs)
 - [TypeScript](https://www.typescriptlang.org/) — Strict typing
 - [SCSS](https://sass-lang.com/) — Styling
 - [Vitest](https://vitest.dev/) + jsdom — Unit and component tests (run through `ng test`)
@@ -169,7 +185,7 @@ Phones (windows under 900px wide) get their own layout; a desktop window looks e
 - The toolbar becomes three short rows, and the page shows one part at a time (Islands, Summary or Trade Routes), chosen with a bar of tabs that stays at the top.
 - Each production line is a card with labelled fields instead of a row of a wide table (the same cards for both games). The labels are hidden on a desktop.
 - A finger cannot hover: a tap shows a tooltip, and a tap elsewhere hides it. Targets are made bigger.
-- `e2e/mobile.mjs` (`npm run e2e:mobile`) checks that a phone-sized window never scrolls sideways, that the tabs, cards and tooltips work, and that targets are big enough. `e2e/desktop-shots.mjs` proves the desktop is untouched: take its screenshots before a change and after it, then compare.
+- `e2e/mobile.mjs` (`npm run e2e:mobile`) checks that a phone-sized window never scrolls sideways, that the tabs, cards and tooltips work, and that targets are big enough. `e2e/desktop-shots.mjs` proves the desktop is untouched: take its screenshots before a change and after it, then compare. The screenshots in this README are made by `e2e/readme-screenshots.mjs` (build first, then run it), so that they can be taken again whenever the look changes.
 
 ## 🛠️ Development
 
