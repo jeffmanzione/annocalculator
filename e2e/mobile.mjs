@@ -97,6 +97,21 @@ for (const [name, route, selector, island] of [
   const labels = await visibleCount(page, `${island} .mobile-label`);
   check(`${name}: the cards label their fields`, labels > 5, `${labels} labels`);
 
+  // A long island name stays on one line, and a focused field's label stays put.
+  const title = await page.evaluate((i) => {
+    const t = document.querySelector(`${i}`).closest('mat-expansion-panel').querySelector('mat-panel-title');
+    const r = t.getBoundingClientRect();
+    const lineHeight = parseFloat(getComputedStyle(t).lineHeight) || 20;
+    return { width: Math.round(r.width), height: Math.round(r.height), lineHeight };
+  }, island);
+  check(`${name}: an island name is on one line`, title.height <= title.lineHeight * 1.6 + 8, JSON.stringify(title));
+  const labelTop = () => page.evaluate((i) => document.querySelector(`${i} .island-name-field .mdc-floating-label`).getBoundingClientRect().top, island);
+  const unfocused = await labelTop();
+  await page.locator(`${island} .island-name-field input`).first().focus();
+  await page.waitForTimeout(400);
+  check(`${name}: the label of a focused field does not move`, Math.abs((await labelTop()) - unfocused) < 0.5, `${unfocused} -> ${await labelTop()}`);
+  await page.locator(`${island} .island-name-field input`).first().blur();
+
   // Targets for a finger.
   const sizes = await page.evaluate((i) => {
     const h = (sel) => Math.round(document.querySelector(sel)?.getBoundingClientRect().height ?? 0);

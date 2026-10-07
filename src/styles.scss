@@ -282,10 +282,37 @@ body {
 
   // Fingers need bigger targets than the compact density the desktop uses.
   :root {
-    @include mat.form-field-overrides((container-height: 44px));
-    @include mat.icon-button-overrides((state-layer-size: 44px));
-    @include mat.checkbox-overrides((state-layer-size: 40px));
-    @include mat.button-overrides((filled-container-height: 44px, text-container-height: 44px));
+    @include mat.form-field-overrides(
+      (
+        container-height: 44px,
+      )
+    );
+    @include mat.icon-button-overrides(
+      (
+        state-layer-size: 44px,
+      )
+    );
+    @include mat.checkbox-overrides(
+      (
+        state-layer-size: 40px,
+      )
+    );
+    @include mat.button-overrides(
+      (
+        filled-container-height: 44px,
+        text-container-height: 44px,
+      )
+    );
+  }
+
+  // The label of a focused field stays where it was: the fix above holds the label at the middle of a compact
+  // field's height, which these taller fields have moved.
+  .mat-mdc-form-field
+    .mdc-text-field--focused
+    .mdc-notched-outline--notched
+    .mdc-notched-outline__notch
+    .mdc-floating-label {
+    top: calc(var(--mat-form-field-container-height) / 2 - 1px);
   }
 
   // The compact density sets an icon button's size outright.

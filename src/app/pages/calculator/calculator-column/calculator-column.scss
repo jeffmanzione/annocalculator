@@ -94,6 +94,18 @@ mat-panel-description {
     position: static;
   }
 
+  // An island's name takes the room it needs (Material gives the title a third of the header, which made a
+  // name such as "Dun Eidyn" wrap); the delete button keeps its own size.
+  mat-panel-title {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  mat-panel-description {
+    flex: 0 0 auto;
+    margin-right: 0;
+  }
+
   // The two cards above the islands, one under the other.
   .global-parameters-section {
     flex-direction: column;
