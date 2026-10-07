@@ -1,7 +1,8 @@
 import { NumberConstituent } from '../../components/composite-number/composite-number';
+import { producedPerMinuteConstituents } from '../../components/composite-number/produced-per-minute';
 import { Language } from '../../shared/l10n/l10n';
 import { BuffSource } from './game/rules';
-import { anno117Data, effectsById, itemsById, productsById } from './game/data';
+import { anno117Data, effectsById, itemsById } from './game/data';
 import { Anno117Name } from './game/data-types';
 import { iconUrl, nameIn } from './anno117-game';
 import { Line117Controller } from './model/world-controllers';
@@ -113,13 +114,17 @@ export function producedConstituents(
   line: Line117Controller,
   language: Language,
 ): NumberConstituent[] {
-  const product = productsById.get(Number(line.good));
-  const detail = named(product?.name, product?.icon, language);
-  const extra = line.extraGoods
-    .filter((e) => e.good === line.good)
-    .reduce((sum, e) => sum + e.producedPerMinute, 0);
-  return [
-    { value: line.goodsProducedPerMinute, ...detail },
-    ...(extra ? [{ value: extra, ...detail }] : []),
-  ];
+  return producedPerMinuteConstituents({
+    numBuildings: line.numBuildings,
+    baseProcessTimeSeconds: line.factory.cycleTime,
+    efficiency: line.efficiency,
+    baseProducedPerMinute: line.goodsProducedPerMinute,
+    extras: line.extraGoodRows
+      .filter((extra) => extra.good === line.good)
+      .map((extra) => ({
+        ...describeSource(extra.source, extra.sourceId, language),
+        rateNumerator: extra.amount,
+        rateDenominator: extra.everyCycles,
+      })),
+  });
 }

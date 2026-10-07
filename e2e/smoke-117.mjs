@@ -123,6 +123,13 @@ await settle();
   await islands().nth(0).locator('td.extras-field ac-button').click();
   await settle();
   check('and shows them again', (await table().count()) === 1);
+  // Goods per minute explains itself like Anno 1800's: the base output, then what the silo adds.
+  await islands().nth(0).locator('tbody tr').nth(1).locator('composite-number').last().hover();
+  await page.waitForTimeout(700);
+  const perMinuteTip = (await page.locator('.tooltip-container').allInnerTexts()).join(' ').replace(/\s+/g, ' ');
+  check('goods per minute shows the base production and the silo with their math', /Base Production/.test(perMinuteTip) && /Silo/.test(perMinuteTip) && /1\s*\/\s*3/.test(perMinuteTip), perMinuteTip);
+  await page.mouse.move(5, 5);
+  await page.waitForTimeout(1500);
   await table().locator('tbody td').nth(1).locator('.item-container').first().hover();
   await page.waitForTimeout(800);
   const sourceTip = (await page.locator('.tooltip-container').allInnerTexts()).join(' ').replace(/\s+/g, ' ');

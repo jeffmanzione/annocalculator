@@ -1,5 +1,6 @@
 import { StoredIsland } from '../../../shared/engine/base-world-store';
 import { NumberConstituent } from '../../../components/composite-number/composite-number';
+import { producedPerMinuteConstituents } from '../../../components/composite-number/produced-per-minute';
 import {
   Boost,
   Good,
@@ -570,44 +571,20 @@ export class Line1800View implements ProductionLineEntity {
    * what each extra good of the same good adds. The values sum to the total.
    */
   get goodsProducedPerMinuteConstituents(): NumberConstituent[] {
-    const baseProducedPerMinute = this.goodsProducedPerMinute;
-    // buildings x 60s / (base process time / efficiency), spelled out with
-    // language-neutral math so no extra text needs localizing.
-    const constituents: NumberConstituent[] = [
-      {
-        value: baseProducedPerMinute,
-        description: 'Base Production',
-        detail: [
-          { value: this.numBuildings },
-          '×',
-          { value: 60, unit: 's' },
-          '÷',
-          '(',
-          { value: this.baseBuildingProcessTimeSeconds, unit: 's' },
-          '÷',
-          { value: this.efficiency, isPercent: true },
-          ')',
-        ],
-      },
-    ];
-    for (const eg of this.extraGoods) {
-      if (eg.good !== this.good) {
-        continue;
-      }
-      constituents.push({
-        value: baseProducedPerMinute * (eg.rateNumerator / eg.rateDenominator),
-        description: eg.source,
-        iconUrl: extraGoodSourceIconUrl(eg),
-        detail: [
-          { value: eg.rateNumerator },
-          '/',
-          { value: eg.rateDenominator },
-          '×',
-          { value: baseProducedPerMinute, unit: '/m' },
-        ],
-      });
-    }
-    return constituents;
+    return producedPerMinuteConstituents({
+      numBuildings: this.numBuildings,
+      baseProcessTimeSeconds: this.baseBuildingProcessTimeSeconds,
+      efficiency: this.efficiency,
+      baseProducedPerMinute: this.goodsProducedPerMinute,
+      extras: this.extraGoods
+        .filter((eg) => eg.good === this.good)
+        .map((eg) => ({
+          description: eg.source!,
+          iconUrl: extraGoodSourceIconUrl(eg),
+          rateNumerator: eg.rateNumerator,
+          rateDenominator: eg.rateDenominator,
+        })),
+    });
   }
 
   get goodsProducedPerMinuteWithExtras(): number {
