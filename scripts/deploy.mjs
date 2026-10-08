@@ -46,12 +46,17 @@ try {
   if (!args.has('--skip-build')) run('npm', ['run', 'build']);
 
   const files = fs.readdirSync(DIST);
-  const bundles = files.filter((f) => /^(main|styles)-[A-Z0-9]+\.(js|css)$/.test(f));
+  const bundles = files.filter((f) => /^(main|styles)-[A-Za-z0-9_-]+\.(js|css)$/.test(f));
   if (bundles.length !== 2)
     throw new Error(`Expected one main and one styles bundle in ${DIST}, found: ${bundles.join(', ')}`);
   // Pages loaded on demand (such as the Anno 117 calculator) are separate chunks, named by content like the bundles.
-  const chunks = files.filter((f) => /^chunk-[A-Z0-9]+\.js$/.test(f));
+  const chunks = files.filter((f) => /^chunk-[A-Za-z0-9_-]+\.js$/.test(f));
   const hashed = [...bundles, ...chunks];
+  // Every script and stylesheet at the top level must be one of these: a file the patterns above did not
+  // recognise would otherwise be left out of the upload, and the live site would be missing a page.
+  const unrecognised = files.filter((f) => /\.(js|css)$/.test(f) && !hashed.includes(f));
+  if (unrecognised.length)
+    throw new Error(`Files in ${DIST} that the deploy would not upload: ${unrecognised.join(', ')}`);
   // The version is shown in the toolbar; which file the bundler puts it in can change, so look in all of them.
   const scripts = hashed.filter((f) => f.endsWith('.js'));
   // The minifier writes the string with whichever quote it likes.
